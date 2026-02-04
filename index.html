@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaboralEc | Consultoría y Legislación 2026</title>
+    <style>
+        :root { --p: #002d5a; --s: #fd7e14; --g: #28a745; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); margin: 0; color: #333; }
+        
+        /* HEADER CON LETRA GRANDE */
+        header { 
+            background: var(--p); 
+            color: white; 
+            padding: 50px 20px; 
+            text-align: center; 
+            border-bottom: 8px solid var(--s); 
+        }
+        header h1 { 
+            margin: 0; 
+            font-size: 70px; /* Letra de LaboralEc bien grande */
+            font-weight: 900; 
+            letter-spacing: -2px;
+            text-transform: none;
+        }
+        header h1 span { color: var(--s); } /* El .Ec en color naranja */
+        header p { 
+            font-size: 20px; 
+            opacity: 0.9; 
+            margin-top: 10px;
+            font-weight: 300;
+        }
+
+        .container { max-width: 950px; margin: 0 auto; background: white; min-height: 100vh; box-shadow: 0 0 25px rgba(0,0,0,0.2); }
+        
+        nav { display: flex; background: #222; sticky: top; }
+        nav button { flex: 1; padding: 22px; border: none; background: none; color: white; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 14px; min-width: 140px; border-right: 1px solid #444; transition: 0.3s; }
+        nav button.active { background: var(--s); }
+        nav button:hover { background: #444; }
+
+        .section { display: none; padding: 45px; animation: fadeIn 0.3s; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .card-calc { background: #fff; border: 1px solid #ddd; padding: 30px; border-radius: 12px; margin-bottom: 35px; border-left: 8px solid var(--p); }
+        h3 { font-size: 28px; color: var(--p); margin-top: 0; }
+        label { font-weight: bold; display: block; margin-top: 15px; font-size: 16px; }
+        input, select { width: 100%; padding: 15px; margin: 10px 0; border-radius: 8px; border: 2px solid #eee; font-size: 18px; box-sizing: border-box; }
+        .btn-calc { background: var(--p); color: white; width: 100%; padding: 18px; border: none; border-radius: 8px; font-size: 20px; font-weight: bold; cursor: pointer; margin-top: 15px; transition: 0.3s; }
+        .btn-calc:hover { background: var(--s); transform: scale(1.02); }
+        
+        .resultado { margin-top: 25px; padding: 25px; background: #e8f5e9; border-left: 8px solid var(--g); border-radius: 8px; font-size: 20px; display: none; }
+        
+        .observaciones-legales { background: #fdfdfd; border: 1px solid #eee; padding: 30px; border-radius: 8px; margin-top: 20px; }
+        .observaciones-legales h4 { color: var(--p); border-bottom: 2px solid var(--s); padding-bottom: 10px; margin-bottom: 20px; text-transform: uppercase; font-size: 18px; }
+        .art-box { margin-bottom: 25px; text-align: justify; line-height: 1.8; font-size: 15px; }
+        .art-title { font-weight: bold; color: #d35400; font-size: 17px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Laboral<span>Ec</span></h1>
+    <p>Portal Jurídico Profesional de Cálculos Laborales 2026</p>
+</header>
+
+<nav>
+    <button class="active" onclick="navegar(event, 's-liq')">Liquidaciones</button>
+    <button onclick="navegar(event, 's-horas')">Horas Extras</button>
+    <button onclick="navegar(event, 's-decimos')">Décimos</button>
+    <button onclick="navegar(event, 's-formatos')">Formatos</button>
+</nav>
+
+<div class="container">
+    
+    <div id="s-liq" class="section active">
+        <h3>Calculadora de Liquidación</h3>
+        <div class="card-calc">
+            <label>Tipo de Trámite:</label>
+            <select id="l_motivo">
+                <option value="desahucio">Desahucio (Art. 185)</option>
+                <option value="despido">Despido Intempestivo (Art. 188)</option>
+            </select>
+            <label>Última Remuneración Mensual ($):</label>
+            <input type="number" id="l_sueldo" value="482">
+            <label>Tiempo de Servicio (Años completos):</label>
+            <input type="number" id="l_anos" placeholder="Ej: 5">
+            <label>Días Vacaciones No Gozadas:</label>
+            <input type="number" id="l_vac" value="0">
+            <button class="btn-calc" onclick="calcLiq()">Generar Cálculo Profesional</button>
+            <div id="res-liq" class="resultado"></div>
+        </div>
+
+        <div class="observaciones-legales">
+            <h4>Base Legal del Código del Trabajo</h4>
+            <div class="art-box">
+                <span class="art-title">Art. 185.- Bonificación por desahucio:</span>
+                <span class="cita">"En los casos de terminación de la relación laboral por desahucio, el empleador pagará al trabajador el veinticinco por ciento del equivalente a la última remuneración mensual por cada uno de los años de servicio prestados."</span>
+            </div>
+            <div class="art-box">
+                <span class="art-title">Art. 188.- Indemnización por despido intempestivo:</span>
+                <span class="cita">"El empleador que despidiere intempestivamente al trabajador, será condenado a indemnizarlo con el valor correspondiente a tres meses de remuneración (hasta 3 años de servicio); y de más de tres años, con un mes por cada año, hasta 25 meses."</span>
+            </div>
+            <div class="art-box">
+                <span class="art-title">Art. 71.- Liquidación de Vacaciones:</span>
+                <span class="cita">"La liquidación de vacaciones se realizará en base a la veinticuatroava parte de lo percibido por el trabajador durante un año completo de trabajo."</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="s-horas" class="section">
+        <h3>Recargos de Jornada Suplementaria</h3>
+        <div class="card-calc">
+            <label>Sueldo Mensual ($):</label>
+            <input type="number" id="h_sueldo" value="482">
+            <label>Horas Suplementarias (50%):</label>
+            <input type="number" id="h_50" value="0">
+            <label>Horas Extraordinarias (100%):</label>
+            <input type="number" id="h_100" value="0">
+            <button class="btn-calc" onclick="calcHoras()">Calcular Recargos</button>
+            <div id="res-horas" class="resultado"></div>
+        </div>
+        <div class="observaciones-legales">
+            <h4>Análisis Legal Art. 55</h4>
+            <p>Las horas trabajadas después de la jornada ordinaria (suplementarias) tienen un recargo del 50%. Si son nocturnas o en días de descanso obligatorio/feriados (extraordinarias), el recargo es del 100%.</p>
+        </div>
+    </div>
+
+    <div id="s-decimos" class="section">
+        <h3>Bonificaciones Anuales (Décimos)</h3>
+        <div class="card-calc">
+            <label>Sueldo Promedio ($):</label>
+            <input type="number" id="d_sueldo" value="482">
+            <label>Días Trabajados en el periodo:</label>
+            <input type="number" id="d_dias" placeholder="Ej: 360">
+            <button class="btn-calc" onclick="calcDec()">Calcular Décimos</button>
+            <div id="res-dec" class="resultado"></div>
+        </div>
+        <div class="observaciones-legales">
+            <h4>Art. 111 y 113</h4>
+            <p>El Décimo Tercero corresponde a la doceava parte de todo lo ganado. El Décimo Cuarto corresponde a un Salario Básico Unificado completo ($482 para el año 2026).</p>
+        </div>
+    </div>
+
+    <div id="s-formatos" class="section">
+        <h3>Descarga de Formatos Subsanados</h3>
+        <div class="card-calc" style="text-align:center;">
+            <p>Documentos técnicos según requerimientos ministeriales 2026.</p>
+            <a href="Modelo-Contrato-Colectivo-Integral-2026.docx" download style="text-decoration:none">
+                <button class="btn-calc" style="background:var(--g)">📥 Descargar Contrato Colectivo</button>
+            </a>
+            <br><br>
+            <a href="Pliego-de-Peticiones-Premium-Subsanado-2026.docx" download style="text-decoration:none">
+                <button class="btn-calc" style="background:#555;">📥 Descargar Pliego de Peticiones</button>
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function navegar(e, id) {
+        const secs = document.getElementsByClassName("section");
+        for (let s of secs) s.style.display = "none";
+        const btns = document.querySelectorAll("nav button");
+        btns.forEach(b => b.classList.remove("active"));
+        document.getElementById(id).style.display = "block";
+        e.currentTarget.classList.add("active");
+        window.scrollTo(0,0);
+    }
+
+    function calcLiq() {
+        let m = document.getElementById('l_motivo').value;
+        let s = parseFloat(document.getElementById('l_sueldo').value) || 0;
+        let a = parseFloat(document.getElementById('l_anos').value) || 0;
+        let v = parseFloat(document.getElementById('l_vac').value) || 0;
+        let d = s * 0.25 * a;
+        let i = (m === "despido") ? (s * Math.max(3, a)) : 0;
+        let vac = (s / 30) * v;
+        let res = document.getElementById('res-liq');
+        res.style.display = "block";
+        res.innerHTML = `Desahucio (Art. 185): $${d.toFixed(2)}<br>${m==="despido"?'Despido (Art. 188): $'+i.toFixed(2)+'<br>':''}Vacaciones: $${vac.toFixed(2)}<br><hr><strong>TOTAL LIQUIDACIÓN: $${(d+i+vac).toFixed(2)}</strong>`;
+    }
+
+    function calcHoras() {
+        let s = parseFloat(document.getElementById('h_sueldo').value) || 0;
+        let h5 = parseFloat(document.getElementById('h_50').value) || 0;
+        let h1 = parseFloat(document.getElementById('h_100').value) || 0;
+        let vh = s / 240;
+        let t = (h5 * vh * 1.5) + (h1 * vh * 2);
+        let res = document.getElementById('res-horas');
+        res.style.display = "block";
+        res.innerHTML = `<strong>Total en Horas Extras: $${t.toFixed(2)}</strong>`;
+    }
+
+    function calcDec() {
+        let s = parseFloat(document.getElementById('d_sueldo').value) || 0;
+        let d = parseFloat(document.getElementById('d_dias').value) || 0;
+        let t3 = (s * d) / 360;
+        let t4 = (482 * d) / 360;
+        let res = document.getElementById('res-dec');
+        res.style.display = "block";
+        res.innerHTML = `Décimo Tercero: $${t3.toFixed(2)}<br>Décimo Cuarto: $${t4.toFixed(2)}<br><hr><strong>TOTAL: $${(t3+t4).toFixed(2)}</strong>`;
+    }
+</script>
+
+</body>
+</html>

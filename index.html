@@ -55,6 +55,66 @@
         .observaciones-legales h4 { color: var(--p); border-bottom: 2px solid var(--s); padding-bottom: 10px; margin-bottom: 20px; text-transform: uppercase; font-size: 18px; }
         .art-box { margin-bottom: 25px; text-align: justify; line-height: 1.8; font-size: 15px; }
         .art-title { font-weight: bold; color: #d35400; font-size: 17px; }
+        /* Contenedor principal de información */
+.info-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 30px;
+  padding: 15px;
+  justify-content: center;
+}
+
+/* Estilo para cada columna (Noticias y Enlaces) */
+.info-column {
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border-top: 4px solid #d35400; /* Color naranja de tu marca */
+}
+
+.info-column h3 {
+  color: #2c3e50;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 5px;
+}
+
+/* Lista de noticias */
+.news-list {
+  list-style: none;
+  padding: 0;
+}
+
+.news-list li {
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed #ddd;
+}
+
+.news-list .date {
+  font-weight: bold;
+  color: #d35400;
+  font-size: 0.85rem;
+  display: block;
+}
+
+.news-list a {
+  text-decoration: none;
+  color: #333;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.news-list a:hover {
+  color: #2980b9;
+}
     </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4278440613074024" crossorigin="anonymous"></script>
 
@@ -211,6 +271,39 @@
         res.style.display = "block";
         res.innerHTML = `Décimo Tercero: $${t3.toFixed(2)}<br>Décimo Cuarto: $${t4.toFixed(2)}<br><hr><strong>TOTAL: $${(t3+t4).toFixed(2)}</strong>`;
     }
+    <section class="info-container">
+  <div class="info-column">
+    <h3>noticias 2026 🇪🇨</h3>
+    <ul class="news-list">
+      <li>
+        <span class="date">05 Feb</span>
+        <a href="https://elmercurio.com.ec/nacional/2026/02/05/aprueban-ley-que-protege-laboralmente-a-padres-de-ninos-con-cancer/" target="_blank">
+          Asamblea aprueba Ley de protección laboral para padres de niños con cáncer.
+        </a>
+      </li>
+      <li>
+        <span class="date">05 Feb</span>
+        <a href="https://www.expreso.ec/actualidad/feriado-de-carnaval-2026-que-dias-no-se-trabaja-y-cuales-son-recuperables-273410.html" target="_blank">
+          Feriado de Carnaval 2026: Días no recuperables y pagos extraordinarios.
+        </a>
+      </li>
+      <li>
+        <span class="date">01 Ene</span>
+        <a href="#">Entra en vigencia el nuevo SBU de $482.00 para todo el sector privado.</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="info-column">
+    <h3>enlaces de interés</h3>
+    <div class="link-grid">
+      <a href="https://www.trabajo.gob.ec/" class="btn-link" target="_blank">Ministerio del Trabajo</a>
+      <a href="https://www.iess.gob.ec/" class="btn-link" target="_blank">IESS - Afiliados</a>
+      <a href="https://sut.trabajo.gob.ec/" class="btn-link" target="_blank">Sistema SUT (Contratos)</a>
+      <a href="https://www.derecho-ecuador.com/" class="btn-link" target="_blank">Base Legal Ecuador</a>
+    </div>
+  </div>
+</section>
 </script><footer style="background: #222; color: white; text-align: center; padding: 30px 10px; margin-top: 50px;">
     <p style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">LaboralEc &copy; 2026</p>
     <p style="font-size: 14px; opacity: 0.8;">Consultoría Laboral y Cálculos Legales para Ecuador</p>
@@ -227,6 +320,7 @@
 </body>
 
 </html>
+
 
 
 

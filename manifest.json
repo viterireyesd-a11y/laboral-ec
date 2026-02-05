@@ -1,15 +1,16 @@
 {
-  "name": "LaboralEc - Calculadora Laboral",
+  "name": "LaboralEc - Calculadora",
   "short_name": "LaboralEc",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
+  "background_color": "#002d55",
   "theme_color": "#d35400",
   "icons": [
     {
-      "src": "icono.png",
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjI1NiIgZmlsbD0iIzAwMmQ1NSIvPjxwYXRoIGZpbGw9IiNkMzU0MDAiIGQ9Ik0yNTYgOTB2MzMzbTE0MC0yMDNjMC0zMC0yOC01NS02Mi01NXMtNjIgMjUtNjIgNTVtLTE1NiAwYzAtMzAgMjgtNTUgNjItNTVzNjIgMjUgNjIgNTVtLTEyNCAwaDI0OG0tMjQ4IDBoMTI0bS0yNDggMHMwIDYwIDYyIDYwbDYyLTYwbS0xMjQgMGgxMjRtNjIgMGwwIDYwIDYyLTYwbS0xMjQgMGgxMjQiLz48L3N2Zz4=",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ]
 }

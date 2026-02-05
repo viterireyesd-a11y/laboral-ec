@@ -13,37 +13,40 @@
         header h1 span { color: var(--s); }
         header p { font-size: 18px; opacity: 0.9; margin-top: 10px; }
 
-        .container { max-width: 950px; margin: 0 auto; background: white; min-height: 80vh; box-shadow: 0 0 25px rgba(0,0,0,0.1); }
+        .container { max-width: 950px; margin: 0 auto; background: white; min-height: 70vh; box-shadow: 0 0 25px rgba(0,0,0,0.1); }
         
         nav { display: flex; background: #222; position: sticky; top: 0; z-index: 1000; overflow-x: auto; }
         nav button { flex: 1; padding: 20px; border: none; background: none; color: white; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 13px; min-width: 120px; transition: 0.3s; }
         nav button.active { background: var(--s); }
+        nav button:hover { background: #444; }
 
         .section { display: none; padding: 30px; animation: fadeIn 0.3s; }
         .section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .card-calc { background: #fff; border: 1px solid #ddd; padding: 25px; border-radius: 12px; margin-bottom: 30px; border-left: 8px solid var(--p); }
-        h3 { color: var(--p); margin-top: 0; }
+        h3 { color: var(--p); margin-top: 0; font-size: 24px; }
         label { font-weight: bold; display: block; margin-top: 15px; }
-        input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 6px; border: 1px solid #ccc; box-sizing: border-box; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 6px; border: 1px solid #ccc; box-sizing: border-box; font-size: 16px; }
         .btn-calc { background: var(--p); color: white; width: 100%; padding: 15px; border: none; border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
         
-        .resultado { margin-top: 20px; padding: 20px; background: #e8f5e9; border-left: 8px solid var(--g); border-radius: 6px; display: none; }
+        .resultado { margin-top: 20px; padding: 20px; background: #e8f5e9; border-left: 8px solid var(--g); border-radius: 6px; display: none; font-size: 18px; }
 
-        /* ESTILOS DE NOTICIAS Y ENLACES */
-        .info-container { display: flex; flex-wrap: wrap; gap: 20px; padding: 40px 20px; justify-content: center; background: #eee; }
+        /* SECCIÓN DE NOTICIAS Y ENLACES */
+        .info-container { display: flex; flex-wrap: wrap; gap: 20px; padding: 40px 20px; justify-content: center; background: #f0f0f0; border-top: 2px solid #ddd; }
         .info-column { flex: 1; min-width: 300px; max-width: 450px; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-top: 5px solid var(--s); }
-        .news-list { list-style: none; padding: 0; }
-        .news-list li { margin-bottom: 15px; border-bottom: 1px dashed #ddd; padding-bottom: 8px; }
-        .news-list .date { color: var(--s); font-weight: bold; font-size: 12px; display: block; }
-        .news-list a { text-decoration: none; color: #333; font-size: 14px; }
+        .info-column h3 { font-size: 18px; text-transform: uppercase; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
         
-        .link-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
-        .btn-link { background: var(--p); color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 4px; font-size: 12px; font-weight: bold; }
+        .news-list { list-style: none; padding: 0; }
+        .news-list li { margin-bottom: 15px; border-bottom: 1px dashed #ddd; padding-bottom: 10px; }
+        .news-list .date { color: var(--s); font-weight: bold; font-size: 12px; display: block; }
+        .news-list a { text-decoration: none; color: #333; font-size: 14px; line-height: 1.4; font-weight: 500; }
+        .news-list a:hover { color: var(--p); }
+        
+        .link-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .btn-link { background: var(--p); color: white; padding: 12px; text-align: center; text-decoration: none; border-radius: 6px; font-size: 12px; font-weight: bold; }
+        .btn-link:hover { background: var(--s); }
     </style>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4278440613074024" crossorigin="anonymous"></script>
-    <link rel="manifest" href="manifest.json">
 </head>
 <body>
 
@@ -52,39 +55,39 @@
     <p>Portal Jurídico de Cálculos Laborales 2026</p>
 </header>
 
-<nav>
-    <button class="active" onclick="navegar(event, 's-liq')">Liquidaciones</button>
-    <button onclick="navegar(event, 's-horas')">Horas Extras</button>
-    <button onclick="navegar(event, 's-decimos')">Décimos</button>
-    <button onclick="navegar(event, 's-formatos')">Formatos</button>
+<nav id="mainNav">
+    <button class="tab-btn active" onclick="navegar(event, 's-liq')">Liquidaciones</button>
+    <button class="tab-btn" onclick="navegar(event, 's-horas')">Horas Extras</button>
+    <button class="tab-btn" onclick="navegar(event, 's-decimos')">Décimos</button>
+    <button class="tab-btn" onclick="navegar(event, 's-formatos')">Formatos</button>
 </nav>
 
 <div class="container">
     <div id="s-liq" class="section active">
-        <h3>Liquidación (Art. 185-188)</h3>
+        <h3>Calculadora de Liquidación</h3>
         <div class="card-calc">
-            <label>Motivo:</label>
+            <label>Tipo de Trámite:</label>
             <select id="l_motivo">
-                <option value="desahucio">Desahucio</option>
-                <option value="despido">Despido Intempestivo</option>
+                <option value="desahucio">Desahucio (Art. 185)</option>
+                <option value="despido">Despido Intempestivo (Art. 188)</option>
             </select>
-            <label>Sueldo ($):</label>
+            <label>Sueldo Mensual ($):</label>
             <input type="number" id="l_sueldo" value="482">
             <label>Años de Servicio:</label>
             <input type="number" id="l_anos" value="1">
-            <button class="btn-calc" onclick="calcLiq()">Calcular</button>
+            <button class="btn-calc" onclick="calcLiq()">Generar Cálculo</button>
             <div id="res-liq" class="resultado"></div>
         </div>
     </div>
 
     <div id="s-horas" class="section">
-        <h3>Horas Extras (Art. 55)</h3>
+        <h3>Horas Extras (Recargos)</h3>
         <div class="card-calc">
-            <label>Sueldo ($):</label>
+            <label>Sueldo Mensual ($):</label>
             <input type="number" id="h_sueldo" value="482">
-            <label>Horas 50%:</label>
+            <label>Horas al 50%:</label>
             <input type="number" id="h_50" value="0">
-            <label>Horas 100%:</label>
+            <label>Horas al 100%:</label>
             <input type="number" id="h_100" value="0">
             <button class="btn-calc" onclick="calcHoras()">Calcular</button>
             <div id="res-horas" class="resultado"></div>
@@ -92,11 +95,11 @@
     </div>
 
     <div id="s-decimos" class="section">
-        <h3>Décimos (Art. 111-113)</h3>
+        <h3>Décimos (Bonificaciones Anuales)</h3>
         <div class="card-calc">
-            <label>Sueldo Promedio ($):</label>
+            <label>Sueldo Mensual ($):</label>
             <input type="number" id="d_sueldo" value="482">
-            <label>Días Trabajados:</label>
+            <label>Días Trabajados en el periodo:</label>
             <input type="number" id="d_dias" value="360">
             <button class="btn-calc" onclick="calcDec()">Calcular</button>
             <div id="res-dec" class="resultado"></div>
@@ -104,9 +107,9 @@
     </div>
 
     <div id="s-formatos" class="section">
-        <h3>Formatos 2026</h3>
+        <h3>Formatos Legales 2026</h3>
         <div class="card-calc" style="text-align:center;">
-            <p>Modelos oficiales para descarga inmediata.</p>
+            <p>Descarga directa de modelos según normativa vigente.</p>
             <button class="btn-calc" style="background:var(--g)">📥 Contrato Colectivo</button>
             <button class="btn-calc" style="background:#555; margin-top:10px;">📥 Pliego de Peticiones</button>
         </div>
@@ -115,26 +118,30 @@
 
 <section class="info-container">
     <div class="info-column">
-        <h3>NOTICIAS LABORALES 🇪🇨</h3>
+        <h3>Noticias Laborales 🇪🇨</h3>
         <ul class="news-list">
             <li>
                 <span class="date">05 Feb 2026</span>
-                <a href="https://elmercurio.com.ec/nacional/2026/02/05/aprueban-ley-que-protege-laboralmente-a-padres-de-ninos-con-cancer/" target="_blank">Aprobada Ley de protección para padres con hijos con enfermedades graves.</a>
+                <a href="https://elmercurio.com.ec/nacional/2026/02/05/aprueban-ley-que-protege-laboralmente-a-padres-de-ninos-con-cancer/" target="_blank">Aprobada Ley de protección laboral para padres con hijos con cáncer.</a>
             </li>
             <li>
                 <span class="date">05 Feb 2026</span>
-                <a href="https://www.expreso.ec/actualidad/feriado-de-carnaval-2026-que-dias-no-se-trabaja-y-cuales-son-recuperables-273410.html" target="_blank">Guía de pagos para el feriado de Carnaval 2026.</a>
+                <a href="https://www.expreso.ec/actualidad/feriado-de-carnaval-2026-que-dias-no-se-trabaja-y-cuales-son-recuperables-273410.html" target="_blank">Feriado de Carnaval 2026: Guía de pagos extraordinarios.</a>
+            </li>
+            <li>
+                <span class="date">01 Ene 2026</span>
+                <a href="#">Entra en vigor el nuevo Salario Básico de $482.00 dólares.</a>
             </li>
         </ul>
     </div>
 
     <div class="info-column">
-        <h3>ENLACES OFICIALES</h3>
+        <h3>Enlaces Oficiales</h3>
         <div class="link-grid">
             <a href="https://www.trabajo.gob.ec/" class="btn-link" target="_blank">Min. Trabajo</a>
             <a href="https://www.iess.gob.ec/" class="btn-link" target="_blank">IESS</a>
-            <a href="https://sut.trabajo.gob.ec/" class="btn-link" target="_blank">SUT</a>
-            <a href="https://www.derecho-ecuador.com/" class="btn-link" target="_blank">Leyes EC</a>
+            <a href="https://sut.trabajo.gob.ec/" class="btn-link" target="_blank">Sistema SUT</a>
+            <a href="https://www.derecho-ecuador.com/" class="btn-link" target="_blank">Base Legal</a>
         </div>
     </div>
 </section>
@@ -145,15 +152,29 @@
 </footer>
 
 <script>
+    // FUNCIÓN PARA NAVEGAR ENTRE PESTAÑAS (CORREGIDA)
     function navegar(e, id) {
-        const secs = document.getElementsByClassName("section");
-        for (let s of secs) s.style.display = "none";
-        const btns = document.querySelectorAll("nav button");
-        btns.forEach(b => b.classList.remove("active"));
-        document.getElementById(id).style.display = "block";
+        // Ocultar todas las secciones
+        const secciones = document.getElementsByClassName("section");
+        for (let i = 0; i < secciones.length; i++) {
+            secciones[i].classList.remove("active");
+        }
+        
+        // Quitar estado activo de los botones
+        const botones = document.getElementsByClassName("tab-btn");
+        for (let i = 0; i < botones.length; i++) {
+            botones[i].classList.remove("active");
+        }
+
+        // Mostrar sección actual y activar botón
+        document.getElementById(id).classList.add("active");
         e.currentTarget.classList.add("active");
+        
+        // Subir al inicio de la página
+        window.scrollTo(0, 0);
     }
 
+    // CÁLCULOS
     function calcLiq() {
         let m = document.getElementById('l_motivo').value;
         let s = parseFloat(document.getElementById('l_sueldo').value) || 0;
@@ -170,29 +191,25 @@
         let h5 = parseFloat(document.getElementById('h_50').value) || 0;
         let h1 = parseFloat(document.getElementById('h_100').value) || 0;
         let vh = s / 240;
-        let t = (h5 * vh * 1.5) + (h1 * vh * 2);
+        let total = (h5 * vh * 1.5) + (h1 * vh * 2);
         let res = document.getElementById('res-horas');
         res.style.display = "block";
-        res.innerHTML = `<strong>Recargo total: $${t.toFixed(2)}</strong>`;
+        res.innerHTML = `<strong>Valor Recargos: $${total.toFixed(2)}</strong>`;
     }
 
     function calcDec() {
         let s = parseFloat(document.getElementById('d_sueldo').value) || 0;
         let d = parseFloat(document.getElementById('d_dias').value) || 0;
         let t3 = (s * d) / 360;
-        let t4 = (482 * d) / 360;
+        let t4 = (482 * d) / 360; // SBU 2026
         let res = document.getElementById('res-dec');
         res.style.display = "block";
         res.innerHTML = `<strong>D3: $${t3.toFixed(2)} | D4: $${t4.toFixed(2)}</strong>`;
     }
-
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js');
-    }
 </script>
-
 </body>
 </html>
+
 
 
 

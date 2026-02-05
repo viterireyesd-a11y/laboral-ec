@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LaboralEc | Consultoría y Legislación Ecuador 2026</title>
-    <meta name="description" content="Calculadora laboral ecuatoriana: Liquidaciones, Jubilación Patronal y Décimos por meses.">
+    <title>LaboralEc | Cálculos Laborales Ecuador 2026</title>
+    <meta name="description" content="Calculadora de liquidaciones, décimos por meses y jubilación patronal según el Código del Trabajo.">
     <style>
         :root { --p: #002d5a; --s: #fd7e14; --g: #28a745; --bg: #f4f7f6; }
         body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); margin: 0; color: #333; }
@@ -62,7 +62,7 @@
     <div id="liq" class="section active">
         <h3>Liquidación de Haberes</h3>
         <div class="card">
-            <label>Tipo de Trámite:</label>
+            <label>Tipo de Salida:</label>
             <select id="l_motivo">
                 <option value="desahucio">Desahucio (Art. 185)</option>
                 <option value="despido">Despido Intempestivo (Art. 188)</option>
@@ -71,7 +71,7 @@
             <input type="number" id="l_s" value="482">
             <label>Años de Servicio:</label>
             <input type="number" id="l_a" value="1">
-            <button class="btn" onclick="calcLiq()">Calcular Liquidación</button>
+            <button class="btn" onclick="calcLiq()">Calcular</button>
             <div id="r_l" class="res"></div>
         </div>
     </div>
@@ -97,13 +97,13 @@
             <input type="number" id="j_a" value="25" min="25">
             <label>Edad al Jubilarse:</label>
             <input type="number" id="j_e" value="60">
-            <button class="btn" style="background: var(--s);" onclick="calcJub()">Calcular Pensión Mensual</button>
+            <button class="btn" style="background: var(--s);" onclick="calcJub()">Calcular Pensión</button>
             <div id="r_j" class="res"></div>
         </div>
     </div>
 
     <div id="extras" class="section">
-        <h3>Horas Suplementarias y Extraordinarias</h3>
+        <h3>Horas Extras y Suplementarias</h3>
         <div class="card">
             <label>Sueldo Mensual ($):</label>
             <input type="number" id="h_s" value="482">
@@ -119,12 +119,105 @@
 
 <section class="info-container">
     <div class="info-column">
-        <h3>Actualidad Laboral 🇪🇨</h3>
+        <h3>Noticias Laborales 2026</h3>
         <ul class="news-list">
-            <li><span class="date">05 Feb 2026</span><a href="#">Guía para el pago de feriado de Carnaval 2026.</a></li>
-            <li><span class="date">01 Ene 2026</span><a href="#">SBU 2026 oficializado
+            <li><span class="date">05 Feb 2026</span><a href="#">SBU 2026 oficial en $482.00 mensuales.</a></li>
+            <li><span class="date">01 Feb 2026</span><a href="#">Calendario de pago de utilidades 2026.</a></li>
+        </ul>
+    </div>
+    <div class="info-column">
+        <h3>Enlaces Oficiales</h3>
+        <ul class="news-list">
+            <li><a href="https://www.trabajo.gob.ec/" target="_blank">Ministerio del Trabajo</a></li>
+            <li><a href="https://www.iess.gob.ec/" target="_blank">IESS Ecuador</a></li>
+        </ul>
+    </div>
+</section>
 
+<footer>
+    <p>LaboralEc &copy; 2026 | SBU: $482.00 | Código del Trabajo Ecuador</p>
+</footer>
 
+<script>
+    // SISTEMA DE NAVEGACIÓN CORREGIDO
+    function navegar(e, id) {
+        let sections = document.getElementsByClassName("section");
+        for (let s of sections) s.classList.remove("active");
+        
+        let buttons = document.getElementsByClassName("tab-btn");
+        for (let b of buttons) b.classList.remove("active");
+
+        document.getElementById(id).classList.add("active");
+        e.currentTarget.classList.add("active");
+        window.scrollTo(0, 0);
+    }
+
+    // LIQUIDACIÓN
+    function calcLiq() {
+        let m = document.getElementById('l_motivo').value;
+        let s = parseFloat(document.getElementById('l_s').value) || 0;
+        let a = parseFloat(document.getElementById('l_a').value) || 0;
+        let d = s * 0.25 * a;
+        let i = (m === "despido") ? (s * Math.max(3, a)) : 0;
+        let r = document.getElementById('r_l');
+        r.style.display = "block";
+        r.innerHTML = `Desahucio: $${d.toFixed(2)}<br>${i>0?'Despido: $'+i.toFixed(2):''}<br><hr><strong>TOTAL: $${(d+i).toFixed(2)}</strong>`;
+    }
+
+    // DÉCIMOS (CORREGIDO: CÁLCULO POR MESES)
+    function calcDec() {
+        let s = parseFloat(document.getElementById('d_s').value) || 0;
+        let m = parseFloat(document.getElementById('d_m').value) || 0;
+        let d3 = (s * m) / 12; // Doceava parte por meses trabajados
+        let d4 = (482 * m) / 12; // Proporcional del SBU por meses
+        let r = document.getElementById('r_d');
+        r.style.display = "block";
+        r.innerHTML = `Décimo Tercero: $${d3.toFixed(2)}<br>Décimo Cuarto: $${d4.toFixed(2)}<br><hr><strong>Total Proporcional: $${(d3+d4).toFixed(2)}</strong>`;
+    }
+
+    // JUBILACIÓN PATRONAL (REVISADO ART. 216)
+    function calcJub() {
+        let p = parseFloat(document.getElementById('j_p').value) || 0;
+        let a = parseFloat(document.getElementById('j_a').value) || 0;
+        let e = parseInt(document.getElementById('j_e').value) || 0;
+
+        let fondoGlobal = (p * 12 * 0.05) * a; // 5% de la remuneración anual por años de servicio
+
+        // Coeficientes Art. 218 (Valores exactos)
+        let coef = 6.7113; // Por defecto 60 años
+        if (e <= 40) coef = 9.4541;
+        else if (e <= 45) coef = 9.0064;
+        else if (e <= 50) coef = 8.4144;
+        else if (e <= 55) coef = 7.6391;
+        else if (e <= 60) coef = 6.7113;
+        else if (e <= 65) coef = 5.6720;
+        else coef = 4.5803;
+
+        let mensual = (fondoGlobal / coef) / 12;
+
+        // Topes legales SBU 2026
+        if (mensual > 482) mensual = 482;
+        if (mensual < 20) mensual = 20;
+
+        let r = document.getElementById('r_j');
+        r.style.display = "block";
+        r.innerHTML = `Fondo Global: $${fondoGlobal.toFixed(2)}<br>Coeficiente: ${coef}<br><hr><strong>PENSIÓN MENSUAL: $${mensual.toFixed(2)}</strong>`;
+    }
+
+    // HORAS EXTRAS
+    function calcExtras() {
+        let s = parseFloat(document.getElementById('h_s').value) || 482;
+        let h5 = parseFloat(document.getElementById('h_50').value) || 0;
+        let h1 = parseFloat(document.getElementById('h_100').value) || 0;
+        let vh = s / 240;
+        let total = (h5 * vh * 1.5) + (h1 * vh * 2);
+        let r = document.getElementById('r_h');
+        r.style.display = "block";
+        r.innerHTML = `Valor Hora: $${vh.toFixed(2)}<br><strong>Total Recargos: $${total.toFixed(2)}</strong>`;
+    }
+</script>
+</body>
+</html>
 
 
 

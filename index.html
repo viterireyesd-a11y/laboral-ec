@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LaboralEc | Cálculos Laborales Ecuador 2026</title>
-    <meta name="description" content="Calculadora de liquidaciones, décimos por meses y jubilación patronal según el Código del Trabajo.">
     <style>
         :root { --p: #002d5a; --s: #fd7e14; --g: #28a745; --bg: #f4f7f6; }
         body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); margin: 0; color: #333; }
@@ -33,6 +32,10 @@
         .btn:hover { background: #001a35; transform: translateY(-2px); }
         
         .res { margin-top: 20px; padding: 20px; background: #e8f5e9; border-left: 8px solid var(--g); border-radius: 6px; display: none; font-size: 18px; line-height: 1.6; }
+        
+        /* Estilo para el detalle legal */
+        .legal-box { background: #f8f9fa; border: 1px solid #e0e0e0; padding: 15px; margin-top: 15px; border-radius: 8px; font-size: 14px; color: #555; }
+        .legal-box b { color: var(--p); }
 
         .info-container { display: flex; flex-wrap: wrap; gap: 20px; padding: 40px 20px; justify-content: center; background: #f0f0f0; border-top: 2px solid #ddd; }
         .info-column { flex: 1; min-width: 300px; max-width: 450px; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-top: 5px solid var(--s); }
@@ -98,7 +101,15 @@
             <label>Edad al Jubilarse:</label>
             <input type="number" id="j_e" value="60">
             <button class="btn" style="background: var(--s);" onclick="calcJub()">Calcular Pensión</button>
+            
             <div id="r_j" class="res"></div>
+
+            <div class="legal-box">
+                <b>Observaciones del Art. 216:</b><br>
+                1. La pensión se determina sobre el 5% del promedio de la remuneración anual de los últimos 5 años, multiplicado por los años de servicio.<br>
+                2. El total se divide para el coeficiente de edad (Art. 218).<br>
+                3. <b>Techos Legales 2026:</b> La pensión mensual no puede superar un SBU ($482.00) ni ser menor a la pensión mínima legal.
+            </div>
         </div>
     </div>
 
@@ -139,20 +150,16 @@
 </footer>
 
 <script>
-    // SISTEMA DE NAVEGACIÓN CORREGIDO
     function navegar(e, id) {
         let sections = document.getElementsByClassName("section");
         for (let s of sections) s.classList.remove("active");
-        
         let buttons = document.getElementsByClassName("tab-btn");
         for (let b of buttons) b.classList.remove("active");
-
         document.getElementById(id).classList.add("active");
         e.currentTarget.classList.add("active");
         window.scrollTo(0, 0);
     }
 
-    // LIQUIDACIÓN
     function calcLiq() {
         let m = document.getElementById('l_motivo').value;
         let s = parseFloat(document.getElementById('l_s').value) || 0;
@@ -164,27 +171,28 @@
         r.innerHTML = `Desahucio: $${d.toFixed(2)}<br>${i>0?'Despido: $'+i.toFixed(2):''}<br><hr><strong>TOTAL: $${(d+i).toFixed(2)}</strong>`;
     }
 
-    // DÉCIMOS (CORREGIDO: CÁLCULO POR MESES)
     function calcDec() {
         let s = parseFloat(document.getElementById('d_s').value) || 0;
         let m = parseFloat(document.getElementById('d_m').value) || 0;
-        let d3 = (s * m) / 12; // Doceava parte por meses trabajados
-        let d4 = (482 * m) / 12; // Proporcional del SBU por meses
+        let d3 = (s * m) / 12; 
+        let d4 = (482 * m) / 12; 
         let r = document.getElementById('r_d');
         r.style.display = "block";
         r.innerHTML = `Décimo Tercero: $${d3.toFixed(2)}<br>Décimo Cuarto: $${d4.toFixed(2)}<br><hr><strong>Total Proporcional: $${(d3+d4).toFixed(2)}</strong>`;
     }
 
-    // JUBILACIÓN PATRONAL (REVISADO ART. 216)
     function calcJub() {
         let p = parseFloat(document.getElementById('j_p').value) || 0;
         let a = parseFloat(document.getElementById('j_a').value) || 0;
         let e = parseInt(document.getElementById('j_e').value) || 0;
 
-        let fondoGlobal = (p * 12 * 0.05) * a; // 5% de la remuneración anual por años de servicio
+        // Base de cálculo según Art. 216
+        let remuneracionAnualPromedio = p * 12;
+        let cincoPorcientoAnual = remuneracionAnualPromedio * 0.05;
+        let fondoGlobal = cincoPorcientoAnual * a;
 
-        // Coeficientes Art. 218 (Valores exactos)
-        let coef = 6.7113; // Por defecto 60 años
+        // Coeficientes Art. 218
+        let coef = 6.7113; 
         if (e <= 40) coef = 9.4541;
         else if (e <= 45) coef = 9.0064;
         else if (e <= 50) coef = 8.4144;
@@ -195,16 +203,21 @@
 
         let mensual = (fondoGlobal / coef) / 12;
 
-        // Topes legales SBU 2026
+        // Límites legales
         if (mensual > 482) mensual = 482;
         if (mensual < 20) mensual = 20;
 
         let r = document.getElementById('r_j');
         r.style.display = "block";
-        r.innerHTML = `Fondo Global: $${fondoGlobal.toFixed(2)}<br>Coeficiente: ${coef}<br><hr><strong>PENSIÓN MENSUAL: $${mensual.toFixed(2)}</strong>`;
+        r.innerHTML = `
+            <b>Detalle del Cálculo:</b><br>
+            • Fondo Global (5% anual x años): $${fondoGlobal.toFixed(2)}<br>
+            • Coeficiente por edad (${e} años): ${coef}<br>
+            <hr>
+            <b>PENSIÓN MENSUAL: $${mensual.toFixed(2)}</b>
+        `;
     }
 
-    // HORAS EXTRAS
     function calcExtras() {
         let s = parseFloat(document.getElementById('h_s').value) || 482;
         let h5 = parseFloat(document.getElementById('h_50').value) || 0;
@@ -218,6 +231,5 @@
 </script>
 </body>
 </html>
-
 
 

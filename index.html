@@ -16,7 +16,7 @@
         .container { max-width: 950px; margin: 0 auto; background: white; min-height: 70vh; box-shadow: 0 0 25px rgba(0,0,0,0.1); }
         
         nav { display: flex; background: #222; position: sticky; top: 0; z-index: 1000; overflow-x: auto; }
-        nav button { flex: 1; padding: 20px; border: none; background: none; color: white; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 13px; min-width: 120px; transition: 0.3s; }
+        nav button { flex: 1; padding: 20px; border: none; background: none; color: white; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 12px; min-width: 110px; transition: 0.3s; }
         nav button.active { background: var(--s); }
         nav button:hover { background: #444; }
 
@@ -28,22 +28,22 @@
         h3 { color: var(--p); margin-top: 0; font-size: 24px; }
         label { font-weight: bold; display: block; margin-top: 15px; }
         input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 6px; border: 1px solid #ccc; box-sizing: border-box; font-size: 16px; }
-        .btn-calc { background: var(--p); color: white; width: 100%; padding: 15px; border: none; border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
         
-        .resultado { margin-top: 20px; padding: 20px; background: #e8f5e9; border-left: 8px solid var(--g); border-radius: 6px; display: none; font-size: 18px; }
+        .btn-calc { background: var(--p); color: white; width: 100%; padding: 15px; border: none; border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+        .btn-calc:hover { background: #001f3d; transform: translateY(-2px); }
+        
+        .resultado { margin-top: 20px; padding: 20px; background: #e8f5e9; border-left: 8px solid var(--g); border-radius: 6px; display: none; font-size: 18px; line-height: 1.6; }
 
-        /* SECCIÓN DE NOTICIAS Y ENLACES */
+        /* SECCIÓN DE INFORMACIÓN INFERIOR */
         .info-container { display: flex; flex-wrap: wrap; gap: 20px; padding: 40px 20px; justify-content: center; background: #f0f0f0; border-top: 2px solid #ddd; }
         .info-column { flex: 1; min-width: 300px; max-width: 450px; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-top: 5px solid var(--s); }
-        .info-column h3 { font-size: 18px; text-transform: uppercase; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
         
         .news-list { list-style: none; padding: 0; }
         .news-list li { margin-bottom: 15px; border-bottom: 1px dashed #ddd; padding-bottom: 10px; }
         .news-list .date { color: var(--s); font-weight: bold; font-size: 12px; display: block; }
-        .news-list a { text-decoration: none; color: #333; font-size: 14px; line-height: 1.4; font-weight: 500; }
-        .news-list a:hover { color: var(--p); }
+        .news-list a { text-decoration: none; color: #333; font-size: 14px; font-weight: 500; }
         
-        .link-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .link-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
         .btn-link { background: var(--p); color: white; padding: 12px; text-align: center; text-decoration: none; border-radius: 6px; font-size: 12px; font-weight: bold; }
         .btn-link:hover { background: var(--s); }
     </style>
@@ -59,14 +59,16 @@
     <button class="tab-btn active" onclick="navegar(event, 's-liq')">Liquidaciones</button>
     <button class="tab-btn" onclick="navegar(event, 's-horas')">Horas Extras</button>
     <button class="tab-btn" onclick="navegar(event, 's-decimos')">Décimos</button>
+    <button class="tab-btn" onclick="navegar(event, 's-jubilacion')">Jubilación</button>
     <button class="tab-btn" onclick="navegar(event, 's-formatos')">Formatos</button>
 </nav>
 
 <div class="container">
+    
     <div id="s-liq" class="section active">
-        <h3>Calculadora de Liquidación</h3>
+        <h3>Liquidación de Haberes</h3>
         <div class="card-calc">
-            <label>Tipo de Trámite:</label>
+            <label>Tipo de Salida:</label>
             <select id="l_motivo">
                 <option value="desahucio">Desahucio (Art. 185)</option>
                 <option value="despido">Despido Intempestivo (Art. 188)</option>
@@ -74,43 +76,58 @@
             <label>Sueldo Mensual ($):</label>
             <input type="number" id="l_sueldo" value="482">
             <label>Años de Servicio:</label>
-            <input type="number" id="l_anos" value="1">
-            <button class="btn-calc" onclick="calcLiq()">Generar Cálculo</button>
+            <input type="number" id="l_anos" value="1" min="1">
+            <button class="btn-calc" onclick="calcLiq()">Calcular Liquidación</button>
             <div id="res-liq" class="resultado"></div>
         </div>
     </div>
 
     <div id="s-horas" class="section">
-        <h3>Horas Extras (Recargos)</h3>
+        <h3>Cálculo de Horas Extras</h3>
         <div class="card-calc">
             <label>Sueldo Mensual ($):</label>
             <input type="number" id="h_sueldo" value="482">
-            <label>Horas al 50%:</label>
+            <label>Horas Suplementarias (50%):</label>
             <input type="number" id="h_50" value="0">
-            <label>Horas al 100%:</label>
+            <label>Horas Extraordinarias (100%):</label>
             <input type="number" id="h_100" value="0">
-            <button class="btn-calc" onclick="calcHoras()">Calcular</button>
+            <button class="btn-calc" onclick="calcHoras()">Calcular Recargos</button>
             <div id="res-horas" class="resultado"></div>
         </div>
     </div>
 
     <div id="s-decimos" class="section">
-        <h3>Décimos (Bonificaciones Anuales)</h3>
+        <h3>Décimo Tercero y Cuarto</h3>
         <div class="card-calc">
-            <label>Sueldo Mensual ($):</label>
+            <label>Sueldo Mensual Promedio ($):</label>
             <input type="number" id="d_sueldo" value="482">
-            <label>Días Trabajados en el periodo:</label>
-            <input type="number" id="d_dias" value="360">
-            <button class="btn-calc" onclick="calcDec()">Calcular</button>
+            <label>Meses trabajados en el periodo actual:</label>
+            <input type="number" id="d_meses" value="12" min="1" max="12">
+            <p style="font-size: 0.8rem; color: #666;">* Máximo 12 meses por periodo de cálculo.</p>
+            <button class="btn-calc" onclick="calcDec()">Calcular Bonos</button>
             <div id="res-dec" class="resultado"></div>
         </div>
     </div>
 
+    <div id="s-jubilacion" class="section">
+        <h3>Jubilación Patronal (Art. 216)</h3>
+        <div class="card-calc">
+            <label>Promedio Sueldo (Últimos 5 años):</label>
+            <input type="number" id="j_promedio" value="800">
+            <label>Años de Servicio (Mínimo 25):</label>
+            <input type="number" id="j_anos" value="25" min="25">
+            <label>Edad al Jubilarse:</label>
+            <input type="number" id="j_edad" value="60">
+            <button class="btn-calc" style="background: var(--s);" onclick="calcJubilacion()">Calcular Pensión</button>
+            <div id="res-jub" class="resultado"></div>
+        </div>
+    </div>
+
     <div id="s-formatos" class="section">
-        <h3>Formatos Legales 2026</h3>
+        <h3>Descarga de Formatos 2026</h3>
         <div class="card-calc" style="text-align:center;">
-            <p>Descarga directa de modelos según normativa vigente.</p>
-            <button class="btn-calc" style="background:var(--g)">📥 Contrato Colectivo</button>
+            <p>Modelos técnicos para trámites ministeriales.</p>
+            <button class="btn-calc" style="background:var(--g)">📥 Contrato Colectivo 2026</button>
             <button class="btn-calc" style="background:#555; margin-top:10px;">📥 Pliego de Peticiones</button>
         </div>
     </div>
@@ -118,23 +135,13 @@
 
 <section class="info-container">
     <div class="info-column">
-        <h3>Noticias Laborales 🇪🇨</h3>
+        <h3>Actualidad Laboral 🇪🇨</h3>
         <ul class="news-list">
-            <li>
-                <span class="date">05 Feb 2026</span>
-                <a href="https://elmercurio.com.ec/nacional/2026/02/05/aprueban-ley-que-protege-laboralmente-a-padres-de-ninos-con-cancer/" target="_blank">Aprobada Ley de protección laboral para padres con hijos con cáncer.</a>
-            </li>
-            <li>
-                <span class="date">05 Feb 2026</span>
-                <a href="https://www.expreso.ec/actualidad/feriado-de-carnaval-2026-que-dias-no-se-trabaja-y-cuales-son-recuperables-273410.html" target="_blank">Feriado de Carnaval 2026: Guía de pagos extraordinarios.</a>
-            </li>
-            <li>
-                <span class="date">01 Ene 2026</span>
-                <a href="#">Entra en vigor el nuevo Salario Básico de $482.00 dólares.</a>
-            </li>
+            <li><span class="date">05 Feb 2026</span><a href="#">Ley de protección laboral para padres con hijos con enfermedades.</a></li>
+            <li><span class="date">05 Feb 2026</span><a href="#">Recargos por Feriado de Carnaval 2026.</a></li>
+            <li><span class="date">01 Ene 2026</span><a href="#">SBU 2026 fijado en $482.00 dólares mensuales.</a></li>
         </ul>
     </div>
-
     <div class="info-column">
         <h3>Enlaces Oficiales</h3>
         <div class="link-grid">
@@ -147,43 +154,32 @@
 </section>
 
 <footer style="background: #222; color: white; text-align: center; padding: 30px 10px;">
-    <p>LaboralEc &copy; 2026 | SBU: $482.00</p>
+    <p>LaboralEc &copy; 2026 | SBU Vigente: $482.00</p>
     <a href="privacidad.html" style="color: var(--s); text-decoration: none; font-size: 12px;">POLÍTICA DE PRIVACIDAD</a>
 </footer>
 
 <script>
-    // FUNCIÓN PARA NAVEGAR ENTRE PESTAÑAS (CORREGIDA)
+    // SISTEMA DE NAVEGACIÓN
     function navegar(e, id) {
-        // Ocultar todas las secciones
         const secciones = document.getElementsByClassName("section");
-        for (let i = 0; i < secciones.length; i++) {
-            secciones[i].classList.remove("active");
-        }
+        for (let s of secciones) s.classList.remove("active");
         
-        // Quitar estado activo de los botones
         const botones = document.getElementsByClassName("tab-btn");
-        for (let i = 0; i < botones.length; i++) {
-            botones[i].classList.remove("active");
-        }
+        for (let b of botones) b.classList.remove("active");
 
-        // Mostrar sección actual y activar botón
         document.getElementById(id).classList.add("active");
         e.currentTarget.classList.add("active");
-        
-        // Subir al inicio de la página
-        window.scrollTo(0, 0);
+        window.scrollTo(0,0);
     }
 
-    // CÁLCULOS
+    // LÓGICA DE CÁLCULOS
     function calcLiq() {
         let m = document.getElementById('l_motivo').value;
         let s = parseFloat(document.getElementById('l_sueldo').value) || 0;
         let a = parseFloat(document.getElementById('l_anos').value) || 0;
         let d = s * 0.25 * a;
         let i = (m === "despido") ? (s * Math.max(3, a)) : 0;
-        let res = document.getElementById('res-liq');
-        res.style.display = "block";
-        res.innerHTML = `<strong>Total Estimado: $${(d+i).toFixed(2)}</strong>`;
+        mostrarResultado('res-liq', `Bonificación Desahucio: $${d.toFixed(2)} ${i>0 ? '<br>Indemnización Despido: $'+i.toFixed(2) : ''}<br><hr><strong>TOTAL ESTIMADO: $${(d+i).toFixed(2)}</strong>`);
     }
 
     function calcHoras() {
@@ -192,25 +188,54 @@
         let h1 = parseFloat(document.getElementById('h_100').value) || 0;
         let vh = s / 240;
         let total = (h5 * vh * 1.5) + (h1 * vh * 2);
-        let res = document.getElementById('res-horas');
-        res.style.display = "block";
-        res.innerHTML = `<strong>Valor Recargos: $${total.toFixed(2)}</strong>`;
+        mostrarResultado('res-horas', `Valor Hora Normal: $${vh.toFixed(2)}<br><strong>Total en Recargos: $${total.toFixed(2)}</strong>`);
     }
 
     function calcDec() {
         let s = parseFloat(document.getElementById('d_sueldo').value) || 0;
-        let d = parseFloat(document.getElementById('d_dias').value) || 0;
-        let t3 = (s * d) / 360;
-        let t4 = (482 * d) / 360; // SBU 2026
-        let res = document.getElementById('res-dec');
-        res.style.display = "block";
-        res.innerHTML = `<strong>D3: $${t3.toFixed(2)} | D4: $${t4.toFixed(2)}</strong>`;
+        let m = parseFloat(document.getElementById('d_meses').value) || 0;
+        
+        // El cálculo se basa en la doceava parte de lo ganado (D3) 
+        // y la proporcionalidad del SBU (D4)
+        let t3 = (s * m) / 12;
+        let t4 = (482 * m) / 12; // SBU 2026 = $482
+        
+        mostrarResultado('res-dec', `
+            <strong>Décimo Tercero (Bono Navideño):</strong> $${t3.toFixed(2)}<br>
+            <strong>Décimo Cuarto (Bono Escolar):</strong> $${t4.toFixed(2)}<br>
+            <hr>
+            <strong>TOTAL DÉCIMOS: $${(t3+t4).toFixed(2)}</strong>
+        `);
+    }
+
+    function calcJubilacion() {
+        let p = parseFloat(document.getElementById('j_promedio').value) || 0;
+        let a = parseFloat(document.getElementById('j_anos').value) || 0;
+        let e = parseInt(document.getElementById('j_edad').value) || 0;
+        let fondo = (p * 0.05) * a;
+        let coef = e <= 50 ? 8.72 : e <= 55 ? 8.12 : e <= 60 ? 7.40 : 6.55;
+        let mensual = (fondo / coef) / 12;
+        
+        // Aplicación de techos legales
+        if (mensual > 482) mensual = 482;
+        if (mensual < 20) mensual = 20;
+        
+        mostrarResultado('res-jub', `
+            Fondo Global Estimado: $${fondo.toFixed(2)}<br>
+            Coeficiente por Edad (${e} años): ${coef}<br>
+            <hr>
+            <strong>PENSIÓN MENSUAL: $${mensual.toFixed(2)}</strong>
+        `);
+    }
+
+    function mostrarResultado(id, html) {
+        let r = document.getElementById(id);
+        r.style.display = "block";
+        r.innerHTML = html;
     }
 </script>
 </body>
 </html>
-
-
 
 
 

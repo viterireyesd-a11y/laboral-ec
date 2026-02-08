@@ -3,78 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laboral-EC | Calculadora de Jubilación</title>
+    <title>Laboral-EC | Panel de Cálculos 2026</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        /* Estilos rápidos para asegurar la visualización */
-        body { font-family: Arial, sans-serif; background-color: #f4f7f6; padding: 20px; }
-        .container { max-width: 500px; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin: auto; }
-        h2 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        label { display: block; margin-top: 15px; font-weight: bold; color: #555; }
-        input { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; margin-top: 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .btn-calcular { background-color: #27ae60; color: white; }
-        .btn-calcular:hover { background-color: #219150; }
-        .btn-pdf { background-color: #3498db; color: white; margin-top: 10px; }
-        .resultado-caja { margin-top: 20px; padding: 15px; border-radius: 5px; display: none; }
-        .error { background-color: #fadbd8; color: #a94442; border: 1px solid #ebccd1; display: block; }
-        .exito { background-color: #d4efdf; color: #1e8449; border: 1px solid #c3e6cb; display: block; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; padding: 20px; color: #333; }
+        .container { max-width: 800px; margin: auto; }
+        header { text-align: center; margin-bottom: 30px; }
+        .calculadora-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px; border-top: 5px solid #27ae60; }
+        .card-azul { border-top-color: #3498db; }
+        .card-naranja { border-top-color: #e67e22; }
+        h2 { margin-top: 0; color: #2c3e50; font-size: 1.3rem; }
+        .grid-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .campo { margin-bottom: 15px; }
+        label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; color: #555; }
+        input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        .btn-group { display: flex; gap: 10px; margin-top: 15px; }
+        button { flex: 1; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 0.8rem; }
+        .btn-calc { background-color: #27ae60; color: white; }
+        .btn-calc:hover { background-color: #219150; }
+        .btn-pdf { background-color: #3498db; color: white; }
+        .resultado { margin-top: 15px; padding: 12px; border-radius: 6px; display: none; font-size: 0.9rem; font-weight: 500; }
+        .error { background: #fdf2f2; color: #c0392b; border: 1px solid #f8d7da; display: block; }
+        .exito { background: #f0fff4; color: #276749; border: 1px solid #c3e6cb; display: block; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2>2. Jubilación Patronal</h2>
-        
-        <form id="formJubilacion">
-            <label for="promedio">Promedio Sueldo últimos 5 años:</label>
-            <input type="number" id="promedio" step="0.01" placeholder="Ej: 1554" required>
+<div class="container">
+    <header>
+        <h1>Sistema Laboral Ecuador 2026</h1>
+        <p>Salario Básico Unificado Actual: <strong>$482.00</strong></p>
+    </header>
 
-            <label for="añosServicio">Años de Servicio Continuo:</label>
-            <input type="number" id="añosServicio" placeholder="Mínimo 25 años" required>
-
-            <label for="edad">Edad del Trabajador:</label>
-            <input type="number" id="edad" placeholder="Ej: 65" required>
-
-            <button type="button" class="btn-calcular" onclick="procesarJubilacion()">CALCULAR PENSIÓN</button>
-            <button type="button" class="btn-pdf">
-                <i class="icon-file-pdf"></i> GUARDAR COMO PDF
-            </button>
-        </form>
-
-        <div id="resultado" class="resultado-caja"></div>
+    <div class="calculadora-card card-azul">
+        <h2>1. Décimo Tercero y Cuarto</h2>
+        <div class="grid-inputs">
+            <div class="campo">
+                <label>Ingresos Totales (D13):</label>
+                <input type="text" id="d13_ingresos" placeholder="Suma de sueldos">
+            </div>
+            <div class="campo">
+                <label>Meses Trabajados (D14):</label>
+                <input type="text" id="d14_meses" placeholder="Ej: 12">
+            </div>
+        </div>
+        <div class="btn-group">
+            <button class="btn-calc" onclick="calcularBonos()">Calcular Décimos</button>
+            <button class="btn-pdf">PDF</button>
+        </div>
+        <div id="res_bonos" class="resultado"></div>
     </div>
 
-    <script src="js/normativa.js"></script>
-    <script src="js/calculos.js"></script>
+    <div class="calculadora-card">
+        <h2>2. Jubilación Patronal</h2>
+        <div class="campo">
+            <label>Promedio Sueldo últimos 5 años:</label>
+            <input type="text" id="jub_promedio" placeholder="Ej: 1554">
+        </div>
+        <div class="grid-inputs">
+            <div class="campo">
+                <label>Años de Servicio:</label>
+                <input type="text" id="jub_anios" placeholder="Mínimo 25">
+            </div>
+            <div class="campo">
+                <label>Edad:</label>
+                <input type="text" id="jub_edad" placeholder="Ej: 65">
+            </div>
+        </div>
+        <div class="btn-group">
+            <button class="btn-calc" onclick="calcularJubilacion()">Calcular Pensión</button>
+            <button class="btn-pdf">PDF</button>
+        </div>
+        <div id="res_jubilacion" class="resultado"></div>
+    </div>
 
-    <script>
-        // Esta función vive aquí para conectar el botón con tus archivos .js externos
-        function procesarJubilacion() {
-            const visor = document.getElementById('resultado');
-            
-            // Llamamos a la función que está en js/calculos.js
-            // Pasamos los valores para que el archivo JS los procese con seguridad
-            if (typeof calcularPensionReal === "function") {
-                calcularPensionReal();
-            } else {
-                // Fallback por si los archivos JS externos no han cargado aún
-                const p = document.getElementById('promedio').value;
-                const a = document.getElementById('añosServicio').value;
-                const e = document.getElementById('edad').value;
+    <div class="calculadora-card card-naranja">
+        <h2>3. Horas Suplementarias y Extraordinarias</h2>
+        <div class="campo">
+            <label>Sueldo Mensual:</label>
+            <input type="text" id="he_sueldo" placeholder="Ej: 482">
+        </div>
+        <div class="grid-inputs">
+            <div class="campo">
+                <label>Horas 50%:</label>
+                <input type="text" id="h50" placeholder="Cantidad">
+            </div>
+            <div class="campo">
+                <label>Horas 100%:</label>
+                <input type="text" id="h100" placeholder="Cantidad">
+            </div>
+        </div>
+        <div class="btn-group">
+            <button class="btn-calc" onclick="calcularHoras()">Calcular Recargo</button>
+            <button class="btn-pdf">PDF</button>
+        </div>
+        <div id="res_horas" class="resultado"></div>
+    </div>
+</div>
 
-                if (!p || !a || !e || isNaN(p) || isNaN(a) || isNaN(e)) {
-                    visor.className = "resultado-caja error";
-                    visor.innerHTML = "<strong>Seguridad:</strong> No se pueden procesar letras o campos vacíos.";
-                } else {
-                    // Cálculo rápido usando el nuevo SBU de 482
-                    const sbu = 482; 
-                    visor.className = "resultado-caja exito";
-                    visor.innerHTML = "Calculando con SBU $" + sbu + "... (Revisa la consola)";
-                    console.log("Datos listos para procesar con normativa 2026");
-                }
-            }
+<script>
+    const SBU = 482;
+
+    // Función Genérica de Seguridad
+    function validar(campos) {
+        for (let id of campos) {
+            let val = document.getElementById(id).value;
+            if (isNaN(val) || val === "") return false;
         }
-    </script>
+        return true;
+    }
+
+    function calcularJubilacion() {
+        const res = document.getElementById('res_jubilacion');
+        if (!validar(['jub_promedio', 'jub_anios', 'jub_edad'])) {
+            res.className = "resultado error";
+            res.innerHTML = "⚠️ Error: Use solo números.";
+            return;
+        }
+        const calculo = (parseFloat(document.getElementById('jub_promedio').value) * 0.05) * (parseInt(document.getElementById('jub_anios').value) / 25);
+        res.className = "resultado exito";
+        res.innerHTML = `Pensión estimada: $${calculo.toFixed(2)}`;
+    }
+
+    function calcularBonos() {
+        const res = document.getElementById('res_bonos');
+        const d13 = (parseFloat(document.getElementById('d13_ingresos').value) || 0) / 12;
+        const d14 = (SBU / 12) * (parseInt(document.getElementById('d14_meses').value) || 0);
+        res.className = "resultado exito";
+        res.innerHTML = `D. Tercero: $${d13.toFixed(2)} | D. Cuarto: $${d14.toFixed(2)}`;
+    }
+
+    function calcularHoras() {
+        const res = document.getElementById('res_horas');
+        const sueldo = parseFloat(document.getElementById('he_sueldo').value) || 0;
+        const v_hora = sueldo / 240;
+        const total = (v_hora * 1.5 * (parseFloat(document.getElementById('h50').value) || 0)) + 
+                      (v_hora * 2 * (parseFloat(document.getElementById('h100').value) || 0));
+        res.className = "resultado exito";
+        res.innerHTML = `Total recargo horas extras: $${total.toFixed(2)}`;
+    }
+</script>
+
 </body>
 </html>

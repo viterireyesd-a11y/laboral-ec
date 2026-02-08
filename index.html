@@ -2,40 +2,31 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LaboralEC 2026 | Suite Full Profesional</title>
     <style>
         :root { --p: #1b5e20; --s: #2e7d32; --bg: #f4f7f6; --losep: #1565c0; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding: 20px; }
         .container { max-width: 1250px; margin: auto; }
-        
         header { text-align: center; background: #fff; padding: 25px; border-radius: 15px; border-bottom: 8px solid var(--p); margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 25px; }
-        
-        /* Tarjetas Estilo Profesional */
         .card { background: #fff; padding: 25px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 6px solid var(--p); display: flex; flex-direction: column; transition: 0.3s; }
         .card:hover { transform: translateY(-5px); }
         .card-losep { border-top-color: var(--losep); }
-        
         h2 { color: var(--p); font-size: 1.2em; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 0; }
         .card-losep h2 { color: var(--losep); }
-        
         label { display: block; font-weight: bold; font-size: 0.85em; margin: 12px 0 5px; color: #444; }
         input { width: 100%; padding: 12px; border: 1.5px solid #d1d8e0; border-radius: 10px; box-sizing: border-box; font-size: 1em; }
-        
-        /* Botonera */
         .btn { width: 100%; padding: 14px; background: var(--p); color: #fff; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 15px; font-size: 1em; transition: 0.2s; }
         .btn:hover { background: var(--s); }
         .btn-losep { background: var(--losep); }
         .btn-pdf { background: #455a64; margin-top: 10px; font-size: 0.85em; }
-        
-        /* Resultados */
         .res { margin-top: 20px; padding: 18px; background: #f1f8e9; border-radius: 12px; border: 1px solid #c8e6c9; display: none; }
         .card-losep .res { background: #e3f2fd; border-color: #bbdefb; }
         .r-line { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #abc; font-size: 0.95em; }
         .r-total { display: block; font-size: 1.6em; font-weight: 900; color: var(--p); text-align: center; margin-top: 12px; }
         .card-losep .r-total { color: var(--losep); }
 
-        /* PRINT / PDF LOGIC */
         @media print {
             body { background: white; padding: 0; }
             .btn, input, header, label { display: none !important; }
@@ -59,7 +50,7 @@
 
     <header>
         <h1>Laboral<span>EC</span></h1>
-        <p>SBU 2026: <b>$482.00</b> | Auditoría Integral de Haberes</p>
+        <p>SBU 2026: <b id="sbu-display">$460.00</b> | Auditoría Integral de Haberes</p>
     </header>
 
     <div class="grid">
@@ -148,7 +139,7 @@
             <button class="btn btn-losep" onclick="calc5()">CALCULAR INDEMNIZACIÓN</button>
             <div id="res5" class="res">
                 <div class="r-line"><span>Base (5 RMU x año):</span> <span id="v5_b"></span></div>
-                <div class="r-line"><span>Tope Legal (150 SBU):</span> <span>$72,300.00</span></div>
+                <div class="r-line"><span>Tope Legal (150 SBU):</span> <span id="v5_tope"></span></div>
                 <span class="r-total" id="v5_t"></span>
                 <div class="signature-area">
                     <div class="sig-line">Director Talento Humano</div>
@@ -160,80 +151,8 @@
     </div>
 </div>
 
-<script>
-    const SBU = 482;
-    const f = (n) => `$${n.toLocaleString('es-EC', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-    document.getElementById('currentDate').innerText = new Date().toLocaleDateString();
+<script src="js/normativa.js"></script>
+<script src="js/calculos.js"></script>
 
-    function exportPDF(id) {
-        document.querySelectorAll('.card').forEach(c => c.classList.remove('printing'));
-        document.getElementById(id).classList.add('printing');
-        window.print();
-    }
-
-    // 1. CÓDIGO TRABAJO
-    function calc1() {
-        let s = parseFloat(document.getElementById('s1').value) || 0;
-        let a = parseInt(document.getElementById('a1').value) || 0;
-        let aInd = Math.max(a, 3); if(aInd > 25) aInd = 25;
-        let vi = aInd * s; let vd = (s * 0.25) * a;
-        document.getElementById('v1_i').innerText = f(vi);
-        document.getElementById('v1_d').innerText = f(vd);
-        document.getElementById('v1_t').innerText = f(vi + vd);
-        document.getElementById('res1').style.display = 'block';
-    }
-
-    // 2. JUBILACIÓN
-    function calc2() {
-        let s = parseFloat(document.getElementById('s2').value) || 0;
-        let a = parseInt(document.getElementById('a2').value) || 0;
-        let e = parseInt(document.getElementById('e2').value) || 0;
-        if(a < 20) { alert("Mínimo 20 años"); return; }
-        let haber = (s * 0.05) * a * 12;
-        let coef = (e >= 60) ? 8.24 : 10.45;
-        let mensual = (haber / coef) / 12;
-        if(a >= 25 && mensual < SBU/2) mensual = SBU/2;
-        document.getElementById('v2_f').innerText = f(haber);
-        document.getElementById('v2_p').innerText = `${f(mensual)} / mes`;
-        document.getElementById('res2').style.display = 'block';
-    }
-
-    // 3. DÉCIMOS
-    function calc3() {
-        let s = parseFloat(document.getElementById('s3').value) || 0;
-        let d = Math.min(parseInt(document.getElementById('d3').value) || 0, 360);
-        let d13 = (s / 360) * d;
-        let d14 = (SBU / 360) * d;
-        let vac = (s / 24) * (d / 30);
-        document.getElementById('v3_13').innerText = f(d13);
-        document.getElementById('v3_14').innerText = f(d14);
-        document.getElementById('v3_v').innerText = f(vac);
-        document.getElementById('v3_t').innerText = f(d13 + d14 + vac);
-        document.getElementById('res3').style.display = 'block';
-    }
-
-    // 4. EXTRAS
-    function calc4() {
-        let s = parseFloat(document.getElementById('s4').value) || 0;
-        let vh = s / 240;
-        let r50 = (parseFloat(document.getElementById('h50').value) || 0) * vh * 1.5;
-        let r100 = (parseFloat(document.getElementById('h100').value) || 0) * vh * 2;
-        document.getElementById('v4_50').innerText = f(r50);
-        document.getElementById('v4_100').innerText = f(r100);
-        document.getElementById('v4_t').innerText = f(r50 + r100);
-        document.getElementById('res4').style.display = 'block';
-    }
-
-    // 5. LOSEP
-    function calc5() {
-        let s = parseFloat(document.getElementById('s5').value) || 0;
-        let a = parseInt(document.getElementById('a5').value) || 0;
-        let base = (5 * s) * a;
-        let total = Math.min(base, 150 * SBU);
-        document.getElementById('v5_b').innerText = f(base);
-        document.getElementById('v5_t').innerText = f(total);
-        document.getElementById('res5').style.display = 'block';
-    }
-</script>
 </body>
 </html>

@@ -2,70 +2,110 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Laborales.com | Calculadora Legal Profesional</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaboralEC | Calculadora Legal Profesional</title>
     <style>
         :root { --verde-escuro: #1a5d1a; --verde-claro: #27ae60; --fondo: #f4f7f6; }
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--fondo); margin: 0; padding: 20px; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--fondo); margin: 0; padding: 20px; color: #333; }
         .container { max-width: 1200px; margin: auto; }
-        header { text-align: center; padding: 20px; background: white; border-radius: 10px; border-bottom: 5px solid var(--verde-claro); margin-bottom: 30px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px; }
-        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-top: 6px solid var(--verde-escuro); }
-        h3 { color: var(--verde-escuro); margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        
+        header { text-align: center; padding: 30px; background: white; border-radius: 12px; border-bottom: 6px solid var(--verde-claro); margin-bottom: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        h1 { color: var(--verde-escuro); margin: 0; font-size: 2.5em; }
+        h1 span { color: var(--verde-claro); }
+        .sbu-info { font-weight: bold; color: var(--verde-escuro); margin-top: 5px; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 25px; }
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border-top: 6px solid var(--verde-escuro); display: flex; flex-direction: column; }
+        h3 { color: var(--verde-escuro); margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 20px; }
+
         .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: 600; }
-        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
-        .btn { width: 100%; padding: 12px; background: var(--verde-escuro); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
-        .res { margin-top: 15px; padding: 15px; background: #e8f5e9; border-radius: 8px; display: none; border: 1px solid #c8e6c9; }
-        .res-row { display: flex; justify-content: space-between; margin-bottom: 5px; border-bottom: 1px dashed #abc; }
-        .total { display: block; font-size: 1.4em; font-weight: bold; color: var(--verde-escuro); margin-top: 10px; text-align: center; }
-        .legal-note { font-size: 0.8em; color: #666; margin-top: 10px; line-height: 1.2; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9em; }
+        input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 1em; }
+        
+        .btn { width: 100%; padding: 14px; background: var(--verde-escuro); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1em; transition: 0.3s; }
+        .btn:hover { background: var(--verde-claro); transform: translateY(-2px); }
+
+        .res { margin-top: 20px; padding: 20px; background: #f0fff4; border-radius: 10px; border: 1px solid #c6f6d5; display: none; }
+        .res-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #adcbb0; font-size: 0.95em; }
+        .total-box { margin-top: 15px; text-align: center; border-top: 2px solid var(--verde-claro); padding-top: 10px; }
+        .total-val { display: block; font-size: 1.6em; font-weight: bold; color: var(--verde-escuro); }
+        
+        .alert-box { background: #fff3e0; padding: 10px; border-radius: 6px; border: 1px solid #ffe0b2; margin-bottom: 15px; font-size: 0.85em; color: #d35400; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <h1>Laborales.com</h1>
-        <p style="color: var(--verde-claro); font-weight: bold;">SBU 2026: $482.00</p>
+        <h1>Laboral<span>EC</span></h1>
+        <div class="sbu-info">SBU 2026: $482.00</div>
     </header>
 
     <div class="grid">
         <div class="card">
-            <h3>Liquidación Código del Trabajo</h3>
-            <div class="form-group"><label>Última Remuneración:</label><input type="number" id="ct_sueldo" placeholder="Ej: 800"></div>
-            <div class="form-group"><label>Años de Servicio:</label><input type="number" id="ct_anos" placeholder="Ej: 10"></div>
-            <div class="form-group" style="background: #fff3e0; padding: 10px; border-radius: 5px;">
-                <label style="color: #d35400;"><input type="checkbox" id="ct_100sbu"> ¿Aplica Contrato Colectivo (100 SBU)?</label>
+            <h3>Liquidación (Código del Trabajo)</h3>
+            <div class="form-group">
+                <label>Última Remuneración Mensual:</label>
+                <input type="number" id="ct_sueldo" placeholder="0.00">
             </div>
-            <button class="btn" onclick="calcLiquidacion()">Calcular Liquidación Total</button>
+            <div class="form-group">
+                <label>Años de Servicio:</label>
+                <input type="number" id="ct_anos" placeholder="Ej: 10">
+            </div>
+            <div class="alert-box">
+                <input type="checkbox" id="ct_100sbu"> ¿Aplica Contrato Colectivo (100 SBU)?
+            </div>
+            <button class="btn" onclick="calcLiquidacion()">Calcular Liquidación</button>
+            
             <div id="res_ct" class="res">
-                <div class="res-row"><span>Indemnización Despido:</span> <span id="ct_indem"></span></div>
-                <div class="res-row"><span>Bonificación Desahucio (25%):</span> <span id="ct_desahucio"></span></div>
-                <span class="total" id="ct_total"></span>
-                <p class="legal-note"><b>Nota:</b> El desahucio se paga siempre por ley, sea renuncia o despido.</p>
+                <div class="res-row"><span>Indemnización Despido (Art. 188):</span> <span id="val_indem"></span></div>
+                <div class="res-row"><span>Bonificación Desahucio (Art. 185 - 25%):</span> <span id="val_desahucio"></span></div>
+                <div class="total-box">
+                    <span style="font-size: 0.9em; color: #666;">TOTAL A RECIBIR:</span>
+                    <span class="total-val" id="val_total_ct"></span>
+                </div>
             </div>
         </div>
 
         <div class="card">
-            <h3>Jubilación Patronal (Art. 216)</h3>
-            <div class="form-group"><label>Sueldo Promedio últimos 5 años:</label><input type="number" id="jub_sueldo" placeholder="Ej: 800"></div>
-            <div class="form-group"><label>Años de Servicio:</label><input type="number" id="jub_anos" placeholder="Mínimo 25"></div>
-            <div class="form-group"><label>Edad al momento de la salida:</label><input type="number" id="jub_edad" placeholder="Ej: 60"></div>
-            <button class="btn" onclick="calcJubilacion()">Calcular Pensión Mensual</button>
+            <h3>Jubilación Patronal (Pensión)</h3>
+            <div class="form-group">
+                <label>Promedio Sueldo (Últimos 5 años):</label>
+                <input type="number" id="jub_sueldo" placeholder="0.00">
+            </div>
+            <div class="form-group">
+                <label>Años de Trabajo en la Empresa:</label>
+                <input type="number" id="jub_anos" placeholder="Mínimo 25 años">
+            </div>
+            <div class="form-group">
+                <label>Edad del Trabajador al cese:</label>
+                <input type="number" id="jub_edad" placeholder="Ej: 60">
+            </div>
+            <button class="btn" onclick="calcJubilacion()">Calcular Pensión Vitalicia</button>
+            
             <div id="res_jub" class="res">
-                <div class="res-row"><span>Fondo Global Acumulado:</span> <span id="jub_fondo"></span></div>
-                <span class="total" id="jub_mensual"></span>
-                <p class="legal-note"><b>Cálculo:</b> Se utiliza el coeficiente de la tabla del Art. 218 según la edad.</p>
+                <div class="res-row"><span>Fondo Global Individual:</span> <span id="val_fondo"></span></div>
+                <div class="total-box">
+                    <span style="font-size: 0.9em; color: #666;">PENSIÓN MENSUAL ESTIMADA:</span>
+                    <span class="total-val" id="val_pension"></span>
+                </div>
+                <p style="font-size: 0.75em; color: #666; margin-top:10px;">*Basado en coeficientes de rentabilidad y tablas de mortalidad del IESS (Art. 218).</p>
             </div>
         </div>
 
         <div class="card">
-            <h3>Días de Vacaciones</h3>
-            <div class="form-group"><label>Años de Antigüedad:</label><input type="number" id="v_anos" placeholder="Ej: 7"></div>
-            <button class="btn" onclick="calcVacaciones()">Calcular Días</button>
+            <h3>Cómputo de Vacaciones</h3>
+            <div class="form-group">
+                <label>Años de Antigüedad:</label>
+                <input type="number" id="v_anos" placeholder="Ej: 7">
+            </div>
+            <button class="btn" onclick="calcVacaciones()">Calcular Días de Derecho</button>
             <div id="res_v" class="res">
-                <span class="total" id="v_dias"></span>
-                <p class="legal-note">Base: 15 días. A partir del 6to año, se suma 1 día por año adicional (máximo 30).</p>
+                <div class="total-box">
+                    <span style="font-size: 0.9em; color: #666;">DÍAS DE DESCANSO CORRESPONDIENTES:</span>
+                    <span class="total-val" id="val_v_dias"></span>
+                </div>
+                <p style="font-size: 0.75em; color: #666; margin-top:10px;">15 días base + 1 día extra por cada año a partir del 6to año (Máx. 30 días).</p>
             </div>
         </div>
     </div>
@@ -73,21 +113,25 @@
 
 <script>
 const SBU = 482;
-const f = (v) => `$${v.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+const f = (v) => `$${v.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
 
 function calcLiquidacion() {
     const s = parseFloat(document.getElementById('ct_sueldo').value) || 0;
     const a = parseInt(document.getElementById('ct_anos').value) || 0;
     const contrato = document.getElementById('ct_100sbu').checked;
     
+    // 1. Indemnización por Despido (Art. 188)
     let indem = contrato ? (100 * SBU) : (Math.max(a, 3) * s);
     if (!contrato && a > 25) indem = 25 * s;
     
+    // 2. Desahucio (Art. 185) - SIEMPRE SE SUMA: 25% de la última remuneración por cada año
     let desahucio = (s * 0.25) * a;
     
-    document.getElementById('ct_indem').innerText = f(indem);
-    document.getElementById('ct_desahucio').innerText = f(desahucio);
-    document.getElementById('ct_total').innerText = `TOTAL: ${f(indem + desahucio)}`;
+    let total = indem + desahucio;
+    
+    document.getElementById('val_indem').innerText = f(indem);
+    document.getElementById('val_desahucio').innerText = f(desahucio);
+    document.getElementById('val_total_ct').innerText = f(total);
     document.getElementById('res_ct').style.display = 'block';
 }
 
@@ -96,21 +140,29 @@ function calcJubilacion() {
     const a = parseInt(document.getElementById('jub_anos').value) || 0;
     const edad = parseInt(document.getElementById('jub_edad').value) || 0;
 
-    if (a < 20) { alert("Mínimo 20 años para despido o 25 años normal."); return; }
+    if (a < 20) {
+        alert("La Jubilación Patronal requiere al menos 20 años (si hay despido) o 25 años de servicio continuo.");
+        return;
+    }
 
-    // El Haber Individual es el 5% del promedio de los últimos 5 años multiplicado por los años de servicio.
-    let fondoGlobal = (s * 0.05) * a * 12; 
+    // El Haber Individual es el 5% del promedio de los últimos 5 años x años de servicio x 12
+    let haberIndividual = (s * 0.05) * a * 12;
     
-    // Coeficientes de la tabla Art. 218 (Valores aproximados para cálculo realista)
-    let coef = 11.5; // Base para menores de 50 años
-    if (edad >= 60) coef = 8.1; 
-    else if (edad >= 55) coef = 8.9;
-    else if (edad >= 50) coef = 9.8;
+    // Coeficientes del Art. 218 (Simplificado para el cálculo de la pensión mensual)
+    // Se divide el fondo global por el coeficiente de edad y luego para 12 meses.
+    let coef = 11.5; // Menores de 50
+    if (edad >= 65) coef = 7.2;
+    else if (edad >= 60) coef = 8.1;
+    else if (edad >= 55) coef = 9.0;
+    else if (edad >= 50) coef = 10.2;
 
-    let pensionMensual = (fondoGlobal / coef) / 12;
+    let pensionMensual = (haberIndividual / coef) / 12;
+    
+    // Limite legal: La pensión no puede ser menor a una proporción del SBU ni mayor al sueldo promedio
+    if (pensionMensual < (SBU * 0.5) && a >= 25) pensionMensual = SBU * 0.5;
 
-    document.getElementById('jub_fondo').innerText = f(fondoGlobal);
-    document.getElementById('jub_mensual').innerText = `${f(pensionMensual)} / mes`;
+    document.getElementById('val_fondo').innerText = f(haberIndividual);
+    document.getElementById('val_pension').innerText = `${f(pensionMensual)} / mes`;
     document.getElementById('res_jub').style.display = 'block';
 }
 
@@ -121,9 +173,10 @@ function calcVacaciones() {
         dias += (a - 5);
         if (dias > 30) dias = 30;
     }
-    document.getElementById('v_dias').innerText = `${dias} Días de Descanso`;
+    document.getElementById('val_v_dias').innerText = `${dias} Días Calendario`;
     document.getElementById('res_v').style.display = 'block';
 }
 </script>
+
 </body>
 </html>

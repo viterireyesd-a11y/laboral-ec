@@ -2,154 +2,193 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>LaboralEC 2026 | Suite Completa Auditada</title>
+    <title>LaboralEC 2026 | Suite Full Profesional</title>
     <style>
-        :root { --p: #1b5e20; --s: #2e7d32; --bg: #f4f7f6; --warn: #d32f2f; --losep: #1565c0; }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); margin: 0; padding: 20px; color: #333; }
-        .container { max-width: 1200px; margin: auto; }
+        :root { --p: #1b5e20; --s: #2e7d32; --bg: #f4f7f6; --losep: #1565c0; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding: 20px; }
+        .container { max-width: 1250px; margin: auto; }
         
-        header { text-align: center; background: #fff; padding: 20px; border-radius: 15px; border-bottom: 8px solid var(--p); margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px; }
-        .card { background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-top: 6px solid var(--p); }
+        header { text-align: center; background: #fff; padding: 25px; border-radius: 15px; border-bottom: 8px solid var(--p); margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 25px; }
+        
+        /* Tarjetas Estilo Profesional */
+        .card { background: #fff; padding: 25px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 6px solid var(--p); display: flex; flex-direction: column; transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); }
         .card-losep { border-top-color: var(--losep); }
-        h2 { color: var(--p); font-size: 1.1em; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 0; }
-        label { display: block; font-weight: bold; font-size: 0.85em; margin: 10px 0 5px; color: #555; }
-        input { width: 100%; padding: 10px; border: 1.5px solid #d1d8e0; border-radius: 8px; box-sizing: border-box; }
-        .btn { width: 100%; padding: 12px; background: var(--p); color: #fff; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; }
-        .btn-pdf { background: #455a64; margin-top: 8px; font-size: 0.85em; }
-        .res { margin-top: 15px; padding: 15px; background: #f1f8e9; border-radius: 10px; border: 1px solid #c8e6c9; display: none; }
-        .r-line { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed #abc; font-size: 0.9em; }
-        .r-total { display: block; font-size: 1.5em; font-weight: 800; color: var(--p); text-align: center; margin-top: 10px; }
-        .msg-warn { color: var(--warn); font-size: 0.75em; font-weight: bold; margin-top: 8px; display: none; border: 1px solid var(--warn); padding: 5px; border-radius: 5px; }
+        
+        h2 { color: var(--p); font-size: 1.2em; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 0; }
+        .card-losep h2 { color: var(--losep); }
+        
+        label { display: block; font-weight: bold; font-size: 0.85em; margin: 12px 0 5px; color: #444; }
+        input { width: 100%; padding: 12px; border: 1.5px solid #d1d8e0; border-radius: 10px; box-sizing: border-box; font-size: 1em; }
+        
+        /* Botonera */
+        .btn { width: 100%; padding: 14px; background: var(--p); color: #fff; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 15px; font-size: 1em; transition: 0.2s; }
+        .btn:hover { background: var(--s); }
+        .btn-losep { background: var(--losep); }
+        .btn-pdf { background: #455a64; margin-top: 10px; font-size: 0.85em; }
+        
+        /* Resultados */
+        .res { margin-top: 20px; padding: 18px; background: #f1f8e9; border-radius: 12px; border: 1px solid #c8e6c9; display: none; }
+        .card-losep .res { background: #e3f2fd; border-color: #bbdefb; }
+        .r-line { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #abc; font-size: 0.95em; }
+        .r-total { display: block; font-size: 1.6em; font-weight: 900; color: var(--p); text-align: center; margin-top: 12px; }
+        .card-losep .r-total { color: var(--losep); }
 
+        /* PRINT / PDF LOGIC */
         @media print {
             body { background: white; padding: 0; }
-            .btn, input, header, label, .msg-warn { display: none !important; }
-            .card { border: 1px solid #000; box-shadow: none; margin-bottom: 40px; display: none; }
-            .card.printing { display: block !important; width: 100%; }
-            .res { display: block !important; background: white !important; border: none; }
-            .print-header { display: block !important; text-align: center; margin-bottom: 30px; border-bottom: 2px solid #000; }
-            .sig-area { display: flex !important; justify-content: space-around; margin-top: 80px; }
-            .sig-line { border-top: 1px solid #000; width: 220px; text-align: center; font-size: 0.9em; padding-top: 5px; }
+            .btn, input, header, label { display: none !important; }
+            .card { border: 1px solid #000; box-shadow: none; display: none; margin: 0; }
+            .card.printing { display: block !important; width: 100%; border: none; }
+            .res { display: block !important; background: white !important; border: none; padding: 0; }
+            .print-header { display: block !important; text-align: center; border-bottom: 2px solid #000; margin-bottom: 30px; padding-bottom: 10px; }
+            .signature-area { display: flex !important; justify-content: space-around; margin-top: 80px; }
+            .sig-line { border-top: 1px solid #000; width: 220px; text-align: center; font-size: 0.9em; padding-top: 8px; }
         }
-        .print-header, .sig-area { display: none; }
+        .print-header, .signature-area { display: none; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="print-header">
-        <h1>ACTA TÉCNICA DE LIQUIDACIÓN LABORAL</h1>
-        <p>Sistema LaboralEC - Fecha: <span id="currentDate"></span></p>
+        <h1 style="margin:0;">ACTA DE CÁLCULO LABORAL OFICIAL</h1>
+        <p>Generado por LaboralEC - Fecha: <span id="currentDate"></span></p>
     </div>
 
     <header>
         <h1>Laboral<span>EC</span></h1>
-        <p>SBU 2026: <b>$482.00</b> | Suite Completa: Privado, Público y Beneficios</p>
+        <p>SBU 2026: <b>$482.00</b> | Auditoría Integral de Haberes</p>
     </header>
 
     <div class="grid">
-        <div class="card" id="sec1">
-            <h2>1. Despido e Indemnización (Privado)</h2>
-            <label>Última Remuneración:</label><input type="number" id="s1" placeholder="800.00">
-            <label>Años de Servicio:</label><input type="number" id="a1" placeholder="10">
-            <button class="btn" onclick="calc1()">CALCULAR</button>
+        <div class="card" id="card1">
+            <h2>1. Despido (Código del Trabajo)</h2>
+            <label>Última Remuneración Unificada:</label>
+            <input type="number" id="s1" placeholder="Ej: 800.00">
+            <label>Años de Servicio:</label>
+            <input type="number" id="a1" placeholder="Ej: 5">
+            <button class="btn" onclick="calc1()">CALCULAR HABERES</button>
             <div id="res1" class="res">
-                <div class="r-line"><span>Indemnización (Art. 188):</span> <span id="v1_i"></span></div>
-                <div class="r-line"><span>Bonif. Desahucio (Art. 185):</span> <span id="v1_d"></span></div>
+                <div class="r-line"><span>Indemnización Art. 188:</span> <span id="v1_i"></span></div>
+                <div class="r-line"><span>Desahucio Art. 185 (25%):</span> <span id="v1_d"></span></div>
                 <span class="r-total" id="v1_t"></span>
-                <div class="sig-area"><div class="sig-line">Empleador</div><div class="sig-line">Trabajador</div></div>
+                <div class="signature-area">
+                    <div class="sig-line">Representante Legal</div>
+                    <div class="sig-line">Firma del Trabajador</div>
+                </div>
             </div>
-            <button class="btn btn-pdf" onclick="printCard('sec1')">📄 EXPORTAR PDF</button>
+            <button class="btn btn-pdf" onclick="exportPDF('card1')">📄 GUARDAR COMO PDF</button>
         </div>
 
-        <div class="card" id="sec2">
+        <div class="card" id="card2">
             <h2>2. Jubilación Patronal</h2>
-            <label>Sueldo Promedio (5 años):</label><input type="number" id="s2">
-            <label>Años de Servicio:</label><input type="number" id="a2">
-            <label>Edad:</label><input type="number" id="e2">
+            <label>Promedio Sueldo últimos 5 años:</label>
+            <input type="number" id="s2" placeholder="Ej: 1200.00">
+            <label>Años de Servicio Continuo:</label>
+            <input type="number" id="a2" placeholder="Mínimo 20 o 25">
+            <label>Edad del Trabajador:</label>
+            <input type="number" id="e2" placeholder="Ej: 65">
             <button class="btn" onclick="calc2()">CALCULAR PENSIÓN</button>
             <div id="res2" class="res">
-                <div class="r-line"><span>Fondo Global:</span> <span id="v2_f"></span></div>
+                <div class="r-line"><span>Fondo Global Acumulado:</span> <span id="v2_f"></span></div>
                 <div class="r-line"><span>Pensión Mensual:</span> <span id="v2_p"></span></div>
-                <div class="sig-area"><div class="sig-line">RRHH</div><div class="sig-line">Beneficiario</div></div>
+                <div class="signature-area">
+                    <div class="sig-line">Responsable RRHH</div>
+                    <div class="sig-line">Firma Beneficiario</div>
+                </div>
             </div>
-            <button class="btn btn-pdf" onclick="printCard('sec2')">📄 EXPORTAR PDF</button>
+            <button class="btn btn-pdf" onclick="exportPDF('card2')">📄 GUARDAR COMO PDF</button>
         </div>
 
-        <div class="card" id="sec3">
+        <div class="card" id="card3">
             <h2>3. Décimos y Vacaciones</h2>
-            <label>Sueldo Mensual:</label><input type="number" id="s3">
-            <label>Días trabajados en el periodo:</label><input type="number" id="d3" placeholder="Ej: 180">
-            <button class="btn" onclick="calc3()">CALCULAR HABERES</button>
+            <label>Sueldo Mensual:</label>
+            <input type="number" id="s3" placeholder="Ej: 600.00">
+            <label>Días trabajados en el periodo:</label>
+            <input type="number" id="d3" placeholder="Máx 360">
+            <button class="btn" onclick="calc3()">CALCULAR PROPORCIONALES</button>
             <div id="res3" class="res">
                 <div class="r-line"><span>Décimo Tercero:</span> <span id="v3_13"></span></div>
                 <div class="r-line"><span>Décimo Cuarto:</span> <span id="v3_14"></span></div>
                 <div class="r-line"><span>Vacaciones (24ava):</span> <span id="v3_v"></span></div>
                 <span class="r-total" id="v3_t"></span>
-                <div class="sig-area"><div class="sig-line">Pagador/Contador</div><div class="sig-line">Trabajador</div></div>
+                <div class="signature-area">
+                    <div class="sig-line">Contador / Pagador</div>
+                    <div class="sig-line">Firma de Recibido</div>
+                </div>
             </div>
-            <button class="btn btn-pdf" onclick="printCard('sec3')">📄 EXPORTAR PDF</button>
+            <button class="btn btn-pdf" onclick="exportPDF('card3')">📄 GUARDAR COMO PDF</button>
         </div>
 
-        <div class="card" id="sec4">
-            <h2>4. Horas Extras</h2>
-            <label>Sueldo Mensual:</label><input type="number" id="s4">
-            <label>Horas Suplementarias (50%):</label><input type="number" id="h50" value="0">
-            <label>Horas Extraordinarias (100%):</label><input type="number" id="h100" value="0">
+        <div class="card" id="card4">
+            <h2>4. Horas Extras y Recargos</h2>
+            <label>Sueldo Mensual:</label>
+            <input type="number" id="s4">
+            <label>Horas Suplementarias (50%):</label>
+            <input type="number" id="h50" value="0">
+            <label>Horas Extraordinarias (100%):</label>
+            <input type="number" id="h100" value="0">
             <button class="btn" onclick="calc4()">CALCULAR RECARGOS</button>
             <div id="res4" class="res">
-                <div class="r-line"><span>Total 50%:</span> <span id="v4_50"></span></div>
-                <div class="r-line"><span>Total 100%:</span> <span id="v4_100"></span></div>
+                <div class="r-line"><span>Total Recargo 50%:</span> <span id="v4_50"></span></div>
+                <div class="r-line"><span>Total Recargo 100%:</span> <span id="v4_100"></span></div>
                 <span class="r-total" id="v4_t"></span>
             </div>
-            <button class="btn btn-pdf" onclick="printCard('sec4')">📄 EXPORTAR PDF</button>
+            <button class="btn btn-pdf" onclick="exportPDF('card4')">📄 GUARDAR COMO PDF</button>
         </div>
 
-        <div class="card card-losep" id="sec5">
-            <h2 style="color:var(--losep);">5. Indemnización LOSEP</h2>
-            <label>RMU (Sueldo):</label><input type="number" id="s5">
-            <label>Años de Servicio:</label><input type="number" id="a5">
-            <div id="warn5" class="msg-warn">⚠️ Nota: Art. 129 LOSEP aplica desde el 5to año permanente.</div>
-            <button class="btn" style="background:var(--losep);" onclick="calc5()">CALCULAR LOSEP</button>
+        <div class="card card-losep" id="card5">
+            <h2>5. Indemnización LOSEP</h2>
+            <label>RMU (Sueldo Mensual):</label>
+            <input type="number" id="s5" placeholder="Ej: 1200.00">
+            <label>Años de Servicio:</label>
+            <input type="number" id="a5" placeholder="Ej: 10">
+            <button class="btn btn-losep" onclick="calc5()">CALCULAR INDEMNIZACIÓN</button>
             <div id="res5" class="res">
-                <div class="r-line"><span>Base Indemnización:</span> <span id="v5_b"></span></div>
-                <div class="r-line"><span>Tope (150 SBU):</span> <span>$72,300.00</span></div>
-                <span class="r-total" id="v5_t" style="color:var(--losep);"></span>
-                <div class="sig-area"><div class="sig-line">Talento Humano</div><div class="sig-line">Servidor</div></div>
+                <div class="r-line"><span>Base (5 RMU x año):</span> <span id="v5_b"></span></div>
+                <div class="r-line"><span>Tope Legal (150 SBU):</span> <span>$72,300.00</span></div>
+                <span class="r-total" id="v5_t"></span>
+                <div class="signature-area">
+                    <div class="sig-line">Director Talento Humano</div>
+                    <div class="sig-line">Servidor Público</div>
+                </div>
             </div>
-            <button class="btn btn-pdf" onclick="printCard('sec5')">📄 EXPORTAR PDF</button>
+            <button class="btn btn-pdf" onclick="exportPDF('card5')">📄 GUARDAR COMO PDF</button>
         </div>
     </div>
 </div>
 
 <script>
     const SBU = 482;
-    const f = (n) => `$${n.toLocaleString('es-EC', {minimumFractionDigits: 2})}`;
+    const f = (n) => `$${n.toLocaleString('es-EC', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
     document.getElementById('currentDate').innerText = new Date().toLocaleDateString();
 
-    function printCard(id) {
+    function exportPDF(id) {
         document.querySelectorAll('.card').forEach(c => c.classList.remove('printing'));
         document.getElementById(id).classList.add('printing');
         window.print();
     }
 
+    // 1. CÓDIGO TRABAJO
     function calc1() {
         let s = parseFloat(document.getElementById('s1').value) || 0;
         let a = parseInt(document.getElementById('a1').value) || 0;
-        let ind = Math.max(a, 3); if(ind > 25) ind = 25;
-        let vi = ind * s; let vd = (s * 0.25) * a;
+        let aInd = Math.max(a, 3); if(aInd > 25) aInd = 25;
+        let vi = aInd * s; let vd = (s * 0.25) * a;
         document.getElementById('v1_i').innerText = f(vi);
         document.getElementById('v1_d').innerText = f(vd);
-        document.getElementById('v1_t').innerText = f(vi+vd);
+        document.getElementById('v1_t').innerText = f(vi + vd);
         document.getElementById('res1').style.display = 'block';
     }
 
+    // 2. JUBILACIÓN
     function calc2() {
         let s = parseFloat(document.getElementById('s2').value) || 0;
         let a = parseInt(document.getElementById('a2').value) || 0;
         let e = parseInt(document.getElementById('e2').value) || 0;
-        if(a < 20) return alert("Mínimo 20 años");
+        if(a < 20) { alert("Mínimo 20 años"); return; }
         let haber = (s * 0.05) * a * 12;
         let coef = (e >= 60) ? 8.24 : 10.45;
         let mensual = (haber / coef) / 12;
@@ -159,17 +198,21 @@
         document.getElementById('res2').style.display = 'block';
     }
 
+    // 3. DÉCIMOS
     function calc3() {
         let s = parseFloat(document.getElementById('s3').value) || 0;
-        let d = parseInt(document.getElementById('d3').value) || 0;
-        let d13 = (s / 360) * d; let d14 = (SBU / 360) * d; let vac = (s / 24) * (d / 30);
+        let d = Math.min(parseInt(document.getElementById('d3').value) || 0, 360);
+        let d13 = (s / 360) * d;
+        let d14 = (SBU / 360) * d;
+        let vac = (s / 24) * (d / 30);
         document.getElementById('v3_13').innerText = f(d13);
         document.getElementById('v3_14').innerText = f(d14);
         document.getElementById('v3_v').innerText = f(vac);
-        document.getElementById('v3_t').innerText = f(d13+d14+vac);
+        document.getElementById('v3_t').innerText = f(d13 + d14 + vac);
         document.getElementById('res3').style.display = 'block';
     }
 
+    // 4. EXTRAS
     function calc4() {
         let s = parseFloat(document.getElementById('s4').value) || 0;
         let vh = s / 240;
@@ -177,16 +220,17 @@
         let r100 = (parseFloat(document.getElementById('h100').value) || 0) * vh * 2;
         document.getElementById('v4_50').innerText = f(r50);
         document.getElementById('v4_100').innerText = f(r100);
-        document.getElementById('v4_t').innerText = f(r50+r100);
+        document.getElementById('v4_t').innerText = f(r50 + r100);
         document.getElementById('res4').style.display = 'block';
     }
 
+    // 5. LOSEP
     function calc5() {
         let s = parseFloat(document.getElementById('s5').value) || 0;
         let a = parseInt(document.getElementById('a5').value) || 0;
-        document.getElementById('warn5').style.display = (a < 5) ? 'block' : 'none';
-        let total = Math.min((5 * s * a), 150 * SBU);
-        document.getElementById('v5_b').innerText = f(5 * s * a);
+        let base = (5 * s) * a;
+        let total = Math.min(base, 150 * SBU);
+        document.getElementById('v5_b').innerText = f(base);
         document.getElementById('v5_t').innerText = f(total);
         document.getElementById('res5').style.display = 'block';
     }

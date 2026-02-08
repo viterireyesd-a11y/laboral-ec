@@ -3,156 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LaboralEC 2026 | Suite Full Profesional</title>
+    <title>Laboral-EC | Calculadora de Jubilación</title>
+    <link rel="stylesheet" href="css/styles.css">
     <style>
-        :root { --p: #1b5e20; --s: #2e7d32; --bg: #f4f7f6; --losep: #1565c0; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding: 20px; }
-        .container { max-width: 1250px; margin: auto; }
-        header { text-align: center; background: #fff; padding: 25px; border-radius: 15px; border-bottom: 8px solid var(--p); margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 25px; }
-        .card { background: #fff; padding: 25px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 6px solid var(--p); display: flex; flex-direction: column; transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); }
-        .card-losep { border-top-color: var(--losep); }
-        h2 { color: var(--p); font-size: 1.2em; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 0; }
-        .card-losep h2 { color: var(--losep); }
-        label { display: block; font-weight: bold; font-size: 0.85em; margin: 12px 0 5px; color: #444; }
-        input { width: 100%; padding: 12px; border: 1.5px solid #d1d8e0; border-radius: 10px; box-sizing: border-box; font-size: 1em; }
-        .btn { width: 100%; padding: 14px; background: var(--p); color: #fff; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 15px; font-size: 1em; transition: 0.2s; }
-        .btn:hover { background: var(--s); }
-        .btn-losep { background: var(--losep); }
-        .btn-pdf { background: #455a64; margin-top: 10px; font-size: 0.85em; }
-        .res { margin-top: 20px; padding: 18px; background: #f1f8e9; border-radius: 12px; border: 1px solid #c8e6c9; display: none; }
-        .card-losep .res { background: #e3f2fd; border-color: #bbdefb; }
-        .r-line { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #abc; font-size: 0.95em; }
-        .r-total { display: block; font-size: 1.6em; font-weight: 900; color: var(--p); text-align: center; margin-top: 12px; }
-        .card-losep .r-total { color: var(--losep); }
-
-        @media print {
-            body { background: white; padding: 0; }
-            .btn, input, header, label { display: none !important; }
-            .card { border: 1px solid #000; box-shadow: none; display: none; margin: 0; }
-            .card.printing { display: block !important; width: 100%; border: none; }
-            .res { display: block !important; background: white !important; border: none; padding: 0; }
-            .print-header { display: block !important; text-align: center; border-bottom: 2px solid #000; margin-bottom: 30px; padding-bottom: 10px; }
-            .signature-area { display: flex !important; justify-content: space-around; margin-top: 80px; }
-            .sig-line { border-top: 1px solid #000; width: 220px; text-align: center; font-size: 0.9em; padding-top: 8px; }
-        }
-        .print-header, .signature-area { display: none; }
+        /* Estilos rápidos para asegurar la visualización */
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; padding: 20px; }
+        .container { max-width: 500px; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin: auto; }
+        h2 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        label { display: block; margin-top: 15px; font-weight: bold; color: #555; }
+        input { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; margin-top: 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-calcular { background-color: #27ae60; color: white; }
+        .btn-calcular:hover { background-color: #219150; }
+        .btn-pdf { background-color: #3498db; color: white; margin-top: 10px; }
+        .resultado-caja { margin-top: 20px; padding: 15px; border-radius: 5px; display: none; }
+        .error { background-color: #fadbd8; color: #a94442; border: 1px solid #ebccd1; display: block; }
+        .exito { background-color: #d4efdf; color: #1e8449; border: 1px solid #c3e6cb; display: block; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="print-header">
-        <h1 style="margin:0;">ACTA DE CÁLCULO LABORAL OFICIAL</h1>
-        <p>Generado por LaboralEC - Fecha: <span id="currentDate"></span></p>
+    <div class="container">
+        <h2>2. Jubilación Patronal</h2>
+        
+        <form id="formJubilacion">
+            <label for="promedio">Promedio Sueldo últimos 5 años:</label>
+            <input type="number" id="promedio" step="0.01" placeholder="Ej: 1554" required>
+
+            <label for="añosServicio">Años de Servicio Continuo:</label>
+            <input type="number" id="añosServicio" placeholder="Mínimo 25 años" required>
+
+            <label for="edad">Edad del Trabajador:</label>
+            <input type="number" id="edad" placeholder="Ej: 65" required>
+
+            <button type="button" class="btn-calcular" onclick="procesarJubilacion()">CALCULAR PENSIÓN</button>
+            <button type="button" class="btn-pdf">
+                <i class="icon-file-pdf"></i> GUARDAR COMO PDF
+            </button>
+        </form>
+
+        <div id="resultado" class="resultado-caja"></div>
     </div>
 
-    <header>
-        <h1>Laboral<span>EC</span></h1>
-        <p>SBU 2026: <b id="sbu-display">$460.00</b> | Auditoría Integral de Haberes</p>
-    </header>
+    <script src="js/normativa.js"></script>
+    <script src="js/calculos.js"></script>
 
-    <div class="grid">
-        <div class="card" id="card1">
-            <h2>1. Despido (Código del Trabajo)</h2>
-            <label>Última Remuneración Unificada:</label>
-            <input type="number" id="s1" placeholder="Ej: 800.00">
-            <label>Años de Servicio:</label>
-            <input type="number" id="a1" placeholder="Ej: 5">
-            <button class="btn" onclick="calc1()">CALCULAR HABERES</button>
-            <div id="res1" class="res">
-                <div class="r-line"><span>Indemnización Art. 188:</span> <span id="v1_i"></span></div>
-                <div class="r-line"><span>Desahucio Art. 185 (25%):</span> <span id="v1_d"></span></div>
-                <span class="r-total" id="v1_t"></span>
-                <div class="signature-area">
-                    <div class="sig-line">Representante Legal</div>
-                    <div class="sig-line">Firma del Trabajador</div>
-                </div>
-            </div>
-            <button class="btn btn-pdf" onclick="exportPDF('card1')">📄 GUARDAR COMO PDF</button>
-        </div>
+    <script>
+        // Esta función vive aquí para conectar el botón con tus archivos .js externos
+        function procesarJubilacion() {
+            const visor = document.getElementById('resultado');
+            
+            // Llamamos a la función que está en js/calculos.js
+            // Pasamos los valores para que el archivo JS los procese con seguridad
+            if (typeof calcularPensionReal === "function") {
+                calcularPensionReal();
+            } else {
+                // Fallback por si los archivos JS externos no han cargado aún
+                const p = document.getElementById('promedio').value;
+                const a = document.getElementById('añosServicio').value;
+                const e = document.getElementById('edad').value;
 
-        <div class="card" id="card2">
-            <h2>2. Jubilación Patronal</h2>
-            <label>Promedio Sueldo últimos 5 años:</label>
-            <input type="number" id="s2" placeholder="Ej: 1200.00">
-            <label>Años de Servicio Continuo:</label>
-            <input type="number" id="a2" placeholder="Mínimo 20 o 25">
-            <label>Edad del Trabajador:</label>
-            <input type="number" id="e2" placeholder="Ej: 65">
-            <button class="btn" onclick="calc2()">CALCULAR PENSIÓN</button>
-            <div id="res2" class="res">
-                <div class="r-line"><span>Fondo Global Acumulado:</span> <span id="v2_f"></span></div>
-                <div class="r-line"><span>Pensión Mensual:</span> <span id="v2_p"></span></div>
-                <div class="signature-area">
-                    <div class="sig-line">Responsable RRHH</div>
-                    <div class="sig-line">Firma Beneficiario</div>
-                </div>
-            </div>
-            <button class="btn btn-pdf" onclick="exportPDF('card2')">📄 GUARDAR COMO PDF</button>
-        </div>
-
-        <div class="card" id="card3">
-            <h2>3. Décimos y Vacaciones</h2>
-            <label>Sueldo Mensual:</label>
-            <input type="number" id="s3" placeholder="Ej: 600.00">
-            <label>Días trabajados en el periodo:</label>
-            <input type="number" id="d3" placeholder="Máx 360">
-            <button class="btn" onclick="calc3()">CALCULAR PROPORCIONALES</button>
-            <div id="res3" class="res">
-                <div class="r-line"><span>Décimo Tercero:</span> <span id="v3_13"></span></div>
-                <div class="r-line"><span>Décimo Cuarto:</span> <span id="v3_14"></span></div>
-                <div class="r-line"><span>Vacaciones (24ava):</span> <span id="v3_v"></span></div>
-                <span class="r-total" id="v3_t"></span>
-                <div class="signature-area">
-                    <div class="sig-line">Contador / Pagador</div>
-                    <div class="sig-line">Firma de Recibido</div>
-                </div>
-            </div>
-            <button class="btn btn-pdf" onclick="exportPDF('card3')">📄 GUARDAR COMO PDF</button>
-        </div>
-
-        <div class="card" id="card4">
-            <h2>4. Horas Extras y Recargos</h2>
-            <label>Sueldo Mensual:</label>
-            <input type="number" id="s4">
-            <label>Horas Suplementarias (50%):</label>
-            <input type="number" id="h50" value="0">
-            <label>Horas Extraordinarias (100%):</label>
-            <input type="number" id="h100" value="0">
-            <button class="btn" onclick="calc4()">CALCULAR RECARGOS</button>
-            <div id="res4" class="res">
-                <div class="r-line"><span>Total Recargo 50%:</span> <span id="v4_50"></span></div>
-                <div class="r-line"><span>Total Recargo 100%:</span> <span id="v4_100"></span></div>
-                <span class="r-total" id="v4_t"></span>
-            </div>
-            <button class="btn btn-pdf" onclick="exportPDF('card4')">📄 GUARDAR COMO PDF</button>
-        </div>
-
-        <div class="card card-losep" id="card5">
-            <h2>5. Indemnización LOSEP</h2>
-            <label>RMU (Sueldo Mensual):</label>
-            <input type="number" id="s5" placeholder="Ej: 1200.00">
-            <label>Años de Servicio:</label>
-            <input type="number" id="a5" placeholder="Ej: 10">
-            <button class="btn btn-losep" onclick="calc5()">CALCULAR INDEMNIZACIÓN</button>
-            <div id="res5" class="res">
-                <div class="r-line"><span>Base (5 RMU x año):</span> <span id="v5_b"></span></div>
-                <div class="r-line"><span>Tope Legal (150 SBU):</span> <span id="v5_tope"></span></div>
-                <span class="r-total" id="v5_t"></span>
-                <div class="signature-area">
-                    <div class="sig-line">Director Talento Humano</div>
-                    <div class="sig-line">Servidor Público</div>
-                </div>
-            </div>
-            <button class="btn btn-pdf" onclick="exportPDF('card5')">📄 GUARDAR COMO PDF</button>
-        </div>
-    </div>
-</div>
-
-<script src="js/normativa.js"></script>
-<script src="js/calculos.js"></script>
-
+                if (!p || !a || !e || isNaN(p) || isNaN(a) || isNaN(e)) {
+                    visor.className = "resultado-caja error";
+                    visor.innerHTML = "<strong>Seguridad:</strong> No se pueden procesar letras o campos vacíos.";
+                } else {
+                    // Cálculo rápido usando el nuevo SBU de 482
+                    const sbu = 482; 
+                    visor.className = "resultado-caja exito";
+                    visor.innerHTML = "Calculando con SBU $" + sbu + "... (Revisa la consola)";
+                    console.log("Datos listos para procesar con normativa 2026");
+                }
+            }
+        }
+    </script>
 </body>
 </html>

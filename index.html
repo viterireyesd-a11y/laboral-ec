@@ -3,26 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LaboralEC | Sistema Legal Profesional</title>
+    <title>LaboralEC | Sistema Legal 2026</title>
     <style>
-        :root { --p: #1b5e20; --s: #2e7d32; --bg: #f8f9fa; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 20px; }
+        :root { --p: #1b5e20; --s: #2e7d32; --bg: #f0f2f5; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; padding: 20px; color: #333; }
         .container { max-width: 1200px; margin: auto; }
-        header { text-align: center; background: #fff; padding: 25px; border-radius: 15px; border-bottom: 5px solid var(--s); margin-bottom: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        h1 { color: var(--p); margin: 0; font-size: 2.5em; }
-        h1 span { color: var(--s); }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
-        .card { background: #fff; padding: 25px; border-radius: 12px; border-top: 5px solid var(--p); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        h2 { color: var(--p); font-size: 1.2em; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .f-group { margin-bottom: 12px; }
-        label { display: block; font-weight: 600; font-size: 0.85em; margin-bottom: 4px; }
-        input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
-        .btn { width: 100%; padding: 12px; background: var(--p); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; }
-        .btn:hover { background: var(--s); }
-        .res { margin-top: 15px; padding: 15px; background: #e8f5e9; border-radius: 8px; display: none; border: 1px solid #c8e6c9; }
-        .r-line { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px dashed #abc; font-size: 0.9em; }
-        .r-total { display: block; font-size: 1.3em; font-weight: bold; color: var(--p); margin-top: 10px; text-align: center; }
-        .alert { background: #fff3e0; padding: 10px; border-radius: 5px; font-size: 0.8em; color: #e65100; margin-bottom: 10px; font-weight: bold; }
+        header { text-align: center; background: #fff; padding: 30px; border-radius: 20px; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-bottom: 8px solid var(--p); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px; }
+        .card { background: #fff; padding: 25px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); border-top: 5px solid var(--p); }
+        h2 { color: var(--p); font-size: 1.3em; margin-top: 0; display: flex; align-items: center; gap: 10px; }
+        .f-group { margin-bottom: 15px; }
+        label { display: block; font-weight: 700; font-size: 0.9em; margin-bottom: 5px; color: #555; }
+        input { width: 100%; padding: 12px; border: 2px solid #eee; border-radius: 10px; font-size: 1em; transition: 0.3s; }
+        input:focus { border-color: var(--s); outline: none; }
+        .btn { width: 100%; padding: 15px; background: var(--p); color: #fff; border: none; border-radius: 10px; cursor: pointer; font-weight: 800; font-size: 1em; margin-top: 10px; transition: 0.3s; }
+        .btn:hover { background: var(--s); transform: translateY(-2px); }
+        .res { margin-top: 20px; padding: 20px; background: #e8f5e9; border-radius: 12px; display: none; border: 1px solid #c8e6c9; animation: fadeIn 0.4s; }
+        .r-line { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #adcbb0; font-size: 0.95em; }
+        .r-total { display: block; font-size: 1.5em; font-weight: 900; color: var(--p); margin-top: 15px; text-align: center; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -30,16 +29,18 @@
 <div class="container">
     <header>
         <h1>Laboral<span>EC</span></h1>
-        <p><b>SBU 2026: $482.00</b> | Ministerial Agreements & Observations</p>
+        <p><b>SBU 2026: $482.00</b> | Auditoría de Cálculos de Ley</p>
     </header>
 
     <div class="grid">
         <div class="card">
             <h2>1. Despido e Indemnización</h2>
-            <div class="f-group"><label>Sueldo Mensual:</label><input type="number" id="c1_s"></div>
-            <div class="f-group"><label>Años de Servicio:</label><input type="number" id="c1_a"></div>
-            <div class="alert"><input type="checkbox" id="c1_cc"> ¿Contrato Colectivo (100 SBU)?</div>
-            <button class="btn" onclick="calc1()">Calcular</button>
+            <div class="f-group"><label>Sueldo Último:</label><input type="number" id="c1_s" placeholder="Ej: 800"></div>
+            <div class="f-group"><label>Años de Servicio:</label><input type="number" id="c1_a" placeholder="Ej: 5"></div>
+            <div class="f-group" style="display:flex; gap:10px; align-items:center;">
+                <input type="checkbox" id="c1_cc" style="width:20px;"> <label style="margin:0;">Contrato Colectivo (100 SBU)</label>
+            </div>
+            <button class="btn" onclick="calc1()">CALCULAR HABERES</button>
             <div id="res1" class="res">
                 <div class="r-line"><span>Indemnización (Art. 188):</span> <span id="v1_i"></span></div>
                 <div class="r-line"><span>Desahucio (Art. 185 - 25%):</span> <span id="v1_d"></span></div>
@@ -47,14 +48,15 @@
             </div>
         </div>
 
-        <div class="card">
-            <h2>2. Jubilación Patronal (Art. 216)</h2>
-            <div class="f-group"><label>Promedio Sueldo (5 años):</label><input type="number" id="c2_s"></div>
-            <div class="f-group"><label>Años de Trabajo:</label><input type="number" id="c2_a"></div>
-            <div class="f-group"><label>Edad al salir:</label><input type="number" id="c2_e"></div>
-            <button class="btn" onclick="calc2()">Calcular</button>
+        <div class="card" style="background: #fffef0;">
+            <h2>2. Jubilación Patronal</h2>
+            <div class="f-group"><label>Promedio 5 últimos años:</label><input type="number" id="c2_s"></div>
+            <div class="f-group"><label>Años de Servicio:</label><input type="number" id="c2_a"></div>
+            <div class="f-group"><label>Edad al Cese:</label><input type="number" id="c2_e"></div>
+            <button class="btn" onclick="calc2()">CALCULAR PENSIÓN</button>
             <div id="res2" class="res">
-                <div class="r-line"><span>Fondo Global:</span> <span id="v2_f"></span></div>
+                <div class="r-line"><span>Fondo Global (Art. 216):</span> <span id="v2_f"></span></div>
+                <div class="r-line"><span>Mínimo Legal (50% SBU):</span> <span>$241.00</span></div>
                 <span class="r-total" id="v2_p"></span>
             </div>
         </div>
@@ -62,11 +64,11 @@
         <div class="card">
             <h2>3. Décimos y Vacaciones</h2>
             <div class="f-group"><label>Sueldo Mensual:</label><input type="number" id="c3_s"></div>
-            <div class="f-group"><label>Meses a liquidar:</label><input type="number" id="c3_m"></div>
-            <button class="btn" onclick="calc3()">Calcular Haberes</button>
+            <div class="f-group"><label>Meses acumulados:</label><input type="number" id="c3_m"></div>
+            <button class="btn" onclick="calc3()">CALCULAR PROPORCIONALES</button>
             <div id="res3" class="res">
-                <div class="r-line"><span>13ro Sueldo:</span> <span id="v3_13"></span></div>
-                <div class="r-line"><span>14to Sueldo:</span> <span id="v3_14"></span></div>
+                <div class="r-line"><span>Décimo Tercero:</span> <span id="v3_13"></span></div>
+                <div class="r-line"><span>Décimo Cuarto:</span> <span id="v3_14"></span></div>
                 <div class="r-line"><span>Vacaciones:</span> <span id="v3_v"></span></div>
                 <span class="r-total" id="v3_t"></span>
             </div>
@@ -77,7 +79,7 @@
             <div class="f-group"><label>Sueldo Mensual:</label><input type="number" id="c4_s"></div>
             <div class="f-group"><label>Horas 50%:</label><input type="number" id="c4_50" value="0"></div>
             <div class="f-group"><label>Horas 100%:</label><input type="number" id="c4_100" value="0"></div>
-            <button class="btn" onclick="calc4()">Calcular Extras</button>
+            <button class="btn" onclick="calc4()">CALCULAR RECARGOS</button>
             <div id="res4" class="res">
                 <div class="r-line"><span>Recargo 50%:</span> <span id="v4_50"></span></div>
                 <div class="r-line"><span>Recargo 100%:</span> <span id="v4_100"></span></div>
@@ -86,12 +88,12 @@
         </div>
 
         <div class="card">
-            <h2>5. LOSEP (Sector Público)</h2>
+            <h2>5. Indemnización LOSEP</h2>
             <div class="f-group"><label>Sueldo (RMU):</label><input type="number" id="c5_s"></div>
             <div class="f-group"><label>Años de Servicio:</label><input type="number" id="c5_a"></div>
-            <button class="btn" onclick="calc5()">Calcular LOSEP</button>
+            <button class="btn" onclick="calc5()">CALCULAR SUPRESIÓN</button>
             <div id="res5" class="res">
-                <div class="r-line"><span>Calculado:</span> <span id="v5_b"></span></div>
+                <div class="r-line"><span>Base (5 RMU x año):</span> <span id="v5_b"></span></div>
                 <div class="r-line"><span>Tope (150 SBU):</span> <span>$72,300.00</span></div>
                 <span class="r-total" id="v5_t"></span>
             </div>
@@ -120,12 +122,18 @@
         let s = parseFloat(document.getElementById('c2_s').value) || 0;
         let a = parseInt(document.getElementById('c2_a').value) || 0;
         let e = parseInt(document.getElementById('c2_e').value) || 0;
-        if(a < 20) { alert("Mínimo 20 años"); return; }
-        let fondo = (s * 0.05) * a * 12;
-        let coef = (e >= 60) ? 8.24 : (e >= 50) ? 10.45 : 12.5;
-        let mensual = (fondo / coef) / 12;
-        if(a >= 25 && mensual < (SBU * 0.5)) mensual = SBU * 0.5;
-        document.getElementById('v2_f').innerText = f(fondo);
+        if(a < 20) { alert("Requiere mínimo 20 años de servicio"); return; }
+        
+        let fondoGlobal = (s * 0.05) * a * 12;
+        // Coeficientes Art. 218 aproximados
+        let coef = (e >= 60) ? 8.24 : (e >= 55) ? 9.38 : (e >= 50) ? 10.45 : 12.51;
+        let mensual = (fondoGlobal / coef) / 12;
+        
+        // CORRECCIÓN CLAVE: Mínimo Legal
+        let minimo = SBU * 0.5;
+        if (a >= 25 && mensual < minimo) mensual = minimo;
+
+        document.getElementById('v2_f').innerText = f(fondoGlobal);
         document.getElementById('v2_p').innerText = `${f(mensual)} / mes`;
         document.getElementById('res2').style.display = 'block';
     }
@@ -133,23 +141,18 @@
     function calc3() {
         let s = parseFloat(document.getElementById('c3_s').value) || 0;
         let m = parseInt(document.getElementById('c3_m').value) || 0;
-        let d13 = (s / 12) * m;
-        let d14 = (SBU / 12) * m;
-        let vac = (s / 24) * m;
-        document.getElementById('v3_13').innerText = f(d13);
-        document.getElementById('v3_14').innerText = f(d14);
-        document.getElementById('v3_v').innerText = f(vac);
-        document.getElementById('v3_t').innerText = `TOTAL: ${f(d13+d14+vac)}`;
+        document.getElementById('v3_13').innerText = f(s / 12 * m);
+        document.getElementById('v3_14').innerText = f(SBU / 12 * m);
+        document.getElementById('v3_v').innerText = f(s / 24 * m);
+        document.getElementById('v3_t').innerText = `TOTAL: ${f((s/12*m)+(SBU/12*m)+(s/24*m))}`;
         document.getElementById('res3').style.display = 'block';
     }
 
     function calc4() {
         let s = parseFloat(document.getElementById('c4_s').value) || 0;
-        let h50 = parseFloat(document.getElementById('c4_50').value) || 0;
-        let h100 = parseFloat(document.getElementById('c4_100').value) || 0;
         let vh = s / 240;
-        let r50 = h50 * vh * 1.5;
-        let r100 = h100 * vh * 2;
+        let r50 = (parseFloat(document.getElementById('c4_50').value) || 0) * vh * 1.5;
+        let r100 = (parseFloat(document.getElementById('c4_100').value) || 0) * vh * 2;
         document.getElementById('v4_50').innerText = f(r50);
         document.getElementById('v4_100').innerText = f(r100);
         document.getElementById('v4_t').innerText = `TOTAL: ${f(r50+r100)}`;
@@ -159,13 +162,12 @@
     function calc5() {
         let s = parseFloat(document.getElementById('c5_s').value) || 0;
         let a = parseInt(document.getElementById('c5_a').value) || 0;
-        let b = (5 * s) * a;
-        let t = Math.min(b, 150 * SBU);
-        document.getElementById('v5_b').innerText = f(b);
-        document.getElementById('v5_t').innerText = `TOTAL: ${f(t)}`;
+        let base = (5 * s) * a;
+        let final = Math.min(base, 150 * SBU);
+        document.getElementById('v5_b').innerText = f(base);
+        document.getElementById('v5_t').innerText = `TOTAL: ${f(final)}`;
         document.getElementById('res5').style.display = 'block';
     }
 </script>
-
 </body>
 </html>

@@ -3,166 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laborales.com | Calculadora Oficial 2026</title>
+    <title>Laborales.com | Calculadora Integral 2026</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        :root { --primario: #1a5d1a; --secundario: #27ae60; --alerta: #e67e22; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f4f9; display: flex; justify-content: center; padding: 20px; }
-        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); width: 100%; max-width: 650px; }
-        h1 { color: var(--primario); text-align: center; margin-bottom: 5px; }
-        .version { text-align: center; font-size: 14px; color: var(--secundario); font-weight: bold; margin-bottom: 20px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: 600; color: #333; }
-        select, input { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        .btn { width: 100%; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        .btn-calc { background: var(--secundario); color: white; font-size: 16px; }
-        .btn-pdf { background: var(--alerta); color: white; display: none; }
-        .result-box { margin-top: 25px; padding: 20px; border: 2px solid var(--secundario); border-radius: 10px; background: #f0fff0; display: none; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; padding: 20px; color: #2c3e50; }
+        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); max-width: 800px; margin: auto; }
+        h1 { text-align: center; color: #1a5d1a; border-bottom: 3px solid #27ae60; padding-bottom: 10px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        .card-input { background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 5px solid #27ae60; }
+        label { font-weight: bold; display: block; margin-bottom: 5px; font-size: 0.9em; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        .btn-calc { width: 100%; padding: 15px; background: #27ae60; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; margin-top: 20px; font-weight: bold; }
+        .btn-pdf { width: 100%; padding: 12px; background: #e67e22; color: white; border: none; border-radius: 8px; margin-top: 10px; cursor: pointer; display: none; }
+        #resultado-final { margin-top: 30px; padding: 20px; border: 2px solid #27ae60; border-radius: 10px; display: none; background: #fff; }
         .hidden { display: none; }
-        .highlight { color: #c0392b; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="card">
+<div class="container">
     <h1>Laborales.com</h1>
-    <p class="version">SBU Actualizado 2026: $482.00</p>
+    <p style="text-align:center; font-weight:bold; color:#27ae60;">Calculadora Profesional - SBU 2026: $482.00</p>
 
-    <div class="form-group">
-        <label>Régimen Laboral:</label>
-        <select id="regimen" onchange="switchRegimen()">
-            <option value="codigo">Código del Trabajo</option>
-            <option value="losep">LOSEP (Servidor Público)</option>
-        </select>
-    </div>
+    <div class="grid">
+        <div class="card-input">
+            <label>Régimen Laboral:</label>
+            <select id="regimen" onchange="toggleRegimen()">
+                <option value="codigo">Código del Trabajo</option>
+                <option value="losep">LOSEP (Servidor Público)</option>
+            </select>
+            <div id="opciones-codigo" style="margin-top:10px;">
+                <label><input type="checkbox" id="es_despido" onchange="toggleContrato()"> ¿Es Despido Intempestivo?</label>
+                <div id="check-contrato" class="hidden">
+                    <label style="color:#c0392b;"><input type="checkbox" id="aplica_100sbu"> ¿Aplica Contrato 2019 (100 SBU)?</label>
+                </div>
+            </div>
+            <div id="opciones-losep" class="hidden" style="margin-top:10px;">
+                <label>Nombramiento:</label>
+                <select id="tipo_losep">
+                    <option value="ocasional">Ocasional / Provisional</option>
+                    <option value="permanente">Permanente (Supresión)</option>
+                </select>
+            </div>
+        </div>
 
-    <div id="bloque-codigo">
-        <label><input type="checkbox" id="es_despido" onchange="switchContrato()"> ¿Fue Despido Intempestivo?</label>
-        <div id="check-contrato" class="hidden" style="margin: 10px 0 0 20px; padding: 10px; background: #eee; border-radius: 5px;">
-            <label class="highlight"><input type="checkbox" id="usar_mandato"> Aplicar Indemnización 100 SBU (Contrato 2019)</label>
+        <div class="card-input">
+            <label>Sueldo Mensual Actual ($):</label>
+            <input type="number" id="sueldo" placeholder="Ej: 1000">
+            <label>Años de Servicio (Antigüedad):</label>
+            <input type="number" id="anos" placeholder="Ej: 25">
+            <label>Meses trabajados en el año actual:</label>
+            <input type="number" id="meses_proporcional" placeholder="Ej: 6">
+        </div>
+
+        <div class="card-input">
+            <label>Horas Suplementarias (50%):</label>
+            <input type="number" id="h50" value="0">
+            <label>Horas Extraordinarias (100%):</label>
+            <input type="number" id="h100" value="0">
+        </div>
+
+        <div class="card-input">
+            <label>¿Aplica Jubilación Patronal?</label>
+            <select id="aplica_jubilacion">
+                <option value="no">No</option>
+                <option value="si">Sí (Más de 20 o 25 años)</option>
+            </select>
+            <small>Nota: 25 años (normal) / 20 años (despido).</small>
         </div>
     </div>
 
-    <div id="bloque-losep" class="hidden">
-        <label>Situación del Servidor:</label>
-        <select id="tipo_losep">
-            <option value="nada">Contrato Ocasional / Provisional</option>
-            <option value="indem">Nombramiento Permanente (Supresión)</option>
-        </select>
-    </div>
+    <button class="btn-calc" onclick="calcularTodo()">GENERAR LIQUIDACIÓN INTEGRAL</button>
 
-    <hr style="margin: 20px 0;">
-
-    <div class="form-group">
-        <label>Sueldo Mensual ($):</label>
-        <input type="number" id="sueldo" placeholder="Ej: 1200">
-    </div>
-
-    <div class="form-group">
-        <label>Años de Servicio:</label>
-        <input type="number" id="anos" placeholder="Ej: 5">
-    </div>
-
-    <div class="form-group">
-        <label>Horas Extras Suplementarias (50%):</label>
-        <input type="number" id="h50" value="0">
-    </div>
-
-    <button class="btn btn-calc" onclick="calcularTodo()">CALCULAR LIQUIDACIÓN</button>
-    <button class="btn" style="background:#bdc3c7;" onclick="window.location.reload()">RESETEAR SISTEMA</button>
-
-    <div id="result-box" class="result-box">
-        <div id="area-pdf">
-            <h2 id="total-val" style="text-align:center; color: var(--primario);"></h2>
-            <div id="detalle-val"></div>
-            <p id="fecha-limite" style="font-weight:bold; color:#c0392b; margin-top:15px;"></p>
+    <div id="resultado-final">
+        <div id="area-impresion">
+            <h2 style="text-align:center; color:#1a5d1a; margin-top:0;">Resumen de Liquidación</h2>
+            <div id="detalle-calculos"></div>
+            <h2 id="gran-total" style="text-align:center; background:#27ae60; color:white; padding:10px; border-radius:5px;"></h2>
+            <p id="pago-limite" style="color:#c0392b; font-weight:bold; text-align:center;"></p>
         </div>
-        <button class="btn btn-pdf" id="btn-pdf" onclick="descargar()">Descargar PDF Oficial</button>
+        <button class="btn-pdf" id="btn-pdf" onclick="descargarPDF()">Descargar Acta en PDF</button>
     </div>
 </div>
 
 <script>
-// VALOR GLOBAL ACTUALIZADO 2026
-const SBU_FINAL = 482;
+const SBU_2026 = 482;
 
-function switchRegimen() {
+function toggleRegimen() {
     const r = document.getElementById('regimen').value;
-    document.getElementById('bloque-codigo').classList.toggle('hidden', r !== 'codigo');
-    document.getElementById('bloque-losep').classList.toggle('hidden', r !== 'losep');
+    document.getElementById('opciones-codigo').classList.toggle('hidden', r !== 'codigo');
+    document.getElementById('opciones-losep').classList.toggle('hidden', r !== 'losep');
 }
 
-function switchContrato() {
+function toggleContrato() {
     const d = document.getElementById('es_despido').checked;
     document.getElementById('check-contrato').classList.toggle('hidden', !d);
 }
 
 function calcularTodo() {
-    const reg = document.getElementById('regimen').value;
+    const r = document.getElementById('regimen').value;
     const sueldo = parseFloat(document.getElementById('sueldo').value) || 0;
     const anos = parseInt(document.getElementById('anos').value) || 0;
+    const mesesProp = parseInt(document.getElementById('meses_proporcional').value) || 0;
     const h50 = parseFloat(document.getElementById('h50').value) || 0;
+    const h100 = parseFloat(document.getElementById('h100').value) || 0;
 
     let total = 0;
-    let items = "<ul>";
+    let items = "<ul style='list-style:none; padding:0;'>";
 
-    if (reg === 'codigo') {
-        const despido = document.getElementById('es_despido').checked;
-        const contrato = document.getElementById('usar_mandato').checked;
-
-        if (despido) {
-            if (contrato) {
-                let m = 100 * SBU_FINAL;
+    // 1. INDEMNIZACIONES
+    if (r === 'codigo') {
+        if (document.getElementById('es_despido').checked) {
+            if (document.getElementById('aplica_100sbu').checked) {
+                let m = 100 * SBU_2026;
                 total += m;
-                items += `<li><b>Indemnización Contrato 2019 (100 SBU):</b> $${m.toFixed(2)}</li>`;
+                items += `<li>✅ <b>Indemnización Contrato Colectivo (100 SBU):</b> $${m.toFixed(2)}</li>`;
             } else {
                 let m = (anos < 3 ? 3 : (anos > 25 ? 25 : anos)) * sueldo;
                 total += m;
-                items += `<li><b>Indemnización Despido Art. 188:</b> $${m.toFixed(2)}</li>`;
+                items += `<li>✅ <b>Indemnización Despido (Art. 188):</b> $${m.toFixed(2)}</li>`;
             }
         }
         let desahucio = (sueldo * 0.25) * anos;
         total += desahucio;
-        items += `<li><b>Bonificación Desahucio (25%):</b> $${desahucio.toFixed(2)}</li>`;
+        items += `<li>✅ <b>Bonificación Desahucio (Art. 185):</b> $${desahucio.toFixed(2)}</li>`;
     } else {
-        const tipo = document.getElementById('tipo_losep').value;
-        if (tipo === 'indem') {
-            let m = Math.min((5 * SBU_FINAL * anos), (150 * SBU_FINAL));
+        if (document.getElementById('tipo_losep').value === 'permanente') {
+            let m = Math.min((5 * SBU_2026 * anos), (150 * SBU_2026));
             total += m;
-            items += `<li><b>Indemnización Supresión LOSEP:</b> $${m.toFixed(2)}</li>`;
+            items += `<li>✅ <b>Indemnización Supresión LOSEP:</b> $${m.toFixed(2)}</li>`;
         }
     }
 
-    // Horas extras
-    if(h50 > 0) {
-        let p = h50 * ((sueldo / 240) * 1.5);
-        total += p;
-        items += `<li><b>Horas Suplementarias:</b> $${p.toFixed(2)}</li>`;
+    // 2. DÉCIMOS PROPORCIONALES
+    let d13 = (sueldo / 12) * mesesProp;
+    let d14 = (SBU_2026 / 12) * mesesProp;
+    total += (d13 + d14);
+    items += `<li>✅ <b>Décimo Tercero Proporcional:</b> $${d13.toFixed(2)}</li>`;
+    items += `<li>✅ <b>Décimo Cuarto Proporcional:</b> $${d14.toFixed(2)}</li>`;
+
+    // 3. HORAS EXTRAS
+    let vh = sueldo / 240;
+    let p50 = h50 * (vh * 1.5);
+    let p100 = h100 * (vh * 2);
+    if(p50 > 0 || p100 > 0) {
+        total += (p50 + p100);
+        items += `<li>✅ <b>Horas Extras Totales:</b> $${(p50 + p100).toFixed(2)}</li>`;
     }
 
-    items += "</ul>";
-    
-    // Fecha límite (15 días)
+    // 4. JUBILACIÓN PATRONAL (SIMPLIFICADA ART. 216)
+    if (document.getElementById('aplica_jubilacion').value === 'si' && anos >= 20) {
+        let pensionMensual = (sueldo * 0.05) * (anos / 25); // Estimación base
+        items += `<li style='color:blue;'>ℹ️ <b>Pensión Jubilación Estimada:</b> $${pensionMensual.toFixed(2)} / mes</li>`;
+    }
+
+    // RESULTADO FINAL
     const hoy = new Date();
     hoy.setDate(hoy.getDate() + 15);
-    const fechaPago = hoy.toLocaleDateString('es-EC');
-
-    document.getElementById('total-val').innerText = `TOTAL A PAGAR: $${total.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-    document.getElementById('detalle-val').innerHTML = items;
-    document.getElementById('fecha-limite').innerText = `PLAZO MÁXIMO DE PAGO: ${fechaPago}`;
-    document.getElementById('result-box').style.display = 'block';
+    
+    document.getElementById('gran-total').innerText = `TOTAL LIQUIDACIÓN: $${total.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+    document.getElementById('detalle-calculos').innerHTML = items + "</ul>";
+    document.getElementById('pago-limite').innerText = `FECHA LÍMITE DE PAGO (15 DÍAS): ${hoy.toLocaleDateString('es-EC')}`;
+    document.getElementById('resultado-final').style.display = 'block';
     document.getElementById('btn-pdf').style.display = 'block';
 }
 
-function descargar() {
-    const el = document.getElementById('area-pdf');
+function descargarPDF() {
+    const el = document.getElementById('area-impresion');
     html2pdf().from(el).set({
         margin: 1,
-        filename: 'Laborales_Liquidacion_2026.pdf',
-        jsPDF: { unit: 'in', format: 'letter' }
+        filename: 'Laborales_Liquidacion_Completa.pdf',
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
     }).save();
 }
 </script>
 </body>
 </html>
-
 

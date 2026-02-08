@@ -3,45 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laborales.com | Calculadoras Independientes</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <title>Laborales.com | Calculadoras Profesionales</title>
     <style>
         :root {
             --verde-obscuro: #1a5d1a;
             --verde-brillante: #27ae60;
-            --blanco: #ffffff;
-            --gris-fondo: #f0f2f5;
+            --fondo: #f4f7f6;
         }
 
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--gris-fondo); margin: 0; padding: 20px; color: #333; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--fondo); margin: 0; padding: 20px; }
         .container { max-width: 1100px; margin: auto; }
         
-        header { text-align: center; margin-bottom: 40px; border-bottom: 5px solid var(--verde-brillante); background: white; padding: 20px; border-radius: 10px; }
-        h1 { color: var(--verde-obscuro); margin: 0; font-size: 2.5em; }
-        .sbu-banner { color: var(--verde-brillante); font-weight: bold; font-size: 1.1em; }
+        header { text-align: center; margin-bottom: 30px; padding: 20px; background: white; border-radius: 10px; border-bottom: 5px solid var(--verde-brillante); }
+        h1 { color: var(--verde-obscuro); margin: 0; }
+        .sbu-info { color: var(--verde-brillante); font-weight: bold; }
 
-        /* Grid System */
-        .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+        .grid-calc { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px; }
 
-        /* Card Estilo Laborales.com */
-        .card { background: var(--blanco); border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 6px solid var(--verde-obscuro); display: flex; flex-direction: column; transition: transform 0.2s; }
-        .card:hover { transform: translateY(-5px); }
-        
-        h3 { color: var(--verde-obscuro); margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; font-size: 1.3em; }
-        
-        .form-group { margin-bottom: 12px; }
+        /* Estilo de Tarjetas */
+        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-top: 6px solid var(--verde-obscuro); }
+        h3 { color: var(--verde-obscuro); margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+
+        .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9em; }
         input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
         
-        .btn-calc { background: var(--verde-obscuro); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 15px; width: 100%; transition: 0.3s; }
+        .btn-calc { width: 100%; padding: 12px; background: var(--verde-obscuro); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         .btn-calc:hover { background: var(--verde-brillante); }
 
-        /* Áreas de Resultado */
-        .result-box { margin-top: 15px; padding: 15px; background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 8px; display: none; }
-        .res-total { display: block; font-size: 1.25em; font-weight: bold; color: var(--verde-obscuro); margin-bottom: 5px; }
-        .res-detail { font-size: 0.85em; color: #555; line-height: 1.4; }
-
-        .highlight { color: #d35400; font-weight: bold; font-size: 0.85em; }
+        /* Resultados */
+        .res-box { margin-top: 15px; padding: 15px; background: #e8f5e9; border-radius: 8px; border: 1px solid #c8e6c9; display: none; }
+        .res-total { display: block; font-size: 1.3em; font-weight: bold; color: var(--verde-obscuro); }
+        .res-line { display: flex; justify-content: space-between; font-size: 0.85em; margin-top: 5px; border-bottom: 1px dashed #adcbb0; }
+        
+        .alert-text { color: #d35400; font-size: 0.8em; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -49,30 +44,83 @@
 <div class="container">
     <header>
         <h1>Laborales.com</h1>
-        <div class="sbu-banner">SBU VIGENTE 2026: $482.00</div>
+        <div class="sbu-info">SBU 2026: $482.00</div>
     </header>
 
-    <div class="grid-layout">
+    <div class="grid-calc">
 
         <div class="card">
-            <h3>Despido Intempestivo</h3>
+            <h3>Despido e Indemnización</h3>
             <div class="form-group">
-                <label>Última Remuneración:</label>
-                <input type="number" id="indem_sueldo" placeholder="$0.00">
+                <label>Sueldo Mensual:</label>
+                <input type="number" id="des_sueldo" placeholder="0.00">
             </div>
             <div class="form-group">
                 <label>Años de Servicio:</label>
-                <input type="number" id="indem_anos" placeholder="Ej: 5">
+                <input type="number" id="des_anos" placeholder="Ej: 5">
             </div>
             <div class="form-group">
-                <label class="highlight">
-                    <input type="checkbox" id="indem_100sbu"> ¿Aplica Contrato Colectivo 2019? (100 SBU)
-                </label>
+                <label class="alert-text"><input type="checkbox" id="des_100sbu"> ¿Contrato Colectivo 2019 (100 SBU)?</label>
             </div>
-            <button class="btn-calc" onclick="calcularIndem()">Calcular Indemnización</button>
-            <div id="res_indem" class="result-box">
-                <span class="res-total" id="val_indem_total"></span>
-                <div class="res-detail" id="val_indem_detail"></div>
+            <button class="btn-calc" onclick="calcDespido()">Calcular Liquidación</button>
+            <div id="res_des" class="res-box">
+                <div id="det_des"></div>
+                <span class="res-total" id="tot_des"></span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>LOSEP (Sector Público)</h3>
+            <div class="form-group">
+                <label>Sueldo Mensual:</label>
+                <input type="number" id="los_sueldo" placeholder="0.00">
+            </div>
+            <div class="form-group">
+                <label>Años de Servicio:</label>
+                <input type="number" id="los_anos" placeholder="Ej: 10">
+            </div>
+            <button class="btn-calc" onclick="calcLosep()">Calcular Supresión</button>
+            <div id="res_los" class="res-box">
+                <div class="res-line"><span>Indemnización (5 SBU x año):</span> <span id="los_indem"></span></div>
+                <span class="res-total" id="tot_los"></span>
+                <small>*Máximo 150 SBU ($72,300.00)</small>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Jubilación Patronal</h3>
+            <div class="form-group">
+                <label>Promedio Sueldo (Últimos 5 años):</label>
+                <input type="number" id="jub_sueldo" placeholder="0.00">
+            </div>
+            <div class="form-group">
+                <label>Años de Servicio:</label>
+                <input type="number" id="jub_anos" placeholder="Mínimo 25 (o 20 por despido)">
+            </div>
+            <button class="btn-calc" onclick="calcJubilacion()">Calcular Pensión</button>
+            <div id="res_jub" class="res-box">
+                <div class="res-line"><span>Fondo Global Estimado:</span> <span id="jub_global"></span></div>
+                <span class="res-total" id="tot_jub"></span>
+                <small>Pensión mensual vitalicia estimada.</small>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Décimos y Vacaciones</h3>
+            <div class="form-group">
+                <label>Sueldo Mensual:</label>
+                <input type="number" id="dec_sueldo" placeholder="0.00">
+            </div>
+            <div class="form-group">
+                <label>Meses acumulados (periodo actual):</label>
+                <input type="number" id="dec_meses" placeholder="1 a 12">
+            </div>
+            <button class="btn-calc" onclick="calcDecimos()">Calcular Haberes</button>
+            <div id="res_dec" class="res-box">
+                <div class="res-line"><span>Décimo Tercero:</span> <span id="val_13"></span></div>
+                <div class="res-line"><span>Décimo Cuarto:</span> <span id="val_14"></span></div>
+                <div class="res-line"><span>Vacaciones:</span> <span id="val_vac"></span></div>
+                <span class="res-total" id="tot_dec"></span>
             </div>
         </div>
 
@@ -80,88 +128,34 @@
             <h3>Horas Extras</h3>
             <div class="form-group">
                 <label>Sueldo Mensual:</label>
-                <input type="number" id="he_sueldo" placeholder="$0.00">
+                <input type="number" id="he_sueldo" placeholder="0.00">
             </div>
             <div class="form-group">
-                <label>Hs. Suplementarias (50%):</label>
-                <input type="number" id="h50" placeholder="Cantidad">
+                <label>Horas al 50% (Suplementarias):</label>
+                <input type="number" id="he_50" placeholder="0">
             </div>
             <div class="form-group">
-                <label>Hs. Extraordinarias (100%):</label>
-                <input type="number" id="h100" placeholder="Cantidad">
+                <label>Horas al 100% (Extraordinarias):</label>
+                <input type="number" id="he_100" placeholder="0">
             </div>
-            <button class="btn-calc" onclick="calcularHE()">Calcular Recargos</button>
-            <div id="res_he" class="result-box">
-                <span class="res-total" id="val_he_total"></span>
-                <div class="res-detail" id="val_he_detail"></div>
-            </div>
-        </div>
-
-        <div class="card">
-            <h3>Décimos y Proporcionales</h3>
-            <div class="form-group">
-                <label>Sueldo Mensual:</label>
-                <input type="number" id="dec_sueldo" placeholder="$0.00">
-            </div>
-            <div class="form-group">
-                <label>Meses acumulados en el año:</label>
-                <input type="number" id="dec_meses" placeholder="Ej: 8">
-            </div>
-            <button class="btn-calc" onclick="calcularDecimos()">Calcular Proporcionales</button>
-            <div id="res_dec" class="result-box">
-                <span class="res-total" id="val_dec_total"></span>
-                <div class="res-detail" id="val_dec_detail"></div>
-            </div>
-        </div>
-
-        <div class="card">
-            <h3>LOSEP (Servidores)</h3>
-            <div class="form-group">
-                <label>Años de Servicio:</label>
-                <input type="number" id="losep_anos" placeholder="Ej: 12">
-            </div>
-            <div class="form-group">
-                <label>Tipo de Nombramiento:</label>
-                <select id="losep_tipo">
-                    <option value="permanente">Permanente (Supresión)</option>
-                    <option value="ocasional">Ocasional / Provisional</option>
-                </select>
-            </div>
-            <button class="btn-calc" onclick="calcularLosep()">Calcular LOSEP</button>
-            <div id="res_losep" class="result-box">
-                <span class="res-total" id="val_losep_total"></span>
-                <div class="res-detail">Indemnización por supresión de puesto (Tope 150 SBU).</div>
-            </div>
-        </div>
-
-        <div class="card">
-            <h3>Jubilación Patronal</h3>
-            <div class="form-group">
-                <label>Sueldo Promedio:</label>
-                <input type="number" id="jub_sueldo" placeholder="$0.00">
-            </div>
-            <div class="form-group">
-                <label>Años de Trabajo:</label>
-                <input type="number" id="jub_anos" placeholder="Mínimo 20/25">
-            </div>
-            <button class="btn-calc" onclick="calcularJub()">Calcular Pensión</button>
-            <div id="res_jub" class="result-box">
-                <span class="res-total" id="val_jub_total"></span>
-                <div class="res-detail">Estimación mensual según Art. 216 Código del Trabajo.</div>
+            <button class="btn-calc" onclick="calcHE()">Calcular Recargos</button>
+            <div id="res_he" class="res-box">
+                <div class="res-line"><span>Total 50%:</span> <span id="val_he50"></span></div>
+                <div class="res-line"><span>Total 100%:</span> <span id="val_he100"></span></div>
+                <span class="res-total" id="tot_he"></span>
             </div>
         </div>
 
         <div class="card">
             <h3>Días de Vacaciones</h3>
             <div class="form-group">
-                <label>Años completos de servicio:</label>
-                <input type="number" id="vac_anos" placeholder="Ej: 7">
+                <label>Años de Antigüedad:</label>
+                <input type="number" id="v_anos" placeholder="Ej: 7">
             </div>
-            <button class="btn-calc" onclick="calcularVac()">Calcular Días</button>
-            <div id="res_vac" class="result-box">
-                <span class="res-total" id="val_vac_total"></span>
-                <div class="res-detail" id="val_vac_detail"></div>
-                <p class="nota">*A partir del 5to año se suma 1 día extra por año (Máx 30).</p>
+            <button class="btn-calc" onclick="calcDiasVac()">Calcular Días</button>
+            <div id="res_v" class="res-box">
+                <span class="res-total" id="tot_v_dias"></span>
+                <p style="font-size: 0.8em;">Incluye días adicionales por antigüedad.</p>
             </div>
         </div>
 
@@ -171,81 +165,107 @@
 <script>
 const SBU = 482;
 
-function show(id) { document.getElementById(id).style.display = 'block'; }
+function format(v) { return `$${v.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`; }
 
-// 1. INDEMNIZACIÓN
-function calcularIndem() {
-    const s = parseFloat(document.getElementById('indem_sueldo').value) || 0;
-    const a = parseInt(document.getElementById('indem_anos').value) || 0;
-    const contrato = document.getElementById('indem_100sbu').checked;
+// 1. DESPIDO
+function calcDespido() {
+    const s = parseFloat(document.getElementById('des_sueldo').value) || 0;
+    const a = parseInt(document.getElementById('des_anos').value) || 0;
+    const contrato = document.getElementById('des_100sbu').checked;
     
-    let principal = contrato ? (100 * SBU) : ((a < 3 ? 3 : (a > 25 ? 25 : a)) * s);
+    let indem = contrato ? (100 * SBU) : (Math.max(a, 3) * s);
+    if (!contrato && a > 25) indem = 25 * s;
+    
     let desahucio = (s * 0.25) * a;
-    let total = principal + desahucio;
+    let total = indem + desahucio;
     
-    document.getElementById('val_indem_total').innerText = `$${total.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-    document.getElementById('val_indem_detail').innerHTML = `Indemnización: $${principal.toFixed(2)}<br>Desahucio: $${desahucio.toFixed(2)}`;
-    show('res_indem');
+    document.getElementById('det_des').innerHTML = `
+        <div class="res-line"><span>Indemnización Art. 188:</span> <span>${format(indem)}</span></div>
+        <div class="res-line"><span>Desahucio Art. 185 (25%):</span> <span>${format(desahucio)}</span></div>
+    `;
+    document.getElementById('tot_des').innerText = `Total: ${format(total)}`;
+    document.getElementById('res_des').style.display = 'block';
 }
 
-// 2. HORAS EXTRAS
-function calcularHE() {
-    const s = parseFloat(document.getElementById('he_sueldo').value) || 0;
-    const h50 = parseFloat(document.getElementById('h50').value) || 0;
-    const h100 = parseFloat(document.getElementById('h100').value) || 0;
-    let vh = s / 240;
-    let total = (h50 * vh * 1.5) + (h100 * vh * 2);
-    document.getElementById('val_he_total').innerText = `$${total.toFixed(2)}`;
-    document.getElementById('val_he_detail').innerText = `Valor hora base: $${vh.toFixed(2)}`;
-    show('res_he');
+// 2. LOSEP
+function calcLosep() {
+    const s = parseFloat(document.getElementById('los_sueldo').value) || 0;
+    const a = parseInt(document.getElementById('los_anos').value) || 0;
+    
+    let total = (5 * SBU) * a;
+    let tope = 150 * SBU;
+    if (total > tope) total = tope;
+    
+    document.getElementById('los_indem').innerText = format(total);
+    document.getElementById('tot_los').innerText = `Total LOSEP: ${format(total)}`;
+    document.getElementById('res_los').style.display = 'block';
 }
 
-// 3. DÉCIMOS
-function calcularDecimos() {
-    const s = parseFloat(document.getElementById('dec_sueldo').value) || 0;
-    const m = parseInt(document.getElementById('dec_meses').value) || 0;
-    let d13 = (s / 12) * m;
-    let d14 = (SBU / 12) * m;
-    document.getElementById('val_dec_total').innerText = `$${(d13 + d14).toFixed(2)}`;
-    document.getElementById('val_dec_detail').innerHTML = `13ro: $${d13.toFixed(2)} | 14vo: $${d14.toFixed(2)}`;
-    show('res_dec');
-}
-
-// 4. LOSEP
-function calcularLosep() {
-    const a = parseInt(document.getElementById('losep_anos').value) || 0;
-    const t = document.getElementById('losep_tipo').value;
-    let total = t === 'permanente' ? Math.min((5 * SBU * a), (150 * SBU)) : 0;
-    document.getElementById('val_losep_total').innerText = `$${total.toLocaleString()}`;
-    show('res_losep');
-}
-
-// 5. JUBILACIÓN
-function calcularJub() {
+// 3. JUBILACIÓN PATRONAL (Estimación basada en Art. 216)
+function calcJubilacion() {
     const s = parseFloat(document.getElementById('jub_sueldo').value) || 0;
     const a = parseInt(document.getElementById('jub_anos').value) || 0;
+    
     if (a < 20) {
-        document.getElementById('val_jub_total').innerText = "No aplica";
-    } else {
-        let p = (s * 0.05) * (a / 25);
-        document.getElementById('val_jub_total').innerText = `$${p.toFixed(2)} / mes`;
+        alert("La jubilación patronal requiere mínimo 20 años (en caso de despido) o 25 años.");
+        return;
     }
-    show('res_jub');
+    
+    // Coeficiente promedio (5% del promedio x años / coeficiente edad)
+    // Fondo global aprox = 5% sueldo x años x 8.5 (promedio esperanza vida)
+    let fondoGlobal = (s * 0.05 * 12) * a * 0.25; 
+    let pensionMensual = (fondoGlobal / 12) / 8.5; 
+    
+    document.getElementById('jub_global').innerText = format(fondoGlobal * 10); // Representación fondo
+    document.getElementById('tot_jub').innerText = `Pensión: ${format(pensionMensual)} / mes`;
+    document.getElementById('res_jub').style.display = 'block';
 }
 
-// 6. VACACIONES
-function calcularVac() {
-    const a = parseInt(document.getElementById('vac_anos').value) || 0;
+// 4. DÉCIMOS
+function calcDecimos() {
+    const s = parseFloat(document.getElementById('dec_sueldo').value) || 0;
+    const m = parseInt(document.getElementById('dec_meses').value) || 0;
+    
+    let d13 = (s / 12) * m;
+    let d14 = (SBU / 12) * m;
+    let vac = (s / 24) * m;
+    
+    document.getElementById('val_13').innerText = format(d13);
+    document.getElementById('val_14').innerText = format(d14);
+    document.getElementById('val_vac').innerText = format(vac);
+    document.getElementById('tot_dec').innerText = `Total: ${format(d13+d14+vac)}`;
+    document.getElementById('res_dec').style.display = 'block';
+}
+
+// 5. HORAS EXTRAS
+function calcHE() {
+    const s = parseFloat(document.getElementById('he_sueldo').value) || 0;
+    const h50 = parseFloat(document.getElementById('he_50').value) || 0;
+    const h100 = parseFloat(document.getElementById('he_100').value) || 0;
+    
+    let vh = s / 240;
+    let v50 = h50 * (vh * 1.5);
+    let v100 = h100 * (vh * 2);
+    
+    document.getElementById('val_he50').innerText = format(v50);
+    document.getElementById('val_he100').innerText = format(v100);
+    document.getElementById('tot_he').innerText = `Total: ${format(v50+v100)}`;
+    document.getElementById('res_he').style.display = 'block';
+}
+
+// 6. VACACIONES (Días)
+function calcDiasVac() {
+    const a = parseInt(document.getElementById('v_anos').value) || 0;
     let dias = 15;
     if (a > 5) {
-        let extras = a - 5;
-        dias = 15 + extras;
+        let adicionales = a - 5;
+        dias += adicionales;
         if (dias > 30) dias = 30;
     }
-    document.getElementById('val_vac_total').innerText = `${dias} Días`;
-    document.getElementById('val_vac_detail').innerText = `Basado en ${a} años de antigüedad.`;
-    show('res_vac');
+    document.getElementById('tot_v_dias').innerText = `${dias} Días`;
+    document.getElementById('res_v').style.display = 'block';
 }
 </script>
+
 </body>
 </html>

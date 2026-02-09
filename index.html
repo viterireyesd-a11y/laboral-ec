@@ -53,7 +53,6 @@
         .tabla-guia th, .tabla-guia td { border: 1px solid #e2e8f0; padding: 10px; text-align: center; }
         .tabla-guia th { background: #f1f5f9; color: var(--p); font-weight: 700; }
 
-        /* --- ESTILOS DE LA IA DE ALTA CAPACIDAD --- */
         #chat-bot { 
             position: fixed; bottom: 100px; right: 30px; width: 450px; height: 600px;
             background: #ffffff; border-radius: 25px; box-shadow: 0 25px 60px rgba(0,0,0,0.3); 
@@ -66,53 +65,15 @@
         #chat-header { 
             background: linear-gradient(90deg, var(--p), #334155); color: white; padding: 20px; 
             font-weight: 700; display: flex; justify-content: space-between; align-items: center; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        #chat-body { 
-            flex: 1; padding: 20px; overflow-y: auto; font-size: 0.95rem; 
-            background: #f8fafc; display: flex; flex-direction: column; gap: 18px; 
-        }
-        
-        #chat-input-area { 
-            background: white; padding: 20px; border-top: 1px solid #e2e8f0; 
-            display: flex; align-items: center; gap: 12px;
-        }
-        #chat-input { 
-            background: #f1f5f9; border: 2px solid #e2e8f0; padding: 14px 20px; 
-            flex: 1; border-radius: 30px; outline: none; font-size: 1rem; 
-        }
-        #chat-input:focus { border-color: var(--s); background: white; }
-        
-        #chat-send { 
-            background: var(--s); color: white; border: none; width: 50px; height: 50px; 
-            border-radius: 50%; cursor: pointer; display: flex; justify-content: center; 
-            align-items: center; font-size: 1.4rem; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
-            transition: transform 0.2s;
-        }
-        #chat-send:hover { transform: scale(1.1); }
+        #chat-body { flex: 1; padding: 20px; overflow-y: auto; font-size: 0.95rem; background: #f8fafc; display: flex; flex-direction: column; gap: 18px; }
+        #chat-input-area { background: white; padding: 20px; border-top: 1px solid #e2e8f0; display: flex; align-items: center; gap: 12px; }
+        #chat-input { background: #f1f5f9; border: 2px solid #e2e8f0; padding: 14px 20px; flex: 1; border-radius: 30px; outline: none; }
+        #chat-send { background: var(--s); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 1.4rem; }
 
-        .bot-msg { 
-            background: white; padding: 16px 20px; border-radius: 20px 20px 20px 5px; 
-            align-self: flex-start; max-width: 85%; color: #334155; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; line-height: 1.5; 
-        }
-        .bot-msg strong { color: var(--p); }
-        .user-msg { 
-            background: var(--i); color: white; padding: 14px 20px; 
-            border-radius: 20px 20px 5px 20px; align-self: flex-end; max-width: 80%; 
-            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
-        }
-
-        #chat-toggle { 
-            position: fixed; bottom: 30px; right: 30px; background: var(--p); 
-            color: white; width: 75px; height: 75px; border-radius: 50%; 
-            display: flex; justify-content: center; align-items: center; 
-            cursor: pointer; font-size: 36px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
-            z-index: 2001; transition: transform 0.3s;
-        }
-        #chat-toggle:hover { transform: scale(1.1) rotate(5deg); }
-
-        @media (max-width: 600px) { #chat-bot { width: 100%; height: 100%; bottom: 0; right: 0; border-radius: 0; } #chat-toggle { width: 60px; height: 60px; font-size: 28px; } }
+        .bot-msg { background: white; padding: 16px 20px; border-radius: 20px 20px 20px 5px; align-self: flex-start; max-width: 85%; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; }
+        .user-msg { background: var(--i); color: white; padding: 14px 20px; border-radius: 20px 20px 5px 20px; align-self: flex-end; max-width: 80%; }
+        #chat-toggle { position: fixed; bottom: 30px; right: 30px; background: var(--p); color: white; width: 75px; height: 75px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 36px; z-index: 2001; }
     </style>
 </head>
 <body>
@@ -146,14 +107,11 @@
             <input type="text" id="j4" value="0">
             <button onclick="f('j')">Calcular Pensión Mensual</button>
             <div id="out_j" class="res"></div>
-            
-            <h3 style="margin-top:20px; font-size:0.9rem; color:var(--g);">Tabla Referencial (Código del Trabajo)</h3>
             <table class="tabla-guia">
                 <thead><tr><th>Edad</th><th>Coeficiente</th><th>Edad</th><th>Coeficiente</th></tr></thead>
                 <tbody>
                     <tr><td>40 a 44</td><td>12.0120</td><td>60 a 64</td><td>7.3750</td></tr>
                     <tr><td>45 a 49</td><td>10.9750</td><td>65 a 69</td><td>6.0590</td></tr>
-                    <tr><td>50 a 54</td><td>9.8510</td><td>70 a 74</td><td>4.7520</td></tr>
                 </tbody>
             </table>
         </div>
@@ -202,24 +160,8 @@
 
 <div id="chat-toggle" onclick="toggleChat()">💬</div>
 <div id="chat-bot">
-    <div id="chat-header">
-        <span>⚖️ IA JURÍDICA ECUADOR</span>
-        <span style="cursor:pointer; font-size:1.5rem;" onclick="toggleChat()">×</span>
-    </div>
-    <div id="chat-body">
-        <div class="bot-msg">
-            👋 <b>Bienvenido a la IA Jurídica de LABORALEC.</b>
-            <br><br>
-            He sido diseñada para funcionar 100% sin internet. Mi base de datos interna contiene información detallada sobre:
-            <br><br>
-            📌 <b>Código del Trabajo</b> (Despidos, Renuncias, Visto Bueno)<br>
-            📌 <b>Seguridad Social IESS</b> (Afiliación, Mora)<br>
-            📌 <b>Grupos Prioritarios</b> (Maternidad, Discapacidad)<br>
-            📌 <b>Normativa Ministerial 2026</b>
-            <br><br>
-            ¿Cuál es tu consulta legal hoy?
-        </div>
-    </div>
+    <div id="chat-header"><span>⚖️ IA JURÍDICA ECUADOR</span><span style="cursor:pointer" onclick="toggleChat()">×</span></div>
+    <div id="chat-body"><div class="bot-msg">👋 Bienvenido. Soy tu IA Jurídica 2026.</div></div>
     <div id="chat-input-area">
         <input type="text" id="chat-input" placeholder="Ej: ¿Cuánto me toca por despido?" onkeypress="handleKey(event)">
         <button id="chat-send" onclick="askBot()">➤</button>
@@ -229,9 +171,6 @@
 <script>
     const SBU = 482.00; 
 
-    /* ==================================================================
-       1. BLOQUE DE CALCULADORAS (LÓGICA ORIGINAL PLANA)
-       ================================================================== */
     function v(id) {
         let val = document.getElementById(id).value.trim().replace(',', '.');
         if (val === "" || isNaN(val) || parseFloat(val) < 0) return null;
@@ -242,8 +181,7 @@
         target.innerHTML = m; target.className = 'res ' + (e ? 'err' : 'ok');
         target.style.display = 'block';
     }
-    
-    // Función f(t) sin emojis ni adornos, solo datos
+
     function f(t) {
         if (t === 'd') {
             let s = v('d1'), m = v('d2');
@@ -282,81 +220,61 @@
         }
     }
 
-    /* ==================================================================
-       2. INTELIGENCIA ARTIFICIAL OFFLINE (CORREGIDA Y EXTENDIDA)
-       ================================================================== */
     const KNOWLEDGE_BASE = [
         {
-            // AGREGADO: Esta sección faltaba en la versión anterior
-            tags: ["despido", "intempestivo", "liquidacion", "botar", "indemnizacion", "separacion"],
-            answer: "🚫 <b>Despido Intempestivo (Art. 188):</b> Es la terminación del contrato sin causa legal.<br>💰 <b>Indemnización:</b><br>1. <b>Hasta 3 años de servicio:</b> 3 meses de remuneración (valor fijo).<br>2. <b>Más de 3 años:</b> 1 mes de sueldo por cada año de servicio.<br>➕ <b>Adicional:</b> Se debe sumar la bonificación por desahucio (25% del sueldo por año)."
+            tags: ["despido", "intempestivo", "liquidacion", "botar", "indemnizacion"],
+            answer: "🚫 <b>Despido Intempestivo (Art. 188):</b> Terminación sin causa legal.<br>💰 <b>Indemnización:</b> 1 mes de sueldo por cada año (mínimo 3) más el 25% de desahucio."
         },
         {
             tags: ["acuerdo", "ministerial", "mdt", "normativa"],
-            answer: "📑 <b>Acuerdos Ministeriales:</b> Normas técnicas del MDT. <br>1. <b>MDT-2023-140:</b> Fija el SBU ($482) y salarios sectoriales. <br>2. <b>Teletrabajo:</b> Derecho a desconexión (12h mínimas) y pago de equipos. <br>3. <b>Contrato Joven:</b> Incentivos por contratar menores de 26 años."
+            answer: "📑 <b>Acuerdos Ministeriales:</b> Normas técnicas del MDT. <br>1. <b>SBU 2026:</b> $482. <br>2. <b>Teletrabajo:</b> Desconexión mínima de 12h."
         },
         {
-            tags: ["reglamento", "interno", "rit", "normas"],
-            answer: "📜 <b>Reglamento Interno:</b> Obligatorio si hay +10 trabajadores. <br>✅ <b>Contiene:</b> Horarios, seguridad, sanciones. <br>❌ <b>Prohibido:</b> Multas >10% del sueldo diario. Debe estar aprobado por el Ministerio."
-        },
-        {
-            tags: ["maternidad", "embarazo", "gestacion", "lactancia", "madre"],
-            answer: "🤰 <b>Maternidad (Art. 152-155):</b> <br>1. <b>Licencia:</b> 12 semanas pagadas (2 pre y 10 posnatales). <br>2. <b>Lactancia:</b> Jornada reducida. La madre trabajará <b>6 horas diarias durante 12 meses</b> desde el parto (recibiendo el sueldo de 8h). <br>3. <b>Despido Ineficaz:</b> Despedir a una embarazada o en lactancia es nulo. Se paga indemnización de 12 meses EXTRA de sueldo."
-        }, <b>Despido Ineficaz:</b> Despedir a una embarazada es nulo. Se paga indemnización de 12 meses EXTRA de sueldo."
+            tags: ["maternidad", "embarazo", "lactancia", "madre"],
+            answer: "🤰 <b>Maternidad (Art. 152-155):</b> <br>1. <b>Licencia:</b> 12 semanas. <br>2. <b>Lactancia:</b> Jornada de 6h diarias durante 12 meses. <br>3. <b>Despido Ineficaz:</b> Indemnización de 12 meses extra si se despide a la madre."
         },
         {
             tags: ["paternidad", "padre", "nacimiento"],
-            answer: "👨‍🍼 <b>Licencia Paternidad:</b> <br>- <b>Parto Normal:</b> 10 días pagados. <br>- <b>Cesárea/Múltiple:</b> 15 días. <br>- <b>Prematuro:</b> 18 días."
+            answer: "👨‍🍼 <b>Licencia Paternidad:</b> 10 días por parto normal, 15 por cesárea."
         },
         {
-            tags: ["discapacidad", "conadis", "carnet", "sustituto"],
-            answer: "♿ <b>Discapacidad:</b> <br>1. <b>Cuota:</b> Empresas con +25 empleados deben tener 4% de personal con discapacidad. <br>2. <b>Despido:</b> Indemnización de <b>18 meses</b> de sueldo adicional si son despedidos injustificadamente."
+            tags: ["discapacidad", "conadis"],
+            answer: "♿ <b>Discapacidad:</b> Cuota del 4%. Despido injustificado implica 18 meses de sueldo adicional."
         },
         {
-            tags: ["iess", "seguridad social", "afiliacion", "aporte", "mora"],
-            answer: "🏥 <b>IESS:</b> <br>🔹 <b>Afiliación:</b> Desde el día 1. <br>🔹 <b>Aporte Personal:</b> 9.45%. <br>🔹 <b>Aporte Patronal:</b> 11.15%. <br>⚠️ Si no se paga a tiempo, el empleador cubre gastos médicos (Responsabilidad Patronal)."
+            tags: ["iess", "afiliacion", "aporte"],
+            answer: "🏥 <b>IESS:</b> Aporte personal 9.45% y patronal 11.15%."
         },
         {
-            tags: ["fondo", "reserva", "acumulacion"],
-            answer: "💰 <b>Fondos de Reserva:</b> <br>8.33% del sueldo mensual. <br>✅ <b>Derecho:</b> Desde el mes 13 de trabajo. <br>✅ <b>Pago:</b> Mensual o acumulado (a elección del trabajador)."
+            tags: ["fondo", "reserva"],
+            answer: "💰 <b>Fondos de Reserva:</b> 8.33% del sueldo a partir del mes 13."
         },
         {
             tags: ["utilidades", "ganancias", "abril"],
-            answer: "📊 <b>Utilidades:</b> <br>15% de ganancias líquidas anuales de la empresa. <br>- 10% para todos los trabajadores. <br>- 5% según cargas familiares. <br>📅 <b>Pago:</b> Hasta el 15 de abril."
+            answer: "📊 <b>Utilidades:</b> 15% de ganancias (10% individual, 5% cargas). Pago hasta 15 de abril."
         },
         {
-            tags: ["visto bueno", "justificado", "inspector", "falta"],
-            answer: "⚖️ <b>Visto Bueno (Art. 172):</b> <br>Autorización del Inspector para despedir SIN indemnización. <br><b>Causas:</b> Faltas de asistencia (>3 días), indisciplina, injurias, ineptitud. Si el inspector lo niega, se considera despido intempestivo."
+            tags: ["visto bueno", "inspector"],
+            answer: "⚖️ <b>Visto Bueno:</b> Terminación por causas graves (faltas, indisciplina) autorizada por inspector."
         },
         {
-            tags: ["renuncia", "voluntaria", "retiro"],
-            answer: "👋 <b>Renuncia Voluntaria:</b> <br>El trabajador se va por su cuenta. <br>✅ <b>Recibe:</b> Décimos proporcionales, vacaciones no gozadas y Fondos de Reserva. <br>❌ <b>NO Recibe:</b> Indemnización por despido."
+            tags: ["renuncia", "voluntaria"],
+            answer: "👋 <b>Renuncia:</b> Solo se cobra proporcionales y desahucio (25% por año)."
         },
         {
-            tags: ["vacaciones", "descanso"],
-            answer: "🏖️ <b>Vacaciones:</b> <br>15 días ininterrumpidos al año. <br>A partir del 5to año, aumenta 1 día por año de antigüedad."
+            tags: ["vacaciones"],
+            answer: "🏖️ <b>Vacaciones:</b> 15 días al año. 1 día extra por año tras el 5to año."
         },
         {
-            tags: ["losep", "sector publico", "nombramiento"],
-            answer: "🏛️ <b>Sector Público (LOSEP):</b> <br>No hay despido intempestivo, sino 'Supresión de Puesto'. <br>💰 <b>Indemnización:</b> 5 SBU por año de servicio (Tope 150 SBU)."
-        },
-        {
-            tags: ["horas", "extra", "suplementaria", "nocturna"],
-            answer: "⏱️ <b>Horas Extras:</b> <br>🌙 <b>Nocturna (19h-06h):</b> +25%. <br>➕ <b>Suplementarias (fines jornada):</b> +50%. <br>🚨 <b>Extraordinarias (fines semana):</b> +100%."
-        },
-        {
-            tags: ["contrato", "prueba", "indefinido", "fijo"],
-            answer: "📝 <b>Contratos:</b> <br>1. <b>Indefinido:</b> Regla general. <br>2. <b>Prueba:</b> Máx 90 días (se puede terminar sin costo). <br>3. <b>Eventual:</b> Reemplazos o picos de producción (+35% recargo)."
+            tags: ["horas", "extra", "suplementaria"],
+            answer: "⏱️ <b>Horas:</b> Suplementarias (50% recargo), Extraordinarias (100% recargo)."
         }
     ];
 
-    function toggleChat() {
-        const chat = document.getElementById('chat-bot');
-        const isVisible = chat.style.display === 'flex';
-        chat.style.display = isVisible ? 'none' : 'flex';
-        if (!isVisible) setTimeout(() => document.getElementById('chat-input').focus(), 100);
+    function toggleChat() { 
+        const c = document.getElementById('chat-bot');
+        c.style.display = (c.style.display === 'flex') ? 'none' : 'flex';
     }
-
     function handleKey(e) { if(e.key === 'Enter') askBot(); }
 
     function askBot() {
@@ -367,39 +285,16 @@
 
         body.innerHTML += `<div class="user-msg">${input.value}</div>`;
         input.value = "";
-        body.scrollTop = body.scrollHeight;
 
         setTimeout(() => {
-            let response = "";
-            let bestMatch = null;
-            let maxScore = 0;
-
+            let r = "🤔 No encontré ese tema. Prueba con 'Despido' o 'IESS'.";
             KNOWLEDGE_BASE.forEach(item => {
-                let score = 0;
-                item.tags.forEach(tag => {
-                    if (txt.includes(tag)) score++; // Busca coincidencia parcial
-                });
-                if (score > maxScore) {
-                    maxScore = score;
-                    bestMatch = item;
-                }
+                item.tags.forEach(t => { if(txt.includes(t)) r = item.answer; });
             });
-
-            if (bestMatch && maxScore > 0) {
-                response = bestMatch.answer;
-            } else {
-                if (txt.includes("hola") || txt.includes("buenos") || txt.includes("gracias")) {
-                    response = "👋 ¡Hola! Soy tu asistente legal. Pregúntame sobre: <b>Despido, Vacaciones, Maternidad, IESS o Utilidades</b>.";
-                } else {
-                    response = "🤔 No encontré ese tema específico. Intenta con palabras clave simples como: <br><b>'Despido', 'Renuncia', 'Maternidad', 'Fondos', 'Horas Extra'.</b>";
-                }
-            }
-
-            body.innerHTML += `<div class="bot-msg">${response}</div>`;
+            body.innerHTML += `<div class="bot-msg">${r}</div>`;
             body.scrollTop = body.scrollHeight;
-        }, 500);
+        }, 400);
     }
 </script>
 </body>
 </html>
-

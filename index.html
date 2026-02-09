@@ -6,7 +6,7 @@
     <title>LABORALEC | SISTEMA INTEGRAL 2026</title>
     <style>
         :root { --p: #0f172a; --s: #10b981; --i: #3b82f6; --w: #f59e0b; --d: #ef4444; --g: #64748b; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f1f5f9; margin: 0; padding: 20px; position: relative; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f1f5f9; margin: 0; padding: 20px; position: relative; padding-bottom: 100px; }
         
         body::before {
             content: "LABORALEC"; position: fixed; top: 50%; left: 50%;
@@ -36,10 +36,18 @@
         .tabla-guia th, .tabla-guia td { border: 1px solid #e2e8f0; padding: 8px; text-align: center; }
         .tabla-guia th { background: #f8fafc; color: var(--p); }
 
-        /* Estilos Explicación */
-        .info-box { background: #fefce8; border: 1px solid #fef08a; padding: 15px; border-radius: 8px; margin-top: 15px; font-size: 0.85rem; color: #854d0e; }
+        /* Estilos Asistente Virtual */
+        #chat-bot { position: fixed; bottom: 85px; right: 20px; width: 300px; background: white; border-radius: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.2); z-index: 1000; display: none; flex-direction: column; overflow: hidden; border: 1px solid #ddd; }
+        #chat-header { background: var(--p); color: white; padding: 15px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+        #chat-body { height: 300px; padding: 15px; overflow-y: auto; font-size: 0.9rem; background: #f9f9f9; display: flex; flex-direction: column; gap: 10px; }
+        #chat-input-area { display: flex; border-top: 1px solid #eee; }
+        #chat-input { border: none; padding: 12px; flex: 1; outline: none; }
+        #chat-send { background: var(--s); color: white; border: none; padding: 10px 15px; cursor: pointer; font-weight: bold; }
+        .bot-msg { background: #e2e8f0; padding: 8px 12px; border-radius: 10px 10px 10px 0; align-self: flex-start; max-width: 85%; }
+        .user-msg { background: var(--i); color: white; padding: 8px 12px; border-radius: 10px 10px 0 10px; align-self: flex-end; max-width: 85%; }
+        #chat-toggle { position: fixed; bottom: 20px; right: 20px; background: var(--p); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 24px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 1001; }
 
-        @media print { .no-print { display: none !important; } }
+        @media print { .no-print, #chat-toggle, #chat-bot { display: none !important; } }
     </style>
 </head>
 <body>
@@ -47,7 +55,7 @@
 <div class="container">
     <header>
         <h1>LABORALEC | CALCULADORA INTEGRAL 2026</h1>
-        <p>SBU Vigente: $482.00 | Jubilación Patronal y Guía de Coeficientes</p>
+        <p>SBU Vigente: $482.00 | Jubilación Patronal y Asistente Legal</p>
     </header>
 
     <div class="grid">
@@ -69,16 +77,11 @@
             <input type="text" id="j2" placeholder="Mínimo 25">
             <label>Coeficiente Edad (Ver tabla abajo):</label>
             <input type="text" id="j3" placeholder="Ej: 6.2305">
-            <label>Fondos de Reserva (a deducir):</label>
+            <label>Fondos de Reserva (Total a deducir):</label>
             <input type="text" id="j4" value="0">
             
-            <button onclick="f('j')">Calcular Pensión</button>
+            <button onclick="f('j')">Calcular Pensión Mensual</button>
             <div id="out_j" class="res"></div>
-
-            <div class="info-box">
-                <strong>¿Qué son los Fondos de Reserva a deducir?</strong><br>
-                Es el dinero que el empleador ya te pagó o depositó en el IESS por este concepto. Según el Código del Trabajo, el empleador tiene derecho a restar este acumulado del capital total de tu jubilación para calcular la pensión mensual final.
-            </div>
 
             <h3>Guía de Coeficientes (IESS)</h3>
             <table class="tabla-guia">
@@ -86,10 +89,10 @@
                     <tr><th>Edad</th><th>Coeficiente</th><th>Edad</th><th>Coeficiente</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td>40</td><td>12.0120</td><td>60</td><td>7.3750</td></tr>
-                    <tr><td>45</td><td>10.9750</td><td>65</td><td>6.0590</td></tr>
-                    <tr><td>50</td><td>9.8510</td><td>70</td><td>4.7520</td></tr>
-                    <tr><td>55</td><td>8.6470</td><td>75</td><td>3.5230</td></tr>
+                    <tr><td>40 años</td><td>12.0120</td><td>60 años</td><td>7.3750</td></tr>
+                    <tr><td>45 años</td><td>10.9750</td><td>65 años</td><td>6.0590</td></tr>
+                    <tr><td>50 años</td><td>9.8510</td><td>70 años</td><td>4.7520</td></tr>
+                    <tr><td>55 años</td><td>8.6470</td><td>75 años</td><td>3.5230</td></tr>
                 </tbody>
             </table>
         </div>
@@ -136,6 +139,21 @@
     </div>
 </div>
 
+<div id="chat-toggle" onclick="toggleChat()">💬</div>
+<div id="chat-bot">
+    <div id="chat-header">
+        <span>Asistente LABORALEC</span>
+        <span style="cursor:pointer" onclick="toggleChat()">✖</span>
+    </div>
+    <div id="chat-body">
+        <div class="bot-msg">¡Hola! Soy tu asistente laboral. ¿Tienes dudas sobre el Código del Trabajo? Intenta con palabras como: "vacaciones", "prueba", "despido" o "fondos".</div>
+    </div>
+    <div id="chat-input-area">
+        <input type="text" id="chat-input" placeholder="Escribe tu duda..." onkeypress="handleKey(event)">
+        <button id="chat-send" onclick="askBot()">></button>
+    </div>
+</div>
+
 <script>
     const SBU = 482.00;
 
@@ -154,22 +172,24 @@
     function f(t) {
         if (t === 'd') {
             let s = v('d1'), m = v('d2');
-            if (s === null || m === null) return res('d', '⚠️ Use números.', true);
+            if (s === null || m === null) return res('d', '⚠️ Use números válidos.', true);
             let d13 = (s * m) / 12;
             let d14 = (SBU / 12) * m;
             res('d', `Décimo 3ro: $${d13.toFixed(2)}<br>Décimo 4to: $${d14.toFixed(2)}`);
         }
         
         if (t === 'j') {
-            let p = v('j1'), a = v('j2'), c = v('j3'), fr = v('j4')||0;
-            if (p === null || a === null || c === null) return res('j', '⚠️ Datos obligatorios.', true);
+            let sueldo = v('j1'), anios = v('j2'), coef = v('j3'), fondoRes = v('j4')||0;
+            if (sueldo === null || anios === null || coef === null) return res('j', '⚠️ Completa los campos obligatorios.', true);
             
-            // Lógica Profesional: 5% del promedio de ingresos de los últimos 5 años
-            let haberBruto = (p * 0.05) * a; // Simplificación legal aceptada del fondo global
-            let haberNeto = haberBruto - (fr / 12); // Ajuste de fondos proporcional
-            let mensual = (haberNeto / c); 
+            // FÓRMULA RECTIFICADA ART. 216
+            let suma5Anios = (sueldo * 12) * 5; 
+            let haberIndividualBase = (suma5Anios * 0.05 / 5) * anios; 
+            let haberNeto = haberIndividualBase - fondoRes;
+            let pensionAnual = haberNeto / coef;
+            let pensionMensual = pensionAnual / 12;
             
-            res('j', `Pensión Mensual: $${mensual.toFixed(2)}<br><small>Fondo Global Estimado: $${haberBruto.toFixed(2)}</small>`);
+            res('j', `Pensión Mensual: $${pensionMensual.toFixed(2)}<br><small>Haber Neto Individual: $${haberNeto.toFixed(2)}</small>`);
         }
 
         if (t === 'h') {
@@ -183,7 +203,7 @@
             let r = v('i1'), a = v('i2');
             if (r === null || a === null) return res('i', '⚠️ Revise datos.', true);
             let factor = (a < 3) ? 3 : a;
-            res('i', `Monto Art. 188: $${(r * factor).toFixed(2)}`);
+            res('i', `Indemnización: $${(r * factor).toFixed(2)}`);
         }
 
         if (t === 'ds') {
@@ -199,6 +219,38 @@
             let tope = SBU * 150;
             res('l', `Monto LOSEP: $${(total > tope ? tope : total).toFixed(2)}`);
         }
+    }
+
+    // --- LÓGICA ASISTENTE VIRTUAL ---
+    function toggleChat() {
+        const chat = document.getElementById('chat-bot');
+        chat.style.display = (chat.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    function handleKey(e) { if(e.key === 'Enter') askBot(); }
+
+    function askBot() {
+        const input = document.getElementById('chat-input');
+        const body = document.getElementById('chat-body');
+        const txt = input.value.toLowerCase().trim();
+        if(!txt) return;
+
+        body.innerHTML += `<div class="user-msg">${input.value}</div>`;
+        input.value = "";
+
+        let r = "Lo siento, solo puedo responder dudas sobre el Código del Trabajo de Ecuador. Intenta con 'vacaciones', 'prueba', 'fondos' o 'despido'.";
+        
+        if(txt.includes("vacaciones")) r = "Art. 69: Tienes derecho a 15 días de vacaciones tras 1 año. Desde el 5to año, sumas 1 día extra por cada año de antigüedad.";
+        if(txt.includes("prueba")) r = "Art. 15: El periodo de prueba es máximo de 90 días. Se puede terminar la relación sin pago de indemnización en este lapso.";
+        if(txt.includes("despido")) r = "El despido intempestivo (Art. 188) paga 1 mes de sueldo por cada año de trabajo (mínimo 3 meses) más el 25% de desahucio.";
+        if(txt.includes("fondos")) r = "Los Fondos de Reserva (8.33% del sueldo) se pagan desde el segundo año. En la jubilación, el empleador puede deducir este acumulado.";
+        if(txt.includes("decimo") || txt.includes("bono")) r = "D13 (Navideño): Todo lo ganado entre dic y nov / 12. D14 (Escolar): Un salario básico completo.";
+        if(txt.includes("hola") || txt.includes("buenos")) r = "¡Hola! Bienvenido a LABORALEC. ¿En qué tema laboral puedo orientarte hoy?";
+
+        setTimeout(() => {
+            body.innerHTML += `<div class="bot-msg">${r}</div>`;
+            body.scrollTop = body.scrollHeight;
+        }, 500);
     }
 </script>
 </body>

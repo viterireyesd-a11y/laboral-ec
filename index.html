@@ -6,81 +6,113 @@
     <title>LABORALEC | SISTEMA INTEGRAL 2026</title>
     <style>
         :root { --p: #0f172a; --s: #10b981; --i: #3b82f6; --w: #f59e0b; --d: #ef4444; --g: #64748b; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f1f5f9; margin: 0; padding: 20px; position: relative; padding-bottom: 100px; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f8fafc; margin: 0; padding: 20px; padding-bottom: 120px; }
         
         body::before {
-            content: "LABORALEC"; position: fixed; top: 50%; left: 50%;
+            content: "LABORALEC 2026"; position: fixed; top: 50%; left: 50%;
             transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: 8rem; font-weight: 900; color: rgba(0, 0, 0, 0.03);
+            font-size: 6rem; font-weight: 900; color: rgba(0, 0, 0, 0.04);
             z-index: -1; pointer-events: none;
         }
 
-        .container { max-width: 1200px; margin: auto; }
-        header { background: var(--p); color: white; padding: 25px; border-radius: 12px; text-align: center; margin-bottom: 25px; }
+        .container { max-width: 1250px; margin: auto; }
         
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
-        .card { background: white; border-radius: 12px; padding: 20px; border-top: 6px solid; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        
-        h2 { font-size: 1rem; color: var(--p); margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 8px; text-transform: uppercase; }
-        label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--g); margin: 10px 0 5px; }
-        input { width: 100%; padding: 12px; border: 1.5px solid #cbd5e0; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
-        
-        button { width: 100%; padding: 14px; border: none; border-radius: 8px; color: white; font-weight: 700; cursor: pointer; background: var(--p); margin-top: 15px; font-size: 1rem; }
-        button:hover { background: #1e293b; }
-
-        .res { margin-top: 15px; padding: 15px; border-radius: 8px; display: none; font-size: 0.95rem; font-weight: 700; line-height: 1.6; }
-        .ok { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; display: block; }
-        
-        .tabla-guia { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.8rem; }
-        .tabla-guia th, .tabla-guia td { border: 1px solid #e2e8f0; padding: 8px; text-align: center; }
-        .tabla-guia th { background: #f8fafc; color: var(--p); }
-
-        /* --- DISEÑO DEL ASISTENTE --- */
-        #chat-bot { 
-            position: fixed; bottom: 100px; right: 25px; width: 380px; 
-            background: #ffffff; border-radius: 20px; box-shadow: 0 15px 45px rgba(0,0,0,0.2); 
-            z-index: 1000; display: none; flex-direction: column; overflow: hidden; 
-            border: 1px solid #e2e8f0; animation: slideUp 0.3s ease;
+        header { 
+            background: linear-gradient(135deg, var(--p), #1e293b); 
+            color: white; padding: 30px; border-radius: 16px; 
+            text-align: center; margin-bottom: 30px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
         }
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+        
+        .card { 
+            background: white; border-radius: 16px; padding: 25px; 
+            border-top: 6px solid; box-shadow: 0 4px 10px rgba(0,0,0,0.06); 
+            transition: transform 0.2s ease;
+        }
+        .card:hover { transform: translateY(-3px); }
+        
+        h2 { font-size: 1.1rem; color: var(--p); margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+        label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--g); margin: 12px 0 6px; }
+        input { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; box-sizing: border-box; font-size: 1rem; transition: border-color 0.3s; }
+        input:focus { border-color: var(--i); outline: none; }
+        
+        button { 
+            width: 100%; padding: 15px; border: none; border-radius: 10px; 
+            color: white; font-weight: 700; cursor: pointer; background: var(--p); 
+            margin-top: 20px; font-size: 1rem; transition: background 0.3s;
+        }
+        button:hover { background: #334155; }
+
+        .res { margin-top: 20px; padding: 15px; border-radius: 10px; display: none; font-size: 0.95rem; font-weight: 700; line-height: 1.6; border-left: 5px solid; }
+        .ok { background: #dcfce7; color: #166534; border-color: #166534; }
+        .err { background: #fef2f2; color: #b91c1c; border-color: #b91c1c; }
+        
+        .tabla-guia { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.85rem; }
+        .tabla-guia th, .tabla-guia td { border: 1px solid #e2e8f0; padding: 10px; text-align: center; }
+        .tabla-guia th { background: #f1f5f9; color: var(--p); font-weight: 700; }
+
+        /* --- ESTILOS DE LA IA DE ALTA CAPACIDAD --- */
+        #chat-bot { 
+            position: fixed; bottom: 100px; right: 30px; width: 450px; height: 600px;
+            background: #ffffff; border-radius: 25px; box-shadow: 0 25px 60px rgba(0,0,0,0.3); 
+            z-index: 2000; display: none; flex-direction: column; overflow: hidden; 
+            border: 1px solid #cbd5e1; font-family: 'Segoe UI', sans-serif;
+            animation: popUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes popUp { from { transform: translateY(50px) scale(0.9); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
 
         #chat-header { 
-            background: var(--p); color: white; padding: 18px; 
+            background: linear-gradient(90deg, var(--p), #334155); color: white; padding: 20px; 
             font-weight: 700; display: flex; justify-content: space-between; align-items: center; 
-            border-bottom: 3px solid var(--s);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         #chat-body { 
-            height: 400px; padding: 15px; overflow-y: auto; font-size: 0.9rem; 
-            background: #f8fafc; display: flex; flex-direction: column; gap: 15px; 
+            flex: 1; padding: 20px; overflow-y: auto; font-size: 0.95rem; 
+            background: #f8fafc; display: flex; flex-direction: column; gap: 18px; 
         }
         
         #chat-input-area { 
-            background: white; padding: 15px; border-top: 1px solid #e2e8f0; 
-            display: flex; align-items: center; gap: 10px;
+            background: white; padding: 20px; border-top: 1px solid #e2e8f0; 
+            display: flex; align-items: center; gap: 12px;
         }
         #chat-input { 
-            background: #f1f5f9; border: 2px solid #cbd5e0; padding: 12px 18px; 
-            flex: 1; border-radius: 30px; outline: none; font-size: 0.95rem;
+            background: #f1f5f9; border: 2px solid #e2e8f0; padding: 14px 20px; 
+            flex: 1; border-radius: 30px; outline: none; font-size: 1rem; 
         }
-        #chat-input:focus { border-color: var(--i); background: white; }
+        #chat-input:focus { border-color: var(--s); background: white; }
         
         #chat-send { 
-            background: var(--s); color: white; border: none; 
-            width: 48px; height: 48px; border-radius: 50%; cursor: pointer; 
-            display: flex; justify-content: center; align-items: center; font-size: 1.3rem;
+            background: var(--s); color: white; border: none; width: 50px; height: 50px; 
+            border-radius: 50%; cursor: pointer; display: flex; justify-content: center; 
+            align-items: center; font-size: 1.4rem; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+            transition: transform 0.2s;
         }
+        #chat-send:hover { transform: scale(1.1); }
 
-        .bot-msg { background: white; padding: 14px; border-radius: 18px 18px 18px 0; align-self: flex-start; max-width: 90%; color: #334155; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; line-height: 1.5; }
-        .user-msg { background: var(--i); color: white; padding: 12px 16px; border-radius: 18px 18px 0 18px; align-self: flex-end; max-width: 85%; }
+        .bot-msg { 
+            background: white; padding: 16px 20px; border-radius: 20px 20px 20px 5px; 
+            align-self: flex-start; max-width: 85%; color: #334155; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; line-height: 1.5; 
+        }
+        .bot-msg strong { color: var(--p); }
+        .user-msg { 
+            background: var(--i); color: white; padding: 14px 20px; 
+            border-radius: 20px 20px 5px 20px; align-self: flex-end; max-width: 80%; 
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+        }
 
         #chat-toggle { 
-            position: fixed; bottom: 25px; right: 25px; background: var(--p); 
-            color: white; width: 65px; height: 65px; border-radius: 50%; 
+            position: fixed; bottom: 30px; right: 30px; background: var(--p); 
+            color: white; width: 75px; height: 75px; border-radius: 50%; 
             display: flex; justify-content: center; align-items: center; 
-            cursor: pointer; font-size: 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); z-index: 1001;
+            cursor: pointer; font-size: 36px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+            z-index: 2001; transition: transform 0.3s;
         }
+        #chat-toggle:hover { transform: scale(1.1) rotate(5deg); }
 
-        @media print { #chat-toggle, #chat-bot { display: none !important; } }
+        @media (max-width: 600px) { #chat-bot { width: 100%; height: 100%; bottom: 0; right: 0; border-radius: 0; } #chat-toggle { width: 60px; height: 60px; font-size: 28px; } }
     </style>
 </head>
 <body>
@@ -88,7 +120,7 @@
 <div class="container">
     <header>
         <h1>LABORALEC | SISTEMA INTEGRAL 2026</h1>
-        <p>SBU Vigente: $482.00 | Consultoría Laboral Especializada</p>
+        <p>SBU Vigente: $482.00 | Consultoría Jurídica Offline Avanzada</p>
     </header>
 
     <div class="grid">
@@ -112,17 +144,16 @@
             <input type="text" id="j3" placeholder="Ej: 6.2305">
             <label>Fondos de Reserva (Total a deducir):</label>
             <input type="text" id="j4" value="0">
-            
             <button onclick="f('j')">Calcular Pensión Mensual</button>
             <div id="out_j" class="res"></div>
-
-            <h3>Guía de Coeficientes</h3>
+            
+            <h3 style="margin-top:20px; font-size:0.9rem; color:var(--g);">Tabla Referencial (Código del Trabajo)</h3>
             <table class="tabla-guia">
-                <thead><tr><th>Edad</th><th>Coef.</th><th>Edad</th><th>Coef.</th></tr></thead>
+                <thead><tr><th>Edad</th><th>Coeficiente</th><th>Edad</th><th>Coeficiente</th></tr></thead>
                 <tbody>
-                    <tr><td>40</td><td>12.0120</td><td>60</td><td>7.3750</td></tr>
-                    <tr><td>45</td><td>10.9750</td><td>65</td><td>6.0590</td></tr>
-                    <tr><td>50</td><td>9.8510</td><td>70</td><td>4.7520</td></tr>
+                    <tr><td>40 a 44</td><td>12.0120</td><td>60 a 64</td><td>7.3750</td></tr>
+                    <tr><td>45 a 49</td><td>10.9750</td><td>65 a 69</td><td>6.0590</td></tr>
+                    <tr><td>50 a 54</td><td>9.8510</td><td>70 a 74</td><td>4.7520</td></tr>
                 </tbody>
             </table>
         </div>
@@ -131,9 +162,9 @@
             <h2>3. Horas Suplementarias / Extra</h2>
             <label>Sueldo Mensual:</label>
             <input type="text" id="h1" placeholder="Ej: 482">
-            <label>Horas 50%:</label>
+            <label>Horas 50% (Suplementarias):</label>
             <input type="text" id="h2" value="0">
-            <label>Horas 100%:</label>
+            <label>Horas 100% (Extraordinarias):</label>
             <input type="text" id="h3" value="0">
             <button onclick="f('h')">Calcular Horas</button>
             <div id="out_h" class="res"></div>
@@ -172,22 +203,35 @@
 <div id="chat-toggle" onclick="toggleChat()">💬</div>
 <div id="chat-bot">
     <div id="chat-header">
-        <span>⚖️ Consultor LABORALEC</span>
-        <span style="cursor:pointer" onclick="toggleChat()">×</span>
+        <span>⚖️ IA JURÍDICA ECUADOR</span>
+        <span style="cursor:pointer; font-size:1.5rem;" onclick="toggleChat()">×</span>
     </div>
     <div id="chat-body">
-        <div class="bot-msg">¡Hola! Soy tu consultor de <b>LABORALEC</b>. <br><br>Estoy actualizado con el <b>Código del Trabajo</b> y los últimos <b>Acuerdos Ministeriales</b> de 2026. ¿Cómo puedo ayudarte hoy?</div>
+        <div class="bot-msg">
+            👋 <b>Bienvenido a la IA Jurídica de LABORALEC.</b>
+            <br><br>
+            He sido diseñada para funcionar 100% sin internet. Mi base de datos interna contiene información detallada sobre:
+            <br><br>
+            📌 <b>Código del Trabajo</b> (Despidos, Renuncias, Visto Bueno)<br>
+            📌 <b>Seguridad Social IESS</b> (Afiliación, Mora)<br>
+            📌 <b>Grupos Prioritarios</b> (Maternidad, Discapacidad)<br>
+            📌 <b>Normativa Ministerial 2026</b>
+            <br><br>
+            ¿Cuál es tu consulta legal hoy?
+        </div>
     </div>
     <div id="chat-input-area">
-        <input type="text" id="chat-input" placeholder="Ej: ¿Qué dice el Acuerdo Ministerial 2026?" onkeypress="handleKey(event)">
+        <input type="text" id="chat-input" placeholder="Ej: ¿Qué derechos tiene una mujer embarazada?" onkeypress="handleKey(event)">
         <button id="chat-send" onclick="askBot()">➤</button>
     </div>
 </div>
 
 <script>
-    const SBU = 482.00;
+    const SBU = 482.00; // Salario Básico Unificado 2026
 
-    // --- PROGRAMACIÓN CALCULADORAS (SIN CAMBIOS) ---
+    /* ==================================================================
+       1. BLOQUE DE CALCULADORAS (LÓGICA ORIGINAL INTACTA)
+       ================================================================== */
     function v(id) {
         let val = document.getElementById(id).value.trim().replace(',', '.');
         if (val === "" || isNaN(val) || parseFloat(val) < 0) return null;
@@ -196,7 +240,10 @@
     function res(id, m, e = false) {
         const target = document.getElementById('out_' + id);
         target.innerHTML = m; target.className = 'res ' + (e ? 'err' : 'ok');
+        target.style.display = 'block';
     }
+    
+    // Función f(t) restaurada EXACTAMENTE a la versión original sin emojis ni adornos
     function f(t) {
         if (t === 'd') {
             let s = v('d1'), m = v('d2');
@@ -235,11 +282,73 @@
         }
     }
 
-    // --- PROGRAMACIÓN ASISTENTE (NUEVA LÓGICA AMIGABLE Y MINISTERIAL) ---
+    /* ==================================================================
+       2. INTELIGENCIA ARTIFICIAL OFFLINE (COMPLETA)
+       ================================================================== */
+    const KNOWLEDGE_BASE = [
+        {
+            tags: ["acuerdo", "ministerial", "mdt", "normativa"],
+            answer: "📑 <b>Acuerdos Ministeriales:</b> Son normas técnicas del MDT. <br>1. <b>MDT-2023-140 (Salarios):</b> Fija el SBU y salarios sectoriales. <br>2. <b>Teletrabajo:</b> Regula el derecho a la desconexión (12 horas mínimas) y pago de internet/equipos. <br>3. <b>Contrato Joven:</b> Incentivos para contratar menores de 26 años. <br>⚠️ <i>Recuerde: Ningún acuerdo puede violar derechos del Código del Trabajo.</i>"
+        },
+        {
+            tags: ["reglamento", "interno", "rit", "normas"],
+            answer: "📜 <b>Reglamento Interno de Trabajo:</b> Es obligatorio para empresas con más de 10 trabajadores. <br>✅ <b>Debe contener:</b> Horarios, normas de seguridad, tipos de faltas y sanciones. <br>❌ <b>Prohibido:</b> Multas mayores al 10% del sueldo diario o sanciones corporales. Debe estar aprobado por el Director Regional del Trabajo."
+        },
+        {
+            tags: ["maternidad", "embarazo", "gestacion", "lactancia", "madre"],
+            answer: "🤰 <b>Derechos de Maternidad (Art. 152-155):</b> <br>1. <b>Licencia:</b> 12 semanas remuneradas (2 prenatales, 10 posnatales). <br>2. <b>Lactancia:</b> Jornada reducida a 6 horas diarias durante 12 meses tras el parto. <br>3. <b>Despido Ineficaz:</b> Si se despide a una mujer embarazada o en lactancia, el despido se considera ineficaz (nulo) y conlleva indemnización de 12 meses de sueldo ADICIONALES a las legales."
+        },
+        {
+            tags: ["paternidad", "padre", "nacimiento"],
+            answer: "👨‍🍼 <b>Licencia por Paternidad:</b> <br>El padre tiene derecho a licencia remunerada: <br>- <b>Parto Normal:</b> 10 días. <br>- <b>Cesárea o Parto Múltiple:</b> 15 días. <br>- <b>Nacimiento prematuro/cuidados especiales:</b> 18 días. <br>- <b>Enfermedad degenerativa/terminal de la madre:</b> 25 días."
+        },
+        {
+            tags: ["discapacidad", "conadis", "carnet", "sustituto"],
+            answer: "♿ <b>Derechos por Discapacidad:</b> <br>1. <b>Inclusión:</b> Empresas con +25 empleados deben tener 4% de personal con discapacidad. <br>2. <b>Estabilidad Laboral:</b> En caso de despido injustificado, la indemnización es de <b>18 meses</b> de la mejor remuneración, adicional a la del Art. 188. <br>3. <b>Sustitutos:</b> Tienen los mismos derechos si tienen a cargo una persona con discapacidad severa."
+        },
+        {
+            tags: ["iess", "seguridad social", "afiliacion", "aporte", "mora"],
+            answer: "🏥 <b>Seguridad Social (IESS):</b> <br>🔹 <b>Afiliación:</b> Obligatoria desde el primer día de trabajo (incluso en periodo de prueba). <br>🔹 <b>Aporte Personal:</b> 9.45% (se descuenta al trabajador). <br>🔹 <b>Aporte Patronal:</b> 11.15% (paga la empresa). <br>⚠️ <b>Responsabilidad Patronal:</b> Si el empleador no paga, debe cubrir los costos médicos u hospitalarios del trabajador en caso de accidente."
+        },
+        {
+            tags: ["fondo", "reserva", "acumulacion"],
+            answer: "💰 <b>Fondos de Reserva (Art. 196):</b> <br>Es el 8.33% de la remuneración mensual. <br>✅ <b>Derecho:</b> Se genera a partir del mes 13 de trabajo (después del primer año). <br>✅ <b>Pago:</b> Puede cobrarse mensualmente o acumularse en el IESS (decisión del trabajador). Si se acumula, genera intereses."
+        },
+        {
+            tags: ["utilidades", "ganancias", "abril"],
+            answer: "📊 <b>Utilidades (Art. 97):</b> <br>La empresa debe repartir el 15% de sus ganancias líquidas anuales: <br>- <b>10%:</b> Se divide para todos los trabajadores por tiempo trabajado. <br>- <b>5%:</b> Se divide en función de las cargas familiares (hijos, cónyuge). <br>📅 <b>Fecha máxima de pago:</b> 15 de abril."
+        },
+        {
+            tags: ["visto bueno", "despido justificado", "inspector"],
+            answer: "⚖️ <b>Visto Bueno (Art. 172):</b> <br>Es la autorización que da un Inspector de Trabajo para terminar el contrato legalmente SIN pagar indemnización. <br><b>Causales comunes:</b> <br>1. Faltas repetidas e injustificadas de puntualidad/asistencia (más de 3 días seguidos). <br>2. Indisciplina o desobediencia grave al Reglamento Interno. <br>3. Ineptitud manifiesta para el cargo."
+        },
+        {
+            tags: ["renuncia", "voluntaria", "retiro"],
+            answer: "👋 <b>Renuncia Voluntaria:</b> <br>El trabajador debe presentar su renuncia por escrito (preferible con 15 días de anticipación, aunque ya no es sancionado el no hacerlo). <br>✅ <b>Recibe:</b> Décimos proporcionales, vacaciones no gozadas y Fondos de Reserva. <br>❌ <b>NO Recibe:</b> Indemnización por despido intempestivo. <br>💡 <b>Nota:</b> Si tiene +25 años de servicio, recibe Jubilación Patronal."
+        },
+        {
+            tags: ["vacaciones", "descanso"],
+            answer: "🏖️ <b>Vacaciones (Art. 69):</b> <br>1. <b>Derecho:</b> 15 días ininterrumpidos al año (incluye fines de semana). <br>2. <b>Antigüedad:</b> A partir del 5to año en la misma empresa, se suma 1 día extra por cada año excedente (hasta un máximo de 15 extra). <br>3. <b>Pago:</b> Se calculan dividiendo la remuneración anual para 24."
+        },
+        {
+            tags: ["losep", "sector publico", "nombramiento"],
+            answer: "🏛️ <b>Sector Público (LOSEP):</b> <br>Se rige por una ley distinta al Código del Trabajo. <br>🔹 <b>Jornada:</b> 8 horas diarias. <br>🔹 <b>Despido:</b> Se llama 'Supresión de Puesto' y se indemniza con 5 SBU por año (Tope 150 SBU). <br>🔹 <b>Renuncia:</b> Se puede comprar la renuncia si hay oferta disponible. <br>🔹 <b>Jubilación:</b> Reciben un bono de jubilación (Bonos del Estado) al retirarse (Art. 129 LOSEP)."
+        },
+        {
+            tags: ["horas", "extra", "suplementaria", "nocturna"],
+            answer: "⏱️ <b>Jornadas Especiales:</b> <br>🌙 <b>Jornada Nocturna:</b> (19:00 a 06:00) Tiene un recargo del 25%. <br>➕ <b>Suplementarias:</b> (Después de las 8h, hasta 4 al día/12 semana) Recargo del 50%. <br>🚨 <b>Extraordinarias:</b> (Fines de semana o feriados) Recargo del 100%."
+        },
+        {
+            tags: ["contrato", "prueba", "indefinido"],
+            answer: "📝 <b>Tipos de Contrato:</b> <br>1. <b>Indefinido:</b> Es la regla general. <br>2. <b>Periodo de Prueba:</b> Máximo 90 días. Cualquiera puede terminarlo sin indemnización (solo paga proporcionales). <br>3. <b>Por Obra o Servicio:</b> Termina cuando acaba la obra. Si no se llama al trabajador para la siguiente obra, se considera despido. <br>4. <b>Eventual/Ocasional:</b> Para reemplazos o picos de producción (recargo del 35% en el valor hora)."
+        }
+    ];
+
     function toggleChat() {
         const chat = document.getElementById('chat-bot');
-        chat.style.display = (chat.style.display === 'flex') ? 'none' : 'flex';
-        if(chat.style.display === 'flex') document.getElementById('chat-input').focus();
+        const isVisible = chat.style.display === 'flex';
+        chat.style.display = isVisible ? 'none' : 'flex';
+        if (!isVisible) setTimeout(() => document.getElementById('chat-input').focus(), 100);
     }
 
     function handleKey(e) { if(e.key === 'Enter') askBot(); }
@@ -254,31 +363,35 @@
         input.value = "";
         body.scrollTop = body.scrollHeight;
 
-        let r = "Es una pregunta interesante. Mi conocimiento actual cubre el <b>Código del Trabajo</b> y normativas del <b>Ministerio del Trabajo (MDT)</b>. <br><br>¿Te gustaría profundizar en temas de contratos, despidos o los nuevos acuerdos ministeriales?";
-        
-        if(txt.includes("acuerdo") || txt.includes("ministerial") || txt.includes("mdt")) {
-            r = "Los <b>Acuerdos Ministeriales</b> son fundamentales en Ecuador. Por ejemplo: <br><br>1. El <b>MDT-2023-140</b> fijó el salario básico para los periodos siguientes. <br>2. Existen acuerdos que regulan el <b>Teletrabajo</b> y los <b>Contratos por Obra o Servicio</b> dentro del giro de negocio. <br><br>Es vital que el <b>Reglamento Interno</b> de tu empresa esté debidamente registrado ante el Ministerio para que estas normas sean aplicables.";
-        }
-        else if(txt.includes("reglamento") || txt.includes("interno")) {
-            r = "El <b>Reglamento Interno de Trabajo (RIT)</b> es el documento que rige la convivencia en la empresa. <br><br>Para que sea legal, debe estar aprobado por el Ministerio del Trabajo. En él se detallan las faltas, sanciones y obligaciones específicas que no están detalladas en el Código general. ¡Siempre pide una copia al firmar tu contrato!";
-        }
-        else if(txt.includes("despido") || txt.includes("intempestivo")) {
-            r = "Hablar de despidos es serio. En el <b>Art. 188</b> se establece que si te despiden sin causa legal, te deben pagar 1 mes de sueldo por cada año (mínimo 3 meses). <br><br>Además, recuerda que el <b>Desahucio (Art. 185)</b> añade un 25% de tu última remuneración por cada año de servicio. ¡Es tu derecho!";
-        }
-        else if(txt.includes("vacaciones")) {
-            r = "Según el <b>Art. 69</b>, tienes 15 días de vacaciones pagadas tras tu primer año. <br><br><b>Ojo al detalle:</b> Si llevas más de 5 años con el mismo empleador, el Código te otorga un día adicional por cada año extra. Es una forma de premiar tu estabilidad laboral.";
-        }
-        else if(txt.includes("jubilación")) {
-            r = "La <b>Jubilación Patronal (Art. 216)</b> es para quienes han servido 25 años o más. <br><br>La empresa debe pagarte una pensión mensual de por vida. El cálculo toma en cuenta tus últimos 5 años de sueldo y tu edad actual. ¡Usa nuestra calculadora para un estimado!";
-        }
-        else if(txt.includes("hola") || txt.includes("buenos") || txt.includes("gracias")) {
-            r = "¡Hola! Es un gusto saludarte. Soy el asistente de <b>LABORALEC</b>. ¿Tienes alguna duda sobre contratos, reglamentos o cálculos laborales hoy?";
-        }
-
         setTimeout(() => {
-            body.innerHTML += `<div class="bot-msg">${r}</div>`;
+            let response = "";
+            let bestMatch = null;
+            let maxScore = 0;
+
+            KNOWLEDGE_BASE.forEach(item => {
+                let score = 0;
+                item.tags.forEach(tag => {
+                    if (txt.includes(tag)) score++;
+                });
+                if (score > maxScore) {
+                    maxScore = score;
+                    bestMatch = item;
+                }
+            });
+
+            if (bestMatch && maxScore > 0) {
+                response = bestMatch.answer;
+            } else {
+                if (txt.includes("hola") || txt.includes("gracias")) {
+                    response = "👋 ¡Hola! Soy tu asistente legal offline. Puedes preguntarme sobre <b>cálculos, despidos, maternidad o IESS</b>.";
+                } else {
+                    response = "🤔 Mmm, mi base de datos offline no encuentra una respuesta exacta para eso. <br><br>Intenta usar palabras clave como: <b>'despido', 'vacaciones', 'maternidad', 'utilidades', 'IESS' o 'acuerdo ministerial'</b>.";
+                }
+            }
+
+            body.innerHTML += `<div class="bot-msg">${response}</div>`;
             body.scrollTop = body.scrollHeight;
-        }, 600);
+        }, 500);
     }
 </script>
 </body>

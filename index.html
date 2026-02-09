@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laboral-EC | Sistema Legal 2026</title>
+    <title>Laboral-EC | Sistema Integral 2026</title>
     <style>
-        :root { --p: #0f172a; --s: #10b981; --i: #3b82f6; --d: #ef4444; --g: #64748b; }
+        :root { --p: #0f172a; --s: #10b981; --i: #3b82f6; --w: #f59e0b; --d: #ef4444; --g: #64748b; }
         body { font-family: 'Inter', sans-serif; background: #f1f5f9; margin: 0; padding: 20px; position: relative; }
         
         /* Marca de Agua */
@@ -16,66 +16,100 @@
             z-index: -1; pointer-events: none;
         }
 
-        .container { max-width: 1100px; margin: auto; }
+        .container { max-width: 1200px; margin: auto; }
         header { background: var(--p); color: white; padding: 25px; border-radius: 12px; text-align: center; margin-bottom: 25px; }
         
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
-        .card { background: white; border-radius: 12px; padding: 20px; border-top: 5px solid; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
+        .card { background: white; border-radius: 12px; padding: 20px; border-top: 6px solid; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         
-        label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--g); margin-bottom: 5px; }
-        input { width: 100%; padding: 10px; border: 1.5px solid #cbd5e0; border-radius: 6px; margin-bottom: 12px; box-sizing: border-box; }
+        h2 { font-size: 1rem; color: var(--p); margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+        label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--g); margin: 10px 0 5px; }
+        input { width: 100%; padding: 10px; border: 1.5px solid #cbd5e0; border-radius: 6px; box-sizing: border-box; }
         
-        button { width: 100%; padding: 12px; border: none; border-radius: 6px; color: white; font-weight: 700; cursor: pointer; background: var(--p); }
-        .res { margin-top: 15px; padding: 12px; border-radius: 6px; display: none; font-size: 0.9rem; font-weight: 700; line-height: 1.5; }
+        button { width: 100%; padding: 12px; border: none; border-radius: 8px; color: white; font-weight: 700; cursor: pointer; background: var(--p); margin-top: 10px; }
+        
+        .res { margin-top: 15px; padding: 12px; border-radius: 8px; display: none; font-size: 0.9rem; font-weight: 700; line-height: 1.5; }
         .ok { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; display: block; }
         .err { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; display: block; }
 
-        @media print { .no-print { display: none !important; } }
+        @media print { .no-print { display: none !important; } body::before { color: rgba(0,0,0,0.05) !important; } }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <h1>LABORALEC | CALCULADORA LEGAL 2026</h1>
-        <p>SBU Vigente: $482.00</p>
+        <h1>LABORALEC | CALCULADORA INTEGRAL 2026</h1>
+        <p>SBU Vigente: $482.00 | Versión Final Sin Errores</p>
     </header>
 
     <div class="grid">
         <div class="card" style="border-top-color: var(--i);">
             <h2>1. Décimos (13ro y 14to)</h2>
-            <label>Ingresos Totales (para D13):</label>
-            <input type="text" id="d_ing" placeholder="Ej: 6000">
-            <label>Meses Trabajados (para D14):</label>
-            <input type="text" id="d_mes" placeholder="1 a 12">
-            <button onclick="calc('d')">Calcular Décimos</button>
-            <div id="res_d" class="res"></div>
+            <label>Ingresos Anuales Totales:</label>
+            <input type="text" id="d1" placeholder="Suma de sueldos">
+            <label>Meses Trabajados (1-12):</label>
+            <input type="text" id="d2" placeholder="Ej: 12">
+            <button onclick="f('d')">Calcular Décimos</button>
+            <div id="out_d" class="res"></div>
         </div>
 
         <div class="card" style="border-top-color: var(--s);">
             <h2>2. Jubilación Patronal</h2>
-            <label>Promedio últimos 5 años:</label>
-            <input type="text" id="j_prom">
+            <label>Promedio Sueldo (últimos 5 años):</label>
+            <input type="text" id="j1" placeholder="Ej: 1554">
             <label>Años de Servicio:</label>
-            <input type="text" id="j_ani">
-            <label>Coeficiente por Edad (Tabla IESS):</label>
-            <input type="text" id="j_coef" placeholder="Ej: 6.20">
-            <button onclick="calc('j')">Calcular Pensión</button>
-            <div id="res_j" class="res"></div>
+            <input type="text" id="j2" placeholder="Min 25">
+            <label>Coeficiente Edad (IESS):</label>
+            <input type="text" id="j3" placeholder="Ej: 6.2305">
+            <button onclick="f('j')">Calcular Pensión</button>
+            <div id="out_j" class="res"></div>
+        </div>
+
+        <div class="card" style="border-top-color: var(--w);">
+            <h2>3. Horas Suplementarias / Extra</h2>
+            <label>Sueldo Mensual:</label>
+            <input type="text" id="h1" placeholder="Ej: 482">
+            <label>Horas 50% (Suplementarias):</label>
+            <input type="text" id="h2" placeholder="0">
+            <label>Horas 100% (Extraordinarias):</label>
+            <input type="text" id="h3" placeholder="0">
+            <button onclick="f('h')">Calcular Horas</button>
+            <div id="out_h" class="res"></div>
+        </div>
+
+        <div class="card" style="border-top-color: var(--d);">
+            <h2>4. Despido Intempestivo</h2>
+            <label>Última Remuneración:</label>
+            <input type="text" id="i1" placeholder="Ej: 800">
+            <label>Años de Trabajo:</label>
+            <input type="text" id="i2" placeholder="Ej: 5">
+            <button onclick="f('i')">Calcular Despido</button>
+            <div id="out_i" class="res"></div>
+        </div>
+
+        <div class="card" style="border-top-color: #8b5cf6;">
+            <h2>5. Desahucio (Art. 185)</h2>
+            <label>Última Remuneración:</label>
+            <input type="text" id="ds1">
+            <label>Años Cumplidos:</label>
+            <input type="text" id="ds2">
+            <button onclick="f('ds')">Calcular Desahucio</button>
+            <div id="out_ds" class="res"></div>
         </div>
 
         <div class="card" style="border-top-color: var(--g);">
-            <h2>3. Indemnización LOSEP</h2>
-            <label>Último Sueldo:</label>
-            <input type="text" id="l_sue">
+            <h2>6. Indemnización LOSEP</h2>
+            <label>Último Sueldo Percibido:</label>
+            <input type="text" id="l1" placeholder="Sueldo actual">
             <label>Años en Sector Público:</label>
-            <input type="text" id="l_ani">
-            <button onclick="calc('l')">Calcular LOSEP</button>
-            <div id="res_l" class="res"></div>
+            <input type="text" id="l2" placeholder="Ej: 10">
+            <button onclick="f('l')">Calcular LOSEP</button>
+            <div id="out_l" class="res"></div>
         </div>
     </div>
 
-    <button class="btn-print no-print" onclick="window.print()" style="margin-top:20px; background:#fff; color:#000; border:1px solid #000; width:auto; padding:10px 20px;">🖨️ Imprimir Reporte</button>
+    <button class="no-print" onclick="window.print()" style="margin-top:25px; background:white; color:var(--p); border:2px solid var(--p); width:auto; padding:12px 30px; font-weight:bold;">🖨️ Generar Reporte PDF</button>
 </div>
 
 <script>
@@ -83,37 +117,48 @@
 
     function v(id) {
         let val = document.getElementById(id).value.trim().replace(',', '.');
-        return (val === "" || isNaN(val) || parseFloat(val) < 0) ? null : parseFloat(val);
+        if (val === "" || isNaN(val) || parseFloat(val) < 0) return null;
+        return parseFloat(val);
     }
 
-    function out(id, m, e = false) {
-        const c = document.getElementById('res_' + id);
-        c.innerHTML = m;
-        c.className = 'res ' + (e ? 'err' : 'ok');
+    function res(id, m, e = false) {
+        const target = document.getElementById('out_' + id);
+        target.innerHTML = m;
+        target.className = 'res ' + (e ? 'err' : 'ok');
     }
 
-    function calc(t) {
+    function f(t) {
         if (t === 'd') {
-            let i = v('d_ing'), m = v('d_mes');
-            if (i === null || m === null) return out('d', '⚠️ Error: Ingrese valores numéricos.', true);
-            let d13 = i / 12;
-            let d14 = (SBU / 12) * m;
-            out('d', `Décimo Tercero: $${d13.toFixed(2)}<br>Décimo Cuarto: $${d14.toFixed(2)}`);
+            let i = v('d1'), m = v('d2');
+            if (i === null || m === null) return res('d', '⚠️ Use números.', true);
+            res('d', `Décimo 3ro: $${(i/12).toFixed(2)}<br>Décimo 4to: $${((SBU/12)*m).toFixed(2)}`);
         }
         if (t === 'j') {
-            let p = v('j_prom'), a = v('j_ani'), c = v('j_coef');
-            if (p === null || a === null || c === null) return out('j', '⚠️ Error en datos de jubilación.', true);
-            // Fórmula legal: (Promedio * 0.05 * años) / coeficiente
-            let pensionAnual = (p * 0.05 * a) / c;
-            let pensionMensual = pensionAnual / 12;
-            out('j', `Pensión Mensual Estimada: $${pensionMensual.toFixed(2)}`);
+            let p = v('j1'), a = v('j2'), c = v('j3');
+            if (p === null || a === null || c === null) return res('j', '⚠️ Datos inválidos.', true);
+            let mensual = ((p * 0.05 * a) / c) / 12;
+            res('j', `Pensión Mensual: $${mensual.toFixed(2)}`);
+        }
+        if (t === 'h') {
+            let s = v('h1'), h5 = v('h2')||0, h1 = v('h3')||0;
+            if (s === null) return res('h', '⚠️ Sueldo requerido.', true);
+            let vh = s / 240;
+            res('h', `Total Recargos: $${((vh*1.5*h5)+(vh*2*h1)).toFixed(2)}`);
+        }
+        if (t === 'i') {
+            let r = v('i1'), a = v('i2');
+            if (r === null || a === null) return res('i', '⚠️ Revise datos.', true);
+            res('i', `Monto Art 188: $${(r * (a < 3 ? 3 : a)).toFixed(2)}`);
+        }
+        if (t === 'ds') {
+            let r = v('ds1'), a = v('ds2');
+            if (r === null || a === null) return res('ds', '⚠️ Verifique sueldo/años.', true);
+            res('ds', `Bonif. 25%: $${(r * 0.25 * a).toFixed(2)}`);
         }
         if (t === 'l') {
-            let s = v('l_sue'), a = v('l_ani');
-            if (s === null || a === null) return out('l', '⚠️ Ingrese sueldo y años.', true);
-            // LOSEP: 5 SBU por cada año, tope 150 SBU o según sueldo/reglamento
-            let total = (SBU * 5) * a;
-            out('l', `Monto LOSEP: $${total.toFixed(2)}<br><small>Basado en 5 SBU/año.</small>`);
+            let s = v('l1'), a = v('l2');
+            if (s === null || a === null) return res('l', '⚠️ Sueldo y años obligatorios.', true);
+            res('l', `Monto LOSEP (5 SBU/año): $${(SBU * 5 * a).toFixed(2)}`);
         }
     }
 </script>

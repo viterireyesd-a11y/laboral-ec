@@ -11,235 +11,288 @@
             --accent: #6366f1; --bg: #f1f5f9;
         }
 
-        body { font-family: 'Inter', 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 30px; color: #1e293b; line-height: 1.6; }
-        .container { max-width: 1500px; margin: auto; }
+        body { font-family: 'Inter', 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 0; color: #1e293b; line-height: 1.6; }
+        .container { max-width: 1400px; margin: auto; padding: 20px; }
 
-        /* HEADER CORPORATIVO */
+        /* NAVEGACIÓN Y TABS */
+        nav { 
+            background: var(--p); padding: 15px 0; position: sticky; top: 0; z-index: 2000; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2); 
+        }
+        .nav-container { max-width: 1400px; margin: auto; display: flex; gap: 10px; padding: 0 20px; }
+        .tab-btn { 
+            background: transparent; border: none; color: #94a3b8; padding: 12px 25px; 
+            font-weight: 700; cursor: pointer; border-radius: 12px; transition: 0.3s;
+            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .tab-btn:hover { color: white; background: rgba(255,255,255,0.1); }
+        .tab-btn.active { background: var(--accent); color: white; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); }
+
+        .tab-content { display: none; animation: fadeIn 0.5s ease; padding-top: 20px; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* CABECERAS */
         header { 
             background: linear-gradient(135deg, var(--p) 0%, #1e293b 100%); 
-            color: white; padding: 60px 40px; border-radius: 30px; 
-            text-align: left; margin-bottom: 40px; position: relative;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.2);
+            color: white; padding: 50px 40px; border-radius: 30px; margin-bottom: 30px; position: relative;
         }
-        header h1 { font-size: 2.8rem; margin: 0; font-weight: 800; letter-spacing: -2px; }
-        header p { font-size: 1.2rem; opacity: 0.8; margin-top: 10px; }
-        .badge { position: absolute; top: 40px; right: 40px; background: var(--s); padding: 10px 20px; border-radius: 50px; font-weight: 700; font-size: 0.9rem; }
+        header h1 { font-size: 2.5rem; margin: 0; font-weight: 800; letter-spacing: -1.5px; }
+        .badge { position: absolute; top: 40px; right: 40px; background: var(--s); padding: 10px 20px; border-radius: 50px; font-weight: 700; }
 
-        /* GRID DE APLICACIONES */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 35px; }
-        .card { 
-            background: white; border-radius: 24px; padding: 40px; 
-            border-top: 12px solid; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .card:hover { transform: translateY(-8px); }
-
-        h2 { font-size: 1.5rem; color: var(--p); margin-top: 0; display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
+        /* CALCULADORAS */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(430px, 1fr)); gap: 30px; }
+        .card { background: white; border-radius: 25px; padding: 35px; border-top: 10px solid; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
         
-        .form-group { margin-bottom: 20px; }
-        label { display: block; font-size: 0.9rem; font-weight: 700; color: var(--g); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
-        
-        input { 
-            width: 100%; padding: 16px; border: 2px solid #e2e8f0; border-radius: 16px; 
-            font-size: 1.1rem; box-sizing: border-box; background: #f8fafc; transition: 0.3s;
-        }
-        input:focus { border-color: var(--i); outline: none; background: white; box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.15); }
+        h2 { font-size: 1.4rem; color: var(--p); margin-top: 0; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
+        .form-group { margin-bottom: 18px; }
+        label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--g); margin-bottom: 8px; text-transform: uppercase; }
+        input { width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 14px; font-size: 1rem; box-sizing: border-box; background: #f8fafc; transition: 0.3s; }
+        input:focus { border-color: var(--i); outline: none; background: white; }
 
-        button { 
-            width: 100%; padding: 20px; border: none; border-radius: 16px; 
+        button.action-btn { 
+            width: 100%; padding: 18px; border: none; border-radius: 14px; 
             color: white; font-weight: 800; cursor: pointer; background: var(--p); 
-            font-size: 1.1rem; transition: 0.3s; margin-top: 10px;
+            font-size: 1rem; transition: 0.3s; margin-top: 10px;
         }
-        button:hover { background: var(--accent); box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3); }
+        button.action-btn:hover { background: var(--accent); transform: translateY(-2px); }
 
-        /* RESULTADOS Y TABLAS */
-        .res { 
-            margin-top: 25px; padding: 25px; border-radius: 18px; display: none; 
-            border-left: 10px solid; animation: slideIn 0.4s ease-out;
-        }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .res { margin-top: 20px; padding: 20px; border-radius: 15px; display: none; border-left: 10px solid; line-height: 1.5; }
         .ok { background: #f0fdf4; color: #166534; border-color: #22c55e; }
-        .err { background: #fef2f2; color: #991b1b; border-color: #ef4444; }
 
-        .iess-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.85rem; }
-        .iess-table th { background: #f1f5f9; padding: 8px; text-align: left; border-bottom: 2px solid #e2e8f0; }
-        .iess-table td { padding: 6px 8px; border-bottom: 1px solid #f1f5f9; }
+        /* TABLAS Y ACUERDOS */
+        .iess-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.8rem; background: #f8fafc; border-radius: 10px; overflow: hidden; }
+        .iess-table th { background: #e2e8f0; padding: 8px; text-align: left; }
+        .iess-table td { padding: 8px; border-bottom: 1px solid #e2e8f0; }
+
+        .acuerdo-box { background: white; padding: 30px; border-radius: 20px; margin-bottom: 20px; border-left: 8px solid var(--i); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .cv-template { background: white; padding: 40px; border-radius: 20px; border: 2px dashed #cbd5e1; margin-bottom: 30px; position: relative; }
+        .cv-copy { position: absolute; top: 20px; right: 20px; background: var(--g); color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; }
 
         /* CHATBOT */
-        #chat-toggle { position: fixed; bottom: 40px; right: 40px; background: var(--p); color: white; width: 85px; height: 85px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 20px 40px rgba(0,0,0,0.3); z-index: 2000; font-size: 40px; transition: 0.4s; }
-        #chat-bot { 
-            position: fixed; bottom: 140px; right: 40px; width: 650px; height: 850px; 
-            background: white; border-radius: 35px; box-shadow: 0 35px 70px -15px rgba(0,0,0,0.3); 
-            z-index: 2000; display: none; flex-direction: column; overflow: hidden; border: 1px solid #e2e8f0; 
-        }
-        #chat-header { background: var(--p); color: white; padding: 35px; font-weight: 800; display: flex; justify-content: space-between; align-items: center; font-size: 1.3rem; }
-        #chat-body { flex: 1; padding: 35px; overflow-y: auto; background: #f8fafc; display: flex; flex-direction: column; gap: 20px; }
-        .bot-msg { background: white; padding: 25px; border-radius: 0 25px 25px 25px; align-self: flex-start; max-width: 90%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
-        .user-msg { background: var(--accent); color: white; padding: 18px 25px; border-radius: 25px 25px 0 25px; align-self: flex-end; font-weight: 600; }
-        #chat-input-area { padding: 30px; border-top: 1px solid #e2e8f0; display: flex; gap: 15px; background: white; }
-        #chat-input { flex: 1; padding: 20px; border-radius: 20px; border: 2px solid #f1f5f9; background: #f1f5f9; font-size: 1.1rem; }
-        #chat-send { width: 70px; height: 65px; background: var(--s); border: none; border-radius: 20px; color: white; cursor: pointer; font-size: 1.5rem; }
+        #chat-toggle { position: fixed; bottom: 30px; right: 30px; background: var(--p); color: white; width: 75px; height: 75px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 15px 30px rgba(0,0,0,0.3); z-index: 3000; font-size: 35px; }
+        #chat-bot { position: fixed; bottom: 120px; right: 30px; width: 500px; height: 700px; background: white; border-radius: 30px; box-shadow: 0 25px 60px rgba(0,0,0,0.2); z-index: 3000; display: none; flex-direction: column; overflow: hidden; border: 1px solid #e2e8f0; }
+        #chat-header { background: var(--p); color: white; padding: 25px; font-weight: 800; display: flex; justify-content: space-between; }
+        #chat-body { flex: 1; padding: 25px; overflow-y: auto; background: #f8fafc; display: flex; flex-direction: column; gap: 15px; }
+        .bot-msg { background: white; padding: 15px 20px; border-radius: 0 20px 20px 20px; align-self: flex-start; max-width: 85%; border: 1px solid #e2e8f0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .user-msg { background: var(--accent); color: white; padding: 12px 20px; border-radius: 20px 20px 0 20px; align-self: flex-end; }
+        #chat-input-area { padding: 20px; border-top: 1px solid #e2e8f0; display: flex; gap: 10px; }
+        #chat-input { flex: 1; padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0; }
 
-        hr { border: 0; border-top: 1px solid #e2e8f0; margin: 15px 0; }
-        .legal-ref { font-size: 0.8rem; color: var(--g); font-style: italic; margin-top: 10px; display: block; }
-
-        /* --- MEDIA QUERIES PARA CELULARES --- */
         @media (max-width: 768px) {
-            body { padding: 15px; }
-            header { padding: 40px 20px; border-radius: 20px; margin-bottom: 25px; }
-            header h1 { font-size: 1.8rem; }
-            .badge { position: static; display: inline-block; margin-bottom: 15px; }
-            .grid { grid-template-columns: 1fr; gap: 20px; }
-            .card { padding: 25px; }
-            #chat-bot { width: 100%; height: 100%; bottom: 0; right: 0; border-radius: 0; z-index: 3000; }
-            #chat-toggle { bottom: 20px; right: 20px; width: 65px; height: 65px; font-size: 30px; }
+            .nav-container { flex-wrap: wrap; justify-content: center; }
+            .grid { grid-template-columns: 1fr; }
+            #chat-bot { width: 100%; height: 100%; bottom: 0; right: 0; border-radius: 0; }
         }
     </style>
 </head>
 <body>
 
+<nav>
+    <div class="nav-container">
+        <button class="tab-btn active" onclick="switchTab(event, 'p-calc')">📊 Calculadoras</button>
+        <button class="tab-btn" onclick="switchTab(event, 'p-legal')">📜 Acuerdos MDT</button>
+        <button class="tab-btn" onclick="switchTab(event, 'p-cv')">📄 Plantillas CV</button>
+    </div>
+</nav>
+
 <div class="container">
-    <header>
-        <div class="badge">ACTUALIZADO FEBRERO 2026</div>
-        <h1>LABORALEC : SISTEMA TÉCNICO JURÍDICO</h1>
-        <p>Plataforma de Cálculos Laborales (SBU $482.00)</p>
-    </header>
 
-    <div class="grid">
-        <div class="card" style="border-top-color: var(--i);">
-            <h2>💰 Beneficios de Ley (Décimos)</h2>
-            <div class="form-group"><label>Remuneración Mensual Promedio:</label><input type="number" id="d1" placeholder="Ej: 850.00"></div>
-            <div class="form-group"><label>Meses Laborados en el Periodo:</label><input type="number" id="d2" placeholder="1 al 12"></div>
-            <button onclick="ejecutar('d')">Calcular Beneficios</button>
-            <div id="out_d" class="res"></div>
-        </div>
+    <div id="p-calc" class="tab-content active">
+        <header>
+            <div class="badge">SBU 2026: $482.00</div>
+            <h1>CENTRO DE CÁLCULO LABORAL</h1>
+            <p>Sistemas automatizados bajo el Código del Trabajo y LOSEP.</p>
+        </header>
 
-        <div class="card" style="border-top-color: var(--s);">
-            <h2>👴 Jubilación Patronal (Art. 216)</h2>
-            <div class="form-group"><label>Promedio Sueldo últimos 5 años:</label><input type="number" id="j1" placeholder="Ej: 1200.00"></div>
-            <div class="form-group"><label>Años de Servicio Continuo:</label><input type="number" id="j2" placeholder="Mínimo 25 años"></div>
-            <div class="form-group"><label>Coeficiente IESS (Tabla Art. 218):</label><input type="number" id="j3" placeholder="Ej: 6.2305"></div>
-            
-            <div style="background: #f8fafc; padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0;">
-                <strong style="font-size: 0.8rem; color: var(--g);">REFERENCIA COEFICIENTES IESS:</strong>
+        <div class="grid">
+            <div class="card" style="border-top-color: var(--i);">
+                <h2>💰 Décimo 13ro y 14to</h2>
+                <div class="form-group">
+                    <label>Sueldo Mensual Promedio:</label>
+                    <input type="number" id="calc_s" placeholder="Ej: 850">
+                </div>
+                <div class="form-group">
+                    <label>Meses Trabajados (Periodo):</label>
+                    <input type="number" id="calc_m" placeholder="1 al 12">
+                </div>
+                <button class="action-btn" onclick="run('decimos')">Calcular Beneficios</button>
+                <div id="res_decimos" class="res"></div>
+            </div>
+
+            <div class="card" style="border-top-color: var(--s);">
+                <h2>👴 Jubilación Patronal (Art. 216)</h2>
+                <div class="form-group"><label>Promedio últimos 5 años:</label><input type="number" id="j_p" placeholder="Ej: 1100"></div>
+                <div class="form-group"><label>Años de Servicio:</label><input type="number" id="j_a" placeholder="Mínimo 25"></div>
+                <div class="form-group"><label>Coeficiente IESS (Tabla 218):</label><input type="number" id="j_c" placeholder="Ej: 6.1738"></div>
+                
                 <table class="iess-table">
-                    <tr><th>Edad</th><th>Coeficiente</th><th>Edad</th><th>Coeficiente</th></tr>
-                    <tr><td>60 años</td><td>7.7891</td><td>66 años</td><td>4.7674</td></tr>
-                    <tr><td>61 años</td><td>7.2272</td><td>67 años</td><td>4.3463</td></tr>
-                    <tr><td>62 años</td><td>6.6888</td><td>68 años</td><td>3.9502</td></tr>
-                    <tr><td>63 años</td><td>6.1738</td><td>69 años</td><td>3.5794</td></tr>
-                    <tr><td>64 años</td><td>5.6820</td><td>70 años</td><td>3.2343</td></tr>
-                    <tr><td>65 años</td><td>5.2131</td><td>75 años</td><td>1.7858</td></tr>
+                    <tr><th>Edad</th><th>Coef.</th><th>Edad</th><th>Coef.</th></tr>
+                    <tr><td>60 años</td><td>7.7891</td><td>65 años</td><td>5.2131</td></tr>
+                    <tr><td>63 años</td><td>6.1738</td><td>70 años</td><td>3.2343</td></tr>
                 </table>
-            </div><br>
+                <button class="action-btn" onclick="run('jubilacion')">Calcular Pensión</button>
+                <div id="res_jubilacion" class="res"></div>
+            </div>
 
-            <button onclick="ejecutar('j')">Calcular Jubilación</button>
-            <div id="out_j" class="res"></div>
-        </div>
+            <div class="card" style="border-top-color: var(--w);">
+                <h2>⏱️ Recargos por Jornada</h2>
+                <div class="form-group"><label>Sueldo Mensual:</label><input type="number" id="h_s" placeholder="Ej: 482"></div>
+                <div class="form-group"><label>Horas Suplementarias (50%):</label><input type="number" id="h_sup" value="0"></div>
+                <div class="form-group"><label>Horas Extraordinarias (100%):</label><input type="number" id="h_ext" value="0"></div>
+                <button class="action-btn" onclick="run('horas')">Calcular Recargos</button>
+                <div id="res_horas" class="res"></div>
+            </div>
 
-        <div class="card" style="border-top-color: var(--w);">
-            <h2>⏱️ Recargos por Jornada</h2>
-            <div class="form-group"><label>Sueldo Base Mensual:</label><input type="number" id="h1" placeholder="Ej: 482.00"></div>
-            <div class="form-group"><label>Horas Suplementarias (50%):</label><input type="number" id="h2" value="0"></div>
-            <div class="form-group"><label>Horas Extraordinarias (100%):</label><input type="number" id="h3" value="0"></div>
-            <button onclick="ejecutar('h')">Calcular Recargos</button>
-            <div id="out_h" class="res"></div>
-        </div>
-
-        <div class="card" style="border-top-color: var(--p);">
-            <h2>🏛️ Indemnización LOSEP (Art. 129)</h2>
-            <div class="form-group"><label>Última Remuneración Percibida:</label><input type="number" id="l_sueldo" placeholder="Ej: 1500.00"></div>
-            <div class="form-group"><label>Años de Servicio Permanente:</label><input type="number" id="l1" placeholder="Ej: 12"></div>
-            <button onclick="ejecutar('l')">Calcular Compensación Pública</button>
-            <div id="out_l" class="res"></div>
-        </div>
-
-        <div class="card" style="border-top-color: var(--d);">
-            <h2>🚫 Despido Intempestivo (Privado)</h2>
-            <div class="form-group"><label>Última Remuneración Completa:</label><input type="number" id="i1" placeholder="Ej: 900.00"></div>
-            <div class="form-group"><label>Tiempo de Servicio (Años):</label><input type="number" id="i2" placeholder="Ej: 4"></div>
-            <button onclick="ejecutar('i')">Calcular Liquidación</button>
-            <div id="out_i" class="res"></div>
-        </div>
-
-        <div class="card" style="border-top-color: var(--accent);">
-            <h2>📄 Bonificación por Desahucio</h2>
-            <div class="form-group"><label>Sueldo para el Cálculo:</label><input type="number" id="ds1" placeholder="Ej: 482.00"></div>
-            <div class="form-group"><label>Años Completos de Trabajo:</label><input type="number" id="ds2" placeholder="Ej: 2"></div>
-            <button onclick="ejecutar('ds')">Calcular Desahucio</button>
-            <div id="out_ds" class="res"></div>
+            <div class="card" style="border-top-color: var(--d);">
+                <h2>🚫 Despido Intempestivo (Art. 188)</h2>
+                <div class="form-group"><label>Último Sueldo:</label><input type="number" id="i_s" placeholder="Ej: 900"></div>
+                <div class="form-group"><label>Años de Trabajo:</label><input type="number" id="i_a" placeholder="Ej: 5"></div>
+                <button class="action-btn" onclick="run('despido')">Calcular Liquidación</button>
+                <div id="res_despido" class="res"></div>
+            </div>
         </div>
     </div>
+
+    <div id="p-legal" class="tab-content">
+        <header style="background: var(--accent);">
+            <h1>ACUERDOS Y OBSERVACIONES</h1>
+            <p>Normativa ministerial y reglas de aplicación del IESS.</p>
+        </header>
+
+        <div class="acuerdo-box">
+            <h3>📌 MDT-2024-039: Desconexión Digital</h3>
+            <p>Establece el derecho a la desconexión de al menos 12 horas continuas en un periodo de 24 horas. El empleador no podrá enviar comunicaciones ni requerir tareas fuera de la jornada, salvo emergencia debidamente comprobada.</p>
+        </div>
+
+        <div class="acuerdo-box" style="border-left-color: var(--s);">
+            <h3>📌 Art. 216: Jubilación Patronal</h3>
+            <p>Los trabajadores que por 25 años o más hubieren prestado servicios continua o interrumpidamente, tendrán derecho a ser jubilados por sus empleadores. La pensión no podrá ser mayor que la remuneración media del último año ni inferior al SBU ($482.00).</p>
+        </div>
+
+        <div class="acuerdo-box" style="border-left-color: var(--w);">
+            <h3>📌 Pago de Utilidades (Art. 97)</h3>
+            <p>El empleador participará a sus trabajadores del 15% de las utilidades líquidas. El 10% se divide para todos y el 5% restante se entrega en proporción a las cargas familiares (cónyuge e hijos menores de 18 años).</p>
+        </div>
+    </div>
+
+    <div id="p-cv" class="tab-content">
+        <header style="background: var(--g);">
+            <h1>PLANTILLAS PROFESIONALES</h1>
+            <p>Formatos optimizados para procesos de selección modernos.</p>
+        </header>
+
+        <div class="cv-template">
+            <button class="cv-copy" onclick="alert('Copiado al portapapeles (Simulado)')">Copiar</button>
+            <h3>📄 Formato Funcional (ATS-Friendly)</h3>
+            <pre style="font-family: inherit; color: var(--p);">
+<b>[NOMBRE COMPLETO]</b>
+[Ciudad, Ecuador] | [Teléfono] | [Correo Electrónico] | [LinkedIn]
+
+<b>PERFIL PROFESIONAL</b>
+Especialista en [Área] con más de [X] años de experiencia en el sector [Industrial/Servicios]. 
+Experto en optimización de procesos y gestión de equipos bajo normativa MDT.
+
+<b>EXPERIENCIA LABORAL</b>
+<b>[Nombre de la Empresa]</b> | [Cargo] | [Mes/Año Inicio – Fin]
+• Logro clave: Implementación de sistema X que redujo costos en un 12%.
+• Responsabilidad: Gestión de nómina para 50 colaboradores.
+
+<b>EDUCACIÓN</b>
+• [Título de Grado] | [Universidad] | [Año]
+            </pre>
+        </div>
+    </div>
+
 </div>
 
 <div id="chat-toggle" onclick="toggleChat()">⚖️</div>
 <div id="chat-bot">
-    <div id="chat-header"><span>SISTEMA EXPERTO LABORAL</span><span onclick="toggleChat()" style="cursor:pointer">✕</span></div>
+    <div id="chat-header"><span>SISTEMA EXPERTO V2.6</span><span onclick="toggleChat()" style="cursor:pointer">✕</span></div>
     <div id="chat-body">
-        <div class="bot-msg"><b>CONSULTORÍA JURÍDICA ACTIVADA.</b><br>Acceso a Código del Trabajo, LOSEP y Referencias IESS 2026.</div>
+        <div class="bot-msg">Bienvenido. Soy su consultor laboral 2026. ¿Qué duda legal desea resolver?</div>
     </div>
     <div id="chat-input-area">
-        <input type="text" id="chat-input" placeholder="Pregunte sobre despidos, tablas, horas..." onkeypress="if(event.key==='Enter') preguntar()">
-        <button id="chat-send" onclick="preguntar()">➤</button>
+        <input type="text" id="chat-input" placeholder="Pregunte sobre despidos, IESS..." onkeypress="if(event.key==='Enter') ask()">
     </div>
 </div>
 
 <script>
-    const SBU_VAL = 482.00;
-    function v(id) { let val = document.getElementById(id).value; return (val === "" || isNaN(val)) ? null : parseFloat(val); }
+    const SBU = 482.00;
 
-    function ejecutar(t) {
-        const out = document.getElementById('out_' + t);
+    // SISTEMA DE PESTAÑAS
+    function switchTab(e, tabId) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        e.currentTarget.classList.add('active');
+    }
+
+    // LÓGICA DE CÁLCULOS
+    function run(type) {
+        const out = document.getElementById('res_' + type);
         out.style.display = 'block'; out.className = 'res ok';
-        
-        if (t === 'l') {
-            let s = v('l_sueldo'), a = v('l1');
-            if(s && a) {
-                let b = a * (5 * SBU_VAL), tope = 150 * SBU_VAL;
-                out.innerHTML = `<b>NETO LOSEP: $${(b > tope ? tope : b).toFixed(2)}</b><br><span class="legal-ref">Máximo 150 SBU.</span>`;
-            }
+
+        if (type === 'decimos') {
+            let s = parseFloat(document.getElementById('calc_s').value);
+            let m = parseFloat(document.getElementById('calc_m').value);
+            if (!s || !m) return;
+            out.innerHTML = `<b>13ro (Bono Navideño):</b> $${((s*m)/12).toFixed(2)}<br><b>14to (Bono Escolar):</b> $${((SBU/12)*m).toFixed(2)}`;
         }
-        if (t === 'd') {
-            let s = v('d1'), m = v('d2');
-            if(s && m) out.innerHTML = `<b>13ro:</b> $${((s*m)/12).toFixed(2)}<br><b>14to:</b> $${((SBU_VAL/12)*m).toFixed(2)}`;
+
+        if (type === 'jubilacion') {
+            let p = parseFloat(document.getElementById('j_p').value);
+            let a = parseFloat(document.getElementById('j_a').value);
+            let c = parseFloat(document.getElementById('j_c').value);
+            if (!p || !a || !c) return;
+            let fondo = ((p*12*5)*0.05/5)*a;
+            let mensual = (fondo/c/12);
+            out.innerHTML = `<b>Pensión Vitalicia Mensual: $${mensual.toFixed(2)}</b><br><small>Basado en coeficiente IESS Art. 218.</small>`;
         }
-        if (t === 'j') {
-            let s = v('j1'), a = v('j2'), c = v('j3');
-            if(s && a && c) out.innerHTML = `<b>Pensión Vitalicia: $${(((s*12*5)*0.05/5)*a/c/12).toFixed(2)} /mes</b>`;
+
+        if (type === 'horas') {
+            let s = parseFloat(document.getElementById('h_s').value);
+            let h5 = parseFloat(document.getElementById('h_sup').value);
+            let h1 = parseFloat(document.getElementById('h_ext').value);
+            if (!s) return;
+            let vh = s/240;
+            let t = (vh*1.5*h5) + (vh*2*h1);
+            out.innerHTML = `<b>Total Recargos: $${t.toFixed(2)}</b><br>Valor Hora Normal: $${vh.toFixed(2)}`;
         }
-        if (t === 'h') {
-            let s = v('h1'), h5 = v('h2'), h1 = v('h3');
-            if(s) { let vh = s/240; out.innerHTML = `<b>Recargos: $${((vh*1.5*h5)+(vh*2*h1)).toFixed(2)}</b>`; }
-        }
-        if (t === 'i') {
-            let r = v('i1'), a = v('i2');
-            if(r && a) out.innerHTML = `<b>Indemnización: $${(r * (a < 3 ? 3 : a)).toFixed(2)}</b>`;
-        }
-        if (t === 'ds') {
-            let r = v('ds1'), a = v('ds2');
-            if(r && a) out.innerHTML = `<b>Desahucio (25%): $${(r * 0.25 * a).toFixed(2)}</b>`;
+
+        if (type === 'despido') {
+            let s = parseFloat(document.getElementById('i_s').value);
+            let a = parseFloat(document.getElementById('i_a').value);
+            if (!s || !a) return;
+            let f = (a < 3) ? 3 : a;
+            let desahucio = s * 0.25 * a;
+            out.innerHTML = `<b>Indemnización Art. 188:</b> $${(s*f).toFixed(2)}<br><b>Bonificación Desahucio:</b> $${desahucio.toFixed(2)}<hr><b>TOTAL ESTIMADO: $${((s*f)+desahucio).toFixed(2)}</b>`;
         }
     }
 
-    const DB_LEGAL = [
-        { tags: ["iess", "tabla", "coeficiente"], respuesta: "Los coeficientes del Art. 218 están visibles en la calculadora de Jubilación Patronal." },
-        { tags: ["despido", "intempestivo"], respuesta: "Art. 188: 1 mes de sueldo por año. Si es menos de 3 años, le corresponden 3 meses." },
-        { tags: ["losep"], respuesta: "Art. 129: 5 SBU por cada año de servicio, hasta un máximo de 150 SBU." },
-        { tags: ["suplementarias", "extras"], respuesta: "Suplementarias: 50% de recargo (hasta las 24:00). Extraordinarias: 100% (fines de semana/feriados)." }
+    // CHATBOT
+    function toggleChat() { 
+        let c = document.getElementById('chat-bot');
+        c.style.display = (c.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    const LEGAL_DB = [
+        { key: ["iess", "coeficiente", "tabla"], msg: "Los coeficientes del Art. 218 dependen de la edad. Para 60 años es 7.7891 y para 65 años es 5.2131. Se usan para dividir el fondo capitalizado de jubilación patronal." },
+        { key: ["despido", "echaron", "botaron"], msg: "En despido intempestivo, el empleador paga 1 mes de sueldo por cada año de servicio (mínimo 3 meses) más el 25% de desahucio." },
+        { key: ["vacaciones"], msg: "Derecho a 15 días anuales. A partir del 5to año con el mismo empleador, se suma 1 día extra por año (hasta un máximo de 15 días adicionales)." }
     ];
 
-    function toggleChat() { let c = document.getElementById('chat-bot'); c.style.display = (c.style.display === 'flex') ? 'none' : 'flex'; }
-    function preguntar() {
+    function ask() {
         const input = document.getElementById('chat-input'), body = document.getElementById('chat-body');
-        const query = input.value.toLowerCase(); if(!query) return;
+        const q = input.value.toLowerCase(); if(!q) return;
         body.innerHTML += `<div class="user-msg">${input.value}</div>`;
         input.value = "";
         setTimeout(() => {
-            let r = "No detectado. Intente: IESS, Despido o LOSEP.";
-            for(let d of DB_LEGAL) { if(d.tags.some(t => query.includes(t))) { r = d.respuesta; break; } }
-            body.innerHTML += `<div class="bot-msg">${r}</div>`;
+            let ans = "Tema no identificado. Intente: 'IESS', 'Despido' o 'Vacaciones'.";
+            for(let d of LEGAL_DB) { if(d.key.some(k => q.includes(k))) ans = d.msg; }
+            body.innerHTML += `<div class="bot-msg">${ans}</div>`;
             body.scrollTop = body.scrollHeight;
-        }, 400);
+        }, 500);
     }
 </script>
 </body>

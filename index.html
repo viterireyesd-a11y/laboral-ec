@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LABORALEC | CALCULADORA PROFESIONAL</title>
+    <title>LABORALEC | SISTEMA LEGAL 2026</title>
     <style>
         :root { --p: #0f172a; --s: #10b981; --i: #3b82f6; --w: #f59e0b; --d: #ef4444; --g: #64748b; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f1f5f9; margin: 0; padding: 20px; position: relative; }
         
-        /* Marca de Agua */
         body::before {
             content: "LABORALEC"; position: fixed; top: 50%; left: 50%;
             transform: translate(-50%, -50%) rotate(-45deg);
@@ -40,14 +39,14 @@
 
 <div class="container">
     <header>
-        <h1>LABORALEC | SISTEMA LEGAL</h1>
-        <p>SBU Vigente: $482.00 | Jubilación Patronal Rectificada</p>
+        <h1>LABORALEC | CALCULADORA INTEGRAL</h1>
+        <p>SBU 2026: $482.00 | Jubilación Patronal Rectificada</p>
     </header>
 
     <div class="grid">
         <div class="card" style="border-top-color: var(--i);">
             <h2>1. Décimos (13ro y 14to)</h2>
-            <label>Sueldo Mensual del Periodo:</label>
+            <label>Sueldo Mensual:</label>
             <input type="text" id="d1" placeholder="Ej: 561">
             <label>Meses Trabajados (1-12):</label>
             <input type="text" id="d2" placeholder="Ej: 12">
@@ -59,9 +58,9 @@
             <h2>2. Jubilación Patronal (Art. 216)</h2>
             <label>Promedio Sueldo (últimos 5 años):</label>
             <input type="text" id="j1" placeholder="Ej: 800">
-            <label>Años de Servicio (Continuos):</label>
+            <label>Años de Servicio:</label>
             <input type="text" id="j2" placeholder="Mínimo 25">
-            <label>Coeficiente por Edad (Tabla IESS):</label>
+            <label>Coeficiente Edad (Tabla IESS):</label>
             <input type="text" id="j3" placeholder="Ej: 6.2305">
             <button onclick="f('j')">Calcular Pensión Mensual</button>
             <div id="out_j" class="res"></div>
@@ -71,9 +70,9 @@
             <h2>3. Horas Suplementarias / Extra</h2>
             <label>Sueldo Mensual:</label>
             <input type="text" id="h1" placeholder="Ej: 482">
-            <label>Horas 50% (Suplementarias):</label>
+            <label>Horas 50%:</label>
             <input type="text" id="h2" value="0">
-            <label>Horas 100% (Extraordinarias):</label>
+            <label>Horas 100%:</label>
             <input type="text" id="h3" value="0">
             <button onclick="f('h')">Calcular Horas</button>
             <div id="out_h" class="res"></div>
@@ -82,9 +81,9 @@
         <div class="card" style="border-top-color: var(--d);">
             <h2>4. Despido Intempestivo</h2>
             <label>Última Remuneración:</label>
-            <input type="text" id="i1" placeholder="Ej: 900">
+            <input type="text" id="i1">
             <label>Años de Trabajo:</label>
-            <input type="text" id="i2" placeholder="Ej: 5">
+            <input type="text" id="i2">
             <button onclick="f('i')">Calcular Despido</button>
             <div id="out_i" class="res"></div>
         </div>
@@ -125,31 +124,29 @@
     }
 
     function f(t) {
+        // DÉCIMOS
         if (t === 'd') {
             let s = v('d1'), m = v('d2');
             if (s === null || m === null) return res('d', '⚠️ Use números válidos.', true);
-            let d13 = (s * m) / 12; // (Sueldo * Meses) / 12
+            let d13 = (s * m) / 12; 
             let d14 = (SBU / 12) * m;
             res('d', `Décimo 3ro: $${d13.toFixed(2)}<br>Décimo 4to: $${d14.toFixed(2)}`);
         }
         
+        // JUBILACIÓN PATRONAL (RECTIFICADA)
         if (t === 'j') {
             let p = v('j1'), a = v('j2'), c = v('j3');
             if (p === null || a === null || c === null) return res('j', '⚠️ Datos incompletos.', true);
             
-            // RECTIFICACIÓN MATEMÁTICA JUBILACIÓN PATRONAL
-            // 1. Haber Individual: 5% del promedio de los últimos 5 años por los años de servicio.
-            let haberIndividual = (p * 0.05) * a;
+            // FÓRMULA PASO A PASO
+            let fondoHaber = (p * 0.05) * a;
+            let pensionAnual = fondoHaber / c;
+            let pensionMensual = pensionAnual / 12;
             
-            // 2. Renta Anual: Haber Individual / Coeficiente de edad.
-            let rentaAnual = haberIndividual / c;
-            
-            // 3. Pensión Mensual: Renta Anual / 12 meses.
-            let mensual = rentaAnual / 12;
-            
-            res('j', `Pensión Mensual: $${mensual.toFixed(2)}<br><small>Haber Individual: $${haberIndividual.toFixed(2)}</small>`);
+            res('j', `Pensión Mensual: $${pensionMensual.toFixed(2)}<br><small>Haber Individual: $${fondoHaber.toFixed(2)}</small>`);
         }
 
+        // HORAS EXTRAS
         if (t === 'h') {
             let s = v('h1'), h5 = v('h2')||0, h1 = v('h3')||0;
             if (s === null) return res('h', '⚠️ Sueldo requerido.', true);
@@ -157,19 +154,22 @@
             res('h', `Total Recargos: $${((vh*1.5*h5)+(vh*2*h1)).toFixed(2)}`);
         }
 
+        // DESPIDO
         if (t === 'i') {
             let r = v('i1'), a = v('i2');
             if (r === null || a === null) return res('i', '⚠️ Revise datos.', true);
             let factor = (a < 3) ? 3 : a;
-            res('i', `Monto Art. 188: $${(r * factor).toFixed(2)}`);
+            res('i', `Indemnización: $${(r * factor).toFixed(2)}`);
         }
 
+        // DESAHUCIO
         if (t === 'ds') {
             let r = v('ds1'), a = v('ds2');
             if (r === null || a === null) return res('ds', '⚠️ Revise datos.', true);
             res('ds', `Bonif. 25%: $${(r * 0.25 * a).toFixed(2)}`);
         }
 
+        // LOSEP
         if (t === 'l') {
             let a = v('l1');
             if (a === null) return res('l', '⚠️ Años requeridos.', true);

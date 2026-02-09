@@ -221,16 +221,16 @@
         </div>
     </div>
     <div id="chat-input-area">
-        <input type="text" id="chat-input" placeholder="Ej: ¿Qué derechos tiene una mujer embarazada?" onkeypress="handleKey(event)">
+        <input type="text" id="chat-input" placeholder="Ej: ¿Cuánto me toca por despido?" onkeypress="handleKey(event)">
         <button id="chat-send" onclick="askBot()">➤</button>
     </div>
 </div>
 
 <script>
-    const SBU = 482.00; // Salario Básico Unificado 2026
+    const SBU = 482.00; 
 
     /* ==================================================================
-       1. BLOQUE DE CALCULADORAS (LÓGICA ORIGINAL INTACTA)
+       1. BLOQUE DE CALCULADORAS (LÓGICA ORIGINAL PLANA)
        ================================================================== */
     function v(id) {
         let val = document.getElementById(id).value.trim().replace(',', '.');
@@ -243,7 +243,7 @@
         target.style.display = 'block';
     }
     
-    // Función f(t) restaurada EXACTAMENTE a la versión original sin emojis ni adornos
+    // Función f(t) sin emojis ni adornos, solo datos
     function f(t) {
         if (t === 'd') {
             let s = v('d1'), m = v('d2');
@@ -283,64 +283,69 @@
     }
 
     /* ==================================================================
-       2. INTELIGENCIA ARTIFICIAL OFFLINE (COMPLETA)
+       2. INTELIGENCIA ARTIFICIAL OFFLINE (CORREGIDA Y EXTENDIDA)
        ================================================================== */
     const KNOWLEDGE_BASE = [
         {
+            // AGREGADO: Esta sección faltaba en la versión anterior
+            tags: ["despido", "intempestivo", "liquidacion", "botar", "indemnizacion", "separacion"],
+            answer: "🚫 <b>Despido Intempestivo (Art. 188):</b> Es la terminación del contrato sin causa legal.<br>💰 <b>Indemnización:</b><br>1. <b>Hasta 3 años de servicio:</b> 3 meses de remuneración (valor fijo).<br>2. <b>Más de 3 años:</b> 1 mes de sueldo por cada año de servicio.<br>➕ <b>Adicional:</b> Se debe sumar la bonificación por desahucio (25% del sueldo por año)."
+        },
+        {
             tags: ["acuerdo", "ministerial", "mdt", "normativa"],
-            answer: "📑 <b>Acuerdos Ministeriales:</b> Son normas técnicas del MDT. <br>1. <b>MDT-2023-140 (Salarios):</b> Fija el SBU y salarios sectoriales. <br>2. <b>Teletrabajo:</b> Regula el derecho a la desconexión (12 horas mínimas) y pago de internet/equipos. <br>3. <b>Contrato Joven:</b> Incentivos para contratar menores de 26 años. <br>⚠️ <i>Recuerde: Ningún acuerdo puede violar derechos del Código del Trabajo.</i>"
+            answer: "📑 <b>Acuerdos Ministeriales:</b> Normas técnicas del MDT. <br>1. <b>MDT-2023-140:</b> Fija el SBU ($482) y salarios sectoriales. <br>2. <b>Teletrabajo:</b> Derecho a desconexión (12h mínimas) y pago de equipos. <br>3. <b>Contrato Joven:</b> Incentivos por contratar menores de 26 años."
         },
         {
             tags: ["reglamento", "interno", "rit", "normas"],
-            answer: "📜 <b>Reglamento Interno de Trabajo:</b> Es obligatorio para empresas con más de 10 trabajadores. <br>✅ <b>Debe contener:</b> Horarios, normas de seguridad, tipos de faltas y sanciones. <br>❌ <b>Prohibido:</b> Multas mayores al 10% del sueldo diario o sanciones corporales. Debe estar aprobado por el Director Regional del Trabajo."
+            answer: "📜 <b>Reglamento Interno:</b> Obligatorio si hay +10 trabajadores. <br>✅ <b>Contiene:</b> Horarios, seguridad, sanciones. <br>❌ <b>Prohibido:</b> Multas >10% del sueldo diario. Debe estar aprobado por el Ministerio."
         },
         {
             tags: ["maternidad", "embarazo", "gestacion", "lactancia", "madre"],
-            answer: "🤰 <b>Derechos de Maternidad (Art. 152-155):</b> <br>1. <b>Licencia:</b> 12 semanas remuneradas (2 prenatales, 10 posnatales). <br>2. <b>Lactancia:</b> Jornada reducida a 6 horas diarias durante 12 meses tras el parto. <br>3. <b>Despido Ineficaz:</b> Si se despide a una mujer embarazada o en lactancia, el despido se considera ineficaz (nulo) y conlleva indemnización de 12 meses de sueldo ADICIONALES a las legales."
+            answer: "🤰 <b>Maternidad (Art. 152):</b> <br>1. <b>Licencia:</b> 12 semanas pagadas (2 pre y 10 posnatales). <br>2. <b>Lactancia:</b> Jornada de 6 horas por 12 meses. <br>3. <b>Despido Ineficaz:</b> Despedir a una embarazada es nulo. Se paga indemnización de 12 meses EXTRA de sueldo."
         },
         {
             tags: ["paternidad", "padre", "nacimiento"],
-            answer: "👨‍🍼 <b>Licencia por Paternidad:</b> <br>El padre tiene derecho a licencia remunerada: <br>- <b>Parto Normal:</b> 10 días. <br>- <b>Cesárea o Parto Múltiple:</b> 15 días. <br>- <b>Nacimiento prematuro/cuidados especiales:</b> 18 días. <br>- <b>Enfermedad degenerativa/terminal de la madre:</b> 25 días."
+            answer: "👨‍🍼 <b>Licencia Paternidad:</b> <br>- <b>Parto Normal:</b> 10 días pagados. <br>- <b>Cesárea/Múltiple:</b> 15 días. <br>- <b>Prematuro:</b> 18 días."
         },
         {
             tags: ["discapacidad", "conadis", "carnet", "sustituto"],
-            answer: "♿ <b>Derechos por Discapacidad:</b> <br>1. <b>Inclusión:</b> Empresas con +25 empleados deben tener 4% de personal con discapacidad. <br>2. <b>Estabilidad Laboral:</b> En caso de despido injustificado, la indemnización es de <b>18 meses</b> de la mejor remuneración, adicional a la del Art. 188. <br>3. <b>Sustitutos:</b> Tienen los mismos derechos si tienen a cargo una persona con discapacidad severa."
+            answer: "♿ <b>Discapacidad:</b> <br>1. <b>Cuota:</b> Empresas con +25 empleados deben tener 4% de personal con discapacidad. <br>2. <b>Despido:</b> Indemnización de <b>18 meses</b> de sueldo adicional si son despedidos injustificadamente."
         },
         {
             tags: ["iess", "seguridad social", "afiliacion", "aporte", "mora"],
-            answer: "🏥 <b>Seguridad Social (IESS):</b> <br>🔹 <b>Afiliación:</b> Obligatoria desde el primer día de trabajo (incluso en periodo de prueba). <br>🔹 <b>Aporte Personal:</b> 9.45% (se descuenta al trabajador). <br>🔹 <b>Aporte Patronal:</b> 11.15% (paga la empresa). <br>⚠️ <b>Responsabilidad Patronal:</b> Si el empleador no paga, debe cubrir los costos médicos u hospitalarios del trabajador en caso de accidente."
+            answer: "🏥 <b>IESS:</b> <br>🔹 <b>Afiliación:</b> Desde el día 1. <br>🔹 <b>Aporte Personal:</b> 9.45%. <br>🔹 <b>Aporte Patronal:</b> 11.15%. <br>⚠️ Si no se paga a tiempo, el empleador cubre gastos médicos (Responsabilidad Patronal)."
         },
         {
             tags: ["fondo", "reserva", "acumulacion"],
-            answer: "💰 <b>Fondos de Reserva (Art. 196):</b> <br>Es el 8.33% de la remuneración mensual. <br>✅ <b>Derecho:</b> Se genera a partir del mes 13 de trabajo (después del primer año). <br>✅ <b>Pago:</b> Puede cobrarse mensualmente o acumularse en el IESS (decisión del trabajador). Si se acumula, genera intereses."
+            answer: "💰 <b>Fondos de Reserva:</b> <br>8.33% del sueldo mensual. <br>✅ <b>Derecho:</b> Desde el mes 13 de trabajo. <br>✅ <b>Pago:</b> Mensual o acumulado (a elección del trabajador)."
         },
         {
             tags: ["utilidades", "ganancias", "abril"],
-            answer: "📊 <b>Utilidades (Art. 97):</b> <br>La empresa debe repartir el 15% de sus ganancias líquidas anuales: <br>- <b>10%:</b> Se divide para todos los trabajadores por tiempo trabajado. <br>- <b>5%:</b> Se divide en función de las cargas familiares (hijos, cónyuge). <br>📅 <b>Fecha máxima de pago:</b> 15 de abril."
+            answer: "📊 <b>Utilidades:</b> <br>15% de ganancias líquidas anuales de la empresa. <br>- 10% para todos los trabajadores. <br>- 5% según cargas familiares. <br>📅 <b>Pago:</b> Hasta el 15 de abril."
         },
         {
-            tags: ["visto bueno", "despido justificado", "inspector"],
-            answer: "⚖️ <b>Visto Bueno (Art. 172):</b> <br>Es la autorización que da un Inspector de Trabajo para terminar el contrato legalmente SIN pagar indemnización. <br><b>Causales comunes:</b> <br>1. Faltas repetidas e injustificadas de puntualidad/asistencia (más de 3 días seguidos). <br>2. Indisciplina o desobediencia grave al Reglamento Interno. <br>3. Ineptitud manifiesta para el cargo."
+            tags: ["visto bueno", "justificado", "inspector", "falta"],
+            answer: "⚖️ <b>Visto Bueno (Art. 172):</b> <br>Autorización del Inspector para despedir SIN indemnización. <br><b>Causas:</b> Faltas de asistencia (>3 días), indisciplina, injurias, ineptitud. Si el inspector lo niega, se considera despido intempestivo."
         },
         {
             tags: ["renuncia", "voluntaria", "retiro"],
-            answer: "👋 <b>Renuncia Voluntaria:</b> <br>El trabajador debe presentar su renuncia por escrito (preferible con 15 días de anticipación, aunque ya no es sancionado el no hacerlo). <br>✅ <b>Recibe:</b> Décimos proporcionales, vacaciones no gozadas y Fondos de Reserva. <br>❌ <b>NO Recibe:</b> Indemnización por despido intempestivo. <br>💡 <b>Nota:</b> Si tiene +25 años de servicio, recibe Jubilación Patronal."
+            answer: "👋 <b>Renuncia Voluntaria:</b> <br>El trabajador se va por su cuenta. <br>✅ <b>Recibe:</b> Décimos proporcionales, vacaciones no gozadas y Fondos de Reserva. <br>❌ <b>NO Recibe:</b> Indemnización por despido."
         },
         {
             tags: ["vacaciones", "descanso"],
-            answer: "🏖️ <b>Vacaciones (Art. 69):</b> <br>1. <b>Derecho:</b> 15 días ininterrumpidos al año (incluye fines de semana). <br>2. <b>Antigüedad:</b> A partir del 5to año en la misma empresa, se suma 1 día extra por cada año excedente (hasta un máximo de 15 extra). <br>3. <b>Pago:</b> Se calculan dividiendo la remuneración anual para 24."
+            answer: "🏖️ <b>Vacaciones:</b> <br>15 días ininterrumpidos al año. <br>A partir del 5to año, aumenta 1 día por año de antigüedad."
         },
         {
             tags: ["losep", "sector publico", "nombramiento"],
-            answer: "🏛️ <b>Sector Público (LOSEP):</b> <br>Se rige por una ley distinta al Código del Trabajo. <br>🔹 <b>Jornada:</b> 8 horas diarias. <br>🔹 <b>Despido:</b> Se llama 'Supresión de Puesto' y se indemniza con 5 SBU por año (Tope 150 SBU). <br>🔹 <b>Renuncia:</b> Se puede comprar la renuncia si hay oferta disponible. <br>🔹 <b>Jubilación:</b> Reciben un bono de jubilación (Bonos del Estado) al retirarse (Art. 129 LOSEP)."
+            answer: "🏛️ <b>Sector Público (LOSEP):</b> <br>No hay despido intempestivo, sino 'Supresión de Puesto'. <br>💰 <b>Indemnización:</b> 5 SBU por año de servicio (Tope 150 SBU)."
         },
         {
             tags: ["horas", "extra", "suplementaria", "nocturna"],
-            answer: "⏱️ <b>Jornadas Especiales:</b> <br>🌙 <b>Jornada Nocturna:</b> (19:00 a 06:00) Tiene un recargo del 25%. <br>➕ <b>Suplementarias:</b> (Después de las 8h, hasta 4 al día/12 semana) Recargo del 50%. <br>🚨 <b>Extraordinarias:</b> (Fines de semana o feriados) Recargo del 100%."
+            answer: "⏱️ <b>Horas Extras:</b> <br>🌙 <b>Nocturna (19h-06h):</b> +25%. <br>➕ <b>Suplementarias (fines jornada):</b> +50%. <br>🚨 <b>Extraordinarias (fines semana):</b> +100%."
         },
         {
-            tags: ["contrato", "prueba", "indefinido"],
-            answer: "📝 <b>Tipos de Contrato:</b> <br>1. <b>Indefinido:</b> Es la regla general. <br>2. <b>Periodo de Prueba:</b> Máximo 90 días. Cualquiera puede terminarlo sin indemnización (solo paga proporcionales). <br>3. <b>Por Obra o Servicio:</b> Termina cuando acaba la obra. Si no se llama al trabajador para la siguiente obra, se considera despido. <br>4. <b>Eventual/Ocasional:</b> Para reemplazos o picos de producción (recargo del 35% en el valor hora)."
+            tags: ["contrato", "prueba", "indefinido", "fijo"],
+            answer: "📝 <b>Contratos:</b> <br>1. <b>Indefinido:</b> Regla general. <br>2. <b>Prueba:</b> Máx 90 días (se puede terminar sin costo). <br>3. <b>Eventual:</b> Reemplazos o picos de producción (+35% recargo)."
         }
     ];
 
@@ -371,7 +376,7 @@
             KNOWLEDGE_BASE.forEach(item => {
                 let score = 0;
                 item.tags.forEach(tag => {
-                    if (txt.includes(tag)) score++;
+                    if (txt.includes(tag)) score++; // Busca coincidencia parcial
                 });
                 if (score > maxScore) {
                     maxScore = score;
@@ -382,10 +387,10 @@
             if (bestMatch && maxScore > 0) {
                 response = bestMatch.answer;
             } else {
-                if (txt.includes("hola") || txt.includes("gracias")) {
-                    response = "👋 ¡Hola! Soy tu asistente legal offline. Puedes preguntarme sobre <b>cálculos, despidos, maternidad o IESS</b>.";
+                if (txt.includes("hola") || txt.includes("buenos") || txt.includes("gracias")) {
+                    response = "👋 ¡Hola! Soy tu asistente legal. Pregúntame sobre: <b>Despido, Vacaciones, Maternidad, IESS o Utilidades</b>.";
                 } else {
-                    response = "🤔 Mmm, mi base de datos offline no encuentra una respuesta exacta para eso. <br><br>Intenta usar palabras clave como: <b>'despido', 'vacaciones', 'maternidad', 'utilidades', 'IESS' o 'acuerdo ministerial'</b>.";
+                    response = "🤔 No encontré ese tema específico. Intenta con palabras clave simples como: <br><b>'Despido', 'Renuncia', 'Maternidad', 'Fondos', 'Horas Extra'.</b>";
                 }
             }
 

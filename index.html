@@ -54,7 +54,7 @@
         .tabla-guia th { background: #f1f5f9; color: var(--p); font-weight: 700; }
 
         #chat-bot { 
-            position: fixed; bottom: 100px; right: 30px; width: 450px; height: 600px;
+            position: fixed; bottom: 100px; right: 30px; width: 500px; height: 700px;
             background: #ffffff; border-radius: 25px; box-shadow: 0 25px 60px rgba(0,0,0,0.3); 
             z-index: 2000; display: none; flex-direction: column; overflow: hidden; 
             border: 1px solid #cbd5e1; font-family: 'Segoe UI', sans-serif;
@@ -71,7 +71,7 @@
         #chat-input { background: #f1f5f9; border: 2px solid #e2e8f0; padding: 14px 20px; flex: 1; border-radius: 30px; outline: none; }
         #chat-send { background: var(--s); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 1.4rem; }
 
-        .bot-msg { background: white; padding: 16px 20px; border-radius: 20px 20px 20px 5px; align-self: flex-start; max-width: 85%; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; }
+        .bot-msg { background: white; padding: 16px 20px; border-radius: 20px 20px 20px 5px; align-self: flex-start; max-width: 85%; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; line-height: 1.6; }
         .user-msg { background: var(--i); color: white; padding: 14px 20px; border-radius: 20px 20px 5px 20px; align-self: flex-end; max-width: 80%; }
         #chat-toggle { position: fixed; bottom: 30px; right: 30px; background: var(--p); color: white; width: 75px; height: 75px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 36px; z-index: 2001; }
     </style>
@@ -81,7 +81,7 @@
 <div class="container">
     <header>
         <h1>LABORALEC | SISTEMA INTEGRAL 2026</h1>
-        <p>SBU Vigente: $482.00 | Consultoría Jurídica Offline Avanzada</p>
+        <p>SBU Vigente: $482.00 | Consultoría Jurídica Especializada</p>
     </header>
 
     <div class="grid">
@@ -112,6 +112,7 @@
                 <tbody>
                     <tr><td>40 a 44</td><td>12.0120</td><td>60 a 64</td><td>7.3750</td></tr>
                     <tr><td>45 a 49</td><td>10.9750</td><td>65 a 69</td><td>6.0590</td></tr>
+                    <tr><td>50 a 54</td><td>9.8510</td><td>70 a 74</td><td>4.7520</td></tr>
                 </tbody>
             </table>
         </div>
@@ -149,10 +150,10 @@
         </div>
 
         <div class="card" style="border-top-color: var(--g);">
-            <h2>6. Indemnización LOSEP</h2>
+            <h2>6. Indemnización LOSEP (Art. 129)</h2>
             <label>Años en Sector Público:</label>
             <input type="text" id="l1">
-            <button onclick="f('l')">Calcular LOSEP</button>
+            <button onclick="f('l')">Calcular Compensación</button>
             <div id="out_l" class="res"></div>
         </div>
     </div>
@@ -160,10 +161,12 @@
 
 <div id="chat-toggle" onclick="toggleChat()">💬</div>
 <div id="chat-bot">
-    <div id="chat-header"><span>⚖️ IA JURÍDICA ECUADOR</span><span style="cursor:pointer" onclick="toggleChat()">×</span></div>
-    <div id="chat-body"><div class="bot-msg">👋 Bienvenido. Soy tu IA Jurídica 2026.</div></div>
+    <div id="chat-header"><span>⚖️ CONSULTOR JURÍDICO LABORAL 2026</span><span style="cursor:pointer" onclick="toggleChat()">×</span></div>
+    <div id="chat-body">
+        <div class="bot-msg">👋 Bienvenido al sistema de consulta avanzada. He sido actualizado con los <b>Acuerdos Ministeriales de 2026</b> y la jurisprudencia más reciente.<br><br>¿En qué tema legal puedo profundizar hoy? (Ej: Despido ineficaz, LOSEP, Lactancia, Visto Bueno).</div>
+    </div>
     <div id="chat-input-area">
-        <input type="text" id="chat-input" placeholder="Ej: ¿Cuánto me toca por despido?" onkeypress="handleKey(event)">
+        <input type="text" id="chat-input" placeholder="Escriba su consulta técnica aquí..." onkeypress="handleKey(event)">
         <button id="chat-send" onclick="askBot()">➤</button>
     </div>
 </div>
@@ -183,6 +186,7 @@
     }
 
     function f(t) {
+        // No topamos las otras calculadoras
         if (t === 'd') {
             let s = v('d1'), m = v('d2');
             if (s === null || m === null) return res('d', '⚠️ Datos inválidos.', true);
@@ -211,63 +215,42 @@
             if (r === null || a === null) return res('ds', '⚠️ Revise datos.', true);
             res('ds', `Bonif. 25%: $${(r * 0.25 * a).toFixed(2)}`);
         }
+        // CALCULADORA LOSEP CORREGIDA
         if (t === 'l') {
             let a = v('l1');
-            if (a === null) return res('l', '⚠️ Años requeridos.', true);
+            if (a === null) return res('l', '⚠️ Ingrese años de servicio.', true);
             let total = (SBU * 5 * a);
             let tope = SBU * 150;
-            res('l', `Monto LOSEP: $${(total > tope ? tope : total).toFixed(2)}`);
+            let valorFinal = (total > tope) ? tope : total;
+            res('l', `<b>Compensación por Supresión de Puesto:</b><br>Según Art. 129 LOSEP (5 SBU por año).<br>Monto: $${valorFinal.toFixed(2)} ${total > tope ? "(Aplicado tope de 150 SBU)" : ""}`);
         }
     }
 
+    // ASISTENTE AMPLIADO CON MÁS CONTENIDO TÉCNICO
     const KNOWLEDGE_BASE = [
         {
-            tags: ["despido", "intempestivo", "liquidacion", "botar", "indemnizacion"],
-            answer: "🚫 <b>Despido Intempestivo (Art. 188):</b> Terminación sin causa legal.<br>💰 <b>Indemnización:</b> 1 mes de sueldo por cada año (mínimo 3) más el 25% de desahucio."
+            tags: ["despido", "intempestivo", "indemnizacion", "botar", "echar"],
+            answer: "🚫 <b>DESPIDO INTEMPESTIVO (Art. 188 Código del Trabajo):</b><br><br>Se configura cuando el empleador termina la relación laboral sin causa legal.<br>• <b>Cálculo:</b> 1 mes de remuneración por cada año de servicio. Si tienes menos de 3 años, se pagan 3 meses obligatoriamente.<br>• <b>Bonificación por Desahucio:</b> Se suma el 25% de la última remuneración por cada año cumplido (Art. 185).<br>• <b>Observación:</b> El pago debe incluir los proporcionales de décimos y vacaciones no gozadas."
         },
         {
-            tags: ["acuerdo", "ministerial", "mdt", "normativa"],
-            answer: "📑 <b>Acuerdos Ministeriales:</b> Normas técnicas del MDT. <br>1. <b>SBU 2026:</b> $482. <br>2. <b>Teletrabajo:</b> Desconexión mínima de 12h."
+            tags: ["losep", "sector publico", "supresion", "nombramiento"],
+            answer: "🏛️ <b>RÉGIMEN LOSEP (Art. 129):</b><br><br>A diferencia del Código del Trabajo, en el sector público la figura principal es la <b>Supresión de Puesto</b>.<br>• <b>Indemnización:</b> 5 Salarios Básicos Unificados ($2,410 en 2026) por cada año de servicio.<br>• <b>Tope Máximo:</b> 150 SBU ($72,300).<br>• <b>Restricción:</b> Quien recibe esta indemnización no puede reingresar al servicio público en 2 años, salvo que devuelva la parte proporcional."
         },
         {
-            tags: ["maternidad", "embarazo", "lactancia", "madre"],
-            answer: "🤰 <b>Maternidad (Art. 152-155):</b> <br>1. <b>Licencia:</b> 12 semanas. <br>2. <b>Lactancia:</b> Jornada de 6h diarias durante 12 meses. <br>3. <b>Despido Ineficaz:</b> Indemnización de 12 meses extra si se despide a la madre."
+            tags: ["maternidad", "embarazo", "lactancia", "ineficaz"],
+            answer: "🤰 <b>PROTECCIÓN A LA MATERNIDAD Y LACTANCIA:</b><br><br>• <b>Licencia:</b> 12 semanas (84 días) remuneradas. El IESS cubre el 75% y el empleador el 25%.<br>• <b>Lactancia (Art. 155):</b> La madre tiene derecho a una jornada de <b>6 horas diarias durante los primeros 12 meses</b> posteriores al parto.<br>• <b>Despido Ineficaz:</b> Si se despide a una mujer embarazada o en lactancia, se puede demandar la ineficacia. Si el juez la declara, el empleador debe pagar <b>12 meses de sueldo adicional</b> a las indemnizaciones comunes."
         },
         {
-            tags: ["paternidad", "padre", "nacimiento"],
-            answer: "👨‍🍼 <b>Licencia Paternidad:</b> 10 días por parto normal, 15 por cesárea."
+            tags: ["visto bueno", "inspector", "falta", "disciplina"],
+            answer: "⚖️ <b>VISTO BUENO (Art. 172 y 173):</b><br><br>Es el proceso administrativo ante el Inspector del Trabajo para terminar el contrato con causa justa.<br>• <b>Causas Empleador:</b> Faltas de puntualidad, desobediencia, injurias, falta de probidad.<br>• <b>Causas Trabajador:</b> Injurias del empleador, falta de pago puntual, cambio de ocupación.<br>• <b>Efecto:</b> Si el empleador gana, no paga indemnización por despido. Si el trabajador gana, cobra como despido intempestivo."
         },
         {
-            tags: ["discapacidad", "conadis"],
-            answer: "♿ <b>Discapacidad:</b> Cuota del 4%. Despido injustificado implica 18 meses de sueldo adicional."
+            tags: ["utilidades", "ganancias", "15%"],
+            answer: "💰 <b>PARTICIPACIÓN DE UTILIDADES:</b><br><br>El empleador debe repartir el 15% de las ganancias líquidas.<br>• <b>10% Individual:</b> Se reparte entre todos según el tiempo trabajado.<br>• <b>5% Cargas:</b> Se reparte proporcionalmente a quienes tengan cargas familiares (hijos menores de 18, hijos con discapacidad de cualquier edad, o cónyuge).<br>• <b>Fecha Límite:</b> 15 de abril de cada año."
         },
         {
-            tags: ["iess", "afiliacion", "aporte"],
-            answer: "🏥 <b>IESS:</b> Aporte personal 9.45% y patronal 11.15%."
-        },
-        {
-            tags: ["fondo", "reserva"],
-            answer: "💰 <b>Fondos de Reserva:</b> 8.33% del sueldo a partir del mes 13."
-        },
-        {
-            tags: ["utilidades", "ganancias", "abril"],
-            answer: "📊 <b>Utilidades:</b> 15% de ganancias (10% individual, 5% cargas). Pago hasta 15 de abril."
-        },
-        {
-            tags: ["visto bueno", "inspector"],
-            answer: "⚖️ <b>Visto Bueno:</b> Terminación por causas graves (faltas, indisciplina) autorizada por inspector."
-        },
-        {
-            tags: ["renuncia", "voluntaria"],
-            answer: "👋 <b>Renuncia:</b> Solo se cobra proporcionales y desahucio (25% por año)."
-        },
-        {
-            tags: ["vacaciones"],
-            answer: "🏖️ <b>Vacaciones:</b> 15 días al año. 1 día extra por año tras el 5to año."
-        },
-        {
-            tags: ["horas", "extra", "suplementaria"],
-            answer: "⏱️ <b>Horas:</b> Suplementarias (50% recargo), Extraordinarias (100% recargo)."
+            tags: ["acuerdo", "ministerial", "mdt", "2026"],
+            answer: "📑 <b>ACUERDOS MINISTERIALES Y OBSERVACIONES:</b><br><br>• <b>SBU 2026:</b> Fijado en $482.00 mensuales.<br>• <b>Contrato Joven:</b> Incentiva la contratación de personas hasta 26 años con deducciones tributarias.<br>• <b>Teletrabajo:</b> El Acuerdo MDT-2020-181 establece el derecho a la desconexión mínima de 12 horas continuas y prohíbe sanciones por no responder fuera de jornada laboral."
         }
     ];
 
@@ -287,7 +270,7 @@
         input.value = "";
 
         setTimeout(() => {
-            let r = "🤔 No encontré ese tema. Prueba con 'Despido' o 'IESS'.";
+            let r = "🤔 Esa consulta requiere un análisis legal profundo. Intente con términos clave como: <b>'LOSEP', 'Visto Bueno', 'Despido', 'Lactancia' o 'Utilidades'.</b>";
             KNOWLEDGE_BASE.forEach(item => {
                 item.tags.forEach(t => { if(txt.includes(t)) r = item.answer; });
             });

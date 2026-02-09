@@ -3,224 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LABORALEC | CONSULTOR JURÍDICO INTEGRAL 2026</title>
+    <title>SISTEMA LABORAL EXPERTO ECUADOR 2026</title>
     <style>
-        /* CONFIGURACIÓN DE COLORES Y DISEÑO PROFESIONAL */
         :root { 
             --p: #0f172a; --s: #10b981; --i: #3b82f6; 
             --w: #f59e0b; --d: #ef4444; --g: #64748b; 
-            --bg: #f1f5f9;
+            --accent: #6366f1; --bg: #f1f5f9;
         }
 
-        body { 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-            background: var(--bg); margin: 0; padding: 20px; 
-            padding-bottom: 120px; color: #1e293b; 
-        }
+        body { font-family: 'Inter', 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 30px; color: #1e293b; line-height: 1.6; }
+        .container { max-width: 1500px; margin: auto; }
 
-        .container { max-width: 1400px; margin: auto; }
-
+        /* HEADER ESTILO CORPORATIVO */
         header { 
-            background: linear-gradient(135deg, var(--p), #1e293b); 
-            color: white; padding: 50px 20px; border-radius: 24px; 
-            text-align: center; margin-bottom: 40px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15); 
+            background: linear-gradient(135deg, var(--p) 0%, #1e293b 100%); 
+            color: white; padding: 60px 40px; border-radius: 30px; 
+            text-align: left; margin-bottom: 40px; position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.2);
         }
+        header h1 { font-size: 2.8rem; margin: 0; font-weight: 800; letter-spacing: -2px; }
+        header p { font-size: 1.2rem; opacity: 0.8; margin-top: 10px; }
+        .badge { position: absolute; top: 40px; right: 40px; background: var(--s); padding: 10px 20px; border-radius: 50px; font-weight: 700; font-size: 0.9rem; }
 
-        header h1 { font-size: 2.5rem; margin: 0; letter-spacing: -1px; }
-        header p { opacity: 0.9; font-size: 1.1rem; margin-top: 10px; }
-
-        /* GRID DE CALCULADORAS */
-        .grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); 
-            gap: 30px; 
-        }
-
+        /* GRID DE APLICACIONES */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 35px; }
         .card { 
-            background: white; border-radius: 20px; padding: 35px; 
-            border-top: 10px solid; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); 
-            transition: all 0.3s ease;
+            background: white; border-radius: 24px; padding: 40px; 
+            border-top: 12px solid; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        .card:hover { transform: translateY(-8px); }
 
-        .card:hover { transform: translateY(-5px); box-shadow: 0 20px 35px -10px rgba(0,0,0,0.1); }
-
-        h2 { font-size: 1.4rem; color: var(--p); margin-top: 0; margin-bottom: 25px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
-
-        label { display: block; font-size: 0.9rem; font-weight: 700; color: var(--g); margin: 15px 0 8px; }
-
+        h2 { font-size: 1.5rem; color: var(--p); margin-top: 0; display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
+        
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-size: 0.9rem; font-weight: 700; color: var(--g); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        
         input { 
-            width: 100%; padding: 15px; border: 2px solid #e2e8f0; 
-            border-radius: 14px; box-sizing: border-box; font-size: 1rem; 
-            transition: all 0.3s; background: #f8fafc;
+            width: 100%; padding: 16px; border: 2px solid #e2e8f0; border-radius: 16px; 
+            font-size: 1.1rem; box-sizing: border-box; background: #f8fafc; transition: 0.3s;
         }
-
-        input:focus { border-color: var(--i); outline: none; background: white; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
+        input:focus { border-color: var(--i); outline: none; background: white; box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.15); }
 
         button { 
-            width: 100%; padding: 18px; border: none; border-radius: 14px; 
-            color: white; font-weight: 700; cursor: pointer; 
-            background: var(--p); margin-top: 25px; font-size: 1.1rem; 
-            transition: 0.3s; text-transform: uppercase;
+            width: 100%; padding: 20px; border: none; border-radius: 16px; 
+            color: white; font-weight: 800; cursor: pointer; background: var(--p); 
+            font-size: 1.1rem; transition: 0.3s; margin-top: 10px;
         }
+        button:hover { background: var(--accent); box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3); }
 
-        button:hover { background: #334155; }
-
-        /* RESPUESTAS DE CALCULADORAS */
+        /* RESULTADOS DETALLADOS */
         .res { 
-            margin-top: 25px; padding: 25px; border-radius: 14px; 
-            display: none; font-size: 1.05rem; line-height: 1.7; 
-            border-left: 8px solid; 
+            margin-top: 25px; padding: 25px; border-radius: 18px; display: none; 
+            border-left: 10px solid; animation: slideIn 0.4s ease-out;
         }
-        .ok { background: #f0fdf4; color: #14532d; border-color: #22c55e; }
-        .err { background: #fef2f2; color: #7f1d1d; border-color: #ef4444; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .ok { background: #f0fdf4; color: #166534; border-color: #22c55e; }
+        .err { background: #fef2f2; color: #991b1b; border-color: #ef4444; }
 
-        /* SISTEMA DE CHAT MAXIMIZADO */
-        #chat-toggle { 
-            position: fixed; bottom: 35px; right: 35px; background: var(--p); 
-            color: white; width: 80px; height: 80px; border-radius: 50%; 
-            display: flex; justify-content: center; align-items: center; 
-            cursor: pointer; box-shadow: 0 15px 35px rgba(0,0,0,0.3); 
-            z-index: 4000; font-size: 35px; transition: 0.3s;
-        }
-        #chat-toggle:hover { transform: scale(1.1); }
+        /* CHATBOT AVANZADO (MAXIMIZADO) */
+        #chat-toggle { position: fixed; bottom: 40px; right: 40px; background: var(--p); color: white; width: 85px; height: 85px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 20px 40px rgba(0,0,0,0.3); z-index: 2000; font-size: 40px; transition: 0.4s; }
+        #chat-toggle:hover { transform: rotate(15deg) scale(1.1); }
 
         #chat-bot { 
-            position: fixed; bottom: 125px; right: 35px; width: 600px; height: 800px; 
-            background: white; border-radius: 30px; box-shadow: 0 30px 60px -12px rgba(0,0,0,0.25); 
-            z-index: 4000; display: none; flex-direction: column; overflow: hidden; 
-            border: 1px solid #e2e8f0; 
+            position: fixed; bottom: 140px; right: 40px; width: 650px; height: 850px; 
+            background: white; border-radius: 35px; box-shadow: 0 35px 70px -15px rgba(0,0,0,0.3); 
+            z-index: 2000; display: none; flex-direction: column; overflow: hidden; border: 1px solid #e2e8f0; 
         }
-
-        #chat-header { 
-            background: var(--p); color: white; padding: 30px; 
-            font-weight: 800; display: flex; justify-content: space-between; 
-            align-items: center; font-size: 1.2rem;
-        }
-
-        #chat-body { 
-            flex: 1; padding: 30px; overflow-y: auto; background: #f8fafc; 
-            display: flex; flex-direction: column; gap: 25px; 
-        }
-
+        #chat-header { background: var(--p); color: white; padding: 35px; font-weight: 800; display: flex; justify-content: space-between; align-items: center; font-size: 1.3rem; }
+        
+        #chat-body { flex: 1; padding: 35px; overflow-y: auto; background: #f8fafc; display: flex; flex-direction: column; gap: 20px; }
+        
         .bot-msg { 
             background: white; padding: 25px; border-radius: 0 25px 25px 25px; 
-            align-self: flex-start; max-width: 90%; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; 
-            font-size: 1rem; line-height: 1.8; color: #334155;
+            align-self: flex-start; max-width: 90%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            border: 1px solid #e2e8f0; font-size: 1.05rem; 
         }
+        .user-msg { background: var(--accent); color: white; padding: 18px 25px; border-radius: 25px 25px 0 25px; align-self: flex-end; font-weight: 600; }
+        
+        #chat-input-area { padding: 30px; border-top: 1px solid #e2e8f0; display: flex; gap: 15px; background: white; }
+        #chat-input { flex: 1; padding: 20px; border-radius: 20px; border: 2px solid #f1f5f9; background: #f1f5f9; font-size: 1.1rem; }
+        #chat-send { width: 70px; height: 65px; background: var(--s); border: none; border-radius: 20px; color: white; cursor: pointer; font-size: 1.5rem; }
 
-        .user-msg { 
-            background: var(--i); color: white; padding: 18px 25px; 
-            border-radius: 25px 25px 0 25px; align-self: flex-end; 
-            font-weight: 600; box-shadow: 0 5px 15px rgba(59, 130, 246, 0.2);
-        }
-
-        #chat-input-area { 
-            padding: 25px; border-top: 1px solid #e2e8f0; 
-            display: flex; gap: 15px; background: white;
-        }
-
-        #chat-input { 
-            flex: 1; padding: 18px; border-radius: 18px; 
-            border: 2px solid #f1f5f9; background: #f1f5f9; font-size: 1rem;
-        }
-
-        #chat-send { width: 70px; margin: 0; background: var(--s); border-radius: 18px; }
-
-        /* TABLA JUBILACIÓN */
-        .tabla-guia { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.85rem; }
-        .tabla-guia th, .tabla-guia td { border: 1px solid #e2e8f0; padding: 10px; text-align: center; }
-        .tabla-guia th { background: #f1f5f9; color: var(--p); }
+        hr { border: 0; border-top: 1px solid #e2e8f0; margin: 15px 0; }
+        .legal-ref { font-size: 0.8rem; color: var(--g); font-style: italic; margin-top: 10px; display: block; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <h1>LABORALEC | SISTEMA EXPERTO INTEGRAL 2026</h1>
-        <p>Consultoría de Alta Precisión basada en el Código del Trabajo y LOSEP</p>
+        <div class="badge">ACTUALIZADO FEBRERO 2026</div>
+        <h1>LABORALEC : SISTEMA TÉCNICO JURÍDICO</h1>
+        <p>Plataforma Integral de Cálculos Laborales y Consultoría en Normativa Ecuatoriana (SBU $482.00)</p>
     </header>
 
     <div class="grid">
         <div class="card" style="border-top-color: var(--i);">
-            <h2>💰 Décimos (13ro y 14to)</h2>
-            <label>Promedio Mensual Percibido:</label>
-            <input type="number" id="d1" placeholder="Ej: 650.00">
-            <label>Meses Trabajados en el Periodo:</label>
-            <input type="number" id="d2" placeholder="De 1 a 12">
+            <h2>💰 Beneficios de Ley (Décimos)</h2>
+            <div class="form-group">
+                <label>Remuneración Mensual Promedio:</label>
+                <input type="number" id="d1" placeholder="Ej: 850.00">
+            </div>
+            <div class="form-group">
+                <label>Meses Laborados en el Periodo:</label>
+                <input type="number" id="d2" placeholder="1 al 12">
+            </div>
             <button onclick="ejecutar('d')">Calcular Beneficios</button>
             <div id="out_d" class="res"></div>
         </div>
 
         <div class="card" style="border-top-color: var(--s);">
             <h2>👴 Jubilación Patronal (Art. 216)</h2>
-            <label>Promedio de Remuneración (Últimos 5 años):</label>
-            <input type="number" id="j1" placeholder="Ej: 1200.00">
-            <label>Años de Servicio (Mínimo 25):</label>
-            <input type="number" id="j2" placeholder="Ej: 25">
-            <label>Coeficiente según Edad (IESS):</label>
-            <input type="number" id="j3" placeholder="Ej: 6.2305">
+            <div class="form-group">
+                <label>Promedio Sueldo últimos 5 años:</label>
+                <input type="number" id="j1" placeholder="Ej: 1200.00">
+            </div>
+            <div class="form-group">
+                <label>Años de Servicio Continuo:</label>
+                <input type="number" id="j2" placeholder="Mínimo 25 años">
+            </div>
+            <div class="form-group">
+                <label>Coeficiente IESS (Edad):</label>
+                <input type="number" id="j3" placeholder="Ej: 6.2305">
+            </div>
             <button onclick="ejecutar('j')">Calcular Pensión Vitalicia</button>
             <div id="out_j" class="res"></div>
-            <table class="tabla-guia">
-                <thead><tr><th>Edad</th><th>Coeficiente</th><th>Edad</th><th>Coeficiente</th></tr></thead>
-                <tbody>
-                    <tr><td>45-49</td><td>10.9750</td><td>60-64</td><td>7.3750</td></tr>
-                    <tr><td>50-54</td><td>9.8510</td><td>65-69</td><td>6.0590</td></tr>
-                </tbody>
-            </table>
         </div>
 
         <div class="card" style="border-top-color: var(--w);">
-            <h2>⏱️ Jornada Suplementaria y Extra</h2>
-            <label>Remuneración Mensual:</label>
-            <input type="number" id="h1" placeholder="Ej: 482.00">
-            <label>Horas Suplementarias (50%):</label>
-            <input type="number" id="h2" value="0">
-            <label>Horas Extraordinarias (100%):</label>
-            <input type="number" id="h3" value="0">
+            <h2>⏱️ Recargos por Jornada</h2>
+            <div class="form-group">
+                <label>Sueldo Base Mensual:</label>
+                <input type="number" id="h1" placeholder="Ej: 482.00">
+            </div>
+            <div class="form-group">
+                <label>Horas Suplementarias (50%):</label>
+                <input type="number" id="h2" value="0">
+            </div>
+            <div class="form-group">
+                <label>Horas Extraordinarias (100%):</label>
+                <input type="number" id="h3" value="0">
+            </div>
             <button onclick="ejecutar('h')">Calcular Recargos</button>
             <div id="out_h" class="res"></div>
         </div>
 
         <div class="card" style="border-top-color: var(--p);">
             <h2>🏛️ Indemnización LOSEP (Art. 129)</h2>
-            <label>Años de Servicio Permanente en Sector Público:</label>
-            <input type="number" id="l1" placeholder="Ej: 15">
-            <button onclick="ejecutar('l')">Calcular Liquidación Pública</button>
+            <div class="form-group">
+                <label>Última Remuneración Percibida:</label>
+                <input type="number" id="l_sueldo" placeholder="Ej: 1500.00">
+            </div>
+            <div class="form-group">
+                <label>Años de Servicio Permanente:</label>
+                <input type="number" id="l1" placeholder="Ej: 12">
+            </div>
+            <button onclick="ejecutar('l')">Calcular Compensación Pública</button>
             <div id="out_l" class="res"></div>
         </div>
 
         <div class="card" style="border-top-color: var(--d);">
-            <h2>🚫 Despido Intempestivo (Art. 188)</h2>
-            <label>Última Remuneración Completa:</label>
-            <input type="number" id="i1" placeholder="Ej: 800.00">
-            <label>Años de Trabajo (Fracción cuenta como año):</label>
-            <input type="number" id="i2" placeholder="Ej: 4">
-            <button onclick="ejecutar('i')">Calcular Indemnización</button>
+            <h2>🚫 Despido Intempestivo (Privado)</h2>
+            <div class="form-group">
+                <label>Última Remuneración Completa:</label>
+                <input type="number" id="i1" placeholder="Ej: 900.00">
+            </div>
+            <div class="form-group">
+                <label>Tiempo de Servicio (Años):</label>
+                <input type="number" id="i2" placeholder="Ej: 4">
+            </div>
+            <button onclick="ejecutar('i')">Calcular Liquidación</button>
             <div id="out_i" class="res"></div>
+        </div>
+
+        <div class="card" style="border-top-color: var(--accent);">
+            <h2>📄 Bonificación por Desahucio</h2>
+            <div class="form-group">
+                <label>Sueldo para el Cálculo:</label>
+                <input type="number" id="ds1" placeholder="Ej: 482.00">
+            </div>
+            <div class="form-group">
+                <label>Años Completos de Trabajo:</label>
+                <input type="number" id="ds2" placeholder="Ej: 2">
+            </div>
+            <button onclick="ejecutar('ds')">Calcular Desahucio</button>
+            <div id="out_ds" class="res"></div>
         </div>
     </div>
 </div>
 
 <div id="chat-toggle" onclick="toggleChat()">⚖️</div>
 <div id="chat-bot">
-    <div id="chat-header"><span>SISTEMA EXPERTO LABORAL V.2026</span><span onclick="toggleChat()" style="cursor:pointer">✕</span></div>
+    <div id="chat-header"><span>SISTEMA EXPERTO LABORAL V2</span><span onclick="toggleChat()" style="cursor:pointer">✕</span></div>
     <div id="chat-body">
-        <div class="bot-msg"><b>CONSULTORÍA JURÍDICA ACTIVADA.</b><br>Soy su asistente experto en normativa laboral ecuatoriana. Mis respuestas incluyen base legal detallada. ¿En qué puedo asesorarle hoy?</div>
+        <div class="bot-msg"><b>CONSULTORÍA JURÍDICA GLOBAL ACTIVADA.</b><br>Tengo acceso a la base completa del Código del Trabajo, LOSEP y Acuerdos Ministeriales 2026.<br><br>¿En qué tema legal desea profundizar hoy? (Ej: Despido ineficaz, Vacaciones, Teletrabajo).</div>
     </div>
     <div id="chat-input-area">
-        <input type="text" id="chat-input" placeholder="Consulte sobre despido ineficaz, LOSEP, lactancia..." onkeypress="if(event.key==='Enter') preguntar()">
+        <input type="text" id="chat-input" placeholder="Pregunte aquí detalladamente..." onkeypress="if(event.key==='Enter') preguntar()">
         <button id="chat-send" onclick="preguntar()">➤</button>
     </div>
 </div>
 
 <script>
-    const SBU = 482.00;
+    const SBU_VAL = 482.00;
 
     function v(id) {
-        let val = document.getElementById(id).value.trim();
+        let val = document.getElementById(id).value;
         return (val === "" || isNaN(val)) ? null : parseFloat(val);
     }
 
@@ -229,98 +219,114 @@
         out.style.display = 'block';
         out.className = 'res ok';
 
-        if (t === 'l') { // LÓGICA LOSEP ART 129 COMPLETA
+        // LÓGICA LOSEP RE-DISEÑADA
+        if (t === 'l') {
+            let sueldo = v('l_sueldo');
             let anios = v('l1');
-            if (anios === null) { out.className = 'res err'; out.innerHTML = "⚠️ Ingrese el número de años."; return; }
+            if (!sueldo || !anios) { out.className = 'res err'; out.innerHTML = "⚠️ Ingrese sueldo y años."; return; }
             
-            let compensacionAnual = 5 * SBU; 
-            let totalBruto = anios * compensacionAnual;
-            let topeMaximo = 150 * SBU;
-            let valorEfectivo = (totalBruto > topeMaximo) ? topeMaximo : totalBruto;
+            let baseCalculo = 5 * SBU_VAL; 
+            let bruto = anios * baseCalculo;
+            let tope = 150 * SBU_VAL;
+            let efectivo = (bruto > tope) ? tope : bruto;
 
             out.innerHTML = `
-                <b>RESULTADO DE LIQUIDACIÓN LOSEP:</b><br>
-                • Base de cálculo (5 SBU): $${compensacionAnual.toFixed(2)} por año.<br>
-                • Total acumulado (${anios} años): $${totalBruto.toFixed(2)}<br>
-                • <b>Monto Máximo de Pago: $${valorEfectivo.toFixed(2)}</b><br>
+                <b>ANÁLISIS DE LIQUIDACIÓN LOSEP:</b><br>
+                • Sueldo de Referencia: $${sueldo.toFixed(2)}<br>
+                • Factor de Cálculo (5 SBU): $${baseCalculo.toFixed(2)} por año.<br>
+                • Total Acumulado (${anios} años): $${bruto.toFixed(2)}<br>
                 <hr>
-                <small><b>Base Legal:</b> Art. 129 de la LOSEP. Tope máximo legal: 150 SBU ($${topeMaximo.toFixed(2)}).</small>
+                • <b>MONTO NETO A PERCIBIR: $${efectivo.toFixed(2)}</b><br>
+                <span class="legal-ref">Base Legal: Art. 129 LOSEP. El tope máximo es de 150 SBU.</span>
             `;
         }
 
         if (t === 'd') {
             let s = v('d1'), m = v('d2');
-            if (s === null || m === null) return;
-            out.innerHTML = `• Décimo Tercero (Acumulado): $${((s*m)/12).toFixed(2)}<br>• Décimo Cuarto (Proporcional SBU): $${((SBU/12)*m).toFixed(2)}`;
+            if(s && m) out.innerHTML = `<b>Décimo Tercero:</b> $${((s*m)/12).toFixed(2)}<br><b>Décimo Cuarto:</b> $${((SBU_VAL/12)*m).toFixed(2)}`;
         }
 
         if (t === 'j') {
             let s = v('j1'), a = v('j2'), c = v('j3');
-            if (s === null || a === null || c === null) return;
-            let pension = (((s * 12 * 5) * 0.05 / 5) * a) / c / 12;
-            out.innerHTML = `<b>Pensión Mensual Estimada: $${pension.toFixed(2)}</b><br><small>Aplica tras 25 años de servicio con el mismo empleador.</small>`;
+            if(s && a && c) {
+                let haber = ((s*12*5)*0.05/5)*a;
+                let mensual = (haber/c/12);
+                out.innerHTML = `<b>Pensión Vitalicia Mensual: $${mensual.toFixed(2)}</b><br><span class="legal-ref">Art. 216 Código del Trabajo.</span>`;
+            }
         }
 
         if (t === 'h') {
             let s = v('h1'), h5 = v('h2'), h1 = v('h3');
-            if (s === null) return;
-            let vh = s / 240;
-            let total = (vh * 1.5 * h5) + (vh * 2 * h1);
-            out.innerHTML = `Total a pagar por horas extra: <b>$${total.toFixed(2)}</b>`;
+            if(s) {
+                let vh = s/240;
+                let tot = (vh*1.5*h5) + (vh*2*h1);
+                out.innerHTML = `<b>Total de Recargos Mensuales: $${tot.toFixed(2)}</b><br>Valor Hora Normal: $${vh.toFixed(2)}`;
+            }
         }
 
         if (t === 'i') {
             let r = v('i1'), a = v('i2');
-            if (r === null || a === null) return;
-            let factor = (a < 3) ? 3 : a;
-            let despido = r * factor;
-            let desahucio = r * 0.25 * a;
-            out.innerHTML = `
-                • Indemnización por Despido: $${despido.toFixed(2)}<br>
-                • Bonificación Desahucio (25%): $${desahucio.toFixed(2)}<br>
-                • <b>Total Liquidación: $${(despido + desahucio).toFixed(2)}</b>
-            `;
+            if(r && a) {
+                let f = (a < 3) ? 3 : a;
+                out.innerHTML = `<b>Indemnización por Despido: $${(r * f).toFixed(2)}</b><br><span class="legal-ref">Art. 188: 1 mes por año, mínimo 3 meses.</span>`;
+            }
+        }
+
+        if (t === 'ds') {
+            let r = v('ds1'), a = v('ds2');
+            if(r && a) out.innerHTML = `<b>Bonificación Desahucio (25%): $${(r * 0.25 * a).toFixed(2)}</b>`;
         }
     }
 
-    // BASE DE DATOS DE INTELIGENCIA AMPLIADA
-    const CONOCIMIENTO = [
+    // BASE DE DATOS DE INTELIGENCIA MASIVA
+    const DB_LEGAL = [
         {
-            claves: ["despido", "intempestivo", "liquidacion", "indemnizacion"],
-            respuesta: `<b>ANÁLISIS TÉCNICO: DESPIDO INTEMPESTIVO (ART. 188)</b><br><br>
-            El despido intempestivo ocurre cuando el empleador rompe el vínculo laboral sin causa legal probada ante un inspector.<br><br>
-            <b>Derechos del Trabajador:</b><br>
-            1. <b>Indemnización:</b> 1 mes de sueldo por cada año de servicio. Si tiene menos de 3 años, se pagan 3 meses completos.<br>
-            2. <b>Desahucio (Art. 185):</b> 25% de la última remuneración por cada año de servicio.<br>
-            3. <b>Proporcionales:</b> Décimos y vacaciones devengadas.<br><br>
-            <i>Nota: Si el trabajador tiene discapacidad o es dirigente sindical, las indemnizaciones se duplican o tienen recargos especiales.</i>`
+            tags: ["despido", "botaron", "intempestivo", "echaron"],
+            respuesta: `<b>ANÁLISIS DE DESPIDO INTEMPESTIVO (Art. 188):</b><br><br>
+            El despido intempestivo es la terminación unilateral del contrato por parte del empleador sin causa legal previa.<br><br>
+            <b>Componentes de la Liquidación:</b><br>
+            1. <b>Indemnización:</b> 1 mes de sueldo por cada año laborado. Si llevas menos de 3 años, te corresponden 3 meses completos por ley.<br>
+            2. <b>Desahucio:</b> Se suma el 25% de tu última remuneración por cada año cumplido.<br>
+            3. <b>Proporcionales:</b> Décimo tercero, décimo cuarto y vacaciones no gozadas.<br><br>
+            <i>IMPORTANTE:</i> Si el despido ocurre en medio de un conflicto colectivo o tras denunciar acoso, podría declararse despido ineficaz.`
         },
         {
-            claves: ["maternidad", "lactancia", "embarazo", "embarazada", "ineficaz"],
-            respuesta: `<b>ESTABILIDAD REFORZADA: MATERNIDAD Y LACTANCIA</b><br><br>
-            La legislación ecuatoriana otorga la "Protección por Despido Ineficaz" (Art. 195.1):<br><br>
-            1. <b>Licencia:</b> 12 semanas remuneradas (84 días).<br>
-            2. <b>Lactancia:</b> Jornada de <b>6 horas diarias durante 12 meses</b> contados desde el nacimiento del niño.<br>
-            3. <b>Despido Ineficaz:</b> Si se despide a la madre en estos periodos, el juez declarará el despido como INEFICAZ.<br><br>
-            <b>Compensación:</b> El empleador deberá reintegrar a la trabajadora o pagarle <b>12 sueldos adicionales</b> además de toda la liquidación por despido intempestivo.`
+            tags: ["vacaciones", "descanso", "quince", "pagar"],
+            respuesta: `<b>DERECHO A VACACIONES (Art. 69 y Art. 71):</b><br><br>
+            • Todo trabajador tiene derecho a <b>15 días ininterrumpidos</b> de descanso anual remunerado.<br>
+            • <b>Días Adicionales:</b> Después de 5 años con el mismo empleador, ganas 1 día extra por cada año adicional (Máximo 15 días extra).<br>
+            • <b>Cálculo:</b> El pago es la 24ava parte de todo lo percibido en el año (incluyendo horas extra y bonos).<br>
+            • <b>Acumulación:</b> Puedes acumular vacaciones hasta por 3 años. El empleador no puede negarte el descanso el cuarto año.`
         },
         {
-            claves: ["losep", "sector publico", "nombramiento", "supresion"],
-            respuesta: `<b>RÉGIMEN PÚBLICO: LOSEP (ART. 129)</b><br><br>
-            Para servidores públicos con nombramiento permanente, la terminación por supresión de puesto implica:<br><br>
-            • <b>Indemnización:</b> 5 Salarios Básicos Unificados (SBU) por cada año de servicio.<br>
-            • <b>Tope Máximo 2026:</b> El pago no puede exceder los 150 SBU ($72,300.00).<br><br>
-            <b>Observaciones Importantes:</b><br>
-            - No aplica para contratos ocasionales o nombramientos provisionales.<br>
-            - El servidor no podrá reingresar al sector público por 2 años, salvo devolución proporcional del dinero.`
+            tags: ["losep", "sector publico", "supresion", "permanente"],
+            respuesta: `<b>COMPENSACIÓN LOSEP (Art. 129):</b><br><br>
+            Para servidores con nombramiento permanente cuyo puesto es suprimido por optimización técnica:<br><br>
+            • <b>Fórmula:</b> 5 Salarios Básicos Unificados (SBU) por cada año de servicio.<br>
+            • <b>Tope Máximo 2026:</b> $72,300.00 (equivalente a 150 SBU).<br>
+            • <b>Limitaciones:</b> No puedes reingresar a la función pública en un lapso de 2 años a menos que devuelvas los valores proporcionales al tiempo restante.`
         },
         {
-            claves: ["visto bueno", "inspector", "disciplina", "falta"],
-            respuesta: `<b>PROCESO DE VISTO BUENO (ART. 172/173)</b><br><br>
-            Es la forma legal de terminar un contrato sin pagar indemnización por despido.<br><br>
-            <b>Causas frecuentes del Empleador:</b> Faltas de puntualidad, desobediencia, injurias graves o falta de probidad.<br>
-            <b>Causas del Trabajador:</b> Injurias del empleador, falta de pago o cambio de ocupación.<br><br>
-            <i>El trámite se realiza ante un Inspector del Trabajo y dura aproximadamente 30 días. Mientras tanto, el empleador puede solicitar la suspensión inmediata de la relación laboral consignando 1 mes de sueldo.</i>`
+            tags: ["maternidad", "embarazo", "lactancia", "ineficaz"],
+            respuesta: `<b>PROTECCIÓN A LA MATERNIDAD (Art. 152-155):</b><br><br>
+            • <b>Licencia:</b> 12 semanas (84 días) remuneradas al 100%.<br>
+            • <b>Lactancia:</b> Durante los 12 meses posteriores al parto, la jornada laboral es de <b>6 horas diarias</b> (pero se pagan las 8 horas completas).<br>
+            • <b>Despido Ineficaz:</b> El despido de una mujer embarazada o en lactancia es NULO. Si un juez lo declara, el empleador debe pagar <b>12 meses de sueldo adicionales</b> de forma inmediata.`
+        },
+        {
+            tags: ["utilidades", "ganancias", "abril", "cargas"],
+            respuesta: `<b>REPARTO DE UTILIDADES (Art. 97):</b><br><br>
+            • <b>Porcentaje:</b> Las empresas privadas reparten el 15% de sus utilidades líquidas.<br>
+            • <b>Distribución:</b> 10% se divide para todos los trabajadores por igual (según días trabajados). 5% se divide según las cargas familiares (cónyuge e hijos menores de 18 años).<br>
+            • <b>Fecha Máxima:</b> Deben pagarse hasta el <b>15 de abril</b> de cada año.`
+        },
+        {
+            tags: ["teletrabajo", "acuerdo", "ministerial", "distancia"],
+            respuesta: `<b>ACUERDO MINISTERIAL TELETRABAJO (MDT-2020-181):</b><br><br>
+            El teletrabajo en Ecuador requiere un adendum al contrato donde se especifique:<br>
+            1. <b>Derecho a la Desconexión:</b> El trabajador tiene derecho a 12 horas seguidas de desconexión.<br>
+            2. <b>Equipos:</b> El empleador debe proveer las herramientas de trabajo o compensar el gasto de internet y luz.<br>
+            3. <b>Voluntariedad:</b> El cambio de presencial a teletrabajo debe ser de mutuo acuerdo.`
         }
     ];
 
@@ -332,25 +338,27 @@
     function preguntar() {
         const input = document.getElementById('chat-input');
         const body = document.getElementById('chat-body');
-        const q = input.value.toLowerCase().trim();
-        if(!q) return;
+        const query = input.value.toLowerCase().trim();
+        if(!query) return;
 
         body.innerHTML += `<div class="user-msg">${input.value}</div>`;
         input.value = "";
 
         setTimeout(() => {
-            let res = "<b>CONSULTA FUERA DE ALCANCE:</b><br>No encuentro una base legal específica para ese término. Por favor, intente con: <i>'Despido', 'LOSEP', 'Maternidad' o 'Visto Bueno'.</i>";
-            
-            for(let item of CONOCIMIENTO) {
-                if(item.claves.some(k => q.includes(k))) {
-                    res = item.respuesta;
+            let found = false;
+            let response = `<b>SISTEMA DE ANÁLISIS:</b><br>No detecto ese tema específico en la legislación vigente. Intente consultar sobre: <i>Despido, Vacaciones, LOSEP, Utilidades o Maternidad.</i>`;
+
+            for(let doc of DB_LEGAL) {
+                if(doc.tags.some(t => query.includes(t))) {
+                    response = doc.respuesta;
+                    found = true;
                     break;
                 }
             }
-            
-            body.innerHTML += `<div class="bot-msg">${res}</div>`;
+
+            body.innerHTML += `<div class="bot-msg">${response}</div>`;
             body.scrollTop = body.scrollHeight;
-        }, 500);
+        }, 400);
     }
 </script>
 </body>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laboral-EC | Sistema Integral 2026</title>
+    <title>Laboral-EC | Sistema Certificado 2026</title>
     <style>
         :root { --p: #0f172a; --s: #10b981; --i: #3b82f6; --w: #f59e0b; --d: #ef4444; --g: #64748b; }
         body { font-family: 'Inter', sans-serif; background: #f1f5f9; margin: 0; padding: 20px; position: relative; }
@@ -40,14 +40,14 @@
 <div class="container">
     <header>
         <h1>LABORALEC | CALCULADORA INTEGRAL 2026</h1>
-        <p>SBU Vigente: $482.00 | Versión Final Sin Errores</p>
+        <p>SBU Vigente: $482.00 | Fórmulas de Jubilación y LOSEP Corregidas</p>
     </header>
 
     <div class="grid">
         <div class="card" style="border-top-color: var(--i);">
             <h2>1. Décimos (13ro y 14to)</h2>
-            <label>Ingresos Anuales Totales:</label>
-            <input type="text" id="d1" placeholder="Suma de sueldos">
+            <label>Ingresos Anuales Totales (Suma de sueldos):</label>
+            <input type="text" id="d1" placeholder="Ej: 5784">
             <label>Meses Trabajados (1-12):</label>
             <input type="text" id="d2" placeholder="Ej: 12">
             <button onclick="f('d')">Calcular Décimos</button>
@@ -55,11 +55,11 @@
         </div>
 
         <div class="card" style="border-top-color: var(--s);">
-            <h2>2. Jubilación Patronal</h2>
+            <h2>2. Jubilación Patronal (Art. 216)</h2>
             <label>Promedio Sueldo (últimos 5 años):</label>
-            <input type="text" id="j1" placeholder="Ej: 1554">
-            <label>Años de Servicio:</label>
-            <input type="text" id="j2" placeholder="Min 25">
+            <input type="text" id="j1" placeholder="Ej: 800">
+            <label>Años de Servicio Continuo:</label>
+            <input type="text" id="j2" placeholder="Mínimo 25">
             <label>Coeficiente Edad (IESS):</label>
             <input type="text" id="j3" placeholder="Ej: 6.2305">
             <button onclick="f('j')">Calcular Pensión</button>
@@ -101,14 +101,14 @@
         <div class="card" style="border-top-color: var(--g);">
             <h2>6. Indemnización LOSEP</h2>
             <label>Último Sueldo Percibido:</label>
-            <input type="text" id="l1" placeholder="Sueldo actual">
+            <input type="text" id="l1" placeholder="Ej: 1200">
             <label>Años en Sector Público:</label>
             <input type="text" id="l2" placeholder="Ej: 10">
             <button onclick="f('l')">Calcular LOSEP</button>
             <div id="out_l" class="res"></div>
         </div>
     </div>
-
+    
     <button class="no-print" onclick="window.print()" style="margin-top:25px; background:white; color:var(--p); border:2px solid var(--p); width:auto; padding:12px 30px; font-weight:bold;">🖨️ Generar Reporte PDF</button>
 </div>
 
@@ -130,35 +130,48 @@
     function f(t) {
         if (t === 'd') {
             let i = v('d1'), m = v('d2');
-            if (i === null || m === null) return res('d', '⚠️ Use números.', true);
-            res('d', `Décimo 3ro: $${(i/12).toFixed(2)}<br>Décimo 4to: $${((SBU/12)*m).toFixed(2)}`);
+            if (i === null || m === null) return res('d', '⚠️ Use números válidos.', true);
+            let d13 = i / 12;
+            let d14 = (SBU / 12) * m;
+            res('d', `Décimo 3ro: $${d13.toFixed(2)}<br>Décimo 4to: $${d14.toFixed(2)}`);
         }
+        
         if (t === 'j') {
             let p = v('j1'), a = v('j2'), c = v('j3');
-            if (p === null || a === null || c === null) return res('j', '⚠️ Datos inválidos.', true);
-            let mensual = ((p * 0.05 * a) / c) / 12;
-            res('j', `Pensión Mensual: $${mensual.toFixed(2)}`);
+            if (p === null || a === null || c === null) return res('j', '⚠️ Ingrese todos los datos numéricos.', true);
+            // Fórmula corregida: (Promedio * 0.05 * Años) / Coeficiente / 12 meses
+            let pensionMensual = ((p * 0.05 * a) / c) / 12;
+            res('j', `Pensión Mensual: $${pensionMensual.toFixed(2)}`);
         }
+
         if (t === 'h') {
             let s = v('h1'), h5 = v('h2')||0, h1 = v('h3')||0;
             if (s === null) return res('h', '⚠️ Sueldo requerido.', true);
             let vh = s / 240;
             res('h', `Total Recargos: $${((vh*1.5*h5)+(vh*2*h1)).toFixed(2)}`);
         }
+
         if (t === 'i') {
             let r = v('i1'), a = v('i2');
             if (r === null || a === null) return res('i', '⚠️ Revise datos.', true);
-            res('i', `Monto Art 188: $${(r * (a < 3 ? 3 : a)).toFixed(2)}`);
+            let factor = (a < 3) ? 3 : a;
+            res('i', `Monto Art 188: $${(r * factor).toFixed(2)}`);
         }
+
         if (t === 'ds') {
             let r = v('ds1'), a = v('ds2');
             if (r === null || a === null) return res('ds', '⚠️ Verifique sueldo/años.', true);
             res('ds', `Bonif. 25%: $${(r * 0.25 * a).toFixed(2)}`);
         }
+
         if (t === 'l') {
             let s = v('l1'), a = v('l2');
             if (s === null || a === null) return res('l', '⚠️ Sueldo y años obligatorios.', true);
-            res('l', `Monto LOSEP (5 SBU/año): $${(SBU * 5 * a).toFixed(2)}`);
+            // Tope 150 SBU
+            let monto = (SBU * 5 * a);
+            let tope = SBU * 150;
+            if (monto > tope) monto = tope;
+            res('l', `Monto LOSEP: $${monto.toFixed(2)}`);
         }
     }
 </script>

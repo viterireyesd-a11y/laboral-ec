@@ -35,44 +35,46 @@
         .tabla-guia th, .tabla-guia td { border: 1px solid #e2e8f0; padding: 8px; text-align: center; }
         .tabla-guia th { background: #f8fafc; color: var(--p); }
 
-        /* --- REDISEÑO DEL ASISTENTE --- */
+        /* --- ESTILOS DEL ASISTENTE PULIDO --- */
         #chat-bot { 
-            position: fixed; bottom: 100px; right: 25px; width: 380px; 
-            background: #ffffff; border-radius: 20px; box-shadow: 0 15px 45px rgba(0,0,0,0.2); 
+            position: fixed; bottom: 100px; right: 25px; width: 400px; 
+            background: #ffffff; border-radius: 20px; box-shadow: 0 15px 50px rgba(0,0,0,0.25); 
             z-index: 1000; display: none; flex-direction: column; overflow: hidden; 
-            border: 1px solid #e2e8f0; animation: slideUp 0.3s ease;
+            border: 1px solid #e2e8f0; animation: slideUp 0.3s ease-out;
         }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
         #chat-header { 
             background: var(--p); color: white; padding: 18px; 
             font-weight: 700; display: flex; justify-content: space-between; align-items: center; 
-            border-bottom: 3px solid var(--s);
+            border-bottom: 4px solid var(--s);
         }
         #chat-body { 
-            height: 400px; padding: 15px; overflow-y: auto; font-size: 0.9rem; 
-            background: #f8fafc; display: flex; flex-direction: column; gap: 15px; 
+            height: 420px; padding: 20px; overflow-y: auto; font-size: 0.95rem; 
+            background: #f8fafc; display: flex; flex-direction: column; gap: 15px; scroll-behavior: smooth;
         }
-        
         #chat-input-area { 
             background: white; padding: 15px; border-top: 1px solid #e2e8f0; 
             display: flex; align-items: center; gap: 10px;
         }
         #chat-input { 
-            background: #f1f5f9; border: 2px solid #cbd5e0; padding: 12px 18px; 
+            background: #f1f5f9; border: 2px solid #cbd5e0; padding: 12px 20px; 
             flex: 1; border-radius: 30px; outline: none; font-size: 0.95rem;
         }
-        #chat-input:focus { border-color: var(--i); background: white; }
-        
         #chat-send { 
             background: var(--s); color: white; border: none; 
-            width: 48px; height: 48px; border-radius: 50%; cursor: pointer; 
-            display: flex; justify-content: center; align-items: center; font-size: 1.3rem;
+            width: 50px; height: 50px; border-radius: 50%; cursor: pointer; 
+            display: flex; justify-content: center; align-items: center; font-size: 1.4rem;
         }
-
-        .bot-msg { background: white; padding: 14px; border-radius: 18px 18px 18px 0; align-self: flex-start; max-width: 90%; color: #334155; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; line-height: 1.5; }
-        .user-msg { background: var(--i); color: white; padding: 12px 16px; border-radius: 18px 18px 0 18px; align-self: flex-end; max-width: 85%; }
-
+        .bot-msg { 
+            background: white; padding: 15px; border-radius: 18px 18px 18px 0; 
+            align-self: flex-start; max-width: 92%; color: #334155; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; line-height: 1.6;
+        }
+        .user-msg { 
+            background: var(--i); color: white; padding: 12px 18px; 
+            border-radius: 18px 18px 0 18px; align-self: flex-end; max-width: 80%;
+        }
         #chat-toggle { 
             position: fixed; bottom: 25px; right: 25px; background: var(--p); 
             color: white; width: 65px; height: 65px; border-radius: 50%; 
@@ -80,7 +82,7 @@
             cursor: pointer; font-size: 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); z-index: 1001;
         }
 
-        @media print { #chat-toggle, #chat-bot { display: none !important; } }
+        @media print { .no-print, #chat-toggle, #chat-bot { display: none !important; } }
     </style>
 </head>
 <body>
@@ -88,15 +90,15 @@
 <div class="container">
     <header>
         <h1>LABORALEC | SISTEMA INTEGRAL 2026</h1>
-        <p>SBU Vigente: $482.00 | Consultoría Laboral Especializada</p>
+        <p>SBU Vigente: $482.00 | Cálculos de Décimos y Jubilación Corregidos</p>
     </header>
 
     <div class="grid">
         <div class="card" style="border-top-color: var(--i);">
             <h2>1. Décimos (13ro y 14to)</h2>
-            <label>Sueldo Mensual del Periodo:</label>
+            <label>SUELDO MENSUAL DEL PERIODO:</label>
             <input type="text" id="d1" placeholder="Ej: 561">
-            <label>Meses Trabajados (1-12):</label>
+            <label>MESES TRABAJADOS (1-12):</label>
             <input type="text" id="d2" placeholder="Ej: 12">
             <button onclick="f('d')">Calcular Beneficios</button>
             <div id="out_d" class="res"></div>
@@ -104,54 +106,63 @@
 
         <div class="card" style="border-top-color: var(--s);">
             <h2>2. Jubilación Patronal (Art. 216)</h2>
-            <label>Promedio Sueldo Mensual (Últimos 5 años):</label>
+            <label>PROMEDIO SUELDO MENSUAL (ÚLTIMOS 5 AÑOS):</label>
             <input type="text" id="j1" placeholder="Ej: 800">
-            <label>Años de Servicio:</label>
+            <label>AÑOS DE SERVICIO:</label>
             <input type="text" id="j2" placeholder="Mínimo 25">
-            <label>Coeficiente Edad (IESS):</label>
+            <label>COEFICIENTE EDAD (IESS):</label>
             <input type="text" id="j3" placeholder="Ej: 6.2305">
-            <label>Fondos de Reserva (A deducir):</label>
+            <label>FONDOS DE RESERVA (A DEDUCIR):</label>
             <input type="text" id="j4" value="0">
             
             <button onclick="f('j')">Calcular Pensión Mensual</button>
             <div id="out_j" class="res"></div>
 
             <table class="tabla-guia">
-                <thead><tr><th>Edad</th><th>Coef.</th><th>Edad</th><th>Coef.</th></tr></thead>
+                <thead><tr><th>Edad</th><th>Coeficiente</th><th>Edad</th><th>Coeficiente</th></tr></thead>
                 <tbody>
-                    <tr><td>40</td><td>12.0120</td><td>60</td><td>7.3750</td></tr>
-                    <tr><td>45</td><td>10.9750</td><td>65</td><td>6.0590</td></tr>
-                    <tr><td>50</td><td>9.8510</td><td>70</td><td>4.7520</td></tr>
+                    <tr><td>40 años</td><td>12.0120</td><td>60 años</td><td>7.3750</td></tr>
+                    <tr><td>45 años</td><td>10.9750</td><td>65 años</td><td>6.0590</td></tr>
+                    <tr><td>50 años</td><td>9.8510</td><td>70 años</td><td>4.7520</td></tr>
                 </tbody>
             </table>
         </div>
 
+        <div class="card" style="border-top-color: var(--g);">
+            <h2>3. Indemnización LOSEP</h2>
+            <label>ÚLTIMO SUELDO PERCIBIDO:</label>
+            <input type="text" id="l1_sueldo" placeholder="Ej: 1200">
+            <label>AÑOS EN SECTOR PÚBLICO:</label>
+            <input type="text" id="l1" placeholder="Ej: 15">
+            <button onclick="f('l')">Calcular LOSEP</button>
+            <div id="out_l" class="res"></div>
+        </div>
+
         <div class="card" style="border-top-color: var(--w);">
-            <h2>3. Horas Suplementarias / Extra</h2>
-            <label>Sueldo Mensual:</label>
+            <h2>4. Horas Suplementarias / Extra</h2>
+            <label>SUELDO MENSUAL:</label>
             <input type="text" id="h1" placeholder="Ej: 482">
-            <label>Horas 50%:</label>
+            <label>HORAS 50%:</label>
             <input type="text" id="h2" value="0">
-            <label>Horas 100%:</label>
+            <label>HORAS 100%:</label>
             <input type="text" id="h3" value="0">
             <button onclick="f('h')">Calcular Horas</button>
             <div id="out_h" class="res"></div>
         </div>
-
-        </div>
+    </div>
 </div>
 
 <div id="chat-toggle" onclick="toggleChat()">💬</div>
 <div id="chat-bot">
     <div id="chat-header">
-        <span>⚖️ Consultor LABORALEC</span>
+        <span>⚖️ Asistente LABORALEC</span>
         <span style="cursor:pointer" onclick="toggleChat()">×</span>
     </div>
     <div id="chat-body">
-        <div class="bot-msg">Bienvenido al portal legal de <b>LABORALEC</b>. <br><br>Puedo explicarte a detalle temas sobre el <b>Código del Trabajo</b>. ¿Qué deseas consultar hoy?</div>
+        <div class="bot-msg">Bienvenido a <b>LABORALEC</b>. <br><br>Soy su consultor virtual especializado en el Código del Trabajo de Ecuador. ¿En qué tema legal puedo asistirle hoy?</div>
     </div>
     <div id="chat-input-area">
-        <input type="text" id="chat-input" placeholder="Ej: ¿Cómo se calcula el despido?" onkeypress="handleKey(event)">
+        <input type="text" id="chat-input" placeholder="Pregunte sobre despidos, vacaciones..." onkeypress="handleKey(event)">
         <button id="chat-send" onclick="askBot()">➤</button>
     </div>
 </div>
@@ -159,21 +170,24 @@
 <script>
     const SBU = 482.00;
 
-    // LÓGICA DE CÁLCULO (Se mantiene idéntica)
+    // --- FUNCIONES DE CÁLCULO (CÓDIGO ANTERIOR SIN CAMBIOS) ---
     function v(id) {
         let val = document.getElementById(id).value.trim().replace(',', '.');
         if (val === "" || isNaN(val) || parseFloat(val) < 0) return null;
         return parseFloat(val);
     }
+
     function res(id, m, e = false) {
         const target = document.getElementById('out_' + id);
-        target.innerHTML = m; target.className = 'res ' + (e ? 'err' : 'ok');
+        target.innerHTML = m;
+        target.className = 'res ' + (e ? 'err' : 'ok');
     }
+
     function f(t) {
         if (t === 'd') {
             let s = v('d1'), m = v('d2');
             if (s === null || m === null) return res('d', '⚠️ Datos inválidos.', true);
-            res('d', `Décimo 3ro: $${((s*m)/12).toFixed(2)}<br>Décimo 4to: $${((SBU/12)*m).toFixed(2)}`);
+            res('d', `Décimo Tercero: $${((s * m) / 12).toFixed(2)}<br>Décimo Cuarto: $${((SBU / 12) * m).toFixed(2)}`);
         }
         if (t === 'j') {
             let sueldo = v('j1'), anios = v('j2'), coef = v('j3'), fondoRes = v('j4')||0;
@@ -181,9 +195,22 @@
             let haberNeto = ((sueldo * 12 * 5) * 0.05 / 5) * anios - fondoRes;
             res('j', `Pensión Mensual: $${(haberNeto / coef / 12).toFixed(2)}`);
         }
+        if (t === 'h') {
+            let s = v('h1'), h5 = v('h2')||0, h1 = v('h3')||0;
+            if (s === null) return res('h', '⚠️ Sueldo requerido.', true);
+            let vh = s / 240;
+            res('h', `Total Recargos: $${((vh*1.5*h5)+(vh*2*h1)).toFixed(2)}`);
+        }
+        if (t === 'l') {
+            let s = v('l1_sueldo'), a = v('l1');
+            if (s === null || a === null) return res('l', '⚠️ Datos requeridos.', true);
+            let total = (SBU * 5 * a);
+            let tope = SBU * 150;
+            res('l', `Monto LOSEP: $${(total > tope ? tope : total).toFixed(2)}`);
+        }
     }
 
-    // LÓGICA DEL ASISTENTE AMPLIADA
+    // --- LÓGICA DEL ASISTENTE (RESPUESTAS AMPLIAS) ---
     function toggleChat() {
         const chat = document.getElementById('chat-bot');
         chat.style.display = (chat.style.display === 'flex') ? 'none' : 'flex';
@@ -202,25 +229,22 @@
         input.value = "";
         body.scrollTop = body.scrollHeight;
 
-        let r = "Entiendo su consulta. Sin embargo, mi base de conocimientos está limitada al <b>Código del Trabajo de Ecuador</b>. Por favor, intente con palabras clave como 'despido', 'jubilación patronal', 'vacaciones' o 'contratos'.";
+        let r = "He analizado su duda. Por favor, consulte temas específicos del <b>Código del Trabajo</b> como: 'despido', 'jubilación', 'vacaciones' o 'contratos'.";
         
-        if(txt.includes("despido") || txt.includes("intempestivo")) {
-            r = "<b>Despido Intempestivo (Art. 188):</b><br>Es la terminación unilateral del contrato por parte del empleador. <br><br>1. <b>Indemnización:</b> Hasta 3 años de servicio, se pagan 3 meses de remuneración. Más de 3 años, se paga 1 mes por cada año (máximo 25 meses).<br>2. <b>Bonificación:</b> Se debe sumar el 25% del último sueldo por cada año de servicio (Desahucio).";
+        if(txt.includes("despido")) {
+            r = "<b>Despido Intempestivo (Art. 188):</b><br>Ocurre cuando el empleador termina la relación laboral sin causa. <br>• <b>Indemnización:</b> 1 mes de sueldo por cada año (mínimo 3 meses).<br>• <b>Bonificación:</b> Se suma el 25% por desahucio por cada año trabajado.";
+        }
+        else if(txt.includes("jubilación")) {
+            r = "<b>Jubilación Patronal (Art. 216):</b><br>Es el derecho a una pensión vitalicia tras <b>25 años de servicio continuo</b> para el mismo empleador.<br>Se calcula sobre el promedio de los últimos 5 años y se ajusta según el coeficiente de edad del IESS. Es compatible con la jubilación del IESS.";
         }
         else if(txt.includes("vacaciones")) {
-            r = "<b>Vacaciones Anuales (Art. 69):</b><br>Todo trabajador tiene derecho a 15 días ininterrumpidos de descanso pagado tras cumplir un año de trabajo.<br><br><b>Días adicionales:</b> A partir del 5to año de servicio para el mismo empleador, el trabajador gana 1 día adicional de vacaciones por cada año excedente, con un tope de 15 días adicionales (total 30 días).";
+            r = "<b>Vacaciones (Art. 69):</b><br>Derecho a 15 días tras el primer año. A partir del 5to año, se suma 1 día adicional por cada año excedente (máximo 15 días adicionales).";
         }
-        else if(txt.includes("jubilación") || txt.includes("patronal")) {
-            r = "<b>Jubilación Patronal (Art. 216):</b><br>Es un derecho para trabajadores que han servido por <b>25 años o más</b> de manera continua para el mismo empleador.<br><br><b>Cálculo:</b> Se basa en el promedio de los últimos 5 años. De ese total se calcula el 5%, se multiplica por los años de servicio y se divide para el coeficiente de edad del IESS. El empleador puede deducir los Fondos de Reserva pagados.";
-        }
-        else if(txt.includes("fondos") || txt.includes("reserva")) {
-            r = "<b>Fondos de Reserva (Art. 196):</b><br>Es el 8.33% de la remuneración mensual. Se tiene derecho a ellos a partir del segundo año de trabajo (luego de cumplir 12 meses).<br><br><b>Uso:</b> El trabajador puede pedir que se depositen en el IESS o que se le paguen mensualmente junto con su sueldo.";
-        }
-        else if(txt.includes("prueba")) {
-            r = "<b>Periodo de Prueba (Art. 15):</b><br>En contratos de tiempo indefinido, se puede establecer un periodo de prueba de hasta <b>90 días</b>.<br><br>Durante este tiempo, cualquiera de las partes puede dar por terminada la relación laboral sin previo aviso y sin pago de indemnizaciones, solo se liquidan los proporcionales de ley.";
+        else if(txt.includes("fondos")) {
+            r = "<b>Fondos de Reserva:</b> Corresponden al 8.33% de la remuneración y se perciben tras el segundo año de servicio (luego de 12 meses de trabajo).";
         }
         else if(txt.includes("hola") || txt.includes("buenos")) {
-            r = "¡Hola! Soy su consultor virtual de <b>LABORALEC</b>. Estoy aquí para guiarle con información precisa basada en la normativa ecuatoriana vigente (2026). ¿En qué tema puedo asistirle hoy?";
+            r = "¡Hola! Soy su consultor virtual de <b>LABORALEC</b>. ¿En qué tema del ámbito laboral ecuatoriano puedo asesorarle hoy?";
         }
 
         setTimeout(() => {

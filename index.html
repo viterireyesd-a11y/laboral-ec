@@ -14,7 +14,7 @@
         body { font-family: 'Inter', 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 30px; color: #1e293b; line-height: 1.6; }
         .container { max-width: 1500px; margin: auto; }
 
-        /* HEADER ESTILO CORPORATIVO */
+        /* HEADER */
         header { 
             background: linear-gradient(135deg, var(--p) 0%, #1e293b 100%); 
             color: white; padding: 60px 40px; border-radius: 30px; 
@@ -25,7 +25,7 @@
         header p { font-size: 1.2rem; opacity: 0.8; margin-top: 10px; }
         .badge { position: absolute; top: 40px; right: 40px; background: var(--s); padding: 10px 20px; border-radius: 50px; font-weight: 700; font-size: 0.9rem; }
 
-        /* GRID DE APLICACIONES */
+        /* GRID */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 35px; }
         .card { 
             background: white; border-radius: 24px; padding: 40px; 
@@ -64,8 +64,6 @@
 
         /* CHATBOT */
         #chat-toggle { position: fixed; bottom: 40px; right: 40px; background: var(--p); color: white; width: 85px; height: 85px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 20px 40px rgba(0,0,0,0.3); z-index: 2000; font-size: 40px; transition: 0.4s; }
-        #chat-toggle:hover { transform: rotate(15deg) scale(1.1); }
-
         #chat-bot { 
             position: fixed; bottom: 140px; right: 40px; width: 650px; height: 850px; 
             background: white; border-radius: 35px; box-shadow: 0 35px 70px -15px rgba(0,0,0,0.3); 
@@ -88,17 +86,15 @@
         hr { border: 0; border-top: 1px solid #e2e8f0; margin: 15px 0; }
         .legal-ref { font-size: 0.8rem; color: var(--g); font-style: italic; margin-top: 10px; display: block; }
 
-        /* --- OPTIMIZACIÓN PARA MÓVILES --- */
+        /* --- OPTIMIZACIÓN MÓVIL (Media Queries) --- */
         @media (max-width: 768px) {
             body { padding: 15px; }
             header { padding: 40px 20px; border-radius: 20px; margin-bottom: 25px; }
             header h1 { font-size: 1.8rem; letter-spacing: -1px; }
             header p { font-size: 1rem; }
             .badge { position: static; display: inline-block; margin-bottom: 15px; padding: 8px 15px; font-size: 0.75rem; }
-            
             .grid { grid-template-columns: 1fr; gap: 20px; }
             .card { padding: 25px; border-radius: 20px; }
-            
             #chat-bot { width: 100%; height: 100%; bottom: 0; right: 0; border-radius: 0; z-index: 3000; }
             #chat-toggle { bottom: 20px; right: 20px; width: 65px; height: 65px; font-size: 30px; }
             #chat-header { padding: 20px; font-size: 1.1rem; }
@@ -106,7 +102,6 @@
             #chat-input-area { padding: 15px; }
             #chat-input { font-size: 1rem; padding: 15px; }
             #chat-send { width: 60px; height: 55px; }
-            
             input, button { font-size: 1rem; }
         }
     </style>
@@ -146,7 +141,7 @@
                 <input type="number" id="j2" placeholder="Mínimo 25 años">
             </div>
             <div class="form-group">
-                <label>Coeficiente IESS (Edad):</label>
+                <label>Coeficiente IESS (Tabla Art. 218):</label>
                 <input type="number" id="j3" placeholder="Ej: 6.2305">
             </div>
             <button onclick="ejecutar('j')">Calcular Pensión Vitalicia</button>
@@ -217,12 +212,12 @@
 
 <div id="chat-toggle" onclick="toggleChat()">⚖️</div>
 <div id="chat-bot">
-    <div id="chat-header"><span>SISTEMA EXPERTO LABORAL V2</span><span onclick="toggleChat()" style="cursor:pointer">✕</span></div>
+    <div id="chat-header"><span>CONSULTORÍA JURÍDICA LABORAL</span><span onclick="toggleChat()" style="cursor:pointer">✕</span></div>
     <div id="chat-body">
-        <div class="bot-msg"><b>CONSULTORÍA JURÍDICA GLOBAL ACTIVADA.</b><br>Tengo acceso a la base completa del Código del Trabajo, LOSEP y Acuerdos Ministeriales 2026.<br><br>¿En qué tema legal desea profundizar hoy? (Ej: Despido ineficaz, Vacaciones, Teletrabajo).</div>
+        <div class="bot-msg"><b>SISTEMA EXPERTO ACTIVADO.</b><br>Acceso total a: Código del Trabajo, LOSEP y Referencias IESS 2026.<br><br>¿Qué tema desea analizar hoy?</div>
     </div>
     <div id="chat-input-area">
-        <input type="text" id="chat-input" placeholder="Pregunte aquí detalladamente..." onkeypress="if(event.key==='Enter') preguntar()">
+        <input type="text" id="chat-input" placeholder="Pregunte aquí..." onkeypress="if(event.key==='Enter') preguntar()">
         <button id="chat-send" onclick="preguntar()">➤</button>
     </div>
 </div>
@@ -241,47 +236,34 @@
         out.className = 'res ok';
 
         if (t === 'l') {
-            let sueldo = v('l_sueldo');
-            let anios = v('l1');
+            let sueldo = v('l_sueldo'), anios = v('l1');
             if (!sueldo || !anios) { out.className = 'res err'; out.innerHTML = "⚠️ Ingrese sueldo y años."; return; }
-            let baseCalculo = 5 * SBU_VAL; 
-            let bruto = anios * baseCalculo;
-            let tope = 150 * SBU_VAL;
+            let bruto = anios * (5 * SBU_VAL), tope = 150 * SBU_VAL;
             let efectivo = (bruto > tope) ? tope : bruto;
-            out.innerHTML = `<b>ANÁLISIS LOSEP:</b><br>• Factor (5 SBU): $${baseCalculo.toFixed(2)} p/año.<br>• Bruto: $${bruto.toFixed(2)}<br><hr>• <b>NETO: $${efectivo.toFixed(2)}</b><br><span class="legal-ref">Art. 129 LOSEP. Máx 150 SBU.</span>`;
+            out.innerHTML = `<b>RESULTADO LOSEP (Art. 129):</b><br>• Bruto: $${bruto.toFixed(2)}<br>• Tope Máx (150 SBU): $${tope.toFixed(2)}<br><hr>• <b>NETO A COBRAR: $${efectivo.toFixed(2)}</b>`;
         }
-
         if (t === 'd') {
             let s = v('d1'), m = v('d2');
-            if(s && m) out.innerHTML = `<b>Décimo Tercero:</b> $${((s*m)/12).toFixed(2)}<br><b>Décimo Cuarto:</b> $${((SBU_VAL/12)*m).toFixed(2)}`;
+            if(s && m) out.innerHTML = `<b>D. Tercero:</b> $${((s*m)/12).toFixed(2)}<br><b>D. Cuarto:</b> $${((SBU_VAL/12)*m).toFixed(2)}`;
         }
-
         if (t === 'j') {
             let s = v('j1'), a = v('j2'), c = v('j3');
             if(s && a && c) {
-                let haber = ((s*12*5)*0.05/5)*a;
-                let mensual = (haber/c/12);
-                out.innerHTML = `<b>Pensión Vitalicia Mensual: $${mensual.toFixed(2)}</b><br><span class="legal-ref">Art. 216 Código del Trabajo.</span>`;
+                let hab = ((s*12*5)*0.05/5)*a;
+                out.innerHTML = `<b>Pensión Vitalicia: $${(hab/c/12).toFixed(2)} mensual.</b><br><span class="legal-ref">Según Art. 216 y Tabla de Coeficientes.</span>`;
             }
         }
-
         if (t === 'h') {
             let s = v('h1'), h5 = v('h2'), h1 = v('h3');
             if(s) {
                 let vh = s/240;
-                let tot = (vh*1.5*h5) + (vh*2*h1);
-                out.innerHTML = `<b>Recargos: $${tot.toFixed(2)}</b><br>Hora Normal: $${vh.toFixed(2)}`;
+                out.innerHTML = `<b>Recargos: $${((vh*1.5*h5)+(vh*2*h1)).toFixed(2)}</b><br>Hora Normal: $${vh.toFixed(2)}`;
             }
         }
-
         if (t === 'i') {
             let r = v('i1'), a = v('i2');
-            if(r && a) {
-                let f = (a < 3) ? 3 : a;
-                out.innerHTML = `<b>Indemnización: $${(r * f).toFixed(2)}</b><br><span class="legal-ref">Art. 188: 1 mes/año, mín 3.</span>`;
-            }
+            if(r && a) out.innerHTML = `<b>Indemnización: $${(r * (a < 3 ? 3 : a)).toFixed(2)}</b><br><span class="legal-ref">Art. 188 Código Trabajo.</span>`;
         }
-
         if (t === 'ds') {
             let r = v('ds1'), a = v('ds2');
             if(r && a) out.innerHTML = `<b>Desahucio (25%): $${(r * 0.25 * a).toFixed(2)}</b>`;
@@ -289,30 +271,41 @@
     }
 
     const DB_LEGAL = [
-        { tags: ["despido", "botaron", "intempestivo"], respuesta: `<b>DESPIDO INTEMPESTIVO (Art. 188):</b><br>Indemnización de 1 mes por año (mínimo 3). Se suma el 25% de desahucio y proporcionales.` },
-        { tags: ["vacaciones", "descanso"], respuesta: `<b>VACACIONES:</b> 15 días anuales. Tras 5 años, sumas 1 día extra por año adicional.` },
-        { tags: ["maternidad", "lactancia"], respuesta: `<b>MATERNIDAD:</b> 12 semanas de licencia. Lactancia: jornada de 6 horas por 12 meses.` },
-        { tags: ["utilidades"], respuesta: `<b>UTILIDADES:</b> 15% (10% individual, 5% cargas). Pago hasta el 15 de abril.` },
-        { tags: ["teletrabajo"], respuesta: `<b>TELETRABAJO:</b> Requiere acuerdo escrito, derecho a desconexión (12h) y equipos por el empleador.` }
+        {
+            tags: ["iess", "coeficiente", "tabla", "218"],
+            respuesta: `<b>TABLA DE COEFICIENTES IESS (Art. 218):</b><br>Para el cálculo de Jubilación Patronal:<br>• 60 años: 7.7891<br>• 61 años: 7.2272<br>• 62 años: 6.6888<br>• 63 años: 6.1738<br>• 64 años: 5.6820<br>• 65 años: 5.2131<br>• 66 años: 4.7674<br>• 67 años: 4.3463<br>• 68 años: 3.9502<br>• 69 años: 3.5794<br>• 70 años: 3.2343`
+        },
+        {
+            tags: ["despido", "botaron", "intempestivo"],
+            respuesta: `<b>DESPIDO INTEMPESTIVO (Art. 188):</b><br>1. Hasta 3 años: 3 meses de sueldo.<br>2. Más de 3 años: 1 mes de sueldo por cada año.<br>3. Fracción de año se cuenta como año completo.<br>4. Se suma el 25% de Desahucio.`
+        },
+        {
+            tags: ["losep", "publico", "servidor"],
+            respuesta: `<b>INDEMNIZACIÓN LOSEP (Art. 129):</b><br>Aplica por supresión de puestos o renuncia voluntaria con indemnización.<br>• Pago: 5 SBU por cada año de servicio.<br>• Límite: 150 SBU total ($72,300.00 en 2026).`
+        },
+        {
+            tags: ["suplementarias", "extraordinarias", "horas"],
+            respuesta: `<b>RECARGOS DE HORAS:</b><br>• <b>Suplementarias:</b> 50% de recargo. Máximo 4 diarias, 12 semanales.<br>• <b>Extraordinarias:</b> 100% de recargo. Aplica fines de semana, feriados y de 24:00 a 06:00.`
+        },
+        {
+            tags: ["vacaciones", "descanso"],
+            respuesta: `<b>VACACIONES (Art. 69):</b><br>15 días ininterrumpidos por año. Después del 5to año, se suma 1 día por cada año adicional.`
+        }
     ];
 
     function toggleChat() { 
-        const c = document.getElementById('chat-bot');
+        let c = document.getElementById('chat-bot');
         c.style.display = (c.style.display === 'flex') ? 'none' : 'flex';
     }
 
     function preguntar() {
-        const input = document.getElementById('chat-input');
-        const body = document.getElementById('chat-body');
-        const query = input.value.toLowerCase().trim();
-        if(!query) return;
+        const input = document.getElementById('chat-input'), body = document.getElementById('chat-body');
+        const query = input.value.toLowerCase().trim(); if(!query) return;
         body.innerHTML += `<div class="user-msg">${input.value}</div>`;
         input.value = "";
         setTimeout(() => {
-            let response = `No detecto ese tema. Pruebe con: <i>Despido, Vacaciones o Utilidades.</i>`;
-            for(let doc of DB_LEGAL) {
-                if(doc.tags.some(t => query.includes(t))) { response = doc.respuesta; break; }
-            }
+            let response = `No encuentro ese tema. Pruebe: <i>Tabla IESS, Despido, LOSEP o Horas.</i>`;
+            for(let doc of DB_LEGAL) { if(doc.tags.some(t => query.includes(t))) { response = doc.respuesta; break; } }
             body.innerHTML += `<div class="bot-msg">${response}</div>`;
             body.scrollTop = body.scrollHeight;
         }, 400);

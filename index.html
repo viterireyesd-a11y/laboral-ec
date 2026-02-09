@@ -30,7 +30,14 @@
 
         .res { margin-top: 15px; padding: 15px; border-radius: 8px; display: none; font-size: 0.95rem; font-weight: 700; line-height: 1.6; }
         .ok { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; display: block; }
-        .err { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; display: block; }
+        
+        /* Estilos Tabla Coeficientes */
+        .tabla-guia { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.8rem; }
+        .tabla-guia th, .tabla-guia td { border: 1px solid #e2e8f0; padding: 8px; text-align: center; }
+        .tabla-guia th { background: #f8fafc; color: var(--p); }
+
+        /* Estilos Explicación */
+        .info-box { background: #fefce8; border: 1px solid #fef08a; padding: 15px; border-radius: 8px; margin-top: 15px; font-size: 0.85rem; color: #854d0e; }
 
         @media print { .no-print { display: none !important; } }
     </style>
@@ -40,7 +47,7 @@
 <div class="container">
     <header>
         <h1>LABORALEC | CALCULADORA INTEGRAL 2026</h1>
-        <p>SBU Vigente: $482.00 | Versión Final Corregida</p>
+        <p>SBU Vigente: $482.00 | Jubilación Patronal y Guía de Coeficientes</p>
     </header>
 
     <div class="grid">
@@ -60,12 +67,31 @@
             <input type="text" id="j1" placeholder="Ej: 800">
             <label>Años de Servicio:</label>
             <input type="text" id="j2" placeholder="Mínimo 25">
-            <label>Coeficiente Edad (IESS):</label>
+            <label>Coeficiente Edad (Ver tabla abajo):</label>
             <input type="text" id="j3" placeholder="Ej: 6.2305">
             <label>Fondos de Reserva (a deducir):</label>
             <input type="text" id="j4" value="0">
+            
             <button onclick="f('j')">Calcular Pensión</button>
             <div id="out_j" class="res"></div>
+
+            <div class="info-box">
+                <strong>¿Qué son los Fondos de Reserva a deducir?</strong><br>
+                Es el dinero que el empleador ya te pagó o depositó en el IESS por este concepto. Según el Código del Trabajo, el empleador tiene derecho a restar este acumulado del capital total de tu jubilación para calcular la pensión mensual final.
+            </div>
+
+            <h3>Guía de Coeficientes (IESS)</h3>
+            <table class="tabla-guia">
+                <thead>
+                    <tr><th>Edad</th><th>Coeficiente</th><th>Edad</th><th>Coeficiente</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>40</td><td>12.0120</td><td>60</td><td>7.3750</td></tr>
+                    <tr><td>45</td><td>10.9750</td><td>65</td><td>6.0590</td></tr>
+                    <tr><td>50</td><td>9.8510</td><td>70</td><td>4.7520</td></tr>
+                    <tr><td>55</td><td>8.6470</td><td>75</td><td>3.5230</td></tr>
+                </tbody>
+            </table>
         </div>
 
         <div class="card" style="border-top-color: var(--w);">
@@ -136,15 +162,14 @@
         
         if (t === 'j') {
             let p = v('j1'), a = v('j2'), c = v('j3'), fr = v('j4')||0;
-            if (p === null || a === null || c === null) return res('j', '⚠️ Datos obligatorios faltantes.', true);
+            if (p === null || a === null || c === null) return res('j', '⚠️ Datos obligatorios.', true);
             
-            // LÓGICA INTEGRADA: Haber basado en ingresos de los últimos 5 años
-            let suma5Anios = (p * 12) * 5;
-            let haberBruto = (suma5Anios * 0.05 / 5) * a;
-            let haberNeto = haberBruto - fr;
-            let mensual = (haberNeto / c) / 12;
+            // Lógica Profesional: 5% del promedio de ingresos de los últimos 5 años
+            let haberBruto = (p * 0.05) * a; // Simplificación legal aceptada del fondo global
+            let haberNeto = haberBruto - (fr / 12); // Ajuste de fondos proporcional
+            let mensual = (haberNeto / c); 
             
-            res('j', `Pensión Mensual: $${mensual.toFixed(2)}<br><small>Haber Neto: $${haberNeto.toFixed(2)}</small>`);
+            res('j', `Pensión Mensual: $${mensual.toFixed(2)}<br><small>Fondo Global Estimado: $${haberBruto.toFixed(2)}</small>`);
         }
 
         if (t === 'h') {
@@ -158,7 +183,7 @@
             let r = v('i1'), a = v('i2');
             if (r === null || a === null) return res('i', '⚠️ Revise datos.', true);
             let factor = (a < 3) ? 3 : a;
-            res('i', `Indemnización: $${(r * factor).toFixed(2)}`);
+            res('i', `Monto Art. 188: $${(r * factor).toFixed(2)}`);
         }
 
         if (t === 'ds') {

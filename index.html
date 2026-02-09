@@ -31,21 +31,60 @@
         .res { margin-top: 15px; padding: 15px; border-radius: 8px; display: none; font-size: 0.95rem; font-weight: 700; line-height: 1.6; }
         .ok { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; display: block; }
         
-        /* Estilos Tabla Coeficientes */
         .tabla-guia { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.8rem; }
         .tabla-guia th, .tabla-guia td { border: 1px solid #e2e8f0; padding: 8px; text-align: center; }
         .tabla-guia th { background: #f8fafc; color: var(--p); }
 
-        /* Estilos Asistente Virtual */
-        #chat-bot { position: fixed; bottom: 85px; right: 20px; width: 300px; background: white; border-radius: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.2); z-index: 1000; display: none; flex-direction: column; overflow: hidden; border: 1px solid #ddd; }
-        #chat-header { background: var(--p); color: white; padding: 15px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
-        #chat-body { height: 300px; padding: 15px; overflow-y: auto; font-size: 0.9rem; background: #f9f9f9; display: flex; flex-direction: column; gap: 10px; }
-        #chat-input-area { display: flex; border-top: 1px solid #eee; }
-        #chat-input { border: none; padding: 12px; flex: 1; outline: none; }
-        #chat-send { background: var(--s); color: white; border: none; padding: 10px 15px; cursor: pointer; font-weight: bold; }
-        .bot-msg { background: #e2e8f0; padding: 8px 12px; border-radius: 10px 10px 10px 0; align-self: flex-start; max-width: 85%; }
-        .user-msg { background: var(--i); color: white; padding: 8px 12px; border-radius: 10px 10px 0 10px; align-self: flex-end; max-width: 85%; }
-        #chat-toggle { position: fixed; bottom: 20px; right: 20px; background: var(--p); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 24px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 1001; }
+        /* --- REDISEÑO TOTAL DEL ASISTENTE --- */
+        #chat-bot { 
+            position: fixed; bottom: 100px; right: 25px; width: 350px; 
+            background: #ffffff; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); 
+            z-index: 1000; display: none; flex-direction: column; overflow: hidden; 
+            border: 1px solid #e2e8f0; animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        #chat-header { 
+            background: var(--p); color: white; padding: 20px; 
+            font-weight: 700; display: flex; justify-content: space-between; align-items: center; 
+            border-bottom: 3px solid var(--s);
+        }
+        #chat-body { 
+            height: 350px; padding: 15px; overflow-y: auto; font-size: 0.9rem; 
+            background: #f1f5f9; display: flex; flex-direction: column; gap: 12px; 
+        }
+        
+        /* Área de pregunta mejorada */
+        #chat-input-area { 
+            background: white; padding: 15px; border-top: 1px solid #e2e8f0; 
+            display: flex; align-items: center; gap: 10px;
+        }
+        #chat-input { 
+            background: #f8fafc; border: 2px solid #e2e8f0; padding: 12px 15px; 
+            flex: 1; border-radius: 25px; outline: none; font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+        #chat-input:focus { border-color: var(--i); background: white; }
+        
+        #chat-send { 
+            background: var(--s); color: white; border: none; 
+            width: 45px; height: 45px; border-radius: 50%; cursor: pointer; 
+            display: flex; justify-content: center; align-items: center; 
+            font-size: 1.2rem; transition: 0.2s; box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);
+        }
+        #chat-send:hover { transform: scale(1.1); background: #059669; }
+
+        .bot-msg { background: white; padding: 12px; border-radius: 15px 15px 15px 0; align-self: flex-start; max-width: 85%; color: #1e293b; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+        .user-msg { background: var(--i); color: white; padding: 12px; border-radius: 15px 15px 0 15px; align-self: flex-end; max-width: 85%; box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3); }
+
+        #chat-toggle { 
+            position: fixed; bottom: 25px; right: 25px; background: var(--p); 
+            color: white; width: 65px; height: 65px; border-radius: 50%; 
+            display: flex; justify-content: center; align-items: center; 
+            cursor: pointer; font-size: 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); 
+            z-index: 1001; transition: 0.3s;
+        }
+        #chat-toggle:hover { transform: rotate(15deg) scale(1.1); }
 
         @media print { .no-print, #chat-toggle, #chat-bot { display: none !important; } }
     </style>
@@ -54,8 +93,8 @@
 
 <div class="container">
     <header>
-        <h1>LABORALEC | CALCULADORA INTEGRAL 2026</h1>
-        <p>SBU Vigente: $482.00 | Jubilación Patronal y Asistente Legal</p>
+        <h1>LABORALEC | SISTEMA INTEGRAL 2026</h1>
+        <p>SBU Vigente: $482.00 | Jubilación Patronal y Asistente Interactivo</p>
     </header>
 
     <div class="grid">
@@ -142,21 +181,22 @@
 <div id="chat-toggle" onclick="toggleChat()">💬</div>
 <div id="chat-bot">
     <div id="chat-header">
-        <span>Asistente LABORALEC</span>
-        <span style="cursor:pointer" onclick="toggleChat()">✖</span>
+        <span>🤖 Asistente LABORALEC</span>
+        <span style="cursor:pointer; font-size: 1.5rem;" onclick="toggleChat()">×</span>
     </div>
     <div id="chat-body">
-        <div class="bot-msg">¡Hola! Soy tu asistente laboral. ¿Tienes dudas sobre el Código del Trabajo? Intenta con palabras como: "vacaciones", "prueba", "despido" o "fondos".</div>
+        <div class="bot-msg">¡Hola! Soy tu guía legal en tiempo real. <br><br><b>¿Qué duda laboral tienes?</b> Escribe sobre vacaciones, despidos, contratos o décimos.</div>
     </div>
     <div id="chat-input-area">
-        <input type="text" id="chat-input" placeholder="Escribe tu duda..." onkeypress="handleKey(event)">
-        <button id="chat-send" onclick="askBot()">></button>
+        <input type="text" id="chat-input" placeholder="Haz tu pregunta aquí..." onkeypress="handleKey(event)">
+        <button id="chat-send" onclick="askBot()" title="Enviar pregunta">➤</button>
     </div>
 </div>
 
 <script>
     const SBU = 482.00;
 
+    // --- LÓGICA CALCULADORA (SIN CAMBIOS) ---
     function v(id) {
         let val = document.getElementById(id).value.trim().replace(',', '.');
         if (val === "" || isNaN(val) || parseFloat(val) < 0) return null;
@@ -182,7 +222,6 @@
             let sueldo = v('j1'), anios = v('j2'), coef = v('j3'), fondoRes = v('j4')||0;
             if (sueldo === null || anios === null || coef === null) return res('j', '⚠️ Completa los campos obligatorios.', true);
             
-            // FÓRMULA RECTIFICADA ART. 216
             let suma5Anios = (sueldo * 12) * 5; 
             let haberIndividualBase = (suma5Anios * 0.05 / 5) * anios; 
             let haberNeto = haberIndividualBase - fondoRes;
@@ -221,10 +260,13 @@
         }
     }
 
-    // --- LÓGICA ASISTENTE VIRTUAL ---
+    // --- LÓGICA ASISTENTE VIRTUAL (MEJORADA) ---
     function toggleChat() {
         const chat = document.getElementById('chat-bot');
         chat.style.display = (chat.style.display === 'flex') ? 'none' : 'flex';
+        if(chat.style.display === 'flex') {
+            document.getElementById('chat-input').focus();
+        }
     }
 
     function handleKey(e) { if(e.key === 'Enter') askBot(); }
@@ -235,18 +277,22 @@
         const txt = input.value.toLowerCase().trim();
         if(!txt) return;
 
+        // Mostrar mensaje del usuario
         body.innerHTML += `<div class="user-msg">${input.value}</div>`;
         input.value = "";
+        body.scrollTop = body.scrollHeight;
 
-        let r = "Lo siento, solo puedo responder dudas sobre el Código del Trabajo de Ecuador. Intenta con 'vacaciones', 'prueba', 'fondos' o 'despido'.";
+        // Respuestas predefinidas
+        let r = "Solo puedo responder dudas sobre el Código del Trabajo. Intenta con: 'vacaciones', 'prueba', 'fondos' o 'despido'.";
         
-        if(txt.includes("vacaciones")) r = "Art. 69: Tienes derecho a 15 días de vacaciones tras 1 año. Desde el 5to año, sumas 1 día extra por cada año de antigüedad.";
-        if(txt.includes("prueba")) r = "Art. 15: El periodo de prueba es máximo de 90 días. Se puede terminar la relación sin pago de indemnización en este lapso.";
-        if(txt.includes("despido")) r = "El despido intempestivo (Art. 188) paga 1 mes de sueldo por cada año de trabajo (mínimo 3 meses) más el 25% de desahucio.";
-        if(txt.includes("fondos")) r = "Los Fondos de Reserva (8.33% del sueldo) se pagan desde el segundo año. En la jubilación, el empleador puede deducir este acumulado.";
-        if(txt.includes("decimo") || txt.includes("bono")) r = "D13 (Navideño): Todo lo ganado entre dic y nov / 12. D14 (Escolar): Un salario básico completo.";
-        if(txt.includes("hola") || txt.includes("buenos")) r = "¡Hola! Bienvenido a LABORALEC. ¿En qué tema laboral puedo orientarte hoy?";
+        if(txt.includes("vacaciones")) r = "<b>Art. 69:</b> Tienes 15 días tras el primer año. Desde el 5to año seguido con el mismo jefe, sumas 1 día extra por año adicional.";
+        if(txt.includes("prueba")) r = "<b>Art. 15:</b> El periodo de prueba es de hasta 90 días. En este tiempo se puede terminar el contrato sin pagar indemnización.";
+        if(txt.includes("despido")) r = "<b>Despido:</b> Se paga 1 mes de sueldo por año de trabajo (mínimo 3 meses) más el 25% de bonificación por desahucio.";
+        if(txt.includes("fondos")) r = "<b>Fondos de Reserva:</b> Se ganan tras 1 año (8.33%). En la jubilación patronal, se restan del fondo global para calcular la pensión.";
+        if(txt.includes("decimo") || txt.includes("bono")) r = "<b>Décimos:</b> El 13ro es el promedio anual. El 14to es un sueldo básico ($482).";
+        if(txt.includes("hola") || txt.includes("buenos")) r = "¡Hola! Soy tu asistente de LABORALEC. ¿Qué consulta legal tienes hoy?";
 
+        // Simular escritura del bot
         setTimeout(() => {
             body.innerHTML += `<div class="bot-msg">${r}</div>`;
             body.scrollTop = body.scrollHeight;

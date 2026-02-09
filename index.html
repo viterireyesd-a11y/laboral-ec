@@ -52,7 +52,7 @@
         }
         button:hover { background: var(--accent); box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3); }
 
-        /* RESULTADOS DETALLADOS */
+        /* RESULTADOS */
         .res { 
             margin-top: 25px; padding: 25px; border-radius: 18px; display: none; 
             border-left: 10px solid; animation: slideIn 0.4s ease-out;
@@ -62,7 +62,7 @@
         .ok { background: #f0fdf4; color: #166534; border-color: #22c55e; }
         .err { background: #fef2f2; color: #991b1b; border-color: #ef4444; }
 
-        /* CHATBOT AVANZADO (MAXIMIZADO) */
+        /* CHATBOT */
         #chat-toggle { position: fixed; bottom: 40px; right: 40px; background: var(--p); color: white; width: 85px; height: 85px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 20px 40px rgba(0,0,0,0.3); z-index: 2000; font-size: 40px; transition: 0.4s; }
         #chat-toggle:hover { transform: rotate(15deg) scale(1.1); }
 
@@ -72,7 +72,6 @@
             z-index: 2000; display: none; flex-direction: column; overflow: hidden; border: 1px solid #e2e8f0; 
         }
         #chat-header { background: var(--p); color: white; padding: 35px; font-weight: 800; display: flex; justify-content: space-between; align-items: center; font-size: 1.3rem; }
-        
         #chat-body { flex: 1; padding: 35px; overflow-y: auto; background: #f8fafc; display: flex; flex-direction: column; gap: 20px; }
         
         .bot-msg { 
@@ -88,6 +87,28 @@
 
         hr { border: 0; border-top: 1px solid #e2e8f0; margin: 15px 0; }
         .legal-ref { font-size: 0.8rem; color: var(--g); font-style: italic; margin-top: 10px; display: block; }
+
+        /* --- OPTIMIZACIÓN PARA MÓVILES --- */
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            header { padding: 40px 20px; border-radius: 20px; margin-bottom: 25px; }
+            header h1 { font-size: 1.8rem; letter-spacing: -1px; }
+            header p { font-size: 1rem; }
+            .badge { position: static; display: inline-block; margin-bottom: 15px; padding: 8px 15px; font-size: 0.75rem; }
+            
+            .grid { grid-template-columns: 1fr; gap: 20px; }
+            .card { padding: 25px; border-radius: 20px; }
+            
+            #chat-bot { width: 100%; height: 100%; bottom: 0; right: 0; border-radius: 0; z-index: 3000; }
+            #chat-toggle { bottom: 20px; right: 20px; width: 65px; height: 65px; font-size: 30px; }
+            #chat-header { padding: 20px; font-size: 1.1rem; }
+            #chat-body { padding: 20px; gap: 15px; }
+            #chat-input-area { padding: 15px; }
+            #chat-input { font-size: 1rem; padding: 15px; }
+            #chat-send { width: 60px; height: 55px; }
+            
+            input, button { font-size: 1rem; }
+        }
     </style>
 </head>
 <body>
@@ -219,26 +240,15 @@
         out.style.display = 'block';
         out.className = 'res ok';
 
-        // LÓGICA LOSEP RE-DISEÑADA
         if (t === 'l') {
             let sueldo = v('l_sueldo');
             let anios = v('l1');
             if (!sueldo || !anios) { out.className = 'res err'; out.innerHTML = "⚠️ Ingrese sueldo y años."; return; }
-            
             let baseCalculo = 5 * SBU_VAL; 
             let bruto = anios * baseCalculo;
             let tope = 150 * SBU_VAL;
             let efectivo = (bruto > tope) ? tope : bruto;
-
-            out.innerHTML = `
-                <b>ANÁLISIS DE LIQUIDACIÓN LOSEP:</b><br>
-                • Sueldo de Referencia: $${sueldo.toFixed(2)}<br>
-                • Factor de Cálculo (5 SBU): $${baseCalculo.toFixed(2)} por año.<br>
-                • Total Acumulado (${anios} años): $${bruto.toFixed(2)}<br>
-                <hr>
-                • <b>MONTO NETO A PERCIBIR: $${efectivo.toFixed(2)}</b><br>
-                <span class="legal-ref">Base Legal: Art. 129 LOSEP. El tope máximo es de 150 SBU.</span>
-            `;
+            out.innerHTML = `<b>ANÁLISIS LOSEP:</b><br>• Factor (5 SBU): $${baseCalculo.toFixed(2)} p/año.<br>• Bruto: $${bruto.toFixed(2)}<br><hr>• <b>NETO: $${efectivo.toFixed(2)}</b><br><span class="legal-ref">Art. 129 LOSEP. Máx 150 SBU.</span>`;
         }
 
         if (t === 'd') {
@@ -260,7 +270,7 @@
             if(s) {
                 let vh = s/240;
                 let tot = (vh*1.5*h5) + (vh*2*h1);
-                out.innerHTML = `<b>Total de Recargos Mensuales: $${tot.toFixed(2)}</b><br>Valor Hora Normal: $${vh.toFixed(2)}`;
+                out.innerHTML = `<b>Recargos: $${tot.toFixed(2)}</b><br>Hora Normal: $${vh.toFixed(2)}`;
             }
         }
 
@@ -268,66 +278,22 @@
             let r = v('i1'), a = v('i2');
             if(r && a) {
                 let f = (a < 3) ? 3 : a;
-                out.innerHTML = `<b>Indemnización por Despido: $${(r * f).toFixed(2)}</b><br><span class="legal-ref">Art. 188: 1 mes por año, mínimo 3 meses.</span>`;
+                out.innerHTML = `<b>Indemnización: $${(r * f).toFixed(2)}</b><br><span class="legal-ref">Art. 188: 1 mes/año, mín 3.</span>`;
             }
         }
 
         if (t === 'ds') {
             let r = v('ds1'), a = v('ds2');
-            if(r && a) out.innerHTML = `<b>Bonificación Desahucio (25%): $${(r * 0.25 * a).toFixed(2)}</b>`;
+            if(r && a) out.innerHTML = `<b>Desahucio (25%): $${(r * 0.25 * a).toFixed(2)}</b>`;
         }
     }
 
-    // BASE DE DATOS DE INTELIGENCIA MASIVA
     const DB_LEGAL = [
-        {
-            tags: ["despido", "botaron", "intempestivo", "echaron"],
-            respuesta: `<b>ANÁLISIS DE DESPIDO INTEMPESTIVO (Art. 188):</b><br><br>
-            El despido intempestivo es la terminación unilateral del contrato por parte del empleador sin causa legal previa.<br><br>
-            <b>Componentes de la Liquidación:</b><br>
-            1. <b>Indemnización:</b> 1 mes de sueldo por cada año laborado. Si llevas menos de 3 años, te corresponden 3 meses completos por ley.<br>
-            2. <b>Desahucio:</b> Se suma el 25% de tu última remuneración por cada año cumplido.<br>
-            3. <b>Proporcionales:</b> Décimo tercero, décimo cuarto y vacaciones no gozadas.<br><br>
-            <i>IMPORTANTE:</i> Si el despido ocurre en medio de un conflicto colectivo o tras denunciar acoso, podría declararse despido ineficaz.`
-        },
-        {
-            tags: ["vacaciones", "descanso", "quince", "pagar"],
-            respuesta: `<b>DERECHO A VACACIONES (Art. 69 y Art. 71):</b><br><br>
-            • Todo trabajador tiene derecho a <b>15 días ininterrumpidos</b> de descanso anual remunerado.<br>
-            • <b>Días Adicionales:</b> Después de 5 años con el mismo empleador, ganas 1 día extra por cada año adicional (Máximo 15 días extra).<br>
-            • <b>Cálculo:</b> El pago es la 24ava parte de todo lo percibido en el año (incluyendo horas extra y bonos).<br>
-            • <b>Acumulación:</b> Puedes acumular vacaciones hasta por 3 años. El empleador no puede negarte el descanso el cuarto año.`
-        },
-        {
-            tags: ["losep", "sector publico", "supresion", "permanente"],
-            respuesta: `<b>COMPENSACIÓN LOSEP (Art. 129):</b><br><br>
-            Para servidores con nombramiento permanente cuyo puesto es suprimido por optimización técnica:<br><br>
-            • <b>Fórmula:</b> 5 Salarios Básicos Unificados (SBU) por cada año de servicio.<br>
-            • <b>Tope Máximo 2026:</b> $72,300.00 (equivalente a 150 SBU).<br>
-            • <b>Limitaciones:</b> No puedes reingresar a la función pública en un lapso de 2 años a menos que devuelvas los valores proporcionales al tiempo restante.`
-        },
-        {
-            tags: ["maternidad", "embarazo", "lactancia", "ineficaz"],
-            respuesta: `<b>PROTECCIÓN A LA MATERNIDAD (Art. 152-155):</b><br><br>
-            • <b>Licencia:</b> 12 semanas (84 días) remuneradas al 100%.<br>
-            • <b>Lactancia:</b> Durante los 12 meses posteriores al parto, la jornada laboral es de <b>6 horas diarias</b> (pero se pagan las 8 horas completas).<br>
-            • <b>Despido Ineficaz:</b> El despido de una mujer embarazada o en lactancia es NULO. Si un juez lo declara, el empleador debe pagar <b>12 meses de sueldo adicionales</b> de forma inmediata.`
-        },
-        {
-            tags: ["utilidades", "ganancias", "abril", "cargas"],
-            respuesta: `<b>REPARTO DE UTILIDADES (Art. 97):</b><br><br>
-            • <b>Porcentaje:</b> Las empresas privadas reparten el 15% de sus utilidades líquidas.<br>
-            • <b>Distribución:</b> 10% se divide para todos los trabajadores por igual (según días trabajados). 5% se divide según las cargas familiares (cónyuge e hijos menores de 18 años).<br>
-            • <b>Fecha Máxima:</b> Deben pagarse hasta el <b>15 de abril</b> de cada año.`
-        },
-        {
-            tags: ["teletrabajo", "acuerdo", "ministerial", "distancia"],
-            respuesta: `<b>ACUERDO MINISTERIAL TELETRABAJO (MDT-2020-181):</b><br><br>
-            El teletrabajo en Ecuador requiere un adendum al contrato donde se especifique:<br>
-            1. <b>Derecho a la Desconexión:</b> El trabajador tiene derecho a 12 horas seguidas de desconexión.<br>
-            2. <b>Equipos:</b> El empleador debe proveer las herramientas de trabajo o compensar el gasto de internet y luz.<br>
-            3. <b>Voluntariedad:</b> El cambio de presencial a teletrabajo debe ser de mutuo acuerdo.`
-        }
+        { tags: ["despido", "botaron", "intempestivo"], respuesta: `<b>DESPIDO INTEMPESTIVO (Art. 188):</b><br>Indemnización de 1 mes por año (mínimo 3). Se suma el 25% de desahucio y proporcionales.` },
+        { tags: ["vacaciones", "descanso"], respuesta: `<b>VACACIONES:</b> 15 días anuales. Tras 5 años, sumas 1 día extra por año adicional.` },
+        { tags: ["maternidad", "lactancia"], respuesta: `<b>MATERNIDAD:</b> 12 semanas de licencia. Lactancia: jornada de 6 horas por 12 meses.` },
+        { tags: ["utilidades"], respuesta: `<b>UTILIDADES:</b> 15% (10% individual, 5% cargas). Pago hasta el 15 de abril.` },
+        { tags: ["teletrabajo"], respuesta: `<b>TELETRABAJO:</b> Requiere acuerdo escrito, derecho a desconexión (12h) y equipos por el empleador.` }
     ];
 
     function toggleChat() { 
@@ -340,22 +306,13 @@
         const body = document.getElementById('chat-body');
         const query = input.value.toLowerCase().trim();
         if(!query) return;
-
         body.innerHTML += `<div class="user-msg">${input.value}</div>`;
         input.value = "";
-
         setTimeout(() => {
-            let found = false;
-            let response = `<b>SISTEMA DE ANÁLISIS:</b><br>No detecto ese tema específico en la legislación vigente. Intente consultar sobre: <i>Despido, Vacaciones, LOSEP, Utilidades o Maternidad.</i>`;
-
+            let response = `No detecto ese tema. Pruebe con: <i>Despido, Vacaciones o Utilidades.</i>`;
             for(let doc of DB_LEGAL) {
-                if(doc.tags.some(t => query.includes(t))) {
-                    response = doc.respuesta;
-                    found = true;
-                    break;
-                }
+                if(doc.tags.some(t => query.includes(t))) { response = doc.respuesta; break; }
             }
-
             body.innerHTML += `<div class="bot-msg">${response}</div>`;
             body.scrollTop = body.scrollHeight;
         }, 400);

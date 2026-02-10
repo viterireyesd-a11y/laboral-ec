@@ -89,11 +89,15 @@
         .res-breakdown { font-size: 0.95rem; padding-top: 15px; border-top: 1px dashed rgba(0,0,0,0.1); }
 
         /* ACUERDOS */
+        .search-bar { width: 100%; padding: 20px; border: 2px solid #e2e8f0; border-radius: 16px; margin-bottom: 30px; font-size: 1.1rem; }
         .agreement-item { 
             background: var(--white); padding: 40px; border-radius: var(--radius-lg); margin-bottom: 25px; 
             border-left: 12px solid var(--accent); display: flex; justify-content: space-between; align-items: center;
+            transition: all 0.3s;
         }
+        .agreement-item:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.05); transform: translateX(5px); }
         .observation-panel { background: #fffbeb; border: 2px solid #fde68a; padding: 35px; border-radius: 16px; margin-top: 15px; display: none; }
+        .hidden-agree { display: none !important; }
 
         /* CV */
         .cv-engine { display: grid; grid-template-columns: 480px 1fr; gap: 50px; }
@@ -138,7 +142,7 @@
         <div class="logo"><i class="fas fa-balance-scale"></i> LABORAL<span>PRO</span></div>
         <div class="nav-menu">
             <button class="nav-item active" onclick="changeTab(event, 'calc-tab')">Calculadoras</button>
-            <button class="nav-item" onclick="changeTab(event, 'legal-tab')">Acuerdos MDT</button>
+            <button class="nav-item" onclick="changeTab(event, 'legal-tab')">Biblioteca Legal</button>
             <button class="nav-item" onclick="changeTab(event, 'cv-tab')">Gestor CV</button>
         </div>
     </div>
@@ -238,20 +242,62 @@
     </div>
 
     <div id="legal-tab" class="tab-content">
-        <div class="agreement-item">
-            <div class="agreement-info"><h3>MDT-2024-039: Desconexión Digital</h3><p>Derecho irrenunciable de 12 horas de descanso.</p></div>
-            <button class="nav-item" style="background:var(--primary); color:white" onclick="toggleObs('obs_tele')">Ver</button>
-        </div>
-        <div id="obs_tele" class="observation-panel">
-            <p>El empleador <b>no puede</b> exigir respuestas inmediatas fuera de horario (WhatsApp/Email). Si lo hace, cuenta como hora extra.</p>
-        </div>
+        <input type="text" class="search-bar" id="agree_search" placeholder="🔍 Buscar acuerdo (ej: 'acoso', 'sbu', 'finiquito')..." onkeyup="filterAgreements()">
+        
+        <div id="agreement-list">
+            <div class="agreement-item">
+                <div class="agreement-info"><h3>MDT-2025-001: Nuevo SBU 2026</h3><p>Salario Básico Unificado fijado en <b>$482.00</b>.</p></div>
+                <button class="nav-item" style="background:var(--primary); color:white" onclick="toggleObs('obs_sbu')">Analizar</button>
+            </div>
+            <div id="obs_sbu" class="observation-panel">
+                <h4>Impacto en la Nómina:</h4>
+                <p>Incrementa la base de aportación al IESS y el valor del Décimo Cuarto Sueldo en regiones Costa y Sierra. Afecta también al cálculo de multas laborales establecidas en SBU.</p>
+            </div>
 
-        <div class="agreement-item">
-            <div class="agreement-info"><h3>MDT-2025-001: SBU 2026</h3><p>Salario Básico fijado en <b>$482.00</b>.</p></div>
-            <button class="nav-item" style="background:var(--primary); color:white" onclick="toggleObs('obs_sbu')">Ver</button>
-        </div>
-        <div id="obs_sbu" class="observation-panel">
-            <p>Impacta directamente en el cálculo del <b>Décimo Cuarto Sueldo</b> y los aportes mínimos al IESS.</p>
+            <div class="agreement-item">
+                <div class="agreement-info"><h3>MDT-2024-039: Desconexión Digital</h3><p>Derecho al descanso en Teletrabajo y trabajo híbrido.</p></div>
+                <button class="nav-item" style="background:var(--primary); color:white" onclick="toggleObs('obs_tele')">Analizar</button>
+            </div>
+            <div id="obs_tele" class="observation-panel">
+                <h4>Regla de las 12 Horas:</h4>
+                <p>El trabajador tiene derecho a desconectarse al menos 12 horas continuas en un periodo de 24 horas. Los mensajes del empleador fuera de horario pueden generar pago de horas extras si exigen respuesta inmediata.</p>
+            </div>
+
+            <div class="agreement-item">
+                <div class="agreement-info"><h3>MDT-2020-244: Prevención de Acoso</h3><p>Protocolo obligatorio de prevención de discriminación y violencia.</p></div>
+                <button class="nav-item" style="background:var(--primary); color:white" onclick="toggleObs('obs_acoso')">Analizar</button>
+            </div>
+            <div id="obs_acoso" class="observation-panel">
+                <h4>Obligación Empresarial:</h4>
+                <p>Toda empresa debe tener un Protocolo de Prevención de Riesgos Psicosociales. El incumplimiento genera multas. Permite al trabajador solicitar "Visto Bueno" contra el empleador si es víctima de acoso.</p>
+            </div>
+
+            <div class="agreement-item">
+                <div class="agreement-info"><h3>MDT-2017-135: Plazos de Finiquito</h3><p>Reglamento para el registro y pago de actas de finiquito.</p></div>
+                <button class="nav-item" style="background:var(--primary); color:white" onclick="toggleObs('obs_fini')">Analizar</button>
+            </div>
+            <div id="obs_fini" class="observation-panel">
+                <h4>Plazo Máximo:</h4>
+                <p>El empleador tiene <b>30 días calendario</b> contados desde la terminación de la relación laboral para generar, legalizar el acta en el SUT y realizar el pago. Pasado este tiempo, el trabajador puede denunciar.</p>
+            </div>
+
+            <div class="agreement-item">
+                <div class="agreement-info"><h3>MDT-2023-041: Reglamento de Higiene</h3><p>Normativa de Seguridad y Salud en el trabajo.</p></div>
+                <button class="nav-item" style="background:var(--primary); color:white" onclick="toggleObs('obs_seg')">Analizar</button>
+            </div>
+            <div id="obs_seg" class="observation-panel">
+                <h4>Requisito +10 Trabajadores:</h4>
+                <p>Si la empresa tiene más de 10 trabajadores, debe tener un Reglamento de Higiene y Seguridad aprobado por el MDT. Si tiene menos, debe tener un Plan Mínimo de Prevención de Riesgos.</p>
+            </div>
+
+            <div class="agreement-item">
+                <div class="agreement-info"><h3>MDT-2021-219: Contratos Productivos</h3><p>Modalidades contractuales para sectores productivos y turísticos.</p></div>
+                <button class="nav-item" style="background:var(--primary); color:white" onclick="toggleObs('obs_cont')">Analizar</button>
+            </div>
+            <div id="obs_cont" class="observation-panel">
+                <h4>Flexibilidad:</h4>
+                <p>Permite jornadas dinámicas (distribuidas de forma irregular en la semana) siempre que no excedan las 40 horas semanales. Ideal para turismo y agricultura. El recargo de horas extras aplica solo si se pasa del límite pactado.</p>
+            </div>
         </div>
     </div>
 
@@ -364,6 +410,22 @@
         p.style.display = (p.style.display === 'block') ? 'none' : 'block';
     }
 
+    // --- BUSCADOR DE ACUERDOS ---
+    function filterAgreements() {
+        const input = document.getElementById('agree_search');
+        const filter = input.value.toLowerCase();
+        const nodes = document.querySelectorAll('.agreement-item');
+        
+        nodes.forEach(node => {
+            const text = node.textContent.toLowerCase();
+            if(text.includes(filter)) {
+                node.classList.remove('hidden-agree');
+            } else {
+                node.classList.add('hidden-agree');
+            }
+        });
+    }
+
     function calcVacaciones() {
         const ing = parseFloat(document.getElementById('v_ingresos').value);
         const dias = parseFloat(document.getElementById('v_dias').value);
@@ -416,7 +478,7 @@
             // 14to: (SBU / 12) * Meses laborados
             const d14 = (SBU / 12) * meses;
 
-            // Mostrar los DOS datos por separado como solicitaste
+            // Mostrar los DOS datos por separado
             document.getElementById('val_d13').innerHTML = `<b>13ro (Navideño):</b> <span style="float:right; font-weight:900">$${d13.toFixed(2)}</span>`;
             document.getElementById('val_d14').innerHTML = `<b>14to (Escolar):</b> <span style="float:right; font-weight:900">$${d14.toFixed(2)}</span>`;
             

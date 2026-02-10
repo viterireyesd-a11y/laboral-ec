@@ -195,20 +195,20 @@
             </div>
 
             <div class="tool-card" style="border-top-color: var(--warning);">
-                <h2><i class="fas fa-coins"></i> Décimos</h2>
+                <h2><i class="fas fa-coins"></i> Décimos (13ro y 14to)</h2>
                 <div class="field">
                     <label>Remuneración Mensual Promedio:</label>
-                    <span class="helper-text">Suma de Sueldo + Extras promedio.</span>
-                    <input type="number" id="dec_ingresos" placeholder="Ej: $500">
+                    <span class="helper-text">Para cálculo del 13ro (Sueldo + Extras).</span>
+                    <input type="number" id="dec_ingresos" placeholder="Ej: $500.00">
                 </div>
                 <div class="field">
-                    <label>Meses Laborados en el periodo:</label>
+                    <label>Meses Laborados:</label>
                     <input type="number" id="dec_meses" max="12" placeholder="1 a 12">
                 </div>
                 <button class="btn-calculate" onclick="calcDecimos()">Calcular Proporcionales</button>
                 <div id="res_dec" class="result-display res-positive" style="border-color: var(--warning);">
-                    <div id="val_d13"></div>
-                    <div id="val_d14" style="margin-top:10px"></div>
+                    <div id="val_d13" style="border-bottom: 1px dashed #ccc; padding-bottom: 10px; margin-bottom: 10px;"></div>
+                    <div id="val_d14"></div>
                 </div>
             </div>
 
@@ -226,11 +226,12 @@
 
             <div class="tool-card" style="border-top-color: #8b5cf6;">
                 <h2><i class="fas fa-piggy-bank"></i> Fondos Reserva</h2>
-                <div class="field"><label>Sueldo:</label><input type="number" id="fr_sueldo"></div>
-                <div class="field"><label>Meses:</label><input type="number" id="fr_meses"></div>
+                <div class="field"><label>Sueldo Mensual:</label><input type="number" id="fr_sueldo"></div>
+                <div class="field"><label>Meses Acumulados:</label><input type="number" id="fr_meses"></div>
                 <button class="btn-calculate" onclick="calcFondos()">Calcular</button>
                 <div id="res_fr" class="result-display res-positive" style="border-color: #8b5cf6;">
-                    <span>Total:</span><b class="res-amount" id="val_fr">$0.00</b>
+                    <span>Total Fondos:</span><b class="res-amount" id="val_fr">$0.00</b>
+                    <div class="res-breakdown">Equivale al 8.33% del sueldo.</div>
                 </div>
             </div>
         </div>
@@ -404,20 +405,21 @@
         }
     }
 
-    // --- CORRECCIÓN LÓGICA DE DÉCIMOS ---
+    // --- CORRECCIÓN FINAL: DÉCIMOS ---
     function calcDecimos() {
         const sueldoMensual = parseFloat(document.getElementById('dec_ingresos').value);
         const meses = parseFloat(document.getElementById('dec_meses').value);
         
         if(!isNaN(sueldoMensual) && !isNaN(meses)) {
-            // 13ro: Total Ganado en el año (Sueldo Mensual * Meses) / 12
+            // 13ro: (Sueldo Mensual * Meses) / 12
             const d13 = (sueldoMensual * meses) / 12;
-            
             // 14to: (SBU / 12) * Meses laborados
             const d14 = (SBU / 12) * meses;
 
-            document.getElementById('val_d13').innerText = `13ro (Acumulado): $${d13.toFixed(2)}`;
-            document.getElementById('val_d14').innerText = `14to (Acumulado): $${d14.toFixed(2)}`;
+            // Mostrar los DOS datos por separado como solicitaste
+            document.getElementById('val_d13').innerHTML = `<b>13ro (Navideño):</b> <span style="float:right; font-weight:900">$${d13.toFixed(2)}</span>`;
+            document.getElementById('val_d14').innerHTML = `<b>14to (Escolar):</b> <span style="float:right; font-weight:900">$${d14.toFixed(2)}</span>`;
+            
             document.getElementById('res_dec').style.display = 'block';
         }
     }
@@ -498,3 +500,4 @@
 </script>
 </body>
 </html>
+

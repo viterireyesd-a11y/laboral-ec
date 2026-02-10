@@ -3,700 +3,746 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SISTEMA EXPERTO LABORALEC | Edición 2026</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>LABORALEC | Sistema Integrado de Gestión Jurídica 2026</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         /* =========================================
-           1. CORE STYLES & VARIABLES
+           1. ARQUITECTURA CSS & VARIABLES
            ========================================= */
         :root {
-            --primary: #1e3a8a;       /* Azul Institucional */
-            --primary-dark: #1e293b;
-            --accent: #3b82f6;        /* Azul Brillante */
+            /* Paleta de Colores Corporativa */
+            --primary: #0f172a;       /* Azul Noche */
+            --primary-light: #1e293b;
+            --accent: #3b82f6;        /* Azul Eléctrico */
+            --accent-hover: #2563eb;
             --success: #10b981;
-            --warning: #f59e0b;
             --danger: #ef4444;
-            --bg-body: #f3f4f6;
+            --warning: #f59e0b;
+            
+            /* Fondos y Superficies */
+            --bg-body: #f1f5f9;
             --surface: #ffffff;
-            --text-main: #1f2937;
-            --text-light: #6b7280;
+            --border: #e2e8f0;
+            
+            /* Tipografía */
+            --text-main: #334155;
+            --text-light: #64748b;
+            
+            /* Efectos */
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --radius: 12px;
+            --radius: 10px;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        * { box-sizing: border-box; outline: none; }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-body);
             color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            margin: 0;
+            padding-bottom: 80px; /* Espacio para scroll */
+            line-height: 1.5;
         }
 
-        /* =========================================
-           2. HEADER & NAVIGATION
-           ========================================= */
+        /* --- HEADER --- */
         header {
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
             color: white;
-            padding: 1.5rem 2rem;
+            padding: 1.5rem 0;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            z-index: 50;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: var(--shadow-md);
         }
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+        .brand h1 { margin: 0; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
+        .brand span { color: var(--accent); font-weight: 300; }
+        .user-panel { display: flex; gap: 15px; align-items: center; font-size: 0.9rem; }
+        .status-badge { background: rgba(16, 185, 129, 0.2); color: var(--success); padding: 4px 10px; border-radius: 20px; font-weight: 600; font-size: 0.75rem; }
 
-        .brand i { font-size: 1.8rem; color: var(--accent); }
-        .brand h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; }
-        .brand span { background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; margin-left: 10px; }
-
-        .system-info { text-align: right; font-size: 0.9rem; opacity: 0.9; }
-
-        /* =========================================
-           3. MAIN LAYOUT (SIDEBAR + CONTENT)
-           ========================================= */
-        .app-container {
-            display: flex;
-            flex: 1;
-            max-width: 1400px;
-            margin: 2rem auto;
-            width: 95%;
-            gap: 2rem;
-        }
-
-        /* Sidebar de Navegación */
-        .sidebar {
-            width: 280px;
+        /* --- NAVEGACIÓN TABULADA --- */
+        .nav-container {
             background: var(--surface);
-            border-radius: var(--radius);
-            padding: 1.5rem;
             box-shadow: var(--shadow-sm);
-            height: fit-content;
+            position: sticky;
+            top: 0;
+            z-index: 40;
         }
 
-        .nav-btn {
+        .nav-tabs {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
-            align-items: center;
-            width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 8px;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            padding: 18px 25px;
             background: transparent;
             border: none;
-            border-radius: 8px;
             color: var(--text-light);
-            cursor: pointer;
-            transition: all 0.2s;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 1rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .nav-btn i { margin-right: 12px; width: 20px; text-align: center; }
-        
-        .nav-btn:hover { background: #eff6ff; color: var(--primary); }
-        .nav-btn.active { background: var(--primary); color: white; box-shadow: var(--shadow-sm); }
+        .tab-btn:hover { background-color: #f8fafc; color: var(--primary); }
+        .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
 
-        /* Área de Contenido */
-        .content-area {
-            flex: 1;
+        /* --- CONTENIDO PRINCIPAL --- */
+        .main-wrapper {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            min-height: 600px;
         }
 
-        .calculator-panel {
-            display: none; /* Se ocultan todos, JS activa el correcto */
-            animation: fadeIn 0.4s ease;
-        }
-
-        .calculator-panel.active { display: block; }
-
+        .tab-pane { display: none; animation: fadeIn 0.4s ease-out; }
+        .tab-pane.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* =========================================
-           4. FORMS & CARDS
-           ========================================= */
+        /* --- COMPONENTES UI --- */
         .card {
             background: var(--surface);
             border-radius: var(--radius);
-            box-shadow: var(--shadow-md);
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border: 1px solid #e5e7eb;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
+        
+        .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
-        .card-header-title {
-            font-size: 1.25rem;
-            color: var(--primary-dark);
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid #f3f4f6;
-            padding-bottom: 0.8rem;
+        .card-header {
+            background: #f8fafc;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
+            align-items: center;
         }
+        .card-header h3 { margin: 0; font-size: 1.1rem; color: var(--primary); font-weight: 700; }
+        .card-body { padding: 20px; }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .form-group { margin-bottom: 1rem; }
-        .form-group label { display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main); }
+        .form-control { width: 100%; margin-bottom: 15px; }
+        .form-control label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-main); }
         
-        .input-control {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.2s, box-shadow 0.2s;
+        input, select, textarea {
+            width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px;
+            font-size: 0.95rem; color: var(--primary); transition: border-color 0.2s;
         }
+        input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
 
-        .input-control:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
-
-        .btn-action {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 14px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 1rem;
-            transition: transform 0.1s;
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 10px 20px; border-radius: 6px; border: none; font-weight: 600; cursor: pointer;
+            transition: all 0.2s; width: 100%;
         }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-light); }
+        .btn-accent { background: var(--accent); color: white; }
+        .btn-accent:hover { background: var(--accent-hover); }
 
-        .btn-action:hover { background-color: #1e40af; }
-        .btn-action:active { transform: scale(0.98); }
+        /* --- GRID SYSTEM PARA CALCULADORAS --- */
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
 
-        /* =========================================
-           5. RESULT BOXES (DETAILED)
-           ========================================= */
-        .result-container {
-            margin-top: 2rem;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: var(--radius);
-            overflow: hidden;
-            display: none;
+        /* --- RESULTADOS --- */
+        .result-panel {
+            margin-top: 15px; background: #eff6ff; border-radius: 8px; padding: 15px;
+            border-left: 4px solid var(--accent); display: none;
         }
+        .row-res { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; }
+        .row-total { border-top: 2px dashed #bfdbfe; margin-top: 10px; padding-top: 10px; font-weight: 700; font-size: 1.1rem; color: var(--primary); }
 
-        .result-header { background: var(--primary-dark); color: white; padding: 1rem; font-weight: 600; }
-        .result-body { padding: 1.5rem; }
+        /* --- ESTILOS ESPECÍFICOS ACUERDOS --- */
+        .legal-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; height: 600px; }
+        .legal-list { background: var(--surface); border-radius: var(--radius); overflow-y: auto; border: 1px solid var(--border); }
+        .legal-viewer { background: var(--surface); border-radius: var(--radius); padding: 30px; border: 1px solid var(--border); overflow-y: auto; }
         
-        .result-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #cbd5e1; }
-        .result-row:last-child { border-bottom: none; }
-        .result-row span:last-child { font-weight: 700; color: var(--primary); font-family: monospace; font-size: 1.1rem; }
-        .result-total { background: #dbeafe; padding: 15px; border-radius: 8px; margin-top: 10px; color: var(--primary-dark); font-weight: bold; display: flex; justify-content: space-between; }
+        .doc-item { padding: 15px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.1s; }
+        .doc-item:hover { background: #f1f5f9; }
+        .doc-item.active { background: #eff6ff; border-left: 4px solid var(--accent); }
+        .doc-meta { font-size: 0.75rem; color: var(--text-light); margin-top: 5px; }
 
-        /* =========================================
-           6. CHATBOT WIDGET (ADVANCED)
-           ========================================= */
-        .chat-trigger {
-            position: fixed; bottom: 30px; right: 30px;
-            width: 60px; height: 60px;
-            background: var(--accent); color: white;
-            border-radius: 50%;
+        /* --- ESTILOS ESPECÍFICOS HOJA DE VIDA --- */
+        .cv-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .cv-paper {
+            background: white; width: 100%; min-height: 800px; padding: 40px;
+            box-shadow: var(--shadow-lg); border: 1px solid #e5e5e5;
+            font-family: 'Times New Roman', serif; color: #000;
+        }
+        .cv-paper h1 { border-bottom: 2px solid #000; text-transform: uppercase; margin-bottom: 5px; }
+        .cv-section { margin-top: 20px; }
+        .cv-section h3 { background: #eee; padding: 5px; text-transform: uppercase; font-size: 1rem; font-family: sans-serif; }
+        
+        /* --- CHATBOT AVANZADO --- */
+        .chat-float {
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
+            background: var(--accent); color: white; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: var(--shadow-lg);
-            cursor: pointer;
-            z-index: 1000;
-            transition: transform 0.3s;
+            font-size: 1.5rem; cursor: pointer; box-shadow: var(--shadow-lg);
+            z-index: 100; transition: transform 0.3s;
         }
-        .chat-trigger:hover { transform: scale(1.1); }
+        .chat-float:hover { transform: scale(1.1) rotate(10deg); }
 
         .chat-window {
-            position: fixed; bottom: 100px; right: 30px;
-            width: 380px; height: 500px;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            display: none;
-            flex-direction: column;
-            z-index: 1000;
-            overflow: hidden;
-            border: 1px solid #e5e7eb;
+            position: fixed; bottom: 100px; right: 30px; width: 380px; height: 500px;
+            background: white; border-radius: 12px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+            display: none; flex-direction: column; overflow: hidden; z-index: 99;
+            border: 1px solid var(--border); animation: slideUp 0.3s;
         }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        .chat-header { background: var(--primary); padding: 1rem; color: white; display: flex; justify-content: space-between; align-items: center; }
-        .chat-content { flex: 1; padding: 1rem; overflow-y: auto; background: #f9fafb; display: flex; flex-direction: column; gap: 10px; }
+        .chat-header-win { background: var(--primary); padding: 15px; color: white; font-weight: 600; display: flex; justify-content: space-between; }
+        .chat-messages { flex: 1; padding: 15px; overflow-y: auto; background: #f8fafc; display: flex; flex-direction: column; gap: 10px; }
         
-        .msg { max-width: 80%; padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; line-height: 1.4; }
-        .msg.bot { background: white; border: 1px solid #e5e7eb; align-self: flex-start; border-bottom-left-radius: 2px; }
+        .msg { max-width: 80%; padding: 10px 15px; border-radius: 15px; font-size: 0.9rem; line-height: 1.4; position: relative; }
+        .msg.bot { background: white; border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 2px; }
         .msg.user { background: var(--accent); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+        .timestamp { font-size: 0.65rem; opacity: 0.7; margin-top: 5px; display: block; text-align: right; }
 
-        .chat-input-zone { padding: 10px; background: white; border-top: 1px solid #eee; display: flex; gap: 8px; }
-        .chat-input-zone input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 20px; }
+        /* Toast Notifications */
+        #toast {
+            visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center;
+            border-radius: 4px; padding: 16px; position: fixed; z-index: 1000; left: 50%; bottom: 30px; transform: translateX(-50%);
+        }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
 
-        /* Utilitarios */
-        .badge-sector { display: inline-block; padding: 2px 8px; background: #e0f2fe; color: #0369a1; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
-        .hide { display: none !important; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="brand">
-            <i class="fas fa-balance-scale"></i>
-            <div>
-                <h1>LABORALEC <span class="badge">PRO 2026</span></h1>
+        <div class="header-content">
+            <div class="brand">
+                <h1>LABORAL<span style="font-weight:900">EC</span></h1>
+                <span style="font-size:0.8rem; letter-spacing:1px;">SISTEMA DE GESTIÓN JURÍDICA V3.0</span>
             </div>
-        </div>
-        <div class="system-info">
-            <p><i class="fas fa-calendar-alt"></i> SBU Vigente: <strong>$482.00</strong></p>
-            <p><i class="fas fa-globe-americas"></i> Legislación Ecuatoriana</p>
+            <div class="user-panel">
+                <span id="clock">10/02/2026</span>
+                <span class="status-badge">SBU $482.00</span>
+                <i class="fas fa-user-circle fa-lg"></i>
+            </div>
         </div>
     </header>
 
-    <div class="app-container">
-        
-        <aside class="sidebar">
-            <button class="nav-btn active" onclick="switchTab('iess')"><i class="fas fa-hand-holding-usd"></i> Aportes IESS</button>
-            <button class="nav-btn" onclick="switchTab('extras')"><i class="fas fa-clock"></i> Horas Extras</button>
-            <button class="nav-btn" onclick="switchTab('decimos')"><i class="fas fa-gift"></i> Décimos (13/14)</button>
-            <button class="nav-btn" onclick="switchTab('liquidacion')"><i class="fas fa-door-open"></i> Liquidación Final</button>
-            <button class="nav-btn" onclick="switchTab('losep')"><i class="fas fa-building"></i> Indemnización LOSEP</button>
-            <div style="margin-top: 2rem; border-top: 1px solid #eee; padding-top: 1rem;">
-                <p style="font-size: 0.8rem; color: #999;">Herramientas</p>
-                <button class="nav-btn" onclick="printReport()"><i class="fas fa-print"></i> Imprimir Reporte</button>
-            </div>
-        </aside>
+    <nav class="nav-container">
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="app.switchTab('tab-calculadoras')">
+                <i class="fas fa-calculator"></i> Calculadoras
+            </button>
+            <button class="tab-btn" onclick="app.switchTab('tab-acuerdos')">
+                <i class="fas fa-book-reader"></i> Acuerdos Ministeriales
+            </button>
+            <button class="tab-btn" onclick="app.switchTab('tab-cv')">
+                <i class="fas fa-file-contract"></i> Hoja de Vida
+            </button>
+        </div>
+    </nav>
 
-        <main class="content-area">
+    <div class="main-wrapper">
 
-            <div id="panel-iess" class="calculator-panel active">
+        <div id="tab-calculadoras" class="tab-pane active">
+            <div class="grid-3">
+                
                 <div class="card">
-                    <div class="card-header-title">
-                        Calculadora de Aportaciones al IESS
-                        <span class="badge-sector" id="sector-display">Sector Privado</span>
+                    <div class="card-header">
+                        <h3>Aportes IESS</h3>
+                        <i class="fas fa-hospital-user" style="color:var(--accent)"></i>
                     </div>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Sueldo Bruto Mensual ($)</label>
-                            <input type="number" id="iess_sueldo" class="input-control" placeholder="Ej: 482.00" value="482">
+                    <div class="card-body">
+                        <div class="form-control">
+                            <label>Sueldo Nominal ($)</label>
+                            <input type="number" id="iess_sueldo" value="482.00" min="0">
                         </div>
-                        <div class="form-group">
-                            <label>Tipo de Empleador / Régimen</label>
-                            <select id="iess_tipo" class="input-control" onchange="updateSectorLabel()">
-                                <option value="privado">Sector Privado (Cód. Trabajo)</option>
-                                <option value="publico">Sector Público (LOSEP)</option>
-                                <option value="voluntario">Afiliación Voluntaria (17.6%)</option>
+                        <div class="form-control">
+                            <label>Tipo de Régimen</label>
+                            <select id="iess_tipo">
+                                <option value="privado">Privado (9.45% / 12.15%)</option>
+                                <option value="publico">Público LOSEP (11.45% / 9.15%)</option>
+                                <option value="voluntario">Voluntario (17.6%)</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="form-group" style="margin-top: 15px;">
-                        <label><input type="checkbox" id="iess_fondo"> Incluir cálculo de Fondo de Reserva (8.33%)</label>
-                    </div>
-                    <button class="btn-action" onclick="calcularIESS()">Procesar Aportes</button>
-
-                    <div id="res-iess" class="result-container">
-                        <div class="result-header">Desglose de Aportaciones</div>
-                        <div class="result-body" id="res-body-iess"></div>
+                        <div class="form-control">
+                             <label><input type="checkbox" id="iess_fr"> Acumula Fondo de Reserva</label>
+                        </div>
+                        <button class="btn btn-primary" onclick="calculators.iess()">Calcular Aportes</button>
+                        <div id="res_iess" class="result-panel"></div>
                     </div>
                 </div>
-            </div>
 
-            <div id="panel-extras" class="calculator-panel">
                 <div class="card">
-                    <div class="card-header-title">Cálculo de Horas Suplementarias y Extraordinarias</div>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Remuneración Mensual ($)</label>
-                            <input type="number" id="he_sueldo" class="input-control" placeholder="Ej: 482.00">
-                        </div>
-                        <div class="form-group">
-                            <label>Horas al 50% (Suplementarias)</label>
-                            <input type="number" id="he_50" class="input-control" placeholder="0">
-                        </div>
-                        <div class="form-group">
-                            <label>Horas al 100% (Extraordinarias)</label>
-                            <input type="number" id="he_100" class="input-control" placeholder="0">
-                        </div>
-                        <div class="form-group">
-                            <label>Horas al 25% (Recargo Nocturno)</label>
-                            <input type="number" id="he_25" class="input-control" placeholder="0">
-                        </div>
+                    <div class="card-header">
+                        <h3>Liquidación Final</h3>
+                        <i class="fas fa-door-open" style="color:var(--danger)"></i>
                     </div>
-                    <button class="btn-action" onclick="calcularHE()">Calcular Recargos</button>
-                    <div id="res-he" class="result-container">
-                        <div class="result-header">Detalle de Horas Extras</div>
-                        <div class="result-body" id="res-body-he"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="panel-liquidacion" class="calculator-panel">
-                <div class="card">
-                    <div class="card-header-title">Simulador de Liquidación Final de Haberes</div>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Última Remuneración Completa ($)</label>
-                            <input type="number" id="liq_sueldo" class="input-control" placeholder="Ej: 600.00">
+                    <div class="card-body">
+                        <div class="form-control">
+                            <label>Última Remuneración ($)</label>
+                            <input type="number" id="liq_sueldo">
                         </div>
-                        <div class="form-group">
-                            <label>Tiempo de Servicio (Años)</label>
-                            <input type="number" id="liq_anios" class="input-control" placeholder="Ej: 3">
+                        <div class="form-control">
+                            <label>Años de Servicio</label>
+                            <input type="number" id="liq_anios">
                         </div>
-                        <div class="form-group">
-                            <label>Región (para cálculo de 14to)</label>
-                            <select id="liq_region" class="input-control">
-                                <option value="costa">Costa / Galápagos</option>
-                                <option value="sierra">Sierra / Amazonía</option>
+                        <div class="form-control">
+                            <label>Causal de Salida</label>
+                            <select id="liq_causa">
+                                <option value="intempestivo">Despido Intempestivo</option>
+                                <option value="renuncia">Renuncia Voluntaria</option>
+                                <option value="visto_bueno">Visto Bueno (Empleador)</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>Causal de Terminación</label>
-                            <select id="liq_causa" class="input-control">
-                                <option value="renuncia">Renuncia Voluntaria (Desahucio)</option>
-                                <option value="despido">Despido Intempestivo (Art. 188)</option>
-                                <option value="acuerdo">Mutuo Acuerdo</option>
-                            </select>
+                        <button class="btn btn-primary" onclick="calculators.liquidacion()">Procesar Liquidación</button>
+                        <div id="res_liq" class="result-panel"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Jubilación Patronal</h3>
+                        <i class="fas fa-coins" style="color:var(--warning)"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-control">
+                            <label>Promedio Anual (5 años)</label>
+                            <input type="number" id="jub_promedio" placeholder="Ej: 12000">
+                        </div>
+                        <div class="form-control">
+                            <label>Años de Servicio (Min 20)</label>
+                            <input type="number" id="jub_anios" placeholder="Ej: 25">
+                        </div>
+                        <button class="btn btn-primary" onclick="calculators.jubilacion()">Calcular Fondo Global</button>
+                        <div id="res_jub" class="result-panel"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h3>Horas Extras</h3></div>
+                    <div class="card-body">
+                        <div class="form-control"><label>Sueldo Base ($)</label><input type="number" id="he_sueldo"></div>
+                        <div class="form-control"><label>Horas 50% (Suplementarias)</label><input type="number" id="he_50"></div>
+                        <div class="form-control"><label>Horas 100% (Extraordinarias)</label><input type="number" id="he_100"></div>
+                        <button class="btn btn-accent" onclick="calculators.extras()">Calcular</button>
+                        <div id="res_he" class="result-panel"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h3>Décimos (13ro y 14to)</h3></div>
+                    <div class="card-body">
+                        <div class="form-control"><label>Ingresos Totales Anuales ($)</label><input type="number" id="dec_ingresos"></div>
+                        <div class="form-control"><label>Meses Trabajados</label><input type="number" id="dec_meses" max="12"></div>
+                        <button class="btn btn-accent" onclick="calculators.decimos()">Calcular</button>
+                        <div id="res_dec" class="result-panel"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h3>Indemnización LOSEP</h3></div>
+                    <div class="card-body">
+                        <div class="form-control"><label>RMU Actual ($)</label><input type="number" id="losep_rmu"></div>
+                        <div class="form-control"><label>Años Servicio Público</label><input type="number" id="losep_anios"></div>
+                        <button class="btn btn-accent" onclick="calculators.losep()">Calcular</button>
+                        <div id="res_losep" class="result-panel"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="tab-acuerdos" class="tab-pane">
+            <div class="card" style="margin-bottom:20px; padding:20px;">
+                <input type="text" id="searchAgreement" placeholder="🔍 Buscar acuerdo por palabra clave (ej: Teletrabajo, SBU, Seguridad)..." 
+                       style="padding:15px; font-size:1.1rem; border:2px solid var(--border);" onkeyup="agreements.filter()">
+            </div>
+
+            <div class="legal-layout">
+                <div class="legal-list" id="agreementList">
+                    </div>
+                <div class="legal-viewer" id="agreementViewer">
+                    <div style="text-align:center; margin-top:100px; color:#aaa;">
+                        <i class="fas fa-book-open fa-3x"></i>
+                        <p>Seleccione un documento para visualizar su contenido.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-cv" class="tab-pane">
+            <div class="cv-layout">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Editor de Datos</h3>
+                        <button class="btn btn-primary" style="width:auto; font-size:0.8rem;" onclick="cv.save()">Guardar</button>
+                    </div>
+                    <div class="card-body" style="height:700px; overflow-y:auto;">
+                        <h4 style="color:var(--accent)">1. Datos Personales</h4>
+                        <div class="form-control"><label>Nombre Completo</label><input type="text" id="cv_nombre" onkeyup="cv.update()"></div>
+                        <div class="form-control"><label>Título Profesional</label><input type="text" id="cv_titulo" onkeyup="cv.update()"></div>
+                        <div class="form-control"><label>Teléfono / Email</label><input type="text" id="cv_contacto" onkeyup="cv.update()"></div>
+                        
+                        <h4 style="color:var(--accent)">2. Perfil</h4>
+                        <div class="form-control"><textarea id="cv_perfil" rows="4" placeholder="Resumen profesional..." onkeyup="cv.update()"></textarea></div>
+
+                        <h4 style="color:var(--accent)">3. Experiencia Laboral</h4>
+                        <div class="form-control"><textarea id="cv_exp" rows="6" placeholder="Ej: Gerente de Ventas - Empresa X (2020-2025)..." onkeyup="cv.update()"></textarea></div>
+
+                        <h4 style="color:var(--accent)">4. Educación</h4>
+                        <div class="form-control"><textarea id="cv_edu" rows="4" placeholder="Universidad / Título..." onkeyup="cv.update()"></textarea></div>
+
+                        <div style="margin-top:20px;">
+                            <button class="btn btn-accent" onclick="cv.print()"><i class="fas fa-print"></i> Imprimir PDF</button>
                         </div>
                     </div>
-                    <div class="form-group" style="margin-top:10px;">
-                        <label>Vacaciones No Gozadas (Días pendientes):</label>
-                        <input type="number" id="liq_vacaciones" class="input-control" placeholder="0" value="0">
+                </div>
+
+                <div class="cv-paper" id="cvPreview">
+                    <h1 id="p_nombre">NOMBRE DEL CANDIDATO</h1>
+                    <p id="p_titulo" style="font-size:1.2rem; color:#444; margin-bottom:5px;">TÍTULO PROFESIONAL</p>
+                    <p id="p_contacto" style="font-size:0.9rem; margin-bottom:20px;">Teléfono | Email</p>
+                    
+                    <hr>
+
+                    <div class="cv-section">
+                        <h3>Perfil Profesional</h3>
+                        <p id="p_perfil">...</p>
                     </div>
-                    <button class="btn-action" onclick="calcularLiquidacion()">Generar Liquidación</button>
-                    <div id="res-liq" class="result-container">
-                        <div class="result-header">Liquidación Preliminar</div>
-                        <div class="result-body" id="res-body-liq"></div>
+
+                    <div class="cv-section">
+                        <h3>Experiencia Laboral</h3>
+                        <p id="p_exp" style="white-space: pre-line;">...</p>
+                    </div>
+
+                    <div class="cv-section">
+                        <h3>Educación</h3>
+                        <p id="p_edu" style="white-space: pre-line;">...</p>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div id="panel-decimos" class="calculator-panel">
-                <div class="card">
-                    <h3>Cálculo de Décimos</h3>
-                    <p style="margin-bottom:1rem; color:#666;">Calcula los proporcionales o valores acumulados.</p>
-                    <div class="form-grid">
-                        <div class="form-group"><label>Total Ingresos Año:</label><input type="number" id="dec_ingresos" class="input-control"></div>
-                        <div class="form-group"><label>Meses Trabajados:</label><input type="number" id="dec_meses" class="input-control" max="12"></div>
-                    </div>
-                    <button class="btn-action" onclick="calcularDecimos()">Calcular</button>
-                    <div id="res-dec" class="result-container"><div class="result-body" id="res-body-dec"></div></div>
-                </div>
-            </div>
-
-            <div id="panel-losep" class="calculator-panel">
-                <div class="card">
-                    <h3>Indemnización LOSEP (Sector Público)</h3>
-                    <div class="form-grid">
-                        <div class="form-group"><label>RMU Actual:</label><input type="number" id="losep_rmu" class="input-control"></div>
-                        <div class="form-group"><label>Años Servicio:</label><input type="number" id="losep_anios" class="input-control"></div>
-                    </div>
-                    <button class="btn-action" onclick="calcularLosep()">Calcular (Tope 150 SBU)</button>
-                    <div id="res-losep" class="result-container"><div class="result-body" id="res-body-losep"></div></div>
-                </div>
-            </div>
-
-        </main>
     </div>
 
-    <div class="chat-trigger" onclick="toggleChat()">
+    <div class="chat-float" onclick="chatbot.toggle()">
         <i class="fas fa-robot"></i>
     </div>
 
     <div class="chat-window" id="chatWindow">
-        <div class="chat-header">
-            <span>Asistente Jurídico IA</span>
-            <span style="cursor:pointer;" onclick="toggleChat()"><i class="fas fa-times"></i></span>
+        <div class="chat-header-win">
+            <span>Asistente LaboralEC AI</span>
+            <span style="cursor:pointer;" onclick="chatbot.toggle()">×</span>
         </div>
-        <div class="chat-content" id="chatContent">
+        <div class="chat-messages" id="chatLog">
             <div class="msg bot">
-                Hola. Soy el asistente legal de LaboralEC v2.0. Mi base de datos incluye el Código del Trabajo y Acuerdos Ministeriales 2026. <br><br>
-                Pregúntame sobre: <b>Vacaciones, Despidos, Maternidad, Utilidades o Horas Extras.</b>
+                Hola. Soy tu asistente jurídico virtual. Puedo ayudarte con:
+                <br>• Cálculo de liquidaciones
+                <br>• Derechos de vacaciones
+                <br>• Normativa de horas extras
+                <span class="timestamp">Ahora</span>
             </div>
         </div>
-        <div class="chat-input-zone">
-            <input type="text" id="chatInput" placeholder="Escribe tu consulta legal..." onkeypress="checkEnter(event)">
-            <button onclick="sendMessage()" style="border:none; background:var(--primary); color:white; border-radius:50%; width:40px; height:40px; cursor:pointer;"><i class="fas fa-paper-plane"></i></button>
+        <div style="padding:10px; border-top:1px solid #eee; display:flex; gap:5px; background:white;">
+            <input type="text" id="chatInput" placeholder="Escribe tu consulta..." onkeypress="chatbot.checkEnter(event)">
+            <button class="btn btn-primary" style="width:auto;" onclick="chatbot.send()"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
 
+    <div id="toast">Acción realizada con éxito</div>
+
     <script>
-        // =========================================
-        // 1. SYSTEM CONFIGURATION
-        // =========================================
+        // --- 1. CONFIGURACIÓN Y UTILIDADES ---
         const CONFIG = {
             SBU: 482.00,
-            IESS_PERS_PRIV: 0.0945,
-            IESS_PATR_PRIV: 0.1215,
-            IESS_PERS_PUB: 0.1145,
-            IESS_PATR_PUB: 0.0915,
-            IESS_VOLUNTARIO: 0.1760
+            YEAR: 2026
         };
 
-        // =========================================
-        // 2. UI UTILITIES
-        // =========================================
-        function switchTab(panelId) {
-            // Update buttons
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-            
-            // Update panels
-            document.querySelectorAll('.calculator-panel').forEach(p => p.classList.remove('active'));
-            document.getElementById(`panel-${panelId}`).classList.add('active');
-        }
-
-        function formatUSD(num) {
-            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
-        }
-
-        function getVal(id) {
-            const val = parseFloat(document.getElementById(id).value);
-            return isNaN(val) ? 0 : val;
-        }
-
-        function renderResult(containerId, bodyId, html) {
-            const container = document.getElementById(containerId);
-            const body = document.getElementById(bodyId);
-            body.innerHTML = html;
-            container.style.display = 'block';
-            container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-
-        function updateSectorLabel() {
-            const type = document.getElementById('iess_tipo').value;
-            const label = document.getElementById('sector-display');
-            if(type === 'privado') label.innerText = "Sector Privado";
-            else if(type === 'publico') label.innerText = "Sector Público";
-            else label.innerText = "Voluntario";
-        }
-
-        function printReport() {
-            alert("Generando PDF...\n(Esta función se conectaría a una librería como jsPDF en producción).");
-        }
-
-        // =========================================
-        // 3. CALCULATION ENGINES
-        // =========================================
-        
-        // --- IESS ---
-        function calcularIESS() {
-            const sueldo = getVal('iess_sueldo');
-            const tipo = document.getElementById('iess_tipo').value;
-            const incluirFondo = document.getElementById('iess_fondo').checked;
-
-            if (sueldo < CONFIG.SBU && tipo !== 'voluntario') {
-                alert(`Advertencia: El sueldo ingresado es menor al SBU ($${CONFIG.SBU}).`);
+        const utils = {
+            formatCurrency: (num) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num),
+            getVal: (id) => parseFloat(document.getElementById(id).value) || 0,
+            getText: (id) => document.getElementById(id).value,
+            showToast: (msg) => {
+                const x = document.getElementById("toast");
+                x.innerText = msg;
+                x.className = "show";
+                setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
+            },
+            renderResult: (id, html) => {
+                const el = document.getElementById(id);
+                el.innerHTML = html;
+                el.style.display = 'block';
+                el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
-
-            let p_pers = 0, p_patr = 0;
-
-            switch(tipo) {
-                case 'privado': p_pers = CONFIG.IESS_PERS_PRIV; p_patr = CONFIG.IESS_PATR_PRIV; break;
-                case 'publico': p_pers = CONFIG.IESS_PERS_PUB; p_patr = CONFIG.IESS_PATR_PUB; break;
-                case 'voluntario': p_pers = CONFIG.IESS_VOLUNTARIO; p_patr = 0; break;
-            }
-
-            const valPers = sueldo * p_pers;
-            const valPatr = sueldo * p_patr;
-            let valFondo = 0;
-            
-            if (incluirFondo) valFondo = sueldo * 0.0833;
-
-            renderResult('res-iess', 'res-body-iess', `
-                <div class="result-row"><span>Aporte Personal (${(p_pers*100).toFixed(2)}%):</span> <span>${formatUSD(valPers)}</span></div>
-                <div class="result-row"><span>Aporte Patronal (${(p_patr*100).toFixed(2)}%):</span> <span>${formatUSD(valPatr)}</span></div>
-                ${incluirFondo ? `<div class="result-row"><span>Fondo de Reserva (8.33%):</span> <span>${formatUSD(valFondo)}</span></div>` : ''}
-                <div class="result-total">
-                    <span>Total a Transferir IESS:</span>
-                    <span>${formatUSD(valPers + valPatr + valFondo)}</span>
-                </div>
-                <div style="margin-top:10px; font-size:0.85rem; text-align:right; color:#666;">
-                    Líquido a recibir (Sueldo - Personal): <strong>${formatUSD(sueldo - valPers)}</strong>
-                </div>
-            `);
-        }
-
-        // --- HORAS EXTRAS ---
-        function calcularHE() {
-            const sueldo = getVal('he_sueldo');
-            const h50 = getVal('he_50');
-            const h100 = getVal('he_100');
-            const h25 = getVal('he_25');
-
-            const vHora = sueldo / 240; // 30 días * 8 horas
-            const t50 = h50 * (vHora * 1.5);
-            const t100 = h100 * (vHora * 2);
-            const t25 = h25 * (vHora * 0.25); // Recargo nocturno solo suma el 25%, no la hora base completa si ya está en sueldo
-
-            renderResult('res-he', 'res-body-he', `
-                <div class="result-row"><span>Valor Hora Ordinaria:</span> <span>${formatUSD(vHora)}</span></div>
-                <div class="result-row"><span>Total Suplementarias (50%):</span> <span>${formatUSD(t50)}</span></div>
-                <div class="result-row"><span>Total Extraordinarias (100%):</span> <span>${formatUSD(t100)}</span></div>
-                <div class="result-row"><span>Total Recargo Nocturno (25%):</span> <span>${formatUSD(t25)}</span></div>
-                <div class="result-total">
-                    <span>Total Horas Extras:</span>
-                    <span>${formatUSD(t50 + t100 + t25)}</span>
-                </div>
-            `);
-        }
-
-        // --- LIQUIDACIÓN ---
-        function calcularLiquidacion() {
-            const sueldo = getVal('liq_sueldo');
-            const anios = getVal('liq_anios');
-            const diasVacaciones = getVal('liq_vacaciones');
-            const causa = document.getElementById('liq_causa').value;
-            
-            // 1. Desahucio (Art. 184) - Aplica en renuncia y despido
-            // 25% de la última remuneración por cada año
-            const desahucio = (sueldo * 0.25) * anios;
-
-            // 2. Indemnización Despido (Art. 188)
-            let despido = 0;
-            if (causa === 'despido') {
-                if (anios < 3) despido = sueldo * 3; // Mínimo 3 meses
-                else {
-                    let aniosCalculo = anios > 25 ? 25 : anios;
-                    despido = sueldo * aniosCalculo;
-                }
-            }
-
-            // 3. Vacaciones No Gozadas
-            const valVacaciones = (sueldo / 30) * diasVacaciones;
-
-            renderResult('res-liq', 'res-body-liq', `
-                <div class="result-row"><span>Bonificación Desahucio (25%):</span> <span>${formatUSD(desahucio)}</span></div>
-                <div class="result-row"><span>Indemnización Art. 188:</span> <span>${formatUSD(despido)}</span></div>
-                <div class="result-row"><span>Vacaciones No Gozadas:</span> <span>${formatUSD(valVacaciones)}</span></div>
-                <div class="result-total">
-                    <span>Total Liquidación:</span>
-                    <span>${formatUSD(desahucio + despido + valVacaciones)}</span>
-                </div>
-                <p style="font-size:0.8rem; margin-top:5px; color:#ef4444;">* No incluye cálculo proporcional de décimos (requiere fechas exactas).</p>
-            `);
-        }
-
-        // --- DÉCIMOS ---
-        function calcularDecimos() {
-            const ingresos = getVal('dec_ingresos');
-            const meses = getVal('dec_meses');
-            
-            const decimotercero = ingresos / 12;
-            const decimocuarto = (CONFIG.SBU / 12) * meses;
-
-            renderResult('res-dec', 'res-body-dec', `
-                 <div class="result-row"><span>13ro (Bono Navideño):</span> <span>${formatUSD(decimotercero)}</span></div>
-                 <div class="result-row"><span>14to (Bono Escolar):</span> <span>${formatUSD(decimocuarto)}</span></div>
-                 <div class="result-total"><span>Total Beneficios:</span> <span>${formatUSD(decimotercero + decimocuarto)}</span></div>
-            `);
-        }
-
-        // --- LOSEP ---
-        function calcularLosep() {
-            const rmu = getVal('losep_rmu');
-            const anios = getVal('losep_anios');
-            
-            // Regla LOSEP: 5 SMBU por año
-            // OJO: La ley suele referirse a SBU, no RMU para el cálculo base, pero depende del tipo de contrato.
-            // Usaremos el estándar de indemnización por supresión de partida (ejemplo común).
-            
-            let indemnizacion = (CONFIG.SBU * 5) * anios;
-            const techo = CONFIG.SBU * 150;
-
-            let alerta = "";
-            if (indemnizacion > techo) {
-                indemnizacion = techo;
-                alerta = "(Tope Máximo 150 SBU Aplicado)";
-            }
-
-            renderResult('res-losep', 'res-body-losep', `
-                <div class="result-row"><span>Base (5 SBU x Año):</span> <span>${formatUSD(CONFIG.SBU * 5)}</span></div>
-                <div class="result-row"><span>Años:</span> <span>${anios}</span></div>
-                <div class="result-total"><span>Total Indemnización:</span> <span>${formatUSD(indemnizacion)}</span></div>
-                <small style="color:red">${alerta}</small>
-            `);
-        }
-
-        // =========================================
-        // 4. AI LAW ENGINE (CEREBRO JURÍDICO)
-        // =========================================
-        
-        const legalKnowledge = [
-            {
-                keywords: ['vacaciones', 'descanso', '15 dias'],
-                response: "<strong>Art. 69 - Vacaciones Anuales:</strong><br>Todo trabajador tendrá derecho a gozar anualmente de un período ininterrumpido de quince días de descanso, incluidos los días no laborables. <br>✅ A partir del 5to año, se suma 1 día extra por antigüedad."
-            },
-            {
-                keywords: ['despido', 'intempestivo', 'echaron', 'botaron'],
-                response: "<strong>Art. 188 - Despido Intempestivo:</strong><br>El empleador deberá pagar:<br>1. Hasta 3 años de servicio: 3 meses de remuneración.<br>2. Más de 3 años: 1 mes de sueldo por cada año de servicio (Tope 25 años).<br>⚠️ Adicionalmente aplica la bonificación por desahucio."
-            },
-            {
-                keywords: ['desahucio', 'renuncia', '25%'],
-                response: "<strong>Art. 184 - Desahucio:</strong><br>Es la bonificación del 25% de la última remuneración mensual por cada uno de los años de servicio. Aplica tanto en despido intempestivo como en renuncia voluntaria."
-            },
-            {
-                keywords: ['prueba', 'periodo', '90 dias'],
-                response: "<strong>Art. 15 - Período de Prueba:</strong><br>En los contratos se puede estipular un período de prueba máximo de 90 días. Durante este tiempo cualquiera de las partes puede dar por terminado el contrato sin indemnización (solo pago de haberes pendientes)."
-            },
-            {
-                keywords: ['maternidad', 'embarazo', 'lactancia'],
-                response: "<strong>Art. 152 - Maternidad:</strong><br>Licencia remunerada de 12 semanas (2 antes y 10 después del parto).<br><strong>Lactancia:</strong> Jornada de 6 horas durante 12 meses posteriores al parto."
-            },
-            {
-                keywords: ['utilidades', 'ganancias', '15%'],
-                response: "<strong>Art. 97 - Utilidades:</strong><br>El empleador debe repartir el 15% de las utilidades líquidas.<br>- 10% para todos los trabajadores.<br>- 5% en proporción a las cargas familiares."
-            },
-            {
-                keywords: ['horas extras', 'suplementarias', 'recargo'],
-                response: "<strong>Art. 55 - Horas Suplementarias y Extraordinarias:</strong><br>- Suplementarias (después de jornada, máx 4h): Recargo 50%.<br>- Extraordinarias (fines de semana/feriados): Recargo 100%."
-            },
-            {
-                keywords: ['iess', 'aporte', 'seguro'],
-                response: "<strong>Aportaciones 2026:</strong><br>Sector Privado: 9.45% (Personal) + 12.15% (Patronal).<br>El pago debe realizarse hasta el día 15 del mes siguiente para evitar mora."
-            }
-        ];
-
-        const toggleChat = () => {
-            const w = document.getElementById('chatWindow');
-            w.style.display = (w.style.display === 'flex') ? 'none' : 'flex';
         };
 
-        const checkEnter = (e) => { if(e.key === 'Enter') sendMessage(); };
-
-        const sendMessage = () => {
-            const input = document.getElementById('chatInput');
-            const content = document.getElementById('chatContent');
-            const text = input.value.trim().toLowerCase();
-
-            if(!text) return;
-
-            // User msg
-            content.innerHTML += `<div class="msg user">${input.value}</div>`;
-            input.value = '';
-            content.scrollTop = content.scrollHeight;
-
-            // AI Processing simulation
-            setTimeout(() => {
-                let answer = "Disculpa, no encontré una referencia exacta en el Código del Trabajo para esa consulta. Intenta usar términos como 'vacaciones', 'despido' o 'utilidades'.";
+        // --- 2. GESTIÓN DE LA APLICACIÓN ---
+        const app = {
+            init: () => {
+                setInterval(() => {
+                    document.getElementById('clock').innerText = new Date().toLocaleString('es-EC');
+                }, 1000);
+                agreements.init(); // Cargar base de datos de acuerdos
+                cv.load(); // Cargar datos guardados
+            },
+            switchTab: (tabId) => {
+                document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+                document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
                 
-                // Búsqueda difusa en base de conocimientos
-                for (let item of legalKnowledge) {
-                    if (item.keywords.some(k => text.includes(k))) {
-                        answer = item.response;
-                        break;
-                    }
+                document.getElementById(tabId).classList.add('active');
+                // Encontrar el botón que llamó y activarlo (truco simple)
+                event.currentTarget.classList.add('active');
+            }
+        };
+
+        // --- 3. MOTOR DE CÁLCULO ---
+        const calculators = {
+            iess: () => {
+                const sueldo = utils.getVal('iess_sueldo');
+                const tipo = utils.getText('iess_tipo');
+                const fondoReserva = document.getElementById('iess_fr').checked;
+                
+                let per = 0, pat = 0;
+                if(tipo === 'privado') { per = 0.0945; pat = 0.1215; }
+                else if(tipo === 'publico') { per = 0.1145; pat = 0.0915; }
+                else { per = 0.1760; pat = 0; }
+
+                const valPer = sueldo * per;
+                const valPat = sueldo * pat;
+                const valFR = fondoReserva ? sueldo * 0.0833 : 0;
+
+                utils.renderResult('res_iess', `
+                    <div class="row-res"><span>Aporte Personal (${(per*100).toFixed(2)}%):</span> <strong>${utils.formatCurrency(valPer)}</strong></div>
+                    <div class="row-res"><span>Aporte Patronal (${(pat*100).toFixed(2)}%):</span> <strong>${utils.formatCurrency(valPat)}</strong></div>
+                    ${fondoReserva ? `<div class="row-res"><span>Fondo Reserva (8.33%):</span> <strong>${utils.formatCurrency(valFR)}</strong></div>` : ''}
+                    <div class="row-total">Total IESS: ${utils.formatCurrency(valPer + valPat + valFR)}</div>
+                `);
+            },
+            liquidacion: () => {
+                const s = utils.getVal('liq_sueldo');
+                const a = utils.getVal('liq_anios');
+                const causa = utils.getText('liq_causa');
+                
+                // Desahucio (Art 184): 25% por año en despido y renuncia
+                let desahucio = 0;
+                if(causa !== 'visto_bueno') desahucio = (s * 0.25) * a;
+
+                // Despido (Art 188)
+                let despido = 0;
+                if(causa === 'intempestivo') {
+                    despido = (a < 3) ? (s * 3) : (s * (a > 25 ? 25 : a));
                 }
 
-                content.innerHTML += `<div class="msg bot">${answer}</div>`;
-                content.scrollTop = content.scrollHeight;
-            }, 600);
+                utils.renderResult('res_liq', `
+                    <div class="row-res"><span>Bonificación Desahucio:</span> <span>${utils.formatCurrency(desahucio)}</span></div>
+                    <div class="row-res"><span>Indemnización Despido:</span> <span>${utils.formatCurrency(despido)}</span></div>
+                    <div class="row-total">Total Liquidación: ${utils.formatCurrency(desahucio + despido)}</div>
+                    <small style="color:#666">* No incluye vacaciones no gozadas.</small>
+                `);
+            },
+            jubilacion: () => {
+                const prom = utils.getVal('jub_promedio');
+                const anios = utils.getVal('jub_anios');
+                
+                if(anios < 20) return alert("Se requiere un mínimo de 20 años de servicio.");
+
+                // Cálculo referencial simplificado (Coeficiente legal es complejo)
+                const fondo = (prom * anios) * 0.05; 
+                
+                utils.renderResult('res_jub', `
+                    <div class="row-res"><span>Fondo Global Estimado:</span> <strong>${utils.formatCurrency(fondo)}</strong></div>
+                    <div class="row-res"><span>Pensión Mensual Ref.:</span> <span>${utils.formatCurrency(fondo / 120)}</span></div>
+                `);
+            },
+            extras: () => {
+                const s = utils.getVal('he_sueldo');
+                const h50 = utils.getVal('he_50');
+                const h100 = utils.getVal('he_100');
+                const v = s / 240;
+                
+                utils.renderResult('res_he', `
+                    <div class="row-total">Total a Pagar: ${utils.formatCurrency((h50*v*1.5) + (h100*v*2))}</div>
+                `);
+            },
+            decimos: () => {
+                const ing = utils.getVal('dec_ingresos');
+                const m = utils.getVal('dec_meses');
+                utils.renderResult('res_dec', `
+                    <div class="row-res"><span>13ro:</span> ${utils.formatCurrency(ing/12)}</div>
+                    <div class="row-res"><span>14to:</span> ${utils.formatCurrency((CONFIG.SBU/12)*m)}</div>
+                    <div class="row-total">Total: ${utils.formatCurrency((ing/12) + ((CONFIG.SBU/12)*m))}</div>
+                `);
+            },
+            losep: () => {
+                const rmu = utils.getVal('losep_rmu');
+                const a = utils.getVal('losep_anios');
+                let total = (CONFIG.SBU * 5) * a;
+                const tope = CONFIG.SBU * 150;
+                if(total > tope) total = tope;
+                
+                utils.renderResult('res_losep', `<div class="row-total">Indemnización: ${utils.formatCurrency(total)}</div>`);
+            }
         };
+
+        // --- 4. SISTEMA DE ACUERDOS (BASE DE DATOS SIMULADA) ---
+        const agreements = {
+            db: [
+                { id: 1, code: 'MDT-2026-001', title: 'Fijación SBU 2026', tags: 'Salario, SBU', content: 'Fíjese el Salario Básico Unificado del trabajador en general para el año 2026 en la cantidad de $482.00 USD.' },
+                { id: 2, code: 'MDT-2026-044', title: 'Directriz Teletrabajo', tags: 'Teletrabajo, Jornada', content: 'Regulaciones para la desconexión digital y provision de equipos por parte del empleador.' },
+                { id: 3, code: 'MDT-2026-102', title: 'Reglamento Salud Ocupacional', tags: 'Seguridad, Salud', content: 'Obligatoriedad de médico ocupacional para empresas con más de 100 trabajadores.' },
+                { id: 4, code: 'MDT-2026-015', title: 'Contrato Joven', tags: 'Contratos, Empleo', content: 'Incentivos tributarios para la contratación de jóvenes entre 18 y 29 años.' },
+                { id: 5, code: 'MDT-2025-221', title: 'Registro de Actas de Finiquito', tags: 'Liquidación, SUT', content: 'Plazo máximo de 30 días para registro de actas en el sistema SUT.' }
+            ],
+            init: () => { agreements.render(agreements.db); },
+            render: (data) => {
+                const list = document.getElementById('agreementList');
+                list.innerHTML = '';
+                data.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'doc-item';
+                    div.onclick = () => agreements.view(item);
+                    div.innerHTML = `
+                        <div style="font-weight:bold; color:var(--primary)">${item.code}</div>
+                        <div>${item.title}</div>
+                        <div class="doc-meta"><i class="fas fa-tag"></i> ${item.tags}</div>
+                    `;
+                    list.appendChild(div);
+                });
+            },
+            view: (item) => {
+                const viewer = document.getElementById('agreementViewer');
+                viewer.innerHTML = `
+                    <h2 style="color:var(--primary); border-bottom:2px solid var(--accent); padding-bottom:10px;">${item.code}</h2>
+                    <h3 style="color:#555;">${item.title}</h3>
+                    <div style="background:#f8f9fa; padding:20px; border:1px solid #ddd; border-radius:8px; margin-top:20px;">
+                        <p style="font-family:serif; font-size:1.1rem; line-height:1.6;">"${item.content}"</p>
+                    </div>
+                    <div style="margin-top:20px;">
+                        <span class="status-badge">${item.tags}</span>
+                        <button class="btn btn-primary" style="margin-top:20px; width:auto;" onclick="alert('Descargando PDF oficial...')"><i class="fas fa-file-pdf"></i> Descargar Original</button>
+                    </div>
+                `;
+            },
+            filter: () => {
+                const q = document.getElementById('searchAgreement').value.toLowerCase();
+                const filtered = agreements.db.filter(x => 
+                    x.title.toLowerCase().includes(q) || 
+                    x.tags.toLowerCase().includes(q) ||
+                    x.content.toLowerCase().includes(q)
+                );
+                agreements.render(filtered);
+            }
+        };
+
+        // --- 5. GESTOR DE HOJA DE VIDA ---
+        const cv = {
+            update: () => {
+                // Mapeo simple de IDs de input a IDs de preview
+                const map = {
+                    'cv_nombre': 'p_nombre',
+                    'cv_titulo': 'p_titulo',
+                    'cv_contacto': 'p_contacto',
+                    'cv_perfil': 'p_perfil',
+                    'cv_exp': 'p_exp',
+                    'cv_edu': 'p_edu'
+                };
+                
+                for(let key in map) {
+                    const val = document.getElementById(key).value;
+                    const prev = document.getElementById(map[key]);
+                    if(val) prev.innerText = val;
+                }
+            },
+            save: () => {
+                const data = {
+                    nombre: document.getElementById('cv_nombre').value,
+                    titulo: document.getElementById('cv_titulo').value,
+                    contacto: document.getElementById('cv_contacto').value,
+                    perfil: document.getElementById('cv_perfil').value,
+                    exp: document.getElementById('cv_exp').value,
+                    edu: document.getElementById('cv_edu').value
+                };
+                localStorage.setItem('laboralEC_cv', JSON.stringify(data));
+                utils.showToast('Datos guardados localmente');
+            },
+            load: () => {
+                const data = JSON.parse(localStorage.getItem('laboralEC_cv'));
+                if(data) {
+                    document.getElementById('cv_nombre').value = data.nombre || '';
+                    document.getElementById('cv_titulo').value = data.titulo || '';
+                    document.getElementById('cv_contacto').value = data.contacto || '';
+                    document.getElementById('cv_perfil').value = data.perfil || '';
+                    document.getElementById('cv_exp').value = data.exp || '';
+                    document.getElementById('cv_edu').value = data.edu || '';
+                    cv.update();
+                }
+            },
+            print: () => {
+                window.print();
+            }
+        };
+
+        // --- 6. CHATBOT ENGINE (LÓGICA DIFUSA SIMPLE) ---
+        const chatbot = {
+            visible: false,
+            knowledge: [
+                { keys: ['vacacion', 'descanso'], ans: 'El Art. 69 concede 15 días ininterrumpidos de descanso anual. A partir del 5to año se suma 1 día por antigüedad.' },
+                { keys: ['despido', 'botaron', 'intempestivo'], ans: 'El despido intempestivo (Art. 188) indemniza con: 3 remuneraciones (1-3 años) o 1 mes por año (si es > 3 años).' },
+                { keys: ['renuncia', 'salir'], ans: 'En renuncia voluntaria te corresponde el 25% de la última remuneración por cada año de servicio (Desahucio), más proporcionales.' },
+                { keys: ['hora', 'extra', 'suplementaria'], ans: 'Las horas suplementarias se pagan con 50% de recargo. Las extraordinarias (fines de semana) con el 100%.' },
+                { keys: ['utilidad', 'abril'], ans: 'Se reparte el 15% de las ganancias líquidas: 10% para todos los empleados y 5% según cargas familiares.' }
+            ],
+            toggle: () => {
+                chatbot.visible = !chatbot.visible;
+                const win = document.getElementById('chatWindow');
+                win.style.display = chatbot.visible ? 'flex' : 'none';
+            },
+            checkEnter: (e) => { if(e.key === 'Enter') chatbot.send(); },
+            send: () => {
+                const inp = document.getElementById('chatInput');
+                const txt = inp.value.trim().toLowerCase();
+                if(!txt) return;
+
+                chatbot.addMsg(inp.value, 'user');
+                inp.value = '';
+
+                // Simular pensamiento
+                setTimeout(() => {
+                    const match = chatbot.knowledge.find(k => k.keys.some(word => txt.includes(word)));
+                    const response = match ? match.ans : "No estoy seguro. Intenta preguntar sobre: despidos, vacaciones, utilidades o horas extras.";
+                    chatbot.addMsg(response, 'bot');
+                }, 600);
+            },
+            addMsg: (txt, sender) => {
+                const log = document.getElementById('chatLog');
+                const div = document.createElement('div');
+                div.className = `msg ${sender}`;
+                div.innerHTML = `${txt} <span class="timestamp">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>`;
+                log.appendChild(div);
+                log.scrollTop = log.scrollHeight;
+            }
+        };
+
+        // INICIAR APP
+        window.onload = app.init;
 
     </script>
 </body>

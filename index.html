@@ -21,7 +21,7 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
-        body { background: var(--gray-100); color: var(--primary); line-height: 1.6; padding-bottom: 120px; }
+        body { background: var(--gray-100); color: var(--primary); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
 
         /* NAVEGACIÓN */
         nav { 
@@ -39,7 +39,7 @@
         .nav-item:hover, .nav-item.active { background: var(--accent); color: var(--white); box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.4); }
 
         /* CONTENIDO PRINCIPAL */
-        .main-content { max-width: 1400px; margin: 50px auto; padding: 0 40px; }
+        .main-content { max-width: 1400px; margin: 50px auto; padding: 0 40px; flex: 1; width: 100%; }
         .tab-content { display: none; animation: slideUp 0.5s ease-out; }
         .tab-content.active { display: block; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -88,7 +88,7 @@
         .res-amount { display: block; font-size: 2.8rem; font-weight: 900; margin: 10px 0; }
         .res-breakdown { font-size: 0.95rem; padding-top: 15px; border-top: 1px dashed rgba(0,0,0,0.1); }
 
-        /* ACUERDOS */
+        /* ACUERDOS & LEGAL */
         .search-bar { width: 100%; padding: 20px; border: 2px solid #e2e8f0; border-radius: 16px; margin-bottom: 30px; font-size: 1.1rem; }
         .agreement-item { 
             background: var(--white); padding: 40px; border-radius: var(--radius-lg); margin-bottom: 25px; 
@@ -98,6 +98,28 @@
         .agreement-item:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.05); transform: translateX(5px); }
         .observation-panel { background: #fffbeb; border: 2px solid #fde68a; padding: 35px; border-radius: 16px; margin-top: 15px; display: none; }
         .hidden-agree { display: none !important; }
+
+        /* ENLACES A DOCUMENTOS */
+        .doc-link {
+            display: inline-flex; align-items: center; gap: 8px; margin-top: 15px;
+            color: var(--accent); font-weight: 700; text-decoration: none; font-size: 0.95rem;
+            padding: 8px 15px; border: 1px dashed var(--accent); border-radius: 8px; transition: 0.3s;
+        }
+        .doc-link:hover { background: var(--accent); color: white; border-style: solid; }
+        
+        .main-code-link {
+            background: var(--primary); color: white; text-decoration: none; padding: 15px 30px;
+            border-radius: 12px; font-weight: 700; display: inline-flex; align-items: center; gap: 10px;
+            margin-bottom: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.3s;
+        }
+        .main-code-link:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+
+        /* FOOTER DISCLAIMER */
+        footer {
+            background: white; padding: 40px; text-align: center; border-top: 1px solid #e2e8f0;
+            margin-top: 60px; color: var(--gray-700); font-size: 0.85rem;
+        }
+        footer strong { color: var(--primary); }
 
         /* CV */
         .cv-engine { display: grid; grid-template-columns: 480px 1fr; gap: 50px; }
@@ -242,6 +264,11 @@
     </div>
 
     <div id="legal-tab" class="tab-content">
+        
+        <a href="https://www.trabajo.gob.ec/normativa-legal/" target="_blank" class="main-code-link">
+            <i class="fas fa-book"></i> Ver Código del Trabajo Íntegro (MDT)
+        </a>
+
         <input type="text" class="search-bar" id="agree_search" placeholder="🔍 Buscar acuerdo (ej: 'acoso', 'sbu', 'finiquito')..." onkeyup="filterAgreements()">
         
         <div id="agreement-list">
@@ -251,7 +278,8 @@
             </div>
             <div id="obs_sbu" class="observation-panel">
                 <h4>Impacto en la Nómina:</h4>
-                <p>Incrementa la base de aportación al IESS y el valor del Décimo Cuarto Sueldo en regiones Costa y Sierra. Afecta también al cálculo de multas laborales establecidas en SBU.</p>
+                <p>Incrementa la base de aportación al IESS y el valor del Décimo Cuarto Sueldo en regiones Costa y Sierra.</p>
+                <a href="https://www.trabajo.gob.ec/" target="_blank" class="doc-link"><i class="fas fa-file-pdf"></i> Ver Documento Oficial</a>
             </div>
 
             <div class="agreement-item">
@@ -260,7 +288,8 @@
             </div>
             <div id="obs_tele" class="observation-panel">
                 <h4>Regla de las 12 Horas:</h4>
-                <p>El trabajador tiene derecho a desconectarse al menos 12 horas continuas en un periodo de 24 horas. Los mensajes del empleador fuera de horario pueden generar pago de horas extras si exigen respuesta inmediata.</p>
+                <p>El trabajador tiene derecho a desconectarse al menos 12 horas continuas en un periodo de 24 horas.</p>
+                <a href="https://www.trabajo.gob.ec/" target="_blank" class="doc-link"><i class="fas fa-file-pdf"></i> Ver Documento Oficial</a>
             </div>
 
             <div class="agreement-item">
@@ -269,7 +298,8 @@
             </div>
             <div id="obs_acoso" class="observation-panel">
                 <h4>Obligación Empresarial:</h4>
-                <p>Toda empresa debe tener un Protocolo de Prevención de Riesgos Psicosociales. El incumplimiento genera multas. Permite al trabajador solicitar "Visto Bueno" contra el empleador si es víctima de acoso.</p>
+                <p>Toda empresa debe tener un Protocolo de Prevención de Riesgos Psicosociales.</p>
+                <a href="https://www.trabajo.gob.ec/" target="_blank" class="doc-link"><i class="fas fa-file-pdf"></i> Ver Documento Oficial</a>
             </div>
 
             <div class="agreement-item">
@@ -278,7 +308,8 @@
             </div>
             <div id="obs_fini" class="observation-panel">
                 <h4>Plazo Máximo:</h4>
-                <p>El empleador tiene <b>30 días calendario</b> contados desde la terminación de la relación laboral para generar, legalizar el acta en el SUT y realizar el pago. Pasado este tiempo, el trabajador puede denunciar.</p>
+                <p>El empleador tiene <b>30 días calendario</b> contados desde la terminación de la relación laboral para generar el acta y pagar.</p>
+                <a href="https://www.trabajo.gob.ec/" target="_blank" class="doc-link"><i class="fas fa-file-pdf"></i> Ver Documento Oficial</a>
             </div>
 
             <div class="agreement-item">
@@ -287,7 +318,8 @@
             </div>
             <div id="obs_seg" class="observation-panel">
                 <h4>Requisito +10 Trabajadores:</h4>
-                <p>Si la empresa tiene más de 10 trabajadores, debe tener un Reglamento de Higiene y Seguridad aprobado por el MDT. Si tiene menos, debe tener un Plan Mínimo de Prevención de Riesgos.</p>
+                <p>Si la empresa tiene más de 10 trabajadores, debe tener un Reglamento de Higiene y Seguridad aprobado por el MDT.</p>
+                <a href="https://www.trabajo.gob.ec/" target="_blank" class="doc-link"><i class="fas fa-file-pdf"></i> Ver Documento Oficial</a>
             </div>
 
             <div class="agreement-item">
@@ -296,7 +328,8 @@
             </div>
             <div id="obs_cont" class="observation-panel">
                 <h4>Flexibilidad:</h4>
-                <p>Permite jornadas dinámicas (distribuidas de forma irregular en la semana) siempre que no excedan las 40 horas semanales. Ideal para turismo y agricultura. El recargo de horas extras aplica solo si se pasa del límite pactado.</p>
+                <p>Permite jornadas dinámicas (distribuidas de forma irregular en la semana) siempre que no excedan las 40 horas semanales.</p>
+                <a href="https://www.trabajo.gob.ec/" target="_blank" class="doc-link"><i class="fas fa-file-pdf"></i> Ver Documento Oficial</a>
             </div>
         </div>
     </div>
@@ -321,6 +354,15 @@
         </div>
     </div>
 </div>
+
+<footer>
+    <p>
+        <strong>⚠️ IMPORTANTE:</strong> La presente plataforma "LABORALPRO" es una herramienta de simulación con fines informativos y académicos. 
+        Los cálculos generados son referenciales y no constituyen una liquidación oficial vinculante. 
+        Esta herramienta <strong>no reemplaza la asesoría legal profesional</strong> de un abogado ni la autoridad de un Inspector del Ministerio del Trabajo. 
+        El usuario asume la responsabilidad por el uso de la información aquí proporcionada.
+    </p>
+</footer>
 
 <div id="ia-trigger" onclick="toggleIA()"><i class="fas fa-robot"></i></div>
 <div id="ia-window">
@@ -473,12 +515,9 @@
         const meses = parseFloat(document.getElementById('dec_meses').value);
         
         if(!isNaN(sueldoMensual) && !isNaN(meses)) {
-            // 13ro: (Sueldo Mensual * Meses) / 12
             const d13 = (sueldoMensual * meses) / 12;
-            // 14to: (SBU / 12) * Meses laborados
             const d14 = (SBU / 12) * meses;
 
-            // Mostrar los DOS datos por separado
             document.getElementById('val_d13').innerHTML = `<b>13ro (Navideño):</b> <span style="float:right; font-weight:900">$${d13.toFixed(2)}</span>`;
             document.getElementById('val_d14').innerHTML = `<b>14to (Escolar):</b> <span style="float:right; font-weight:900">$${d14.toFixed(2)}</span>`;
             

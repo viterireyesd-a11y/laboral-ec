@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SISTEMA DE GESTIÓN JURÍDICA | LABORALEC PRO 2026</title>
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="icono.png">
 
     <style>
         /* ==========================================================================
@@ -379,6 +381,53 @@
             background: #fff; border-top: 1px solid #e2e8f0; padding: 20px;
             text-align: center; font-size: 0.75rem; color: #64748b;
             position: fixed; bottom: 0; width: 100%; z-index: 30;
+        }
+
+        /* ==========================================================================
+           8. ESTILOS DE IMPRESIÓN (SOLO PARA CV Y REPORTES)
+           ========================================================================== */
+        @media print {
+            /* Ocultar todo lo que no queremos imprimir */
+            header, .nav-wrapper, .legal-footer, .chat-fab, .chat-window, .cv-editor, .btn, .card-header button {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+
+            /* Ajustar el contenedor principal */
+            .main-content {
+                margin: 0;
+                padding: 0;
+                max-width: 100%;
+            }
+
+            /* Si estamos en la pestaña CV, hacemos que el papel ocupe toda la hoja */
+            .cv-preview-container {
+                display: block;
+                height: auto;
+                overflow: visible;
+                background: white;
+                padding: 0;
+                border: none;
+            }
+
+            .cv-paper {
+                transform: scale(1); /* Quitamos el zoom para que salga tamaño real */
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+                min-height: auto;
+                padding: 0; /* Ajusta según márgenes de impresora */
+            }
+            
+            /* Ocultar otras pestañas por si acaso */
+            #tab-calculadoras, #tab-acuerdos {
+                display: none !important;
+            }
         }
 
     </style>
@@ -854,7 +903,7 @@
             }
         };
 
-        // --- CHATBOT INTELIGENTE ---
+        // --- CHATBOT INTELIGENTE (VERSIÓN SEGURA ANTI-XSS) ---
         const chatbot = {
             toggle: () => {
                 const win = document.getElementById('chatWindow');
@@ -863,12 +912,18 @@
             checkEnter: (e) => { if(e.key === 'Enter') chatbot.send(); },
             send: () => {
                 const input = document.getElementById('chatInput');
-                const text = input.value.trim().toLowerCase();
+                const text = input.value.trim();
                 if(!text) return;
 
                 const log = document.getElementById('chatLog');
-                // Mensaje Usuario
-                log.innerHTML += `<div class="msg user">${input.value}</div>`;
+                
+                // --- SEGURIDAD XSS: Crear elementos DOM en lugar de innerHTML ---
+                const userMsgDiv = document.createElement('div');
+                userMsgDiv.className = 'msg user';
+                userMsgDiv.innerText = text; // Sanitización automática
+                log.appendChild(userMsgDiv);
+                
+                const textLower = text.toLowerCase();
                 input.value = '';
                 log.scrollTop = log.scrollHeight;
 
@@ -876,17 +931,22 @@
                 setTimeout(() => {
                     let response = "No estoy seguro de esa consulta. Intenta con: 'vacaciones', 'despido', 'horas extras' o 'iess'.";
                     
-                    if(text.includes('vacaciones')) {
+                    if(textLower.includes('vacaciones')) {
                         response = "Para esa consulta específica te sugiero revisar el <strong>Art. 69 del Código del Trabajo</strong>: Todo trabajador tiene derecho a 15 días ininterrumpidos de descanso anual. A partir del 5to año se suma 1 día por antigüedad.";
-                    } else if(text.includes('despido')) {
+                    } else if(textLower.includes('despido')) {
                         response = "El <strong>Despido Intempestivo (Art. 188)</strong> se indemniza así:<br>• Hasta 3 años: 3 meses de sueldo.<br>• Más de 3 años: 1 mes de sueldo por cada año de servicio (tope 25 años).";
-                    } else if(text.includes('renuncia')) {
+                    } else if(textLower.includes('renuncia')) {
                         response = "En caso de renuncia, aplica el <strong>Desahucio (Art. 184)</strong>: 25% de la última remuneración por cada año de servicio completo.";
-                    } else if(text.includes('iess')) {
+                    } else if(textLower.includes('iess')) {
                         response = "Las tasas vigentes son:<br>• Privado: 9.45% (Personal) + 12.15% (Patronal).<br>• Público: 11.45% (Personal) + 9.15% (Patronal).";
                     }
 
-                    log.innerHTML += `<div class="msg bot">${response}</div>`;
+                    // Para la respuesta del bot sí usamos innerHTML porque es texto controlado por nosotros (confiable)
+                    const botMsgDiv = document.createElement('div');
+                    botMsgDiv.className = 'msg bot';
+                    botMsgDiv.innerHTML = response;
+                    log.appendChild(botMsgDiv);
+                    
                     log.scrollTop = log.scrollHeight;
                 }, 600);
             }
@@ -900,4 +960,3 @@
     </script>
 </body>
 </html>
-

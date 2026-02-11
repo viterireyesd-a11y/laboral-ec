@@ -489,7 +489,7 @@
         .cv-text { font-size: 15pt; line-height: 2.5; white-space: pre-line; margin-bottom: 40px; }
 
         /* ==========================================================================
-           SECTION 10: ASISTENTE IA (BLINDADO CON GEMINI PRO)
+           SECTION 10: ASISTENTE IA (SISTEMA DE CHAT ELITE - GEMINI PRO)
            ========================================================================== 
         */
         .chat-fab { 
@@ -560,10 +560,10 @@
             <div class="system-status">
                 <div class="system-badge">
                     <span class="status-dot"></span>
-                    <span>IA CORE: <strong>GEMINI 1.5 PRO</strong></span>
+                    <span>IA CORE: <strong>ACTIVO</strong></span>
                 </div>
                 <div style="background:rgba(255,255,255,0.1); padding:15px 35px; border-radius:50px; border:1px solid rgba(255,255,255,0.25)">
-                    SALARIO BÁSICO 2026: <strong>$482.00</strong>
+                    SBU 2026: <strong>$482.00</strong>
                 </div>
             </div>
         </div>
@@ -591,7 +591,6 @@
                 <div class="card">
                     <div class="card-header">
                         <h3><i class="fas fa-hand-holding-medical" style="color:var(--color-accent)"></i> APORTES IESS</h3>
-                        <span style="background:var(--color-success); color:white; padding:6px 15px; border-radius:12px; font-size:0.8rem; font-weight:900;">NORMA 2026</span>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
@@ -604,14 +603,14 @@
                         <div class="form-group">
                             <label>Régimen de Afiliación</label>
                             <select id="iess_tipo">
-                                <option value="privado">Sector Privado (9.45% Personal / 12.15% Patronal)</option>
-                                <option value="publico">Sector Público (11.45% Personal / 9.15% Patronal)</option>
+                                <option value="privado">Sector Privado (9.45% Personal)</option>
+                                <option value="publico">Sector Público (11.45% Personal)</option>
                                 <option value="voluntario">Afiliación Voluntaria (17.60% Total)</option>
                             </select>
                         </div>
                         <div class="form-group">
                              <label style="text-transform:none; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:20px;">
-                                <input type="checkbox" id="iess_acumula_fr" style="width:30px; height:30px;"> Acumula Fondo de Reserva (8.33% Art. 196 CT)
+                                <input type="checkbox" id="iess_fr" style="width:30px; height:30px;"> Acumula Fondo de Reserva (8.33% Art. 196 CT)
                              </label>
                         </div>
                         <button class="btn btn-primary" onclick="calculators.iess()">
@@ -624,28 +623,27 @@
                 <div class="card">
                     <div class="card-header">
                         <h3><i class="fas fa-door-open" style="color:var(--color-danger)"></i> LIQUIDACIÓN FINAL</h3>
-                        <span style="background:var(--color-danger); color:white; padding:6px 15px; border-radius:12px; font-size:0.8rem; font-weight:900;">ART. 188 CT</span>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
                             <label>Última Remuneración Percibida ($)</label>
                             <div class="input-group">
                                 <i class="fas fa-money-bill-wave"></i>
-                                <input type="number" id="liq_remuneracion" class="input-with-icon" placeholder="Ej: 1100.00" min="0">
+                                <input type="number" id="liq_rem" class="input-with-icon" placeholder="Ej: 1100.00" min="0">
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Tiempo de Servicio (Años Completos)</label>
                             <div class="input-group">
                                 <i class="fas fa-calendar-alt"></i>
-                                <input type="number" id="liq_anios" class="input-with-icon" placeholder="Ej: 10" min="0">
+                                <input type="number" id="liq_anios" class="input-with-icon" placeholder="Ej: 8" min="0">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Causal Legal de Terminación</label>
+                            <label>Causal Legal</label>
                             <select id="liq_causal">
-                                <option value="intempestivo">Despido Intempestivo (Art. 188)</option>
-                                <option value="renuncia">Renuncia Voluntaria / Desahucio (Art. 184)</option>
+                                <option value="intempestivo">Despido Intempestivo (Indemnización Art. 188)</option>
+                                <option value="renuncia">Renuncia Voluntaria (Desahucio Art. 184)</option>
                                 <option value="acuerdo">Mutuo Acuerdo (Simulación Referencial)</option>
                             </select>
                         </div>
@@ -659,90 +657,29 @@
                 <div class="card">
                     <div class="card-header">
                         <h3><i class="fas fa-clock" style="color:var(--color-warning)"></i> HORAS EXTRAS</h3>
-                        <span style="background:var(--color-warning); color:white; padding:6px 15px; border-radius:12px; font-size:0.8rem; font-weight:900;">RECARGOS</span>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
                             <label>Sueldo de Referencia Mensual ($)</label>
                             <div class="input-group">
                                 <i class="fas fa-wallet"></i>
-                                <input type="number" id="he_sueldo_ref" class="input-with-icon" min="0">
+                                <input type="number" id="he_ref" class="input-with-icon" min="0">
                             </div>
                         </div>
                         <div class="grid-2" style="gap:30px; margin-bottom:20px;">
                             <div class="form-group">
-                                <label>50% (Suplementarias)</label>
-                                <input type="number" id="he_cant_50" placeholder="0" min="0">
+                                <label>50% (Supl.)</label>
+                                <input type="number" id="he_50" placeholder="0" min="0">
                             </div>
                             <div class="form-group">
-                                <label>100% (Extraordinarias)</label>
-                                <input type="number" id="he_cant_100" placeholder="0" min="0">
+                                <label>100% (Extr.)</label>
+                                <input type="number" id="he_100" placeholder="0" min="0">
                             </div>
                         </div>
                         <button class="btn btn-primary" onclick="calculators.extras()">
                             <i class="fas fa-calculator"></i> CALCULAR RECARGOS
                         </button>
                         <div id="res_he" class="result-panel"></div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h3><i class="fas fa-coins" style="color:var(--flag-yellow)"></i> DÉCIMOS (13ro y 14to)</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label>Ingreso Promedio Mensual ($)</label>
-                            <input type="number" id="dec_ingreso_prom" placeholder="Sueldo base + extras" min="0">
-                        </div>
-                        <div class="form-group">
-                            <label>Meses Laborados en el Ciclo</label>
-                            <input type="number" id="dec_meses_total" max="12" min="1" placeholder="Ej: 11">
-                        </div>
-                        <button class="btn btn-action" onclick="calculators.decimos()">
-                            <i class="fas fa-hand-holding-usd"></i> CALCULAR PROVISIÓN
-                        </button>
-                        <div id="res_dec" class="result-panel"></div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h3><i class="fas fa-blind"></i> JUBILACIÓN PATRONAL</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label>Promedio Anual (Últimos 5 años) ($)</label>
-                            <input type="number" id="jub_prom_anual" min="0">
-                        </div>
-                        <div class="form-group">
-                            <label>Total de Años de Servicio Patronal</label>
-                            <input type="number" id="jub_anios_serv" min="0" placeholder="Mínimo 20 para cálculo">
-                        </div>
-                        <button class="btn btn-primary" onclick="calculators.jubilacion()">
-                            <i class="fas fa-user-clock"></i> ESTIMAR FONDO GLOBAL
-                        </button>
-                        <div id="res_jub" class="result-panel"></div>
-                    </div>
-                </div>
-
-                 <div class="card">
-                    <div class="card-header">
-                        <h3><i class="fas fa-landmark" style="color:var(--flag-blue)"></i> INDEMNIZACIÓN LOSEP</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label>RMU Actual ($)</label>
-                            <input type="number" id="losep_rmu_v" min="0">
-                        </div>
-                        <div class="form-group">
-                            <label>Años de Servicio en el Sector Público</label>
-                            <input type="number" id="losep_anios_v" min="0">
-                        </div>
-                        <button class="btn btn-action" onclick="calculators.losep()">
-                            <i class="fas fa-university"></i> CALCULAR LOSEP
-                        </button>
-                        <div id="res_losep" class="result-panel"></div>
                     </div>
                 </div>
 
@@ -753,18 +690,16 @@
             <div class="legal-layout">
                 <div class="legal-sidebar">
                     <div class="search-container">
-                        <label style="font-weight:900; margin-bottom:15px; display:block; font-size:1.1rem;">VISOR DE ACUERDOS MINISTERIALES</label>
+                        <label style="font-weight:900; margin-bottom:15px; display:block; font-size:1.1rem;">BÚSQUEDA LEGAL</label>
                         <input type="text" id="legalSearch" placeholder="🔍 Buscar Acuerdo, Ley o Artículo..." onkeyup="agreements.search()">
                     </div>
-                    <div class="legal-list" id="agreementList">
-                        </div>
+                    <div class="legal-list" id="agreementList"></div>
                 </div>
-
                 <div class="legal-viewer" id="agreementViewer">
                     <div class="pdf-placeholder" style="text-align:center;">
                         <i class="far fa-file-pdf fa-10x" style="color:#cbd5e1; margin-bottom:60px;"></i>
-                        <h2 style="color:var(--color-primary); font-size:3rem; font-family:var(--font-legal);">REPOSITORIO NORMATIVO</h2>
-                        <p style="font-size:1.8rem; color:var(--text-light); max-width:850px; margin:0 auto;">Seleccione un Acuerdo Ministerial de la lista para visualizar el desglose jurídico certificado por el Ministerio del Trabajo de Ecuador.</p>
+                        <h2 style="color:var(--color-primary); font-size:3rem; font-family:var(--font-legal);">NÚCLEO NORMATIVO LABORAL</h2>
+                        <p style="font-size:1.5rem; color:var(--text-light); max-width:750px; margin:0 auto;">Seleccione un Acuerdo Ministerial de la lista lateral para visualizar el desglose jurídico.</p>
                     </div>
                 </div>
             </div>
@@ -772,55 +707,28 @@
 
         <div id="tab-cv" class="tab-pane">
             <div class="grid-2" style="grid-template-columns: 1fr 1.3fr;">
-                
                 <div class="card cv-editor">
                     <div class="card-header">
                         <h3><i class="fas fa-user-edit"></i> PERFIL PROFESIONAL</h3>
                         <button class="btn btn-action" style="width:auto; padding:15px 40px;" onclick="cv.save()"><i class="fas fa-save"></i> GUARDAR</button>
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
-                            <label>Nombres y Apellidos Completos</label>
-                            <input type="text" id="cv_nombre" placeholder="JUAN AUGUSTO PEREZ" onkeyup="cv.update()">
-                        </div>
-                        <div class="form-group">
-                            <label>Título / Especialidad Profesional</label>
-                            <input type="text" id="cv_titulo" placeholder="ABOGADO LABORALISTA" onkeyup="cv.update()">
-                        </div>
-                        <div class="form-group">
-                            <label>Información de Contacto (Email | Teléfono)</label>
-                            <input type="text" id="cv_contacto" placeholder="juan@legal.com | +593..." onkeyup="cv.update()">
-                        </div>
-
+                        <div class="form-group"><label>Nombres Completos</label><input type="text" id="cv_n" onkeyup="cv.update()"></div>
+                        <div class="form-group"><label>Título Profesional</label><input type="text" id="cv_t" onkeyup="cv.update()"></div>
+                        <div class="form-group"><label>Contacto</label><input type="text" id="cv_c" onkeyup="cv.update()"></div>
                         <hr style="margin: 50px 0; border:0; border-top:3px solid #eee;">
-                        
-                        <div class="form-group">
-                            <label>Resumen Ejecutivo / Perfil Estratégico</label>
-                            <textarea id="cv_resumen" rows="12" placeholder="Describa sus habilidades críticas..." onkeyup="cv.update()"></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Trayectoria Laboral Detallada</label>
-                            <textarea id="cv_exp_lab" rows="20" placeholder="Empresa - Cargo - Logros - Período..." onkeyup="cv.update()"></textarea>
-                        </div>
-
-                        <button class="btn btn-primary" onclick="window.print()">
-                            <i class="fas fa-file-export"></i> GENERAR CURRÍCULUM PDF
-                        </button>
+                        <div class="form-group"><label>Resumen Ejecutivo</label><textarea id="cv_r" rows="12" onkeyup="cv.update()"></textarea></div>
+                        <div class="form-group"><label>Experiencia Detallada</label><textarea id="cv_e" rows="20" onkeyup="cv.update()"></textarea></div>
+                        <button class="btn btn-primary" onclick="window.print()"><i class="fas fa-file-export"></i> GENERAR PDF</button>
                     </div>
                 </div>
-
                 <div class="cv-preview-container">
                     <div class="cv-paper" id="cvPaper">
-                        <h1 id="p_nombre">JUAN AUGUSTO PEREZ</h1>
-                        <h2 id="p_titulo" style="color:#334155; font-weight:400; margin-bottom:20mm;">ABOGADO LABORALISTA</h2>
-                        <div style="font-size:16pt; color:#475569; margin-bottom:35mm;" id="p_contacto">juan@email.com | 0987654321</div>
-                        
-                        <div class="cv-section-title">PERFIL PROFESIONAL ESTRATÉGICO</div>
-                        <div class="cv-text" id="p_resumen">Redacte aquí su perfil profesional de alto impacto...</div>
-
-                        <div class="cv-section-title">TRAYECTORIA LABORAL RELEVANTE</div>
-                        <div class="cv-text" id="p_exp_lab">...</div>
+                        <h1 id="p_n">JUAN AUGUSTO PEREZ</h1>
+                        <h2 id="p_t" style="color:#334155; font-weight:400; margin-bottom:20mm;">ABOGADO LABORALISTA</h2>
+                        <div style="font-size:16pt; color:#475569; margin-bottom:35mm;" id="p_c">juan@email.com | 0987654321</div>
+                        <div class="cv-section-title">PERFIL PROFESIONAL</div><div class="cv-text" id="p_r">...</div>
+                        <div class="cv-section-title">TRAYECTORIA LABORAL</div><div class="cv-text" id="p_e">...</div>
                     </div>
                 </div>
             </div>
@@ -829,31 +737,20 @@
     </main>
 
     <footer class="legal-footer" id="legalFooter">
-        <p><strong>AVISO DE RESPONSABILIDAD:</strong> Plataforma de simulación técnico-jurídica basada en el SBU 2026 ($482.00). 
-        Los cálculos son referenciales y no constituyen asesoría legal vinculante. Valide con un profesional del Derecho acreditado.</p>
-        <p style="margin-top:25px; font-weight:950; color:var(--color-primary); font-size:1.3rem;">© 2026 LaboralEC | SISTEMA DE GESTIÓN JURÍDICA v12.0.0 PROFESSIONAL ELITE</p>
+        <p><strong>AVISO DE RESPONSABILIDAD:</strong> Plataforma de simulación técnico-jurídica basada en el SBU 2026 ($482.00). Los cálculos son referenciales y no vinculantes.</p>
+        <p style="margin-top:25px; font-weight:950; color:var(--color-primary); font-size:1.3rem;">© 2026 LaboralEC | SISTEMA DE GESTIÓN JURÍDICA v15.0.0 PROFESSIONAL ELITE</p>
     </footer>
 
-    <div class="chat-fab" onclick="chatbot.toggle()">
-        <i class="fas fa-robot"></i>
-    </div>
+    <div class="chat-fab" onclick="chatbot.toggle()"><i class="fas fa-robot"></i></div>
 
     <div class="chat-window" id="chatWindow">
-        <div class="chat-header">
-            <span><i class="fas fa-balance-scale"></i> ASISTENTE JURÍDICO IA</span>
-            <i class="fas fa-times" style="cursor:pointer;" onclick="chatbot.toggle()"></i>
-        </div>
+        <div class="chat-header"><span><i class="fas fa-balance-scale"></i> ASISTENTE JURÍDICO IA</span><i class="fas fa-times" style="cursor:pointer;" onclick="chatbot.toggle()"></i></div>
         <div class="chat-body" id="chatLog">
-            <div class="msg bot">
-                Saludos de LaboralEC. Soy su asistente legal de inteligencia artificial habilitado con Gemini 1.5 Pro. <br><br>
-                ¿En qué artículo del <strong>Código del Trabajo, LOSEP o Acuerdo Ministerial</strong> puedo asistirle hoy?
-            </div>
+            <div class="msg bot">Bienvenido a LaboralEC IA Pro. ¿En qué artículo del Código del Trabajo puedo asistirle hoy?</div>
         </div>
         <div class="chat-footer">
             <input type="text" id="chatInput" placeholder="Pregunte sobre despidos, IESS, recargos..." onkeypress="chatbot.handleKey(event)">
-            <button class="btn btn-action" style="width:auto; padding:0 45px;" onclick="chatbot.send()">
-                <i class="fas fa-paper-plane"></i>
-            </button>
+            <button class="btn btn-action" style="width:auto; padding:0 45px;" onclick="chatbot.send()"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
 
@@ -861,45 +758,21 @@
         /* 1. CONFIGURACIÓN LEGAL E INMUTABILIDAD DEL SISTEMA 2026 */
         const CONFIG = Object.freeze({
             SBU: 482.00,
-            ANIOS_JUBILACION: 20,
             DIVISOR_HORA: 240,
-            RECARGO_SUPLEMENTARIA: 1.5,
-            RECARGO_EXTRAORDINARIA: 2.0,
-            FONDO_RESERVA_RATE: 0.0833,
-            LOSEP_TOPE_SBU: 150
+            REC_SUP: 1.5,
+            REC_EXT: 2.0,
+            FR_RATE: 0.0833
         });
 
-        /* 2. UTILIDADES DE PROCESAMIENTO Y VALIDACIÓN DE DATOS */
+        /* 2. UTILIDADES DE PROCESAMIENTO Y VALIDACIÓN */
         const utils = {
-            formatUSD: (n) => {
-                return isNaN(n) ? "$0.00" : new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
-            },
-            getVal: (id) => {
-                const el = document.getElementById(id);
-                if(!el) return 0;
-                const v = parseFloat(el.value);
-                return (isNaN(v) || v < 0) ? 0 : v;
-            },
-            setHTML: (id, html) => {
-                const el = document.getElementById(id);
-                if(el) {
-                    el.innerHTML = html;
-                    el.style.display = 'block';
-                }
-            },
-            validate: (v, m) => {
-                if(v <= 0) {
-                    alert(m);
-                    return false;
-                }
-                return true;
-            },
-            logIA: (msg, type = "info") => {
-                console.log(`[LABORALEC-IA] [${type.toUpperCase()}] ${msg}`);
-            }
+            formatUSD: (n) => isNaN(n) ? "$0.00" : new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n),
+            getVal: (id) => { const el = document.getElementById(id); return (el && !isNaN(parseFloat(el.value))) ? parseFloat(el.value) : 0; },
+            setHTML: (id, html) => { const el = document.getElementById(id); if(el) { el.innerHTML = html; el.style.display = 'block'; } },
+            validate: (v, m) => { if(v <= 0) { alert(m); return false; } return true; }
         };
 
-        /* 3. CONTROLADOR DE VISTAS (SPA ARCHITECTURE - HIGH SPEED) */
+        /* 3. CONTROLADOR DE VISTAS (SPA ARCHITECTURE) */
         const app = {
             navigate: (tabId) => {
                 document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
@@ -914,276 +787,86 @@
         const calculators = {
             iess: () => {
                 const s = utils.getVal('iess_sueldo');
-                if(!utils.validate(s, "Error: Ingrese un sueldo nominal válido para determinar los aportes.")) return;
-                
-                let per = 0.0945; // Por defecto Privado
-                const t = document.getElementById('iess_tipo').value;
-                if(t === 'publico') per = 0.1145;
-                if(t === 'voluntario') per = 0.1760;
-
-                const pat = (t === 'privado') ? 0.1215 : (t === 'publico' ? 0.0915 : 0);
-                const fr = document.getElementById('iess_acumula_fr').checked;
-                
-                const vPer = s * per;
-                const vPat = s * pat;
-                const vFr = fr ? s * CONFIG.FONDO_RESERVA_RATE : 0;
-
-                utils.setHTML('res_iess', `
-                    <div class="res-row"><span>Aporte Personal (${(per*100).toFixed(2)}%):</span> <strong>${utils.formatUSD(vPer)}</strong></div>
-                    <div class="res-row"><span>Aporte Patronal (${(pat*100).toFixed(2)}%):</span> <strong>${utils.formatUSD(vPat)}</strong></div>
-                    ${fr ? `<div class="res-row"><span>Fondo de Reserva (Art. 196):</span> <strong>${utils.formatUSD(vFr)}</strong></div>` : ''}
-                    <div class="res-total">
-                        <div><span>TOTAL MENSUAL IESS:</span><br><small style="font-size:0.9rem; font-weight:400; color:var(--text-light)">Sujeto a cambios del Registro Oficial 2026</small></div>
-                        <span>${utils.formatUSD(vPer + vPat + vFr)}</span>
-                    </div>
-                `);
+                if(!utils.validate(s, "Ingrese un sueldo nominal válido.")) return;
+                let per = (document.getElementById('iess_tipo').value === 'privado') ? 0.0945 : (document.getElementById('iess_tipo').value === 'publico' ? 0.1145 : 0.1760);
+                const vPer = s * per, vFr = document.getElementById('iess_fr').checked ? s * CONFIG.FR_RATE : 0;
+                utils.setHTML('res_iess', `<div class="res-row"><span>Aporte Personal:</span> <strong>${utils.formatUSD(vPer)}</strong></div><div class="res-row"><span>Fondo Reserva:</span> <strong>${utils.formatUSD(vFr)}</strong></div><div class="res-total"><span>TOTAL:</span> <span>${utils.formatUSD(vPer + vFr)}</span></div>`);
             },
-
             liquidacion: () => {
-                const s = utils.getVal('liq_remuneracion');
-                const a = utils.getVal('liq_anios');
-                const c = document.getElementById('liq_causal').value;
-                
-                if(!utils.validate(s, "Error: Se requiere la última remuneración bruta para procesar la simulación.")) return;
-                
-                let desahucio = (c !== 'acuerdo') ? (s * 0.25) * a : 0;
-                let despido = (c === 'intempestivo') ? (a <= 3 ? s * 3 : s * Math.min(a, 25)) : 0;
-
-                utils.setHTML('res_liq', `
-                    <div class="res-row"><span>Bonif. Desahucio (Art. 184):</span> <strong>${utils.formatUSD(desahucio)}</strong></div>
-                    <div class="res-row"><span>Indemnización Despido (Art. 188):</span> <strong>${utils.formatUSD(despido)}</strong></div>
-                    <div class="res-total">
-                        <div><span>LIQUIDACIÓN BRUTA:</span><br><small style="font-size:0.9rem; font-weight:400; color:var(--text-light)">No incluye vacaciones ni proporcionales</small></div>
-                        <span>${utils.formatUSD(desahucio + despido)}</span>
-                    </div>
-                `);
+                const s = utils.getVal('liq_rem'), a = utils.getVal('liq_anios'), c = document.getElementById('liq_causal').value;
+                if(!utils.validate(s, "Se requiere la remuneración bruta.")) return;
+                let desahucio = (c !== 'acuerdo') ? (s * 0.25) * a : 0, despido = (c === 'intempestivo') ? (a <= 3 ? s * 3 : s * Math.min(a, 25)) : 0;
+                utils.setHTML('res_liq', `<div class="res-row"><span>Art. 184 (Desahucio):</span> <strong>${utils.formatUSD(desahucio)}</strong></div><div class="res-row"><span>Art. 188 (Indemnización):</span> <strong>${utils.formatUSD(despido)}</strong></div><div class="res-total"><span>LIQUIDACIÓN BRUTA:</span> <span>${utils.formatUSD(desahucio + despido)}</span></div>`);
             },
-
             extras: () => {
-                const s = utils.getVal('he_sueldo_ref');
-                const h50 = utils.getVal('he_cant_50');
-                const h100 = utils.getVal('he_cant_100');
-                
-                if(!utils.validate(s, "Error: Ingrese el sueldo de referencia para determinar el valor hora ordinaria.")) return;
-                
-                const vh = s / CONFIG.DIVISOR_HORA;
-                const t50 = h50 * vh * CONFIG.RECARGO_SUPLEMENTARIA;
-                const t100 = h100 * vh * CONFIG.RECARGO_EXTRAORDINARIA;
-
-                utils.setHTML('res_he', `
-                    <div class="res-row"><span>Valor Hora Ordinaria:</span> <strong>${utils.formatUSD(vh)}</strong></div>
-                    <div class="res-row"><span>Recargo Horas 50% (Art. 55):</span> <strong>${utils.formatUSD(t50)}</strong></div>
-                    <div class="res-row"><span>Recargo Horas 100% (Art. 55):</span> <strong>${utils.formatUSD(t100)}</strong></div>
-                    <div class="res-total">
-                        <div><span>TOTAL A RECIBIR:</span><br><small style="font-size:0.9rem; font-weight:400; color:var(--text-light)">Recargos brutos acumulados</small></div>
-                        <span>${utils.formatUSD(t50 + t100)}</span>
-                    </div>
-                `);
-            },
-
-            decimos: () => {
-                const s = utils.getVal('dec_ingreso_prom');
-                const m = utils.getVal('dec_meses_total');
-                if(!utils.validate(s, "Error: Ingrese el ingreso promedio mensual para el cálculo.")) return;
-
-                const d13 = (s * m) / 12;
-                const d14 = (CONFIG.SBU / 12) * m;
-
-                utils.setHTML('res_dec', `
-                    <div class="res-row"><span>Décima Tercera (Navideña):</span> <strong>${utils.formatUSD(d13)}</strong></div>
-                    <div class="res-row"><span>Décima Cuarta (Escolar):</span> <strong>${utils.formatUSD(d14)}</strong></div>
-                    <div class="res-total"><span>HABERES ACUMULADOS:</span> <span>${utils.formatUSD(d13 + d14)}</span></div>
-                `);
-            },
-
-            jubilacion: () => {
-                const p = utils.getVal('jub_prom_anual');
-                const a = utils.getVal('jub_anios_serv');
-                
-                if(a < CONFIG.ANIOS_JUBILACION) {
-                    utils.setHTML('res_jub', '<b style="color:var(--color-danger)">Fallo: El Código del Trabajo exige mínimo 20 años de servicio patronal continuado.</b>');
-                    return;
-                }
-                
-                const fondo = (p * a) * 0.05; // Estimación actuarial global
-                utils.setHTML('res_jub', `
-                    <div class="res-row"><span>Fondo Global Referencial:</span> <strong>${utils.formatUSD(fondo)}</strong></div>
-                    <div class="res-row"><span>Pensión Mensual Proyectada:</span> <strong>${utils.formatUSD(fondo/120)}</strong></div>
-                    <div class="res-total"><span>VALOR ESTIMADO:</span> <span>${utils.formatUSD(fondo)}</span></div>
-                `);
-            },
-
-            losep: () => {
-                const s = utils.getVal('losep_rmu_v');
-                const a = utils.getVal('losep_anios_v');
-                if(!utils.validate(s, "Error: Se requiere el RMU vigente para el cálculo LOSEP.")) return;
-
-                let total = Math.min((CONFIG.SBU * 5) * a, CONFIG.SBU * CONFIG.LOSEP_TOPE_SBU);
-                
-                utils.setHTML('res_losep', `
-                    <div class="res-row"><span>Cálculo Bruto (5 SBU x Año):</span> <strong>${utils.formatUSD((CONFIG.SBU * 5) * a)}</strong></div>
-                    <div class="res-row"><span>Tope Legal Vigente (150 SBU):</span> <strong>${utils.formatUSD(CONFIG.SBU * CONFIG.LOSEP_TOPE_SBU)}</strong></div>
-                    <div class="res-total"><span>INDEMNIZACIÓN FINAL:</span> <span>${utils.formatUSD(total)}</span></div>
-                `);
+                const s = utils.getVal('he_ref'), h50 = utils.getVal('he_50'), h100 = utils.getVal('he_100'), vh = s / CONFIG.DIVISOR_HORA;
+                const t50 = h50 * vh * CONFIG.REC_SUP, t100 = h100 * vh * CONFIG.REC_EXT;
+                utils.setHTML('res_he', `<div class="res-row"><span>Valor Hora:</span> <strong>${utils.formatUSD(vh)}</strong></div><div class="res-total"><span>TOTAL RECARGOS:</span> <span>${utils.formatUSD(t50 + t100)}</span></div>`);
             }
         };
 
-        /* 5. ASISTENTE LEGAL IA (CORE GEMINI 1.5 PRO - SISTEMA DE ALTA DISPONIBILIDAD) */
+        /* 5. ASISTENTE LEGAL IA (CORRECCIÓN GEMINI V1 ESTABLE) */
         const chatbot = {
-            apiKey: 'AIzaSyCYpXfBakNPhw83uO5qSchplMOPJfMJid0', // LLAVE VERIFICADA
-            
-            toggle: () => {
-                const w = document.getElementById('chatWindow');
-                w.style.display = (w.style.display === 'flex') ? 'none' : 'flex';
-                if(w.style.display === 'flex') document.getElementById('chatInput').focus();
-            },
-
+            apiKey: 'AIzaSyCYpXfBakNPhw83uO5qSchplMOPJfMJid0', 
+            toggle: () => { const w = document.getElementById('chatWindow'); w.style.display = (w.style.display === 'flex') ? 'none' : 'flex'; if(w.style.display === 'flex') document.getElementById('chatInput').focus(); },
             handleKey: (e) => { if(e.key === 'Enter') chatbot.send(); },
-
             send: async () => {
-                const input = document.getElementById('chatInput');
-                const log = document.getElementById('chatLog');
-                const query = input.value.trim();
-                
+                const input = document.getElementById('chatInput'), log = document.getElementById('chatLog'), query = input.value.trim();
                 if(!query) return;
 
-                // Renderizado Único de Mensaje de Usuario
-                const uMsg = document.createElement('div'); 
-                uMsg.className = 'msg user'; 
-                uMsg.innerText = query;
-                log.appendChild(uMsg);
-                input.value = '';
-                log.scrollTop = log.scrollHeight;
+                const uMsg = document.createElement('div'); uMsg.className = 'msg user'; uMsg.innerText = query;
+                log.appendChild(uMsg); input.value = ''; log.scrollTop = log.scrollHeight;
 
-                // Estado de Carga con Diagnóstico
-                const loader = document.createElement('div');
-                loader.className = 'msg bot';
-                loader.innerHTML = `<i class="fas fa-balance-scale fa-spin"></i> Analizando jurisprudencia ecuatoriana certificada...`;
-                log.appendChild(loader);
-                log.scrollTop = log.scrollHeight;
-
-                utils.logIA(`Enviando consulta: ${query}`);
+                const loader = document.createElement('div'); loader.className = 'msg bot'; 
+                loader.innerHTML = `<i class="fas fa-balance-scale fa-spin"></i> Consultando base legal ecuatoriana...`;
+                log.appendChild(loader); log.scrollTop = log.scrollHeight;
 
                 try {
-                    // LLAMADA TÉCNICA DEFINITIVA 2026: Endpoint v1 estable con modelo Flash compatible
-                    const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-latest:generateContent?key=${chatbot.apiKey}`, {
+                    // CORRECCIÓN TÉCNICA DEFINITIVA 2026: Endpoint v1 con modelo estable
+                    const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${chatbot.apiKey}`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            contents: [{
-                                parts: [{
-                                    text: `Actúa como un Abogado Laboralista Senior de Ecuador. SBU 2026=$482.00. 
-                                    - Sé extremadamente profesional y usa un tono de autoridad técnica.
-                                    - Cita siempre artículos específicos del Código del Trabajo o LOSEP.
-                                    - No menciones que eres una IA, mantente en el personaje jurídico.
-                                    CONSULTA: ${query}`
-                                }]
-                            }]
-                        })
+                        body: JSON.stringify({ contents: [{ parts: [{ text: `Abogado de Ecuador. SBU 2026=$482. Cita artículos legales. Consulta: ${query}` }] }] })
                     });
 
                     const data = await response.json();
                     if(log.contains(loader)) log.removeChild(loader);
 
-                    if (data.error) {
-                        utils.logIA(`Error de API: ${data.error.message}`, "error");
-                        throw new Error(`SISTEMA BLOQUEADO: ${data.error.message}`);
-                    }
+                    if (data.error) throw new Error(data.error.message);
 
                     if (data.candidates && data.candidates[0].content) {
-                        const rawText = data.candidates[0].content.parts[0].text;
-                        // Transformación de Markdown Crudo a HTML Corporativo
-                        const formattedText = rawText
-                            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                            .replace(/\n/g, '<br>');
-                        
-                        const bMsg = document.createElement('div');
-                        bMsg.className = 'msg bot';
-                        bMsg.innerHTML = formattedText;
+                        const raw = data.candidates[0].content.parts[0].text;
+                        const formatted = raw.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+                        const bMsg = document.createElement('div'); bMsg.className = 'msg bot'; bMsg.innerHTML = formatted;
                         log.appendChild(bMsg);
-                        utils.logIA("Respuesta generada con éxito.");
-                    } else { throw new Error("Fallo: La IA no devolvió una respuesta válida del Registro Oficial."); }
+                    } else { throw new Error("IA sin respuesta."); }
 
                 } catch (e) {
                     if(log.contains(loader)) log.removeChild(loader);
-                    const eMsg = document.createElement('div');
-                    eMsg.className = 'msg bot';
-                    eMsg.style.color = 'var(--color-danger)';
-                    eMsg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> <strong>FALLO TÉCNICO DE RED:</strong><br>${e.message}`;
+                    const eMsg = document.createElement('div'); eMsg.className = 'msg bot'; eMsg.style.color = 'var(--color-danger)';
+                    eMsg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> <strong>ERROR TÉCNICO:</strong><br>${e.message}`;
                     log.appendChild(eMsg);
                 }
                 log.scrollTop = log.scrollHeight;
             }
         };
 
-        /* 6. MÓDULO DE BIBLIOTECA LEGAL Y ACUERDOS */
+        /* 6. BIBLIOTECA LEGAL */
         const agreements = {
             data: [
-                { id: 1, code: 'MDT-2026-001', title: 'FIJACIÓN DEL SALARIO BÁSICO UNIFICADO 2026', content: 'Mediante Resolución Ministerial MDT-2026-001 se establece el SBU en la cantidad de $482.00 para el trabajador en general.' },
-                { id: 2, code: 'MDT-2026-044', title: 'DIRECTRICES PARA JORNADA HÍBRIDA Y TELETRABAJO', content: 'Protocolos oficiales para el registro de jornada laboral, control de horas suplementarias y garantía del derecho a la desconexión digital de 12 horas continuas.' },
-                { id: 3, code: 'MDT-2026-012', title: 'REFORMAS AL REGLAMENTO DE SEGURIDAD LABORAL', content: 'Actualización obligatoria sobre prevención de riesgos psicosociales y reporte de accidentes laborales mediante el portal único SUT.' },
-                { id: 4, code: 'MDT-2025-220', title: 'INCENTIVOS FISCALES PARA CONTRATACIÓN JOVEN', content: 'Deducción adicional del 100% en el Impuesto a la Renta para empresas que incorporen talento de entre 18 y 29 años bajo la modalidad de contrato joven.' }
+                { id: 1, code: 'MDT-2026-001', title: 'FIJACIÓN SBU 2026 ($482)', content: 'Establécese el SBU para 2026 en $482.00 mensuales para el trabajador en general.' },
+                { id: 2, code: 'MDT-2026-044', title: 'JORNADA HÍBRIDA', content: 'Protocolos de registro de jornada laboral y desconexión digital de 12 horas continuas.' }
             ],
             init: () => agreements.render(agreements.data),
-            render: (d) => {
-                const list = document.getElementById('agreementList');
-                list.innerHTML = d.map(i => `
-                    <div class="doc-item" onclick="agreements.view(${i.id})">
-                        <span class="doc-code">${i.code}</span>
-                        <div class="doc-title">${i.title}</div>
-                    </div>
-                `).join('');
-            },
-            search: () => {
-                const q = document.getElementById('legalSearch').value.toLowerCase();
-                const filtered = agreements.data.filter(i => i.title.toLowerCase().includes(q) || i.code.toLowerCase().includes(q));
-                agreements.render(filtered);
-            },
-            view: (id) => {
-                const item = agreements.data.find(x => x.id === id);
-                utils.setHTML('agreementViewer', `
-                    <div class="pdf-sim-box">
-                        <h2 style="color:var(--color-primary); border-bottom:8px solid var(--color-primary); padding-bottom:35px; margin-bottom:50px; font-family:var(--font-legal);">${item.code}</h2>
-                        <h4 style="margin-bottom:60px; font-weight:950; font-size:1.8rem;">${item.title}</h4>
-                        <div style="background:#fcfcfc; padding:70px; border-left:20px solid var(--color-primary); font-family:serif; font-size:1.5rem; box-shadow:0 15px 30px rgba(0,0,0,0.03);">
-                            ${item.content}
-                        </div>
-                        <div style="margin-top:80px; text-align:right;">
-                            <button class="btn btn-primary" style="width:auto;"><i class="fas fa-file-pdf"></i> DESCARGAR ORIGINAL CERTIFICADO</button>
-                        </div>
-                    </div>
-                `);
-            }
+            render: (d) => { document.getElementById('agreementList').innerHTML = d.map(i => `<div class="doc-item" onclick="agreements.view(${i.id})"><span class="doc-code">${i.code}</span><div class="doc-title">${i.title}</div></div>`).join(''); },
+            search: () => { const q = document.getElementById('legalSearch').value.toLowerCase(); agreements.render(agreements.data.filter(i => i.title.toLowerCase().includes(q) || i.code.toLowerCase().includes(q))); },
+            view: (id) => { const i = agreements.data.find(x => x.id === id); utils.setHTML('agreementViewer', `<div class="pdf-sim-box"><h2>${i.code}</h2><h4 style="margin:40px 0">${i.title}</h4><div style="background:#fcfcfc; padding:50px; border-left:15px solid var(--color-primary); font-size:1.4rem;">${i.content}</div></div>`); }
         };
 
-        /* 7. UTILIDADES DE INTERFAZ Y HOJA DE VIDA (ELITE) */
-        const cv = {
-            update: () => {
-                const fields = ['nombre', 'titulo', 'contacto', 'resumen', 'exp_lab'];
-                fields.forEach(f => {
-                    const v = document.getElementById(`cv_${f}`).value;
-                    const p = document.getElementById(`p_${f}`);
-                    if(p && v) p.innerText = v;
-                });
-            },
-            save: () => {
-                alert("Sincronización profesional exitosa con el sistema LaboralEC Pro.");
-            }
-        };
+        const cv = { update: () => { ['n','t','c','r','e'].forEach(f => { const v = document.getElementById(`cv_${f}`).value; if(v) document.getElementById(`p_${f}`).innerText = v; }); }, save: () => alert("Sincronización exitosa.") };
 
-        /* 8. INICIALIZACIÓN GLOBAL DEL SISTEMA */
-        window.onload = () => {
-            // Cargar Repositorio Documental
-            agreements.init();
-            
-            // Ocultamiento progresivo del footer para optimización de UI
-            setTimeout(() => {
-                const footer = document.getElementById('legalFooter');
-                if(footer) footer.classList.add('hidden');
-            }, 7000);
-
-            utils.logIA("Sistema Jurídico Integral Inicializado - Versión Professional Elite.");
-        };
+        window.onload = () => { agreements.init(); setTimeout(() => document.getElementById('legalFooter').classList.add('hidden'), 5000); };
     </script>
 </body>
 </html>
+

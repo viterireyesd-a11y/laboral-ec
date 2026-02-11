@@ -7,7 +7,7 @@
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <title>SISTEMA JURÍDICO INTEGRAL LABORALEC PRO 2026</title>
+    <title>SISTEMA DE GESTIÓN JURÍDICA INTEGRAL | LABORALEC PRO 2026</title>
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -16,50 +16,50 @@
 
     <style>
         /* ==========================================================================
-           SECTION 1: CORE DESIGN SYSTEM (CSS VARIABLES EXPANDIDAS)
+           SECTION 1: SISTEMA DE DISEÑO (CSS ARCHITECTURE)
            ========================================================================== 
         */
         :root {
-            /* Identidad Institucional */
+            /* Identidad Corporativa: Azul Judicial */
             --color-primary: #0f172a;       
             --color-primary-light: #1e293b; 
             --color-accent: #3b82f6;        
             --color-accent-hover: #2563eb;
             
-            /* Semántica de Estado */
+            /* Semántica de Estados Legales */
             --color-success: #10b981;
             --color-warning: #f59e0b;
             --color-danger: #ef4444;
             --color-info: #06b6d4;
             
-            /* Identidad Nacional (Tricolor Ecuador) */
+            /* Identidad Nacional: Tricolor Ecuador */
             --flag-yellow: #FFD100;
             --flag-blue: #005EB8;
             --flag-red: #EF3340;
 
-            /* Capas y Superficies */
+            /* Superficies y Fondos de Interfaz */
             --bg-body: #f1f5f9;
             --bg-card: #ffffff;
             --bg-input: #f8fafc;
             --border-color: #e2e8f0;
             
-            /* Tipografía Elite */
+            /* Tipografía de Alta Legibilidad */
             --font-main: 'Inter', system-ui, -apple-system, sans-serif;
             --font-mono: 'Roboto Mono', monospace;
             --text-main: #334155;
             --text-light: #64748b;
             
-            /* Elevación y Efectos */
+            /* Elevación, Sombras y Geometría */
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             --radius-md: 12px;
-            --radius-lg: 20px;
+            --radius-lg: 24px;
             --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* ==========================================================================
-           SECTION 2: GLOBAL RESET & NORMALIZATION
+           SECTION 2: RESET Y NORMALIZACIÓN GLOBAL
            ========================================================================== 
         */
         * { 
@@ -67,7 +67,7 @@
             outline: none; 
             margin: 0; 
             padding: 0; 
-            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
         }
         
         body {
@@ -79,22 +79,22 @@
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
         }
 
+        /* Barra de desplazamiento Elite */
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: var(--bg-body); }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; border: 3px solid var(--bg-body); }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
         /* ==========================================================================
-           SECTION 3: HEADER, BRANDING & REAL-TIME STATUS
+           SECTION 3: HEADER Y BRANDING (LOGO TRICOLOR)
            ========================================================================== 
         */
         header {
             background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
             color: white;
-            padding: 2.2rem 0;
+            padding: 2.5rem 0;
             box-shadow: var(--shadow-md);
             position: relative;
             z-index: 100;
@@ -109,9 +109,15 @@
             align-items: center;
         }
 
-        /* Logotipo Tricolor de Alta Definición */
+        .brand-logo {
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .brand-logo:hover { transform: scale(1.02); }
+
         .brand-logo h1 {
-            font-size: 2.8rem;
+            font-size: 3rem;
             font-weight: 900;
             letter-spacing: -2px;
             margin: 0;
@@ -132,22 +138,21 @@
             display: block;
             font-size: 0.9rem;
             color: #94a3b8;
-            font-weight: 500;
-            letter-spacing: 5px;
-            margin-top: -8px;
+            font-weight: 600;
+            letter-spacing: 6px;
+            margin-top: -10px;
             text-transform: uppercase;
-            -webkit-text-fill-color: #94a3b8; 
         }
 
         .system-badge {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 18px;
             background: rgba(255,255,255,0.08);
-            padding: 12px 28px;
+            padding: 14px 30px;
             border-radius: 50px;
             border: 1px solid rgba(255,255,255,0.15);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(10px);
         }
 
         .status-dot { 
@@ -159,13 +164,13 @@
         }
 
         @keyframes pulseIA {
-            0% { transform: scale(0.95); opacity: 0.8; }
+            0% { transform: scale(0.9); opacity: 0.7; }
             50% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(0.95); opacity: 0.8; }
+            100% { transform: scale(0.9); opacity: 0.7; }
         }
 
         /* ==========================================================================
-           SECTION 4: NAVIGATION (ARCHITECTURE SPA)
+           SECTION 4: NAVEGACIÓN (SPA ROUTER)
            ========================================================================== 
         */
         .nav-wrapper {
@@ -175,7 +180,6 @@
             top: 0;
             z-index: 95;
             border-bottom: 1px solid var(--border-color);
-            overflow-x: auto;
         }
 
         .nav-tabs {
@@ -185,10 +189,11 @@
             justify-content: center;
             gap: 20px;
             padding: 0 20px;
+            overflow-x: auto;
         }
 
         .tab-btn {
-            padding: 24px 35px;
+            padding: 25px 35px;
             background: transparent;
             border: none;
             color: var(--text-light);
@@ -201,6 +206,7 @@
             align-items: center;
             gap: 15px;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .tab-btn i { font-size: 1.4rem; }
@@ -212,7 +218,7 @@
         }
 
         /* ==========================================================================
-           SECTION 5: LAYOUT Y GRID DINÁMICO
+           SECTION 5: ESTRUCTURA DE CONTENIDO Y GRIDS
            ========================================================================== 
         */
         .main-content {
@@ -234,13 +240,13 @@
             to { opacity: 1; transform: translateY(0); } 
         }
 
-        /* ==========================================================================
-           SECTION 6: COMPONENTES DE INTERFAZ (CARDS Y FORMS)
-           ========================================================================== 
-        */
         .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(440px, 1fr)); gap: 45px; }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 45px; }
 
+        /* ==========================================================================
+           SECTION 6: COMPONENTES UI (CARDS, FORMS, BUTTONS)
+           ========================================================================== 
+        */
         .card {
             background: var(--bg-card);
             border-radius: var(--radius-lg);
@@ -250,7 +256,6 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            position: relative;
         }
         .card:hover { transform: translateY(-12px); box-shadow: var(--shadow-lg); border-color: #cbd5e1; }
 
@@ -326,7 +331,7 @@
         .btn-action:hover { background: var(--color-accent-hover); transform: scale(1.02); }
 
         /* ==========================================================================
-           SECTION 7: PANELES DE RESULTADOS ACTUARIALES
+           SECTION 7: PANELES DE RESULTADOS JURÍDICOS
            ========================================================================== 
         */
         .result-panel {
@@ -337,10 +342,9 @@
             border-left: 12px solid var(--color-accent); 
             display: none;
             box-shadow: inset 0 3px 6px rgba(0,0,0,0.05);
-            animation: fadeInRes 0.6s ease;
+            animation: fadeIn 0.5s ease;
         }
-
-        @keyframes fadeInRes { from { opacity: 0; scale: 0.98; } to { opacity: 1; scale: 1; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .res-row { 
             display: flex; 
@@ -366,157 +370,75 @@
         }
 
         /* ==========================================================================
-           SECTION 8: REPOSITORIO LEGAL Y BIBLIOTECA
+           SECTION 8: BIBLIOTECA LEGAL Y ACUERDOS
            ========================================================================== 
         */
         .legal-layout { display: grid; grid-template-columns: 450px 1fr; gap: 45px; height: 850px; }
-        
-        .legal-sidebar { 
-            background: white; 
-            border-radius: var(--radius-lg); 
-            border: 1px solid var(--border-color); 
-            display: flex; 
-            flex-direction: column; 
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-        }
-
+        .legal-sidebar { background: white; border-radius: var(--radius-lg); border: 1px solid var(--border-color); display: flex; flex-direction: column; overflow: hidden; box-shadow: var(--shadow-md); }
         .search-container { padding: 35px; background: #f8fafc; border-bottom: 1px solid var(--border-color); }
-
         .legal-list { overflow-y: auto; flex: 1; }
-        .doc-item { 
-            padding: 35px; 
-            border-bottom: 1px solid var(--border-color); 
-            cursor: pointer; 
-            transition: var(--transition);
-        }
+        .doc-item { padding: 35px; border-bottom: 1px solid var(--border-color); cursor: pointer; transition: var(--transition); }
         .doc-item:hover { background: #f1f5f9; padding-left: 50px; }
         .doc-item.active { border-left: 12px solid var(--color-accent); background: #eff6ff; }
-        .doc-item .doc-code { font-family: var(--font-mono); font-weight: 800; color: var(--color-accent); font-size: 1rem; margin-bottom: 12px; }
-        .doc-item .doc-title { font-weight: 900; font-size: 1.2rem; color: var(--color-primary); line-height: 1.5; }
+        .doc-code { font-family: var(--font-mono); font-weight: 800; color: var(--color-accent); font-size: 1rem; margin-bottom: 12px; }
+        .doc-title { font-weight: 900; font-size: 1.2rem; color: var(--color-primary); line-height: 1.5; }
 
-        .legal-viewer { 
-            background: white; 
-            border-radius: var(--radius-lg); 
-            border: 1px solid var(--border-color); 
-            padding: 70px; 
-            overflow-y: auto; 
-            box-shadow: var(--shadow-md);
-        }
-
-        .pdf-sim-box {
-            background: white;
-            border: 1px solid #e2e8f0;
-            padding: 70px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-            min-height: 750px;
-            font-family: 'serif';
-            line-height: 2.2;
-            color: #111;
-            font-size: 1.3rem;
-        }
+        .legal-viewer { background: white; border-radius: var(--radius-lg); border: 1px solid var(--border-color); padding: 70px; overflow-y: auto; box-shadow: var(--shadow-md); position: relative; }
+        .pdf-sim-box { background: white; border: 1px solid #e2e8f0; padding: 70px; box-shadow: 0 8px 30px rgba(0,0,0,0.06); min-height: 750px; font-family: 'serif'; line-height: 2.2; color: #111; font-size: 1.3rem; }
 
         /* ==========================================================================
-           SECTION 9: GENERADOR DE CV PROFESIONAL (ESTILO ELITE)
+           SECTION 9: GENERADOR DE CV (ESTILO CORPORATIVO)
            ========================================================================== 
         */
-        .cv-preview-container { 
-            background: #1e293b; 
-            padding: 60px; 
-            border-radius: var(--radius-lg); 
-            height: 1000px; 
-            overflow-y: auto; 
-            display: flex; 
-            justify-content: center;
-            box-shadow: inset 0 6px 20px rgba(0,0,0,0.4);
-        }
-
-        .cv-paper { 
-            background: white; 
-            width: 210mm; 
-            min-height: 297mm; 
-            padding: 35mm; 
-            box-shadow: 0 50px 100px rgba(0,0,0,0.7); 
-            font-family: 'Georgia', serif;
-            transform: scale(0.85); 
-            transform-origin: top center;
-            color: #000;
-        }
-
+        .cv-preview-container { background: #1e293b; padding: 60px; border-radius: var(--radius-lg); height: 1000px; overflow-y: auto; display: flex; justify-content: center; box-shadow: inset 0 6px 20px rgba(0,0,0,0.4); }
+        .cv-paper { background: white; width: 210mm; min-height: 297mm; padding: 35mm; box-shadow: 0 50px 100px rgba(0,0,0,0.7); font-family: 'Georgia', serif; transform: scale(0.85); transform-origin: top center; color: #000; }
         .cv-paper h1 { font-size: 36pt; border-bottom: 5px solid var(--color-primary); margin-bottom: 15mm; text-transform: uppercase; font-weight: 900; }
-        .cv-section-title { 
-            font-size: 16pt; font-weight: 900; text-transform: uppercase; 
-            background: #f1f5f9; padding: 15px 25px; margin-top: 30px; 
-            margin-bottom: 20px; border-left: 8px solid var(--color-primary);
-            font-family: var(--font-main);
-        }
+        .cv-section-title { font-size: 16pt; font-weight: 900; text-transform: uppercase; background: #f1f5f9; padding: 15px 25px; margin-top: 30px; margin-bottom: 20px; border-left: 8px solid var(--color-primary); font-family: var(--font-main); }
         .cv-text { font-size: 12.5pt; line-height: 2; white-space: pre-line; margin-bottom: 25px; }
 
         /* ==========================================================================
-           SECTION 10: ASISTENTE IA (INTELIGENCIA REAL GEMINI)
+           SECTION 10: ASISTENTE IA (SISTEMA DE CHAT ROBUSTO)
            ========================================================================== 
         */
-        .chat-fab { 
-            position: fixed; bottom: 60px; right: 60px; width: 90px; height: 90px; 
-            background: var(--color-accent); color: white; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; font-size: 2.8rem; 
-            cursor: pointer; box-shadow: 0 25px 50px rgba(59, 130, 246, 0.7); z-index: 1000; 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 4px solid white;
-        }
-        .chat-fab:hover { transform: scale(1.18) rotate(15deg); background: var(--color-accent-hover); }
+        .chat-fab { position: fixed; bottom: 50px; right: 50px; width: 90px; height: 90px; background: var(--color-accent); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; cursor: pointer; box-shadow: 0 20px 40px rgba(59, 130, 246, 0.6); z-index: 1000; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 4px solid white; }
+        .chat-fab:hover { transform: scale(1.15) rotate(15deg); background: var(--color-accent-hover); }
 
-        .chat-window { 
-            position: fixed; bottom: 170px; right: 60px; width: 520px; height: 750px; 
-            background: white; border-radius: 35px; box-shadow: 0 40px 100px rgba(0,0,0,0.4); 
-            display: none; flex-direction: column; overflow: hidden; z-index: 999; 
-            border: 1px solid var(--border-color);
-            animation: chatLaunch 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        @keyframes chatLaunch { from { opacity: 0; transform: translateY(80px) scale(0.8); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .chat-window { position: fixed; bottom: 150px; right: 50px; width: 500px; height: 750px; background: white; border-radius: 35px; box-shadow: 0 30px 80px rgba(0,0,0,0.3); display: none; flex-direction: column; overflow: hidden; z-index: 999; border: 1px solid var(--border-color); animation: chatIn 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes chatIn { from { opacity: 0; transform: translateY(60px) scale(0.85); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
-        .chat-header { 
-            background: var(--color-primary); padding: 35px; color: white; 
-            font-weight: 900; display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-        }
-        .chat-body { flex: 1; padding: 40px; overflow-y: auto; background: #f8fafc; display: flex; flex-direction: column; gap: 30px; }
-        
-        .msg { max-width: 90%; padding: 22px 30px; border-radius: 25px; font-size: 1.15rem; line-height: 1.7; position: relative; }
-        .msg.bot { background: white; border: 1px solid var(--border-color); align-self: flex-start; border-bottom-left-radius: 5px; box-shadow: var(--shadow-sm); color: #1e293b; }
-        .msg.user { background: var(--color-primary); color: white; align-self: flex-end; border-bottom-right-radius: 5px; box-shadow: 0 8px 25px rgba(15, 23, 42, 0.3); }
-        
-        .chat-footer { padding: 35px; border-top: 1px solid var(--border-color); display: flex; gap: 25px; background: white; }
+        .chat-header { background: var(--color-primary); padding: 30px; color: white; font-weight: 900; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+        .chat-body { flex: 1; padding: 35px; overflow-y: auto; background: #f8fafc; display: flex; flex-direction: column; gap: 25px; }
+        .msg { max-width: 88%; padding: 20px 25px; border-radius: 20px; font-size: 1.1rem; line-height: 1.6; position: relative; }
+        .msg.bot { background: white; border: 1px solid var(--border-color); align-self: flex-start; border-bottom-left-radius: 5px; box-shadow: var(--shadow-sm); color: #334155; }
+        .msg.user { background: var(--color-primary); color: white; align-self: flex-end; border-bottom-right-radius: 5px; box-shadow: 0 5px 15px rgba(15, 23, 42, 0.3); }
+        .chat-footer { padding: 30px; border-top: 1px solid var(--border-color); display: flex; gap: 20px; background: white; }
 
         /* ==========================================================================
-           SECTION 11: FOOTER Y OPTIMIZACIÓN MÓVIL
+           SECTION 11: FOOTER Y MEDIA QUERIES
            ========================================================================== 
         */
         .legal-footer {
             background: #fff; border-top: 1px solid #e2e8f0; padding: 45px;
             text-align: center; font-size: 1rem; color: #64748b;
             position: fixed; bottom: 0; width: 100%; z-index: 30;
-            transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s ease;
+            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s ease;
         }
         .legal-footer.hidden { transform: translateY(100%); opacity: 0; pointer-events: none; }
 
         @media (max-width: 1024px) {
             .grid-3 { grid-template-columns: 1fr; }
             .legal-layout { grid-template-columns: 1fr; height: auto; }
-            .chat-window { width: 98%; right: 1%; height: 80vh; bottom: 110px; }
-            .chat-fab { width: 80px; height: 80px; bottom: 40px; right: 40px; }
+            .chat-window { width: 96%; right: 2%; height: 75vh; bottom: 100px; }
+            .chat-fab { width: 75px; height: 75px; bottom: 30px; right: 30px; }
             .brand-logo h1 { font-size: 2.2rem; }
         }
 
-        /* Impresión Pro */
         @media print {
-            header, .nav-wrapper, .legal-footer, .chat-fab, .chat-window, .cv-editor, .btn, .card-header button {
-                display: none !important;
-            }
+            header, .nav-wrapper, .legal-footer, .chat-fab, .chat-window, .cv-editor, .btn { display: none !important; }
             body { background: white; padding: 0; }
             .main-content { margin: 0; padding: 0; width: 100%; }
             .cv-preview-container { display: block; height: auto; background: white; padding: 0; }
-            .cv-paper { transform: scale(1); box-shadow: none; padding: 20mm; width: 100%; }
+            .cv-paper { transform: scale(1); box-shadow: none; padding: 15mm; width: 100%; }
         }
 
     </style>
@@ -567,7 +489,7 @@
                             <input type="number" id="iess_s" value="482.00" min="482" step="0.01">
                         </div>
                         <div class="form-group">
-                            <label>Tipo de Régimen Laboral</label>
+                            <label>Régimen Laboral</label>
                             <select id="iess_t">
                                 <option value="privado">Sector Privado (9.45% Personal / 12.15% Patronal)</option>
                                 <option value="publico">Sector Público (11.45% Personal / 9.15% Patronal)</option>
@@ -593,18 +515,18 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label>Última Remuneración Percibida ($)</label>
-                            <input type="number" id="liq_s" placeholder="Ej: 950.00" min="0">
+                            <input type="number" id="liq_s" placeholder="Ej: 900.00" min="0">
                         </div>
                         <div class="form-group">
                             <label>Tiempo de Servicio (Años Completos)</label>
-                            <input type="number" id="liq_a" placeholder="Ej: 6" min="0">
+                            <input type="number" id="liq_a" placeholder="Ej: 5" min="0">
                         </div>
                         <div class="form-group">
-                            <label>Causal Legal de Desvinculación</label>
+                            <label>Causal de Terminación</label>
                             <select id="liq_c">
-                                <option value="intempestivo">Despido Intempestivo (Indemnización Art. 188)</option>
-                                <option value="renuncia">Renuncia Voluntaria (Desahucio Art. 184)</option>
-                                <option value="acuerdo">Mutuo Acuerdo (Simulación Referencial)</option>
+                                <option value="intempestivo">Despido Intempestivo (Art. 188 CT)</option>
+                                <option value="renuncia">Renuncia Voluntaria (Desahucio Art. 184 CT)</option>
+                                <option value="acuerdo">Mutuo Acuerdo (Sin Indemnización)</option>
                             </select>
                         </div>
                         <button class="btn btn-action" onclick="calculators.liquidacion()">
@@ -620,7 +542,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label>Sueldo de Referencia Mensual ($)</label>
+                            <label>Sueldo Base ($)</label>
                             <input type="number" id="he_s" min="0">
                         </div>
                         <div class="grid-2" style="gap:25px;">
@@ -642,16 +564,16 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3><i class="fas fa-coins" style="color:var(--flag-yellow)"></i> DÉCIMOS (13ro y 14to)</h3>
+                        <h3><i class="fas fa-coins" style="color:var(--flag-yellow)"></i> DÉCIMOS</h3>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label>Ingreso Promedio Mensual ($)</label>
-                            <input type="number" id="dec_s" placeholder="Sueldo base" min="0">
+                            <label>Sueldo Mensual Promedio ($)</label>
+                            <input type="number" id="dec_s" min="0">
                         </div>
                         <div class="form-group">
                             <label>Meses Laborados en el Ciclo</label>
-                            <input type="number" id="dec_m" max="12" min="1" placeholder="Ej: 9">
+                            <input type="number" id="dec_m" max="12" min="1" placeholder="1-12">
                         </div>
                         <button class="btn btn-action" onclick="calculators.decimos()">
                             <i class="fas fa-hand-holding-usd"></i> CALCULAR PROVISIÓN
@@ -666,12 +588,12 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label>Promedio Anual (Últimos 5 años) ($)</label>
+                            <label>Promedio Anual (Últ. 5 años) ($)</label>
                             <input type="number" id="jub_p" min="0">
                         </div>
                         <div class="form-group">
-                            <label>Total de Años de Servicio Continuo</label>
-                            <input type="number" id="jub_a" min="0" placeholder="Min 20 para cálculo">
+                            <label>Años de Servicio Continuo</label>
+                            <input type="number" id="jub_a" placeholder="Min 20 para cálculo" min="0">
                         </div>
                         <button class="btn btn-primary" onclick="calculators.jubilacion()">
                             <i class="fas fa-user-clock"></i> ESTIMAR FONDO
@@ -682,7 +604,7 @@
 
                  <div class="card">
                     <div class="card-header">
-                        <h3><i class="fas fa-landmark" style="color:var(--flag-blue)"></i> INDEMNIZACIÓN LOSEP</h3>
+                        <h3><i class="fas fa-landmark" style="color:var(--flag-blue)"></i> LOSEP</h3>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
@@ -690,11 +612,11 @@
                             <input type="number" id="losep_s" min="0">
                         </div>
                         <div class="form-group">
-                            <label>Años de Servicio en el Sector Público</label>
+                            <label>Años en Sector Público</label>
                             <input type="number" id="losep_a" min="0">
                         </div>
                         <button class="btn btn-action" onclick="calculators.losep()">
-                            <i class="fas fa-university"></i> CALCULAR LOSEP
+                            <i class="fas fa-university"></i> CALCULAR INDEMNIZACIÓN
                         </button>
                         <div id="res_losep" class="result-panel"></div>
                     </div>
@@ -707,17 +629,15 @@
             <div class="legal-layout">
                 <div class="legal-sidebar">
                     <div class="search-container">
-                        <input type="text" id="legalSearch" placeholder="🔍 Buscar Acuerdo, Ley o Artículo..." onkeyup="agreements.search()">
+                        <input type="text" id="legalSearch" placeholder="🔍 Buscar Acuerdo o Tema..." onkeyup="agreements.search()">
                     </div>
-                    <div class="legal-list" id="agreementList">
-                        </div>
+                    <div class="legal-list" id="agreementList"></div>
                 </div>
-
                 <div class="legal-viewer" id="agreementViewer">
                     <div class="pdf-placeholder">
-                        <i class="far fa-file-pdf fa-8x" style="color:#cbd5e1; margin-bottom:50px;"></i>
-                        <h2 style="color:var(--color-primary)">NÚCLEO NORMATIVO LABORAL</h2>
-                        <p style="font-size:1.3rem; color:var(--text-light); max-width:700px; margin:0 auto;">Seleccione un Acuerdo Ministerial o normativa vigente de la lista lateral para visualizar el desglose jurídico y técnico.</p>
+                        <i class="far fa-file-pdf fa-8x" style="color:#cbd5e1; margin-bottom:40px;"></i>
+                        <h2 style="color:var(--color-primary)">CENTRO DOCUMENTAL MDT</h2>
+                        <p style="font-size:1.3rem; color:var(--text-light);">Seleccione un Acuerdo Ministerial para visualizar el análisis jurídico.</p>
                     </div>
                 </div>
             </div>
@@ -725,55 +645,27 @@
 
         <div id="tab-cv" class="tab-pane">
             <div class="grid-2" style="grid-template-columns: 1fr 1.3fr;">
-                
                 <div class="card cv-editor">
                     <div class="card-header">
-                        <h3><i class="fas fa-user-edit"></i> DATOS ESTRATÉGICOS</h3>
-                        <button class="btn btn-action" style="width:auto; padding:15px 30px;" onclick="cv.save()"><i class="fas fa-save"></i> GUARDAR</button>
+                        <h3><i class="fas fa-user-edit"></i> PERFIL PROFESIONAL</h3>
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
-                            <label>Nombres y Apellidos Completos</label>
-                            <input type="text" id="cv_n" placeholder="JUAN AUGUSTO PEREZ" onkeyup="cv.update()">
-                        </div>
-                        <div class="form-group">
-                            <label>Título / Especialidad Profesional</label>
-                            <input type="text" id="cv_t" placeholder="ABOGADO LABORALISTA" onkeyup="cv.update()">
-                        </div>
-                        <div class="form-group">
-                            <label>Información de Contacto (Email | Teléfono)</label>
-                            <input type="text" id="cv_c" placeholder="juan@legal.com | +593..." onkeyup="cv.update()">
-                        </div>
-
-                        <hr style="margin: 40px 0; border:0; border-top:2px solid #eee;">
-                        
-                        <div class="form-group">
-                            <label>Resumen Ejecutivo / Perfil Profesional</label>
-                            <textarea id="cv_p" rows="8" placeholder="Describa sus habilidades críticas y trayectoria estratégica..." onkeyup="cv.update()"></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Trayectoria Laboral Detallada</label>
-                            <textarea id="cv_e" rows="15" placeholder="Empresa - Cargo - Logros - Período..." onkeyup="cv.update()"></textarea>
-                        </div>
-
-                        <button class="btn btn-primary" onclick="window.print()">
-                            <i class="fas fa-file-export"></i> GENERAR CURRÍCULUM PDF
-                        </button>
+                        <div class="form-group"><label>Nombres Completos</label><input type="text" id="cv_n" onkeyup="cv.update()"></div>
+                        <div class="form-group"><label>Título Profesional</label><input type="text" id="cv_t" onkeyup="cv.update()"></div>
+                        <div class="form-group"><label>Contacto (Email | Teléfono)</label><input type="text" id="cv_c" onkeyup="cv.update()"></div>
+                        <hr style="margin: 30px 0; border:0; border-top:2px solid #eee;">
+                        <div class="form-group"><label>Perfil Ejecutivo</label><textarea id="cv_p" rows="8" onkeyup="cv.update()"></textarea></div>
+                        <div class="form-group"><label>Trayectoria Laboral</label><textarea id="cv_e" rows="15" onkeyup="cv.update()"></textarea></div>
+                        <button class="btn btn-primary" onclick="window.print()"><i class="fas fa-file-export"></i> GENERAR CV PDF</button>
                     </div>
                 </div>
-
                 <div class="cv-preview-container">
                     <div class="cv-paper" id="cvPaper">
-                        <h1 id="p_n">JUAN AUGUSTO PEREZ</h1>
-                        <h2 id="p_t" style="color:#334155; font-weight:400; margin-bottom:15mm;">ABOGADO LABORALISTA</h2>
+                        <h1 id="p_n">JUAN PÉREZ</h1>
+                        <h2 id="p_t" style="color:#334155; font-weight:400; margin-bottom:15mm;">PROFESIONAL</h2>
                         <div style="font-size:14pt; color:#475569; margin-bottom:25mm;" id="p_c">juan@email.com | 0987654321</div>
-                        
-                        <div class="cv-section-title">PERFIL PROFESIONAL</div>
-                        <div class="cv-text" id="p_p">Redacte aquí su perfil estratégico...</div>
-
-                        <div class="cv-section-title">TRAYECTORIA LABORAL</div>
-                        <div class="cv-text" id="p_e">...</div>
+                        <div class="cv-section-title">PERFIL ESTRATÉGICO</div><div class="cv-text" id="p_p">...</div>
+                        <div class="cv-section-title">EXPERIENCIA RELEVANTE</div><div class="cv-text" id="p_e">...</div>
                     </div>
                 </div>
             </div>
@@ -782,58 +674,35 @@
     </main>
 
     <footer class="legal-footer" id="legalFooter">
-        <p><strong>AVISO DE RESPONSABILIDAD:</strong> Plataforma de simulación técnico-jurídica basada en el SBU 2026 ($482.00). 
-        Los cálculos son referenciales y no representan asesoría legal vinculante. Valide con un profesional del Derecho.</p>
-        <p style="margin-top:15px; font-weight:900; color:var(--color-primary);">© 2026 LaboralEC | SISTEMA DE GESTIÓN JURÍDICA v4.0.0 PROFESSIONAL</p>
+        <p><strong>AVISO LEGAL:</strong> Esta plataforma es un simulador técnico basado en el SBU 2026 ($482.00). Los cálculos son referenciales y no representan asesoría legal vinculante.</p>
+        <p style="margin-top:15px; font-weight:900; color:var(--color-primary);">© 2026 LaboralEC | SISTEMA DE GESTIÓN JURÍDICA PROFESIONAL v4.1.5</p>
     </footer>
 
-    <div class="chat-fab" onclick="chatbot.toggle()">
-        <i class="fas fa-robot"></i>
-    </div>
-
+    <div class="chat-fab" onclick="chatbot.toggle()"><i class="fas fa-robot"></i></div>
     <div class="chat-window" id="chatWindow">
-        <div class="chat-header">
-            <span><i class="fas fa-balance-scale"></i> ASISTENTE LEGAL IA</span>
-            <i class="fas fa-times" style="cursor:pointer;" onclick="chatbot.toggle()"></i>
-        </div>
-        <div class="chat-body" id="chatLog">
-            <div class="msg bot">
-                Bienvenido. Soy su asistente legal especializado en Ecuador. <br>
-                ¿Qué consulta sobre el Código del Trabajo o normativa LOSEP tiene hoy?
-            </div>
-        </div>
+        <div class="chat-header"><span>ASISTENTE LEGAL IA</span><i class="fas fa-times" onclick="chatbot.toggle()" style="cursor:pointer;"></i></div>
+        <div class="chat-body" id="chatLog"><div class="msg bot">Saludos. Soy su asistente legal de LaboralEC. ¿Qué consulta sobre el Código del Trabajo o LOSEP tiene hoy?</div></div>
         <div class="chat-footer">
-            <input type="text" id="chatInput" placeholder="Pregunte sobre despidos, IESS, recargos..." onkeypress="chatbot.handleKey(event)">
-            <button class="btn btn-action" style="width:auto; padding:0 35px;" onclick="chatbot.send()">
-                <i class="fas fa-paper-plane"></i>
-            </button>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="loaderModal">
-        <div class="modal-content">
-            <i class="fas fa-balance-scale fa-spin fa-6x" style="color:var(--color-accent); margin-bottom:30px;"></i>
-            <h3 style="color:var(--color-primary); margin-bottom:20px;">SINCRONIZANDO BASE DE DATOS...</h3>
-            <div style="height:15px; background:#e2e8f0; border-radius:20px; overflow:hidden;">
-                <div id="loaderBar" style="height:100%; width:0%; background:var(--color-accent); transition:width 0.4s;"></div>
-            </div>
-            <p id="loaderStatus" style="font-size:1.1rem; margin-top:25px; font-weight:800;">Conectando con servidores ministeriales...</p>
+            <input type="text" id="chatInput" placeholder="Pregunte sobre despidos, IESS, contratos..." onkeypress="chatbot.handleKey(event)">
+            <button class="btn btn-action" style="width:auto; padding:0 30px;" onclick="chatbot.send()"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
 
     <script>
-        /* 1. CONFIGURACIÓN E INMUTABILIDAD LEGAL */
+        /* ==========================================================================
+           SECTION 12: CORE SYSTEM LOGIC (ROBUST JAVASCRIPT)
+           ========================================================================== 
+        */
         const CONFIG = Object.freeze({
             SBU: 482.00,
             ANIOS_JUBILACION: 20,
-            DIVISOR_HORA: 240,
-            RECARGO_50: 1.5,
-            RECARGO_100: 2.0,
-            FONDO_RESERVA: 0.0833,
+            DIVISOR: 240,
+            REC_50: 1.5,
+            REC_100: 2.0,
+            FR_RATE: 0.0833,
             LOSEP_TOPE: 150
         });
 
-        /* 2. UTILIDADES DE PROCESAMIENTO Y VALIDACIÓN */
         const utils = {
             formatUSD: (n) => isNaN(n) ? "$0.00" : new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n),
             getVal: (id) => { const v = parseFloat(document.getElementById(id).value); return (isNaN(v) || v < 0) ? 0 : v; },
@@ -841,7 +710,6 @@
             validate: (v, m) => { if(v <= 0) { alert(m); return false; } return true; }
         };
 
-        /* 3. SPA ROUTER */
         const app = {
             navigate: (id) => {
                 document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
@@ -851,18 +719,17 @@
             }
         };
 
-        /* 4. MOTORES DE CÁLCULO JURÍDICOS */
         const calculators = {
             iess: () => {
                 const s = utils.getVal('iess_s'), t = document.getElementById('iess_t').value, fr = document.getElementById('iess_fr').checked;
-                if(!utils.validate(s, "Ingrese un sueldo nominal válido.")) return;
+                if(!utils.validate(s, "Ingrese un sueldo válido.")) return;
                 let per = (t === 'privado') ? 0.0945 : (t === 'publico' ? 0.1145 : 0.1760), pat = (t === 'privado') ? 0.1215 : (t === 'publico' ? 0.0915 : 0);
-                const vPer = s * per, vPat = s * pat, vFr = fr ? s * CONFIG.FONDO_RESERVA : 0;
+                const vPer = s * per, vPat = s * pat, vFr = fr ? s * CONFIG.FR_RATE : 0;
                 utils.setHTML('res_iess', `<div class="res-row"><span>Personal (${(per*100).toFixed(2)}%):</span> <strong>${utils.formatUSD(vPer)}</strong></div><div class="res-row"><span>Patronal (${(pat*100).toFixed(2)}%):</span> <strong>${utils.formatUSD(vPat)}</strong></div>${fr ? `<div class="res-row"><span>Fondo Reserva:</span> <strong>${utils.formatUSD(vFr)}</strong></div>` : ''}<div class="res-total"><span>TOTAL MENSUAL:</span> <span>${utils.formatUSD(vPer + vPat + vFr)}</span></div>`);
             },
             liquidacion: () => {
                 const s = utils.getVal('liq_s'), a = utils.getVal('liq_a'), c = document.getElementById('liq_c').value;
-                if(!utils.validate(s, "Es necesaria la remuneración para procesar.")) return;
+                if(!utils.validate(s, "Es necesaria la remuneración.")) return;
                 let desahucio = (c !== 'acuerdo') ? (s * 0.25) * a : 0;
                 let despido = (c === 'intempestivo') ? (a <= 3 ? s * 3 : s * Math.min(a, 25)) : 0;
                 utils.setHTML('res_liq', `<div class="res-row"><span>Art. 184 (Desahucio):</span> <strong>${utils.formatUSD(desahucio)}</strong></div><div class="res-row"><span>Art. 188 (Indemnización):</span> <strong>${utils.formatUSD(despido)}</strong></div><div class="res-total"><span>LIQUIDACIÓN BRUTA:</span> <span>${utils.formatUSD(desahucio + despido)}</span></div>`);
@@ -870,28 +737,27 @@
             extras: () => {
                 const s = utils.getVal('he_s'), h50 = utils.getVal('he_50'), h100 = utils.getVal('he_100');
                 if(!utils.validate(s, "Sueldo base mandatorio.")) return;
-                const vh = s / CONFIG.DIVISOR_HORA, t50 = h50 * vh * CONFIG.RECARGO_50, t100 = h100 * vh * CONFIG.RECARGO_100;
-                utils.setHTML('res_he', `<div class="res-row"><span>Valor Hora Base:</span> <strong>${utils.formatUSD(vh)}</strong></div><div class="res-row"><span>Total Suplementarias:</span> <strong>${utils.formatUSD(t50)}</strong></div><div class="res-row"><span>Total Extraordinarias:</span> <strong>${utils.formatUSD(t100)}</strong></div><div class="res-total"><span>TOTAL A RECIBIR:</span> <span>${utils.formatUSD(t50 + t100)}</span></div>`);
+                const vh = s / CONFIG.DIVISOR, t50 = h50 * vh * CONFIG.REC_50, t100 = h100 * vh * CONFIG.REC_100;
+                utils.setHTML('res_he', `<div class="res-row"><span>Valor Hora:</span> <strong>${utils.formatUSD(vh)}</strong></div><div class="res-total"><span>TOTAL RECARGOS:</span> <span>${utils.formatUSD(t50 + t100)}</span></div>`);
             },
             decimos: () => {
                 const s = utils.getVal('dec_s'), m = utils.getVal('dec_m');
                 const d13 = (s * m) / 12, d14 = (CONFIG.SBU / 12) * m;
-                utils.setHTML('res_dec', `<div class="res-row"><span>13ero (Proporcional):</span> <strong>${utils.formatUSD(d13)}</strong></div><div class="res-row"><span>14to (Proporcional):</span> <strong>${utils.formatUSD(d14)}</strong></div><div class="res-total"><span>PROVISIÓN ACUMULADA:</span> <span>${utils.formatUSD(d13 + d14)}</span></div>`);
+                utils.setHTML('res_dec', `<div class="res-row"><span>13ero (Navideño):</span> <strong>${utils.formatUSD(d13)}</strong></div><div class="res-row"><span>14to (Escolar):</span> <strong>${utils.formatUSD(d14)}</strong></div><div class="res-total"><span>PROVISIÓN ACUMULADA:</span> <span>${utils.formatUSD(d13 + d14)}</span></div>`);
             },
             jubilacion: () => {
                 const p = utils.getVal('jub_p'), a = utils.getVal('jub_a');
-                if(a < CONFIG.ANIOS_JUBILACION) return utils.setHTML('res_jub', '<b style="color:var(--color-danger)">El Art. 216 exige mínimo 20 años de servicio.</b>');
+                if(a < CONFIG.ANIOS_JUBILACION) return utils.setHTML('res_jub', '<b style="color:var(--color-danger)">El Art. 216 CT exige mínimo 20 años.</b>');
                 const fondo = (p * a) * 0.05;
-                utils.setHTML('res_jub', `<div class="res-row"><span>Fondo Global Estimado:</span> <strong>${utils.formatUSD(fondo)}</strong></div><div class="res-row"><span>Pensión Mensual Ref:</span> <strong>${utils.formatUSD(fondo/120)}</strong></div><div class="res-total"><span>VALOR FONDO:</span> <span>${utils.formatUSD(fondo)}</span></div>`);
+                utils.setHTML('res_jub', `<div class="res-row"><span>Fondo Global Estimado:</span> <strong>${utils.formatUSD(fondo)}</strong></div><div class="res-row"><span>Pensión Mensual Ref:</span> <strong>${utils.formatUSD(fondo/120)}</strong></div><div class="res-total"><span>VALOR ESTIMADO:</span> <span>${utils.formatUSD(fondo)}</span></div>`);
             },
             losep: () => {
                 const s = utils.getVal('losep_s'), a = utils.getVal('losep_a');
                 let total = Math.min((CONFIG.SBU * 5) * a, CONFIG.SBU * CONFIG.LOSEP_TOPE);
-                utils.setHTML('res_losep', `<div class="res-row"><span>Base (5 SBU x Año):</span> <strong>${utils.formatUSD((CONFIG.SBU * 5) * a)}</strong></div><div class="res-total"><span>TOTAL LOSEP:</span> <span>${utils.formatUSD(total)}</span></div>`);
+                utils.setHTML('res_losep', `<div class="res-row"><span>Base (5 SBU x Año):</span> <strong>${utils.formatUSD((CONFIG.SBU * 5) * a)}</strong></div><div class="res-total"><span>TOTAL INDEMNIZACIÓN:</span> <span>${utils.formatUSD(total)}</span></div>`);
             }
         };
 
-        /* 5. ASISTENTE LEGAL IA (CORRECCIÓN DEFINITIVA) */
         const chatbot = {
             apiKey: 'AIzaSyCYpXfBakNPhw83uO5qSchplMOPJfMJid0',
             toggle: () => { const w = document.getElementById('chatWindow'); w.style.display = (w.style.display === 'flex') ? 'none' : 'flex'; },
@@ -899,71 +765,42 @@
             send: async () => {
                 const input = document.getElementById('chatInput'), log = document.getElementById('chatLog'), query = input.value.trim();
                 if(!query) return;
-
-                // 1. Mostrar mensaje del usuario (SIN DUPLICAR)
-                const uMsg = document.createElement('div'); uMsg.className = 'msg user'; uMsg.innerText = query;
-                log.appendChild(uMsg); input.value = ''; log.scrollTop = log.scrollHeight;
-
-                // 2. Estado de carga profesional
-                const loader = document.createElement('div'); loader.className = 'msg bot'; 
-                loader.innerHTML = '<i class="fas fa-balance-scale fa-spin"></i> Analizando jurisprudencia...';
+                const uMsg = document.createElement('div'); uMsg.className = 'msg user'; uMsg.innerText = query; log.appendChild(uMsg);
+                input.value = ''; log.scrollTop = log.scrollHeight;
+                const loader = document.createElement('div'); loader.className = 'msg bot'; loader.innerHTML = '<i class="fas fa-balance-scale fa-spin"></i> Analizando jurisprudencia...';
                 log.appendChild(loader); log.scrollTop = log.scrollHeight;
-
                 try {
-                    // DIAGNÓSTICO: Verificamos si estamos en un servidor real
-                    if (window.location.protocol === 'file:') {
-                        throw new Error("SEGURIDAD: Google Cloud bloquea claves restringidas en archivos locales. Por favor, usa la extensión 'Live Server' o sube el archivo a un dominio.");
-                    }
-
                     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${chatbot.apiKey}`, {
                         method: 'POST', headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ contents: [{ parts: [{ text: `Eres un Abogado Laboralista experto en Ecuador. SBU 2026=$482. Responde detalladamente y cita el Código del Trabajo a: ${query}` }] }] })
+                        body: JSON.stringify({ contents: [{ parts: [{ text: `Actúa como un Abogado Laboral experto de Ecuador. SBU 2026=$482. Responde profesionalmente y cita artículos legales a: ${query}` }] }] })
                     });
-
-                    if (!response.ok) {
-                        const errData = await response.json();
-                        throw new Error(`API ERROR (${response.status}): ${errData.error.message}`);
-                    }
-
                     const data = await response.json();
-                    log.removeChild(loader);
-
+                    if(log.contains(loader)) log.removeChild(loader);
                     if (data.candidates && data.candidates[0].content) {
-                        const rawText = data.candidates[0].content.parts[0].text;
-                        const formattedText = rawText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
-                        const bMsg = document.createElement('div'); bMsg.className = 'msg bot'; bMsg.innerHTML = formattedText;
-                        log.appendChild(bMsg);
-                    } else { throw new Error("Sin respuesta de la IA."); }
-
-                } catch (error) {
-                    log.removeChild(loader);
-                    const eMsg = document.createElement('div'); eMsg.className = 'msg bot'; eMsg.style.color = 'var(--color-danger)';
-                    eMsg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> <strong>ERROR DE COMUNICACIÓN:</strong><br>${error.message}`;
-                    log.appendChild(eMsg);
-                }
+                        const raw = data.candidates[0].content.parts[0].text;
+                        const formatted = raw.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+                        const bMsg = document.createElement('div'); bMsg.className = 'msg bot'; bMsg.innerHTML = formatted; log.appendChild(bMsg);
+                    } else { throw new Error(data.error.message); }
+                } catch (e) { if(log.contains(loader)) log.removeChild(loader); const eMsg = document.createElement('div'); eMsg.className = 'msg bot'; eMsg.style.color = 'var(--color-danger)'; eMsg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> <strong>BLOQUEO DE CONEXIÓN:</strong><br>${e.message}`; log.appendChild(eMsg); }
                 log.scrollTop = log.scrollHeight;
             }
         };
 
-        /* 6. DATA Y BIBLIOTECA LEGAL */
         const agreements = {
             data: [
-                { id: 1, code: 'MDT-2026-001', title: 'FIJACIÓN SALARIO BÁSICO 2026 ($482)', content: 'Oficialícese el SBU en $482.00 para todos los sectores económicos.' },
-                { id: 2, code: 'MDT-2026-044', title: 'JORNADA HÍBRIDA Y DESCONEXIÓN DIGITAL', content: 'Protocolo de registro de horas extras en modalidades de teletrabajo.' }
+                { id: 1, code: 'MDT-2026-001', title: 'FIJACIÓN DEL SBU 2026', content: 'Mediante Acuerdo MDT-2026-001 se oficializa el SBU en $482.00 para todos los sectores productivos de Ecuador.' },
+                { id: 2, code: 'MDT-2026-044', title: 'DIRECTRICES JORNADA HÍBRIDA', content: 'Protocolos de desconexión digital y registro de jornada laboral en modalidades de teletrabajo parcial.' },
+                { id: 3, code: 'MDT-2026-012', title: 'REFORMAS SEGURIDAD LABORAL', content: 'Actualización de protocolos de prevención de riesgos psicosociales en el portal SUT.' }
             ],
             init: () => agreements.render(agreements.data),
             render: (d) => document.getElementById('agreementList').innerHTML = d.map(i => `<div class="doc-item" onclick="agreements.view(${i.id})"><div class="doc-code">${i.code}</div><div class="doc-title">${i.title}</div></div>`).join(''),
             search: () => { const q = document.getElementById('legalSearch').value.toLowerCase(); agreements.render(agreements.data.filter(i => i.title.toLowerCase().includes(q) || i.code.toLowerCase().includes(q))); },
-            view: (id) => { const i = agreements.data.find(x => x.id === id); utils.setHTML('agreementViewer', `<div class="pdf-sim-box"><h2>${i.code}</h2><p style="margin:40px 0">${i.content}</p></div>`); }
+            view: (id) => { const item = agreements.data.find(d => d.id === id); utils.setHTML('agreementViewer', `<div class="pdf-sim-box"><h2>${item.code}</h2><h4 style="margin:20px 0">${item.title}</h4><div style="background:#fcfcfc; padding:35px; border-left:8px solid var(--color-primary);">${item.content}</div></div>`); }
         };
 
-        const cv = { update: () => { ['n','t','c','p','e'].forEach(f => { const v = document.getElementById(`cv_${f}`).value; if(v) document.getElementById(`p_${f}`).innerText = v; }); }, save: () => alert("Sincronización de datos exitosa.") };
+        const cv = { update: () => { ['n','t','c','p','e'].forEach(f => { const v = document.getElementById(`cv_${f}`).value; if(v) document.getElementById(`p_${f}`).innerText = v; }); } };
 
-        /* 7. INICIALIZACIÓN */
-        window.onload = () => { 
-            agreements.init(); 
-            setTimeout(() => document.getElementById('legalFooter').classList.add('hidden'), 4000); 
-        };
+        window.onload = () => { agreements.init(); setTimeout(() => document.getElementById('legalFooter').classList.add('hidden'), 4000); };
     </script>
 </body>
 </html>

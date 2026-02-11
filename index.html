@@ -680,12 +680,12 @@
         </div>
         <div class="chat-body" id="chatLog">
             <div class="msg bot">
-                Hola, soy tu asistente de LaboralEC. <br>
-                Puedo responder dudas sobre el <strong>Acuerdo Ministerial MDT-2026</strong>, cálculo de horas extras o despidos.
+                Hola, soy tu asistente de LaboralEC con Inteligencia Artificial. <br>
+                Pregúntame cualquier cosa sobre leyes laborales en Ecuador.
             </div>
         </div>
         <div class="chat-footer">
-            <input type="text" id="chatInput" placeholder="Escribe tu consulta..." onkeypress="chatbot.checkEnter(event)">
+            <input type="text" id="chatInput" placeholder="Escribe tu consulta legal..." onkeypress="chatbot.checkEnter(event)">
             <button class="btn btn-action" style="width:auto; padding:0 15px;" onclick="chatbot.send()"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
@@ -703,7 +703,6 @@
 
     <script>
         // --- 1. CONFIGURACIÓN GLOBAL BLINDADA ---
-        // Usamos Object.freeze para que nadie pueda manipular las constantes legales desde la consola
         const CONFIG = Object.freeze({
             SBU: 482.00,        // Salario Básico Unificado 2026
             ANIOS_JUBILACION: 20, // Mínimo años para jubilación patronal
@@ -713,65 +712,46 @@
 
         // --- 2. UTILIDADES DEL SISTEMA ---
         const utils = {
-            // Formateador de moneda seguro (USD)
             formatUSD: (num) => {
                 if (isNaN(num)) return "$0.00";
                 return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
             },
-            // Obtener valor numérico de un input con validación básica
             getVal: (id) => {
                 const el = document.getElementById(id);
                 if (!el) return 0;
                 const val = parseFloat(el.value);
-                return isNaN(val) || val < 0 ? 0 : val; // No permitimos negativos
+                return isNaN(val) || val < 0 ? 0 : val; 
             },
-            // Inyectar HTML en el DOM de forma controlada
             setHTML: (id, html) => { 
                 const el = document.getElementById(id); 
-                if(el) {
-                    el.innerHTML = html; 
-                    el.style.display = 'block'; 
-                }
+                if(el) { el.innerHTML = html; el.style.display = 'block'; }
             }
         };
 
         // --- 3. GESTOR DE NAVEGACIÓN (SPA) ---
         const app = {
             navigate: (tabId) => {
-                // Ocultar todas las pestañas
                 document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
-                // Desactivar todos los botones
                 document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-                
-                // Activar la seleccionada
                 const target = document.getElementById(tabId);
                 if (target) target.classList.add('active');
-                
-                // Activar el botón (usando event.currentTarget para saber cuál se clickeó)
-                if (event && event.currentTarget) {
-                    event.currentTarget.classList.add('active');
-                }
+                if (event && event.currentTarget) event.currentTarget.classList.add('active');
             }
         };
 
-        // --- 4. MOTORES DE CÁLCULO (LÓGICA DE NEGOCIO) ---
+        // --- 4. MOTORES DE CÁLCULO ---
         const calculators = {
-            // Aportes al Instituto Ecuatoriano de Seguridad Social
             iess: () => {
                 const sueldo = utils.getVal('iess_sueldo');
                 const tipo = document.getElementById('iess_tipo').value;
                 const fr = document.getElementById('iess_fr').checked;
-                
-                // Tasas vigentes 2026
                 let per = 0, pat = 0;
                 if(tipo === 'privado') { per = 0.0945; pat = 0.1215; }
                 else if(tipo === 'publico') { per = 0.1145; pat = 0.0915; }
-                else { per = 0.1760; pat = 0; } // Voluntario
-
+                else { per = 0.1760; pat = 0; } 
                 const vPer = sueldo * per;
                 const vPat = sueldo * pat;
-                const vFr = fr ? sueldo * 0.0833 : 0; // 8.33% es la doceava parte
-
+                const vFr = fr ? sueldo * 0.0833 : 0; 
                 utils.setHTML('res_iess', `
                     <div class="res-row"><span>Aporte Personal (${(per*100).toFixed(2)}%):</span> <strong>${utils.formatUSD(vPer)}</strong></div>
                     <div class="res-row"><span>Aporte Patronal (${(pat*100).toFixed(2)}%):</span> <strong>${utils.formatUSD(vPat)}</strong></div>
@@ -779,32 +759,16 @@
                     <div class="res-total"><span>Total IESS:</span> <span>${utils.formatUSD(vPer + vPat + vFr)}</span></div>
                 `);
             },
-            
-            // Liquidación de Haberes (Código de Trabajo)
             liquidacion: () => {
                 const s = utils.getVal('liq_sueldo');
                 const a = utils.getVal('liq_anios');
                 const c = document.getElementById('liq_causa').value;
-                
                 let desahucio = 0, despido = 0;
-                
-                // Art. 184: Bonificación por Desahucio (25% de la última remuneración por año)
-                // Aplica en renuncia y despido intempestivo, no siempre en mutuo acuerdo simple (depende negociación)
-                if(c !== 'acuerdo') {
-                    desahucio = (s * 0.25) * a;
-                }
-
-                // Art. 188: Indemnización por Despido Intempestivo
+                if(c !== 'acuerdo') desahucio = (s * 0.25) * a;
                 if(c === 'intempestivo') {
-                    // Hasta 3 años: 3 remuneraciones.
-                    // Más de 3 años: 1 remuneración por año (tope 25).
-                    if (a <= 3) {
-                        despido = s * 3;
-                    } else {
-                        despido = s * (a > 25 ? 25 : a);
-                    }
+                    if (a <= 3) despido = s * 3;
+                    else despido = s * (a > 25 ? 25 : a);
                 }
-
                 utils.setHTML('res_liq', `
                     <div class="res-row"><span>Bonif. Desahucio (Art. 184):</span> <span>${utils.formatUSD(desahucio)}</span></div>
                     <div class="res-row"><span>Indem. Despido (Art. 188):</span> <span>${utils.formatUSD(despido)}</span></div>
@@ -812,19 +776,13 @@
                     <small style="display:block; margin-top:10px; color:#64748b;">* Cálculo base. No incluye vacaciones no gozadas ni décimos proporcionales.</small>
                 `);
             },
-            
-            // Cálculo de Horas Extras y Suplementarias
             extras: () => {
                 const s = utils.getVal('he_sueldo');
                 const h50 = utils.getVal('he_50');
                 const h100 = utils.getVal('he_100');
-                
-                // Divisor estándar 240 horas (30 días * 8 horas)
                 const vHora = s / 240;
-                
                 const total50 = h50 * vHora * 1.5;
                 const total100 = h100 * vHora * 2.0;
-
                 utils.setHTML('res_he', `
                     <div class="res-row"><span>Valor Hora Normal:</span> <span>${utils.formatUSD(vHora)}</span></div>
                     <div class="res-row"><span>Pago Horas 50%:</span> <span>${utils.formatUSD(total50)}</span></div>
@@ -832,58 +790,36 @@
                     <div class="res-total"><span>Total Extras:</span> <span>${utils.formatUSD(total50 + total100)}</span></div>
                 `);
             },
-            
-            // Décimos (13ro y 14to)
             decimos: () => {
                 const i = utils.getVal('dec_ingresos');
                 const m = utils.getVal('dec_meses');
-                
-                // 13ro: Doceava parte de lo ganado en el año
                 const dec13 = i / 12;
-                
-                // 14to: Un SBU completo (o proporcional)
                 const dec14 = (CONFIG.SBU / 12) * m;
-                
                 utils.setHTML('res_dec', `
                     <div class="res-row"><span>13er Sueldo:</span> <span>${utils.formatUSD(dec13)}</span></div>
                     <div class="res-row"><span>14to Sueldo:</span> <span>${utils.formatUSD(dec14)}</span></div>
                     <div class="res-total"><span>Total Provisión:</span> <span>${utils.formatUSD(dec13 + dec14)}</span></div>
                 `);
             },
-            
-            // Jubilación Patronal (Estimación)
             jubilacion: () => {
                 const p = utils.getVal('jub_prom');
                 const a = utils.getVal('jub_anios');
-                
                 if(a < CONFIG.ANIOS_JUBILACION) {
                     return utils.setHTML('res_jub', '<span style="color:var(--color-danger); font-weight:bold;">Error: Se requiere un mínimo de 20 años de servicio (Art. 216 Código Trabajo).</span>');
                 }
-                
-                // Fórmula simplificada para estimación rápida (Fondo Global)
-                // Haber individual = 5% del promedio anual * años de servicio
                 const fondo = (p * a) * 0.05; 
-                
                 utils.setHTML('res_jub', `
                     <div class="res-row"><span>Fondo Global Est.:</span> <span>${utils.formatUSD(fondo)}</span></div>
                     <div class="res-row"><span>Pensión Mensual Ref.:</span> <span>${utils.formatUSD(fondo/120)}</span></div>
                     <div class="res-total"><span>Total Fondo:</span> <span>${utils.formatUSD(fondo)}</span></div>
                 `);
             },
-            
-            // Indemnización LOSEP (Sector Público)
             losep: () => {
                 const rmu = utils.getVal('losep_rmu');
                 const a = utils.getVal('losep_anios');
-                
-                // 5 salarios básicos por cada año de servicio
                 let total = (CONFIG.SBU * 5) * a;
-                
-                // Tope máximo: 150 SBU
                 const tope = CONFIG.SBU * CONFIG.TOPE_LOSEP;
-                
                 if(total > tope) total = tope;
-                
                 utils.setHTML('res_losep', `
                     <div class="res-row"><span>Cálculo Base:</span> <span>${utils.formatUSD((CONFIG.SBU * 5) * a)}</span></div>
                     <div class="res-row"><span>Tope Legal (150 SBU):</span> <span>${utils.formatUSD(tope)}</span></div>
@@ -892,7 +828,7 @@
             }
         };
 
-        // --- 5. BASE DE DATOS LEGAL (ACUERDOS) ---
+        // --- 5. BASE DE DATOS LEGAL ---
         const agreements = {
             data: [
                 { id: 1, code: 'MDT-2026-001', title: 'Fijación del SBU 2026', tags: 'Salarios', content: 'Fíjese el Salario Básico Unificado del trabajador en general, incluidos los trabajadores de la pequeña industria, trabajadores agrícolas y de maquila; trabajadores del servicio doméstico, operarios de artesanías y colaboradores de la microempresa, en la cantidad de CUATROCIENTOS OCHENTA Y DOS DÓLARES DE LOS ESTADOS UNIDOS DE AMÉRICA ($482,00) mensuales.' },
@@ -900,9 +836,7 @@
                 { id: 3, code: 'MDT-2026-012', title: 'Reglamento Seguridad Salud', tags: 'Seguridad', content: 'Reformas al Reglamento de Seguridad y Salud de los Trabajadores. Obligatoriedad de registro de Comité Paritario en plataforma SUT en un plazo no mayor a 30 días.' },
                 { id: 4, code: 'MDT-2025-220', title: 'Contrato Joven y Empleo', tags: 'Contratos', content: 'Incentivos fiscales para la contratación de jóvenes entre 18 y 29 años. Deducción adicional del 100% en el Impuesto a la Renta sobre remuneraciones y aportes al IESS.' }
             ],
-            init: () => {
-                agreements.render(agreements.data);
-            },
+            init: () => { agreements.render(agreements.data); },
             render: (data) => {
                 const list = document.getElementById('agreementList');
                 list.innerHTML = data.map(item => `
@@ -942,30 +876,22 @@
             }
         };
 
-        // --- 6. SIMULADOR DE DESCARGA PRO ---
+        // --- 6. SIMULADOR DE DESCARGA ---
         const downloader = {
             simulate: (filename) => {
                 const modal = document.getElementById('downloadModal');
                 const bar = document.getElementById('dlProgress');
                 const text = document.getElementById('dlText');
                 const status = document.getElementById('dlStatus');
-                
-                modal.style.display = 'flex';
-                bar.style.width = '0%';
+                modal.style.display = 'flex'; bar.style.width = '0%';
                 text.innerText = `Solicitando archivo: ${filename}.pdf...`;
-                status.innerText = 'Iniciando conexión segura...';
-                status.style.color = '#333';
-
-                // Secuencia de simulación
+                status.innerText = 'Iniciando conexión segura...'; status.style.color = '#333';
                 setTimeout(() => { bar.style.width = '30%'; status.innerText = 'Conectando con repositorio MDT...'; }, 500);
                 setTimeout(() => { bar.style.width = '70%'; status.innerText = 'Descargando paquetes de datos...'; }, 1500);
                 setTimeout(() => { 
-                    bar.style.width = '100%'; 
-                    status.innerText = '¡Descarga Completa!'; 
-                    status.style.color = 'var(--color-success)';
+                    bar.style.width = '100%'; status.innerText = '¡Descarga Completa!'; status.style.color = 'var(--color-success)';
                     text.innerText = 'El archivo se ha guardado en su carpeta de descargas.';
                 }, 2500);
-                
                 setTimeout(() => { modal.style.display = 'none'; }, 4000);
             }
         };
@@ -979,72 +905,103 @@
                     if(val) document.getElementById(`p_${f}`).innerText = val;
                 });
             },
-            save: () => {
-                // Aquí iría la lógica para guardar en LocalStorage o Servidor
-                alert("Datos guardados temporalmente en la caché del navegador.");
-            }
+            save: () => { alert("Datos guardados temporalmente en la caché del navegador."); }
         };
 
-        // --- 8. CHATBOT INTELIGENTE (VERSIÓN SEGURA ANTI-XSS) ---
+        // --- 8. CHATBOT CON INTELIGENCIA ARTIFICIAL REAL (GEMINI) ---
         const chatbot = {
+            // !IMPORTANTE: REEMPLAZA ESTO CON TU API KEY DE GOOGLE AI STUDIO
+            apiKey: 'AIzaSyACvbspnOPhO0NTN4YyQ4H33qlyFPxXT5g', 
+            
             toggle: () => {
                 const win = document.getElementById('chatWindow');
                 win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
+                if(win.style.display === 'flex') document.getElementById('chatInput').focus();
             },
+            
             checkEnter: (e) => { if(e.key === 'Enter') chatbot.send(); },
-            send: () => {
+            
+            send: async () => {
                 const input = document.getElementById('chatInput');
                 const text = input.value.trim();
                 if(!text) return;
 
                 const log = document.getElementById('chatLog');
                 
-                // SEGURIDAD XSS: Crear elementos DOM en lugar de innerHTML
+                // Mostrar mensaje usuario
                 const userMsgDiv = document.createElement('div');
                 userMsgDiv.className = 'msg user';
-                userMsgDiv.innerText = text; 
+                userMsgDiv.innerText = text;
                 log.appendChild(userMsgDiv);
                 
-                const textLower = text.toLowerCase();
                 input.value = '';
                 log.scrollTop = log.scrollHeight;
 
-                // Lógica de Respuesta
-                setTimeout(() => {
-                    let response = "No estoy seguro de esa consulta. Intenta con: 'vacaciones', 'despido', 'horas extras' o 'iess'.";
-                    
-                    if(textLower.includes('vacaciones')) {
-                        response = "Para esa consulta revisa el <strong>Art. 69 del Código del Trabajo</strong>: 15 días ininterrumpidos de descanso anual.";
-                    } else if(textLower.includes('despido')) {
-                        response = "El <strong>Despido Intempestivo (Art. 188)</strong> se paga: 3 meses de sueldo (1-3 años) o 1 sueldo por año (3+ años).";
-                    } else if(textLower.includes('renuncia')) {
-                        response = "En caso de renuncia aplica el <strong>Desahucio (Art. 184)</strong>: 25% de la última remuneración por año.";
-                    } else if(textLower.includes('iess')) {
-                        response = "Tasas vigentes 2026:<br>• Privado: 9.45% (Per) + 12.15% (Pat).<br>• Público: 11.45% (Per) + 9.15% (Pat).";
+                // Indicador de "Pensando..."
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'msg bot';
+                loadingDiv.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Consultando jurisprudencia...';
+                log.appendChild(loadingDiv);
+                log.scrollTop = log.scrollHeight;
+
+                try {
+                    // Validar API KEY
+                    if (chatbot.apiKey === 'PON_AQUI_TU_API_KEY') {
+                        throw new Error("⚠️ Falta configurar la API Key. Revisa el código.");
                     }
 
+                    // Llamada a la API de Gemini
+                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${chatbot.apiKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{
+                                parts: [{
+                                    text: `Eres un abogado experto en legislación laboral de Ecuador. El SBU 2026 es $482. Responde brevemente y con base legal a: "${text}"`
+                                }]
+                            }]
+                        })
+                    });
+
+                    const data = await response.json();
+                    
+                    // Procesar respuesta IA
+                    let aiText = "Lo siento, no pude procesar la respuesta.";
+                    if (data.candidates && data.candidates[0].content) {
+                        aiText = data.candidates[0].content.parts[0].text;
+                        // Convertir Markdown básico a HTML
+                        aiText = aiText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Negritas
+                        aiText = aiText.replace(/\n/g, '<br>'); // Saltos de línea
+                    }
+
+                    log.removeChild(loadingDiv);
                     const botMsgDiv = document.createElement('div');
                     botMsgDiv.className = 'msg bot';
-                    botMsgDiv.innerHTML = response; // Seguro porque es contenido propio
+                    botMsgDiv.innerHTML = aiText;
                     log.appendChild(botMsgDiv);
-                    
-                    log.scrollTop = log.scrollHeight;
-                }, 600);
+
+                } catch (error) {
+                    console.error(error);
+                    log.removeChild(loadingDiv);
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'msg bot';
+                    errorDiv.style.color = 'var(--color-danger)';
+                    errorDiv.innerText = error.message;
+                    log.appendChild(errorDiv);
+                }
+                
+                log.scrollTop = log.scrollHeight;
             }
         };
 
-        // --- 9. INICIALIZACIÓN Y FIX MÓVIL ---
+        // --- 9. INICIALIZACIÓN ---
         window.onload = () => {
             agreements.init();
-
-            // LÓGICA DE DESVANECIMIENTO DEL FOOTER (UX MÓVIL)
-            // Esperamos 3 segundos y luego añadimos la clase .hidden que lo baja
+            
+            // LÓGICA DE FOOTER MÓVIL
             setTimeout(() => {
                 const footer = document.querySelector('.legal-footer');
-                if(footer) {
-                    footer.classList.add('hidden');
-                    console.log("Footer ocultado para mejorar visibilidad móvil");
-                }
+                if(footer) footer.classList.add('hidden');
             }, 3000);
         };
 

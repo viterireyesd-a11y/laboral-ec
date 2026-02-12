@@ -22,15 +22,15 @@
             --color-accent: #3b82f6;        /* Azul Vibrante */
             --color-accent-hover: #2563eb;
             
-            /* Colores de Estado - MODIFICADO: ROJO MÁS VISIBLE */
+            /* Colores de Estado */
             --color-success: #10b981;
             --color-warning: #f59e0b;
-            --color-danger: #D32F2F; /* Rojo oscuro para mejor legibilidad */
+            --color-danger: #ef4444;
             
-            /* Colores Bandera Ecuador (Para Títulos) */
+            /* Colores Bandera Ecuador (Para el Logo LABORALEC) */
             --flag-yellow: #FFD100;
             --flag-blue: #005EB8;
-            --flag-red: #EF3340;
+            --flag-red: #EF3340; /* Rojo Intenso */
 
             /* Superficies y Fondos */
             --bg-body: #f1f5f9;
@@ -87,14 +87,14 @@
             align-items: center;
         }
 
-        /* LOGO CON COLORES DE LA BANDERA DEL ECUADOR */
+        /* LOGO CON COLORES DE LA BANDERA DEL ECUADOR (AMARILLO, AZUL Y ROJO) */
         .brand-logo h1 {
             font-size: 2.2rem;
             font-weight: 900;
             letter-spacing: -1px;
             margin: 0;
             text-transform: uppercase;
-            /* Técnica de degradado sobre texto */
+            /* Técnica de degradado sobre texto: Bandera Ecuador */
             background: linear-gradient(180deg, 
                 var(--flag-yellow) 0%, 
                 var(--flag-yellow) 50%, 
@@ -127,12 +127,6 @@
             padding: 8px 16px;
             border-radius: 50px;
             border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        /* MODIFICADO: Clase para resaltar texto rojo */
-        .text-red-visible {
-            color: var(--color-danger);
-            font-weight: 800;
         }
 
         .status-dot { height: 8px; width: 8px; background-color: var(--color-success); border-radius: 50%; display: inline-block; margin-right: 6px; box-shadow: 0 0 8px var(--color-success); }
@@ -266,11 +260,9 @@
         @keyframes slideDown { from {opacity:0; transform:translateY(-10px);} to {opacity:1; transform:translateY(0);} }
 
         .res-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; border-bottom: 1px dashed #cbd5e1; padding-bottom: 5px; }
-        
-        /* MODIFICADO: El total ahora usa el color rojo visible */
         .res-total { 
             margin-top: 15px; padding-top: 15px; border-top: 2px solid var(--color-accent); 
-            font-weight: 800; font-size: 1.2rem; color: var(--color-danger); 
+            font-weight: 800; font-size: 1.2rem; color: var(--color-primary); 
             display: flex; justify-content: space-between;
         }
 
@@ -389,8 +381,7 @@
             background: #fff; border-top: 1px solid #e2e8f0; padding: 20px;
             text-align: center; font-size: 0.75rem; color: #64748b;
             position: fixed; bottom: 0; width: 100%; z-index: 30;
-            /* Transición añadida para el efecto de desaparición */
-            transition: opacity 0.5s ease, transform 0.5s ease; 
+            transition: opacity 0.5s ease, transform 0.5s ease; /* Transición añadida */
         }
 
         /* ==========================================================================
@@ -452,7 +443,7 @@
             </div>
             <div class="system-status">
                 <span class="status-dot"></span>
-                <span>SBU Vigente: <strong class="text-red-visible">$482.00</strong></span>
+                <span>SBU Vigente: <strong>$482.00</strong></span>
             </div>
         </div>
     </header>
@@ -661,9 +652,9 @@
 
     </main>
 
-    <footer class="legal-footer" id="legal-footer">
-        <p><strong>AVISO LEGAL:</strong> Esta herramienta es un simulador referencial basado en la normativa ecuatoriana vigente (SBU <span class="text-red-visible">$482</span>). 
-        Los cálculos generados <span class="text-red-visible">no constituyen una liquidación oficial vinculante</span> ni asesoría legal definitiva. 
+    <footer class="legal-footer" id="mobile-legal-footer">
+        <p><strong>AVISO LEGAL:</strong> Esta herramienta es un simulador referencial basado en la normativa ecuatoriana vigente (SBU $482). 
+        Los cálculos generados no constituyen una liquidación oficial vinculante ni asesoría legal definitiva. 
         Para casos legales específicos, se recomienda consultar con un abogado laboralista o acudir al Ministerio del Trabajo. 
         LaboralEC no se responsabiliza por el uso indebido de esta información.</p>
         <p style="margin-top:5px;">&copy; 2026 LaboralEC - Versión Pro 3.1.2</p>
@@ -962,22 +953,23 @@
             }
         };
 
-        // --- LÓGICA DE AVISO MÓVIL (MODIFICACIÓN SOLICITADA) ---
-        window.addEventListener('load', () => {
+        // --- SCRIPT PARA OCULTAR FOOTER EN MOVIL (3 Segundos) ---
+        window.onload = () => {
             agreements.init();
-
-            // Detectar si es dispositivo móvil (ancho menor a 768px)
+            
+            // Detectar móvil (ancho <= 768px)
             if (window.innerWidth <= 768) {
                 setTimeout(() => {
-                    const footer = document.getElementById('legal-footer');
+                    const footer = document.getElementById('mobile-legal-footer');
                     if(footer) {
-                        footer.style.opacity = '0';
-                        footer.style.transform = 'translateY(100%)';
+                        footer.style.opacity = '0'; // Desvanecer
+                        footer.style.transform = 'translateY(100%)'; // Deslizar abajo
+                        // Quitar del DOM después de la animación para liberar espacio
                         setTimeout(() => { footer.style.display = 'none'; }, 500);
                     }
-                }, 3000); // 3 SEGUNDOS
+                }, 3000); // 3000ms = 3 Segundos exactos
             }
-        });
+        };
 
     </script>
 </body>

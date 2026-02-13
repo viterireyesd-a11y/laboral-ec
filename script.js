@@ -1,8 +1,26 @@
+/**
+ * LABORALEC PRO - VERSIÓN DEFINITIVA 5.0
+ * Corrección de Caché y Desglose Matemático Detallado
+ */
+
 const SBU = 482.00;
 const $ = id => document.getElementById(id);
 const val = id => parseFloat($(id)?.value) || 0;
 const fmt = n => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
 const html = (id, h) => { const e = $(id); if(e){ e.innerHTML = h; e.style.display = 'block'; }};
+
+// COEFICIENTES ART. 218 CÓDIGO TRABAJO
+const COEFICIENTES = {
+    40: 31.97, 41: 31.25, 42: 30.52, 43: 29.77, 44: 29.00,
+    45: 28.22, 46: 27.42, 47: 26.61, 48: 25.78, 49: 24.94,
+    50: 24.08, 51: 23.21, 52: 22.33, 53: 21.43, 54: 20.52,
+    55: 19.61, 56: 18.68, 57: 17.75, 58: 16.81, 59: 15.87,
+    60: 14.93, 61: 13.98, 62: 13.04, 63: 12.11, 64: 11.19,
+    65: 10.28, 66: 9.39,  67: 8.52,  68: 7.68,  69: 6.88,
+    70: 6.12,  71: 5.40,  72: 4.73,  73: 4.12,  74: 3.56,
+    75: 3.07,  76: 2.64,  77: 2.26,  78: 1.94,  79: 1.66,
+    80: 1.43,  81: 1.23,  82: 1.07,  83: 0.93,  84: 0.81, 85: 0.71
+};
 
 const app = {
     navigate: tab => {
@@ -29,15 +47,67 @@ const calc = {
         html('res_he', `50%: ${fmt(h50 * vH * 1.5)} | 100%: ${fmt(h100 * vH * 2)} <br><b>Total: ${fmt((h50 * vH * 1.5) + (h100 * vH * 2))}</b>`);
     },
     decimos: () => {
-        const d3 = val('dec_ingresos') / 12, d4 = (SBU / 12) * val('dec_meses');
-        html('res_dec', `13ro: ${fmt(d3)} | 14to: ${fmt(d4)} <br><b>Total: ${fmt(d3 + d4)}</b>`);
+        // CORRECCIÓN ID CRÍTICA: Aseguramos que lea 'dec_sueldo'
+        const sueldo = val('dec_sueldo'); 
+        const meses = val('dec_meses');
+        
+        // 13ro: Si ganas $561 y trabajas 12 meses, recibes $561.
+        // Fórmula: (Sueldo * Meses) / 12
+        const d3 = (sueldo * meses) / 12;
+        
+        // 14to: (482 * Meses) / 12
+        const d4 = (SBU * meses) / 12; 
+        
+        html('res_dec', `
+            <div style="display:flex; justify-content:space-between;">
+                <span>13ro (Sueldo):</span> <b>${fmt(d3)}</b>
+            </div>
+            <div style="display:flex; justify-content:space-between;">
+                <span>14to (Bono):</span> <b>${fmt(d4)}</b>
+            </div>
+            <div style="margin-top:5px; border-top:1px solid #ccc; padding-top:5px; text-align:right;">
+                Total a recibir: <b style="color:#2563eb; font-size:1.1rem">${fmt(d3 + d4)}</b>
+            </div>
+        `);
     },
     jubilacion: () => {
-        const p = val('jub_prom'), a = val('jub_anios');
-        if (a < 20) return html('res_jub', '<b style="color:red">Mínimo 20 años requeridos.</b>');
-        let men = ((p * 0.05 * a) / 10.6033) / 12; // Coeficiente legal (60 años)
-        men = Math.max(30, Math.min(men, SBU)); // Topes legales: Min $30, Max $482
-        html('res_jub', `Pensión Mensual Jubilar: <b style="color:green; font-size:1.2rem">${fmt(men)}</b>`);
+        const p = val('jub_prom'), a = val('jub_anios'), edad = parseInt($('jub_edad').value) || 60;
+        
+        if (a < 20 && a < 25) return html('res_jub', '<b style="color:red">Mínimo 20 años requeridos.</b>');
+        
+        // Coeficiente
+        let coef = COEFICIENTES[edad];
+        if (!coef) coef = edad < 40 ? 31.97 : 0.71; 
+
+        // Matemática Pura
+        const haber = (p * 0.05) * a;
+        let anual = haber / coef;
+        let mensualReal = anual / 12; 
+
+        // Aplicación de Topes Legales
+        let mensualFinal = mensualReal;
+        let nota = "";
+        
+        if (mensualReal < 30) { 
+            mensualFinal = 30; 
+            nota = "⚠️ Sube a Mínimo Legal"; 
+        } else if (mensualReal > SBU) { 
+            mensualFinal = SBU; 
+            nota = "⚠️ Tope Máximo SBU"; 
+        }
+
+        html('res_jub', `
+            <div style="font-size:0.85rem; color:#555; background:#f8fafc; padding:8px; border-radius:4px;">
+                1. Haber (Prom ${fmt(p)} x 5% x ${a} años): <b>${fmt(haber)}</b><br>
+                2. Coeficiente (Edad ${edad}): <b>${coef}</b><br>
+                3. Cálculo Matemático: ${fmt(haber)} / ${coef} / 12 = <b>${fmt(mensualReal)}</b>
+            </div>
+            <div style="margin-top:10px; text-align:center;">
+                Pensión Mensual a Pagar:<br>
+                <b style="color:green; font-size:1.4rem">${fmt(mensualFinal)}</b><br>
+                <small style="color:#d97706; font-weight:bold;">${nota}</small>
+            </div>
+        `);
     },
     losep: () => html('res_losep', `Indemnización: <b>${fmt(Math.min((SBU * 5) * val('losep_anios'), SBU * 150))}</b>`)
 };
@@ -84,6 +154,6 @@ const bot = {
 window.onload = () => { 
     legal.init(); 
     if(window.innerWidth <= 768) setTimeout(() => $('mobile-legal-footer').style.display = 'none', 3000); 
-    // Mapeo global para HTML onclicks
+    // Mapeo global
     window.app = app; window.calculators = calc; window.agreements = legal; window.cv = cv; window.chatbot = bot;
 };

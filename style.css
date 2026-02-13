@@ -1,42 +1,23 @@
 /* ==========================================================================
-   LABORALEC PRO - DISEÑO "DARK ENGINEERING" (MODO OSCURO)
-   Ingeniero Alask - Optimizado para Descanso Visual
+   LABORALEC PRO - DISEÑO "PATRIOT" (MODO OSCURO + BANDERA)
+   Ingeniero Alask
    ========================================================================== */
 
 :root {
-    /* --- PALETA OSCURA PROFESIONAL --- */
-    --bg-body: #0f172a;       /* Fondo Principal (Azul Noche Profundo) */
-    --bg-card: #1e293b;       /* Fondo Tarjetas (Azul Acero Oscuro) */
-    --bg-input: #334155;      /* Fondo Inputs */
+    --bg-body: #0f172a;       
+    --bg-card: #1e293b;       
+    --color-primary: #3b82f6; 
+    --color-accent: #60a5fa;  
+    --border-color: #334155;  
+    --text-main: #f1f5f9;     
+    --text-muted: #94a3b8;    
     
-    /* --- ACENTOS & BORDES --- */
-    --color-primary: #3b82f6; /* Azul Brillante (Botones/Enlaces) */
-    --color-accent: #60a5fa;  /* Azul Claro (Hover) */
-    --border-color: #334155;  /* Bordes sutiles */
-    
-    /* --- TEXTOS --- */
-    --text-main: #f1f5f9;     /* Texto Principal (Blanco Humo) */
-    --text-muted: #94a3b8;    /* Texto Secundario (Gris) */
-    
-    /* --- INDICADORES --- */
-    --color-success: #10b981; /* Verde Éxito */
-    --color-warning: #f59e0b; /* Amarillo Alerta */
-    --color-danger: #ef4444;  /* Rojo Error */
-
-    /* --- BANDERA ECUADOR (LOGO) --- */
-    --flag-yellow: #FFD100;
-    --flag-blue: #005EB8;
-    --flag-red: #EF3340;
-
-    /* --- EFECTOS --- */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    /* COLORES OFICIALES BANDERA ECUADOR */
+    --ec-yellow: #FFD100;
+    --ec-blue: #005EB8;
+    --ec-red: #EF3340;
 }
 
-/* === RESET & BASE === */
 * { box-sizing: border-box; outline: none; margin: 0; padding: 0; }
 
 body {
@@ -48,17 +29,11 @@ body {
     min-height: 100vh;
 }
 
-/* Scrollbar Personalizado (Estilo Hacker) */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--bg-body); }
-::-webkit-scrollbar-thumb { background: var(--bg-input); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
-
-/* === HEADER (EL COMANDO) === */
+/* === HEADER CON ESCUDO === */
 header {
-    background: rgba(15, 23, 42, 0.95); /* Semi-transparente */
+    background: rgba(15, 23, 42, 0.95);
     border-bottom: 1px solid var(--border-color);
-    padding: 1.5rem 0;
+    padding: 1rem 0;
     position: sticky; top: 0; z-index: 50;
     backdrop-filter: blur(10px);
 }
@@ -68,42 +43,60 @@ header {
     display: flex; justify-content: space-between; align-items: center;
 }
 
-.brand-logo h1 {
-    font-size: 2rem; font-weight: 900; letter-spacing: -1px; margin: 0;
-    background: linear-gradient(180deg, var(--flag-yellow) 30%, var(--flag-blue) 60%, var(--flag-red) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+/* LOGO TIPO FLAGG (BANDERA) */
+.brand-wrapper {
+    display: flex; align-items: center; gap: 15px; /* Espacio entre escudo y texto */
 }
-.brand-logo span {
-    display: block; font-size: 0.75rem; color: var(--text-muted);
-    letter-spacing: 3px; font-weight: 500; margin-top: -5px;
+
+.escudo-img {
+    height: 60px; /* Tamaño del escudo */
+    width: auto;
+    filter: drop-shadow(0 0 8px rgba(255, 209, 0, 0.3)); /* Resplandor dorado */
+}
+
+.brand-text h1 {
+    font-size: 2.5rem; font-weight: 900; letter-spacing: -1px; margin: 0; line-height: 1;
+    text-transform: uppercase;
+    
+    /* EL DEGRADADO DE LA BANDERA (50% Amarillo, 25% Azul, 25% Rojo) */
+    background: linear-gradient(180deg, 
+        var(--ec-yellow) 0%, 
+        var(--ec-yellow) 45%, 
+        var(--ec-blue) 45%, 
+        var(--ec-blue) 72%, 
+        var(--ec-red) 72%, 
+        var(--ec-red) 100%);
+    
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 0px rgba(0,0,0,0.5)); /* Sombra para legibilidad */
+}
+
+.brand-text span {
+    display: block; font-size: 0.7rem; color: var(--text-muted);
+    letter-spacing: 4px; font-weight: 500; margin-top: 2px;
 }
 
 .system-status {
-    background: var(--bg-input); padding: 6px 16px; border-radius: 50px;
+    background: var(--bg-card); padding: 8px 16px; border-radius: 50px;
     font-size: 0.85rem; border: 1px solid var(--border-color);
     display: flex; align-items: center; gap: 8px;
 }
-.status-dot { width: 8px; height: 8px; background: var(--color-success); border-radius: 50%; box-shadow: 0 0 8px var(--color-success); }
+.status-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; box-shadow: 0 0 8px #10b981; }
 
 /* === NAVEGACIÓN === */
-.nav-wrapper {
-    background: var(--bg-card); border-bottom: 1px solid var(--border-color);
-    margin-bottom: 30px;
-}
-.nav-tabs {
-    max-width: 1200px; margin: 0 auto; display: flex; gap: 20px; padding: 0 20px;
-}
+.nav-wrapper { background: var(--bg-card); border-bottom: 1px solid var(--border-color); margin-bottom: 30px; }
+.nav-tabs { max-width: 1200px; margin: 0 auto; display: flex; gap: 20px; padding: 0 20px; }
 .tab-btn {
     background: transparent; border: none; padding: 15px 0;
     color: var(--text-muted); font-weight: 500; cursor: pointer;
-    border-bottom: 3px solid transparent; transition: var(--transition);
+    border-bottom: 3px solid transparent; transition: 0.2s;
     display: flex; align-items: center; gap: 8px; font-size: 0.95rem;
 }
 .tab-btn:hover { color: var(--text-main); }
 .tab-btn.active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
 
-/* === CONTENIDO & TARJETAS === */
+/* === TARJETAS === */
 .main-content { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 .tab-pane { display: none; animation: fadeIn 0.4s ease; }
 .tab-pane.active { display: block; }
@@ -114,135 +107,73 @@ header {
 
 .card {
     background: var(--bg-card); border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+    border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
     overflow: hidden; display: flex; flex-direction: column;
 }
-.card:hover { border-color: var(--text-muted); box-shadow: var(--shadow-lg); transform: translateY(-2px); }
-
 .card-header {
     background: rgba(0,0,0,0.2); padding: 15px 20px;
     border-bottom: 1px solid var(--border-color);
     display: flex; justify-content: space-between; align-items: center;
 }
-.card-header h3 { font-size: 1.1rem; color: var(--text-main); margin: 0; display: flex; align-items: center; gap: 10px; }
+.card-header h3 { font-size: 1.1rem; color: var(--text-main); margin: 0; }
 .card-body { padding: 20px; }
 
-/* === FORMULARIOS (MODO OSCURO) === */
+/* === FORMULARIOS === */
 .form-group { margin-bottom: 18px; }
-.form-group label {
-    display: block; font-size: 0.8rem; font-weight: 600;
-    color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;
-}
+.form-group label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
 input, select, textarea {
-    width: 100%; padding: 10px 14px;
-    background: var(--bg-body); border: 1px solid var(--border-color);
-    border-radius: var(--radius-md); color: var(--text-main);
-    font-size: 0.95rem; transition: var(--transition); font-family: inherit;
+    width: 100%; padding: 10px 14px; background: var(--bg-body); 
+    border: 1px solid var(--border-color); border-radius: 8px; 
+    color: var(--text-main); font-size: 0.95rem;
 }
-input:focus, select:focus, textarea:focus {
-    border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-}
+input:focus { border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
 
-/* === BOTONES === */
+/* === BOTONES & RESULTADOS === */
 .btn {
-    width: 100%; padding: 12px; border: none; border-radius: var(--radius-md);
-    font-weight: 600; cursor: pointer; text-transform: uppercase; font-size: 0.9rem;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    transition: var(--transition);
+    width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; text-transform: uppercase;
+    transition: 0.2s; margin-top: 10px;
 }
 .btn-primary { background: var(--color-primary); color: white; }
-.btn-primary:hover { background: var(--color-accent); transform: scale(1.02); }
-.btn-action { background: var(--color-success); color: white; } /* Verde para acciones */
-.btn-action:hover { filter: brightness(1.1); transform: scale(1.02); }
+.btn-primary:hover { background: var(--color-accent); }
+.btn-action { background: #10b981; color: white; }
 
-/* === PANELES DE RESULTADOS === */
 .result-panel {
     margin-top: 20px; background: rgba(59, 130, 246, 0.1);
-    border: 1px solid var(--color-primary); border-radius: var(--radius-md);
-    padding: 15px; display: none; animation: slideDown 0.3s;
+    border: 1px solid var(--color-primary); border-radius: 8px;
+    padding: 15px; display: none;
 }
-@keyframes slideDown { from {opacity:0; height:0;} to {opacity:1; height:auto;} }
 
-.result-panel b { color: var(--color-accent); font-size: 1.1rem; }
-.result-panel small { color: var(--text-muted); }
-
-/* === ESPECÍFICO: BIBLIOTECA LEGAL === */
+/* === LEGAL & CV === */
 .legal-layout { display: grid; grid-template-columns: 320px 1fr; gap: 25px; height: 600px; }
-.legal-sidebar { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; display: flex; flex-direction: column; }
-.search-box { padding: 15px; background: rgba(0,0,0,0.2); border-bottom: 1px solid var(--border-color); }
+.legal-sidebar { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
+.search-box { padding: 15px; background: rgba(0,0,0,0.2); }
 .legal-list { overflow-y: auto; flex: 1; }
-
-.doc-item {
-    padding: 15px; border-bottom: 1px solid var(--border-color); cursor: pointer; transition: 0.2s;
-}
+.doc-item { padding: 15px; border-bottom: 1px solid var(--border-color); cursor: pointer; }
 .doc-item:hover { background: var(--bg-body); }
-.doc-item b { color: var(--color-primary); display: block; margin-bottom: 4px; }
-.doc-item div { font-size: 0.85rem; color: var(--text-muted); }
+.legal-viewer { background: var(--bg-card); border-radius: 12px; padding: 30px; overflow-y: auto; border: 1px solid var(--border-color); }
+.pdf-content-sim { background: white; color: #111; padding: 40px; min-height: 500px; }
 
-.legal-viewer {
-    background: var(--bg-card); border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg); padding: 30px; overflow-y: auto;
-}
-.pdf-content-sim {
-    background: white; color: #1e293b; /* Simulación de papel blanco */
-    padding: 40px; border-radius: 4px; min-height: 500px;
-}
-.pdf-placeholder { text-align: center; color: var(--text-muted); margin-top: 25%; }
-
-/* === CHATBOT FLOTANTE === */
-.chat-fab {
-    position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
-    background: var(--color-primary); color: white; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; font-size: 24px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3); cursor: pointer; transition: 0.3s; z-index: 100;
-}
-.chat-fab:hover { transform: scale(1.1) rotate(15deg); }
-
-.chat-window {
-    position: fixed; bottom: 100px; right: 30px; width: 350px; height: 500px;
-    background: var(--bg-card); border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg); display: none; flex-direction: column;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5); z-index: 99; overflow: hidden;
-}
-.chat-header { background: var(--color-primary); color: white; padding: 15px; font-weight: bold; display: flex; justify-content: space-between; }
-.chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-.msg { padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; max-width: 85%; }
-.msg.bot { background: var(--bg-body); color: var(--text-main); align-self: flex-start; border: 1px solid var(--border-color); }
+/* === CHAT & FOOTER === */
+.chat-fab { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--color-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; z-index: 100; box-shadow: 0 0 15px rgba(59,130,246,0.5); }
+.chat-window { position: fixed; bottom: 100px; right: 30px; width: 350px; height: 500px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; display: none; flex-direction: column; z-index: 99; }
+.chat-header { background: var(--color-primary); padding: 15px; color: white; font-weight: bold; display: flex; justify-content: space-between; }
+.chat-body { flex: 1; padding: 15px; overflow-y: auto; }
+.msg { padding: 8px 12px; border-radius: 8px; margin-bottom: 10px; font-size: 0.9rem; }
+.msg.bot { background: var(--bg-body); border: 1px solid var(--border-color); }
 .msg.user { background: var(--color-primary); color: white; align-self: flex-end; }
 .chat-footer { padding: 15px; border-top: 1px solid var(--border-color); display: flex; gap: 10px; }
 
-/* === FOOTER LEGAL === */
-.legal-footer {
-    text-align: center; font-size: 0.75rem; color: var(--text-muted);
-    padding: 20px; border-top: 1px solid var(--border-color);
-    background: var(--bg-body); position: fixed; bottom: 0; width: 100%; z-index: 40;
-}
+.legal-footer { text-align: center; padding: 20px; font-size: 0.75rem; color: var(--text-muted); background: var(--bg-body); position: fixed; bottom: 0; width: 100%; border-top: 1px solid var(--border-color); }
 
-/* === MODALES === */
-.modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
-    display: none; align-items: center; justify-content: center; z-index: 2000;
-}
-.modal-content {
-    background: var(--bg-card); padding: 30px; border-radius: var(--radius-lg);
-    width: 400px; text-align: center; border: 1px solid var(--border-color);
-}
-
-/* === ESTILOS IMPRESIÓN (CV) === */
+/* === PRINT === */
 @media print {
     body { background: white; color: black; }
-    .nav-wrapper, .legal-footer, .chat-fab, .chat-window, header { display: none !important; }
-    .cv-preview-container { background: white; padding: 0; height: auto; border: none; }
-    .cv-paper { transform: scale(1); box-shadow: none; width: 100%; margin: 0; }
-    /* Ocultar botones y paneles innecesarios */
-    .btn, .card-header button, #tab-calculadoras, #tab-acuerdos { display: none !important; }
+    header, .nav-wrapper, .chat-fab, .legal-footer { display: none; }
+    .cv-paper { width: 100%; box-shadow: none; margin: 0; transform: scale(1); }
+    .btn { display: none; }
 }
-
 /* === RESPONSIVE === */
 @media (max-width: 768px) {
-    .legal-layout { grid-template-columns: 1fr; height: auto; }
-    .legal-sidebar { height: 300px; }
-    .legal-viewer { height: 500px; }
-    .grid-2 { grid-template-columns: 1fr; }
+    .legal-layout { grid-template-columns: 1fr; }
+    .header-container { flex-direction: column; gap: 15px; }
 }

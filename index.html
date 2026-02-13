@@ -4,91 +4,37 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LABORALEC PRO 2026 | SISTEMA JURÍDICO INTEGRADO</title>
+    <title>LABORALEC PRO 2026 | Sistema Jurídico Integrado</title>
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=9.9">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=10.2">
 
     <style>
-        /* Estilos Potenciados para la Base de Datos Legal */
-        .legal-universe {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-            font-family: 'Inter', sans-serif;
+        /* Estilos de la Enciclopedia Pro */
+        .legal-universe { max-width: 1100px; margin: 0 auto; padding: 20px; }
+        .hero-legal {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white; padding: 40px; border-radius: 20px;
+            margin-bottom: 30px; text-align: center; border: 1px solid rgba(255,255,255,0.1);
         }
-
-        .legal-header-box {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            color: white;
-            padding: 40px;
-            border-radius: 16px;
-            margin-bottom: 30px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
         .legal-item {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            overflow: hidden;
+            background: white; border: 1px solid #e2e8f0;
+            border-radius: 12px; margin-bottom: 15px; overflow: hidden;
             transition: all 0.3s ease;
         }
-
-        .legal-item:hover {
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border-color: #3b82f6;
-        }
-
+        .legal-item:hover { border-color: #3b82f6; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
         summary {
-            padding: 20px;
-            cursor: pointer;
-            list-style: none;
-            display: flex;
-            align-items: center;
-            font-weight: 700;
-            color: #1e293b;
-            background: #f8fafc;
+            padding: 20px; cursor: pointer; list-style: none;
+            display: flex; align-items: center; font-weight: 700; color: #1e293b;
         }
-
-        summary::-webkit-details-marker { display: none; }
-
         .art-badge {
-            background: #3b82f6;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            margin-right: 15px;
-            text-transform: uppercase;
+            background: #3b82f6; color: white; padding: 4px 12px;
+            border-radius: 6px; font-size: 0.75rem; margin-right: 15px;
         }
-
-        .legal-content {
-            padding: 25px;
-            border-top: 1px solid #e2e8f0;
-            line-height: 1.8;
-            color: #475569;
-        }
-
-        .legal-content h4 {
-            color: #0f172a;
-            border-left: 4px solid #3b82f6;
-            padding-left: 10px;
-            margin: 20px 0 10px 0;
-        }
-
-        .tech-note {
-            background: #f1f5f9;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            border-left: 4px solid #64748b;
-            margin: 15px 0;
-        }
-
+        .legal-content { padding: 25px; border-top: 1px solid #f1f5f9; line-height: 1.8; color: #475569; }
+        .legal-content h4 { color: #0f172a; margin: 20px 0 10px 0; display: flex; align-items: center; gap: 8px; }
+        .tech-note { background: #f1f5f9; padding: 15px; border-radius: 8px; border-left: 4px solid #3b82f6; margin: 15px 0; }
         .tab-pane { display: none; }
         .tab-pane.active { display: block; }
     </style>
@@ -117,7 +63,7 @@
                 <i class="fas fa-calculator"></i> Calculadoras
             </button>
             <button class="tab-btn" onclick="app.navigate('tab-base-legal')">
-                <i class="fas fa-gavel"></i> Base Legal Detallada
+                <i class="fas fa-book"></i> Enciclopedia Legal
             </button>
             <button class="tab-btn" onclick="app.navigate('tab-cv')">
                 <i class="fas fa-file-signature"></i> Hoja de Vida
@@ -129,125 +75,151 @@
 
         <div id="tab-calculadoras" class="tab-pane active">
             <div class="grid-3">
+                
                 <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-hand-holding-medical"></i> Aportes IESS</h3></div>
+                    <div class="card-header"><h3><i class="fas fa-hand-holding-medical" style="color:#60a5fa"></i> Aportes IESS</h3></div>
                     <div class="card-body">
                         <div class="form-group"><label>Sueldo Nominal ($)</label><input type="number" id="iess_sueldo" value="482.00"></div>
                         <div class="form-group">
                             <label>Régimen</label>
                             <select id="iess_tipo">
-                                <option value="privado">Sector Privado</option>
-                                <option value="publico">Sector Público</option>
+                                <option value="privado">Sector Privado (9.45%)</option>
+                                <option value="publico">Sector Público (11.45%)</option>
                             </select>
                         </div>
-                        <button class="btn btn-primary" onclick="calculators.iess()">Calcular</button>
+                        <div class="form-group">
+                             <label><input type="checkbox" id="iess_fr"> Acumula Fondo de Reserva</label>
+                        </div>
+                        <button class="btn btn-primary" onclick="calculators.iess()">Calcular Aportaciones</button>
                         <div id="res_iess" class="result-panel"></div>
                     </div>
                 </div>
 
                 <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-door-open"></i> Liquidación Final</h3></div>
+                    <div class="card-header"><h3><i class="fas fa-door-open" style="color:#ef4444"></i> Liquidación Final</h3></div>
                     <div class="card-body">
                         <div class="form-group"><label>Remuneración ($)</label><input type="number" id="liq_sueldo"></div>
-                        <div class="form-group"><label>Años Servicio</label><input type="number" id="liq_anios"></div>
+                        <div class="form-group"><label>Años de Servicio</label><input type="number" id="liq_anios"></div>
                         <div class="form-group">
                             <label>Causal</label>
                             <select id="liq_causa">
-                                <option value="intempestivo">Despido Intempestivo</option>
-                                <option value="renuncia">Renuncia/Desahucio</option>
+                                <option value="intempestivo">Despido Intempestivo (Art. 188)</option>
+                                <option value="renuncia">Renuncia Voluntaria</option>
                             </select>
                         </div>
-                        <button class="btn btn-action" onclick="calculators.liquidacion()">Simular</button>
+                        <button class="btn btn-action" onclick="calculators.liquidacion()">Simular Liquidación</button>
                         <div id="res_liq" class="result-panel"></div>
                     </div>
                 </div>
 
                 <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-clock"></i> Horas Extras</h3></div>
+                    <div class="card-header"><h3><i class="fas fa-clock" style="color:#f59e0b"></i> Horas Extras</h3></div>
                     <div class="card-body">
                         <div class="form-group"><label>Sueldo ($)</label><input type="number" id="he_sueldo"></div>
                         <div class="grid-2">
-                            <div class="form-group"><label>50%</label><input type="number" id="he_50"></div>
-                            <div class="form-group"><label>100%</label><input type="number" id="he_100"></div>
+                            <div class="form-group"><label>Horas 50%</label><input type="number" id="he_50"></div>
+                            <div class="form-group"><label>Horas 100%</label><input type="number" id="he_100"></div>
                         </div>
-                        <button class="btn btn-primary" onclick="calculators.extras()">Calcular</button>
+                        <button class="btn btn-primary" onclick="calculators.extras()">Calcular Recargos</button>
                         <div id="res_he" class="result-panel"></div>
                     </div>
                 </div>
+
+                <div class="card">
+                    <div class="card-header"><h3><i class="fas fa-blind"></i> Jubilación Patronal</h3></div>
+                    <div class="card-body">
+                        <div class="form-group"><label>Sueldo Promedio ($)</label><input type="number" id="jub_prom"></div>
+                        <div class="form-group"><label>Años Servicio</label><input type="number" id="jub_anios"></div>
+                        <div class="form-group"><label>Edad</label><input type="number" id="jub_edad"></div>
+                        <button class="btn btn-primary" onclick="calculators.jubilacion()">Calcular Pensión</button>
+                        <div id="res_jub" class="result-panel"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h3><i class="fas fa-coins"></i> Décimos</h3></div>
+                    <div class="card-body">
+                        <div class="form-group"><label>Sueldo ($)</label><input type="number" id="dec_sueldo"></div>
+                        <div class="form-group"><label>Meses</label><input type="number" id="dec_meses" value="12"></div>
+                        <button class="btn btn-action" onclick="calculators.decimos()">Calcular Acumulado</button>
+                        <div id="res_dec" class="result-panel"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h3><i class="fas fa-landmark"></i> LOSEP</h3></div>
+                    <div class="card-body">
+                        <div class="form-group"><label>RMU ($)</label><input type="number" id="losep_rmu"></div>
+                        <div class="form-group"><label>Años</label><input type="number" id="losep_anios"></div>
+                        <button class="btn btn-action" onclick="calculators.losep()">Simular LOSEP</button>
+                        <div id="res_losep" class="result-panel"></div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
         <div id="tab-base-legal" class="tab-pane">
             <div class="legal-universe">
-                <div class="legal-header-box">
-                    <h2>Compendio Normativo Laboral 2026</h2>
-                    <p>Referencia técnica del Código del Trabajo para profesionales y ciudadanos.</p>
+                <div class="hero-legal">
+                    <h1>Biblioteca Normativa Laboral 2026</h1>
+                    <p>Compendio detallado de derechos y protecciones especiales en Ecuador.</p>
                 </div>
 
-                <details class="legal-item">
-                    <summary><span class="art-badge">Art. 55</span> Horas Suplementarias y Extraordinarias</summary>
-                    <div class="legal-content">
-                        <h4>Definiciones y Recargos</h4>
-                        <p>El Código establece que la jornada laboral máxima es de 8 horas diarias y 40 semanales. Cualquier tiempo excedente debe ser remunerado con los siguientes recargos:</p>
-                        <ul>
-                            <li><strong>Jornada Suplementaria (50%):</strong> Se genera tras finalizar la jornada ordinaria. No puede exceder de 4 horas al día ni 12 a la semana.</li>
-                            <li><strong>Jornada Extraordinaria (100%):</strong> Se genera por trabajo en días sábados, domingos, feriados, o en el periodo comprendido entre las 24h00 y las 06h00.</li>
-                        </ul>
-                        <div class="tech-note">
-                            <strong>Fórmula Técnica:</strong> (Sueldo / 240) * Factor de Recargo (1.5 o 2.0) * Número de horas.
+                <div class="legal-grid">
+                    
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Art. 155</span> Guarderías y Cuidado Infantil</summary>
+                        <div class="legal-content">
+                            <h4><i class="fas fa-baby-carriage"></i> Obligación de Guardería</h4>
+                            <p>En empresas con 50 o más trabajadores, el empleador debe establecer el servicio de guardería gratuito para hijos de trabajadores.</p>
+                            <div class="tech-note">Si no hay guardería propia, se puede pagar un bono de guardería mensual regulado por ley.</div>
                         </div>
-                    </div>
-                </details>
+                    </details>
 
-                <details class="legal-item">
-                    <summary><span class="art-badge">Art. 111-113</span> Décimos (13ro y 14to Sueldo)</summary>
-                    <div class="legal-content">
-                        <h4>Bonificaciones Anuales</h4>
-                        <p>Derechos irrenunciables que pueden ser acumulados o pagados mensualmente:</p>
-                        <ul>
-                            <li><strong>Décimo Tercero:</strong> Doceava parte de todo lo percibido en el año (incluye horas extras y comisiones). Periodo: 1 dic - 30 nov.</li>
-                            <li><strong>Décimo Cuarto:</strong> Un Salario Básico Unificado ($482) dividido para 12. Periodo Sierra/Amazonía: 1 ago - 31 jul. Costa/Insular: 1 mar - 28 feb.</li>
-                        </ul>
-                    </div>
-                </details>
-
-                <details class="legal-item">
-                    <summary><span class="art-badge">Art. 188</span> Despido Intempestivo e Indemnizaciones</summary>
-                    <div class="legal-content">
-                        <h4>Escala de Indemnización</h4>
-                        <p>Cuando la relación laboral termina unilateralmente por parte del empleador sin causa legal:</p>
-                        <div class="tech-note">
-                            <strong>Escala según tiempo de servicio:</strong><br>
-                            - Hasta 3 años: 3 meses de la última remuneración.<br>
-                            - Más de 3 años: 1 mes de sueldo por cada año de servicio, hasta un máximo de 25 meses.
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Ley Salud</span> Enfermedades Catastróficas y Raras</summary>
+                        <div class="legal-content">
+                            <h4><i class="fas fa-heartbeat"></i> Estabilidad Reforzada</h4>
+                            <p>Prohibición de despido para trabajadores con enfermedades catastróficas. El despido se considera ineficaz.</p>
+                            <div class="tech-note">Indemnización: Se suma 1 año de sueldo adicional a la indemnización normal.</div>
                         </div>
-                        <p>En casos de <strong>Despido Ineficaz</strong> (embarazo o dirigentes sindicales), la indemnización se incrementa con el valor de un año de remuneración adicional.</p>
-                    </div>
-                </details>
+                    </details>
 
-                <details class="legal-item">
-                    <summary><span class="art-badge">Art. 216</span> Jubilación Patronal</summary>
-                    <div class="legal-content">
-                        <h4>Pensión Vitalicia</h4>
-                        <p>El trabajador que cumpla 25 años de servicio para el mismo empleador adquiere el derecho a una pensión vitalicia mensual.</p>
-                        <h4>Cálculo de la Pensión:</h4>
-                        <p>Se basa en el promedio de las remuneraciones de los últimos 5 años. Intervienen factores como la edad del trabajador y los años totales de servicio, aplicando tablas actuariales del IESS.</p>
-                    </div>
-                </details>
+                    <details class="legal-item">
+                        <summary><span class="art-badge">L.O.D.</span> Personas con Discapacidad y Sustitutos</summary>
+                        <div class="legal-content">
+                            <h4><i class="fas fa-hands-helping"></i> El Rol del Sustituto Laboral</h4>
+                            <p>El sustituto es quien cuida a una persona con discapacidad severa y recibe los mismos beneficios de estabilidad.</p>
+                            <div class="tech-note"><strong>Indemnización Especial:</strong> El despido de un sustituto conlleva el pago de 18 meses de sueldo (Art. 51 LOD).</div>
+                        </div>
+                    </details>
+
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Art. 55</span> Horas Extras (Recargos)</summary>
+                        <div class="legal-content"><p>Suplementarias: 50% de recargo. Extraordinarias: 100% de recargo.</p></div>
+                    </details>
+
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Art. 216</span> Jubilación Patronal</summary>
+                        <div class="legal-content"><p>Derecho vitalicio tras 25 años de servicio para el mismo empleador.</p></div>
+                    </details>
+
+                </div>
             </div>
         </div>
 
         <div id="tab-cv" class="tab-pane">
             <div class="legal-universe" style="text-align:center;">
-                <h2>Generador de Hoja de Vida</h2>
-                <p>Módulo activo. Complete su información para exportar el perfil profesional.</p>
-                </div>
+                <h2>Generador de CV Profesional</h2>
+                <p>Módulo de edición y exportación PDF activo.</p>
+            </div>
         </div>
 
     </main>
 
     <footer class="legal-footer">
-        <p>LABORALEC PRO 2026 | Consultoría Técnica Legal Automatizada.</p>
+        <p>LABORALEC PRO 2026 | Información legal de alta precisión.</p>
     </footer>
 
     <script src="script.js?v=6.0"></script>

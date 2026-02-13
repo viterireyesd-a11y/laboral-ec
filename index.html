@@ -7,35 +7,41 @@
     <title>LABORALEC PRO 2026 | Sistema Jurídico Integrado</title>
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=11.2">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=11.5">
 
     <style>
+        /* Estilos Base Preservados */
         .legal-universe { max-width: 1100px; margin: 0 auto; padding: 20px; }
         .hero-legal {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             color: white; padding: 40px; border-radius: 20px;
             margin-bottom: 30px; text-align: center; border: 1px solid rgba(255,255,255,0.1);
         }
-        .legal-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+        .legal-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
         .legal-item {
             background: white; border: 1px solid #e2e8f0;
-            border-radius: 12px; margin-bottom: 15px; overflow: hidden;
+            border-radius: 12px; overflow: hidden;
             transition: all 0.3s ease;
         }
-        .legal-item:hover { border-color: #3b82f6; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        .legal-item:hover { border-color: #3b82f6; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
         summary {
             padding: 20px; cursor: pointer; list-style: none;
             display: flex; align-items: center; font-weight: 700; color: #1e293b;
+            background: #fff;
         }
+        summary:hover { background: #f8fafc; }
         .art-badge {
             background: #3b82f6; color: white; padding: 4px 12px;
-            border-radius: 6px; font-size: 0.75rem; margin-right: 15px;
+            border-radius: 6px; font-size: 0.75rem; margin-right: 15px; font-family: 'Roboto Mono', monospace; min-width: 80px; text-align: center;
         }
         .legal-content { padding: 25px; border-top: 1px solid #f1f5f9; line-height: 1.8; color: #475569; }
-        .law-box { background: #f8fafc; padding: 20px; border-left: 4px solid #3b82f6; border-radius: 0 8px 8px 0; font-style: italic; margin: 15px 0; }
-        .tech-note { background: #f1f5f9; padding: 15px; border-radius: 8px; border-left: 4px solid #3b82f6; margin: 15px 0; }
-        
+        .law-box { background: #f8fafc; padding: 15px; border-left: 4px solid #3b82f6; border-radius: 0 6px 6px 0; font-style: italic; margin: 15px 0; font-size: 0.95rem; }
+        .tech-note { background: #eff6ff; padding: 15px; border-radius: 8px; border: 1px solid #bfdbfe; margin: 15px 0; font-size: 0.9rem; }
+        .tech-table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9rem; }
+        .tech-table th, .tech-table td { border: 1px solid #e2e8f0; padding: 8px; text-align: left; }
+        .tech-table th { background: #f1f5f9; color: #1e293b; }
+
         .tab-pane { display: none; animation: fadeIn 0.3s ease; }
         .tab-pane.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -84,7 +90,6 @@
 
         <div id="tab-calculadoras" class="tab-pane active">
             <div class="grid-calculadoras">
-                
                 <div class="card">
                     <div class="card-header"><h3><i class="fas fa-hand-holding-medical" style="color:#60a5fa"></i> Aportes IESS</h3></div>
                     <div class="card-body">
@@ -109,7 +114,7 @@
                         <div class="form-group">
                             <label>Causal</label>
                             <select id="liq_causa">
-                                <option value="intempestivo">Despido Intempestivo (Art. 188)</option>
+                                <option value="intempestivo">Despido Intempestivo</option>
                                 <option value="renuncia">Renuncia / Desahucio</option>
                             </select>
                         </div>
@@ -161,52 +166,165 @@
                         <div id="res_losep" class="result-panel"></div>
                     </div>
                 </div>
-
             </div>
         </div>
 
         <div id="tab-base-legal" class="tab-pane">
             <div class="legal-universe">
                 <div class="hero-legal">
-                    <h1>Enciclopedia Jurídica del Trabajo 2026</h1>
-                    <p>Referencia técnica exhaustiva sobre derechos, estabilidad y protecciones especiales.</p>
+                    <h1>Compendio Jurídico Laboral 2026</h1>
+                    <p>Los 15 Pilares Fundamentales del Código del Trabajo Ecuatoriano.</p>
                 </div>
 
                 <div class="legal-grid">
+                    
                     <details class="legal-item" open>
-                        <summary><span class="art-badge">Art. 155</span> Guarderías y Cuidado Infantil</summary>
+                        <summary><span class="art-badge">Art. 55</span> Horas Suplementarias y Extraordinarias</summary>
                         <div class="legal-content">
-                            <h4>Protección a la Familia Trabajadora</h4>
-                            <p>Toda empresa con 50 o más trabajadores está obligada a proveer centros de cuidado gratuitos.</p>
-                            <div class="law-box">"El servicio será gratuito y se mantendrá hasta que el niño cumpla 5 años."</div>
+                            <h4>Régimen de Recargos</h4>
+                            <p>Compensación obligatoria por trabajo fuera de la jornada legal.</p>
+                            <table class="tech-table">
+                                <tr><th>Tipo</th><th>Recargo</th><th>Límite</th></tr>
+                                <tr><td>Suplementaria</td><td>50%</td><td>Hasta las 24H00 (Máx 4h diarias).</td></tr>
+                                <tr><td>Extraordinaria</td><td>100%</td><td>Sábados, Domingos y Feriados.</td></tr>
+                            </table>
                         </div>
                     </details>
-                    
+
                     <details class="legal-item">
-                        <summary><span class="art-badge">Ley Salud</span> Enfermedades Catastróficas</summary>
+                        <summary><span class="art-badge">Art. 69</span> Derecho a Vacaciones</summary>
                         <div class="legal-content">
-                            <h4>Estabilidad Laboral Reforzada</h4>
-                            <p>Protección contra el despido ineficaz para trabajadores con patologías catastróficas o raras.</p>
-                            <div class="tech-note"><strong>Efecto:</strong> El despido conlleva una indemnización de 12 meses de sueldo adicionales por ley.</div>
+                            <h4>Periodo de Descanso</h4>
+                            <p>Derecho irrenunciable a 15 días de descanso tras un año de trabajo.</p>
+                            <div class="tech-note"><strong>Regla de Antigüedad:</strong> A partir del 5to año en la misma empresa, se suma 1 día extra de vacaciones por cada año adicional (hasta 15 extra).</div>
+                        </div>
+                    </details>
+
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Art. 97</span> Participación de Utilidades</summary>
+                        <div class="legal-content">
+                            <h4>Distribución del 15%</h4>
+                            <p>El empleador debe repartir el 15% de las utilidades líquidas.</p>
+                            <ul>
+                                <li><strong>10% Individual:</strong> Para todos los trabajadores por igual (según días laborados).</li>
+                                <li><strong>5% Cargas:</strong> Proporcional a cargas familiares (hijos/cónyuge).</li>
+                            </ul>
+                        </div>
+                    </details>
+
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Art. 111</span> Décimo Tercero (Bono Navideño)</summary>
+                        <div class="legal-content">
+                            <h4>Doceava Remuneración</h4>
+                            <p>Corresponde a la doceava parte de todo lo ganado en el año calendario.</p>
+                            <div class="law-box">Fecha máxima de pago: 24 de diciembre.</div>
+                        </div>
+                    </details>
+
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Art. 113</span> Décimo Cuarto (Bono Escolar)</summary>
+                        <div class="legal-content">
+                            <h4>Bonificación Escolar</h4>
+                            <p>Un Salario Básico Unificado completo ($482.00 en 2026).</p>
+                            <p><strong>Costa:</strong> Marzo. <strong>Sierra:</strong> Agosto.</p>
+                        </div>
+                    </details>
+
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Art. 152</span> Licencia por Maternidad</summary>
+                        <div class="legal-content">
+                            <h4>Protección a la Madre</h4>
+                            <p>12 semanas de licencia remunerada por el nacimiento.</p>
+                            <div class="tech-note" style="border-color:#ef4444; background:#fef2f2; color:#b91c1c;">
+                                <strong>Despido Ineficaz:</strong> Prohibido despedir a embarazadas. Multa: 12 sueldos extra.
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Art. 155</span> Guarderías y Cuidado Infantil</summary>
+                        <div class="legal-content">
+                            <h4>Obligación Patronal</h4>
+                            <p>Empresas con 50 o más trabajadores deben tener guardería o pagar servicio externo gratuito para el empleado.</p>
+                        </div>
+                    </details>
+
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Art. 172</span> Causales de Visto Bueno</summary>
+                        <div class="legal-content">
+                            <h4>Despido Justificado</h4>
+                            <p>El empleador puede terminar el contrato sin indemnización por:</p>
+                            <ul>
+                                <li>Faltas repetidas e injustificadas de puntualidad.</li>
+                                <li>Indisciplina o desobediencia grave.</li>
+                                <li>Falta de probidad (conducta inmoral).</li>
+                            </ul>
+                        </div>
+                    </details>
+
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Art. 185</span> Bonificación por Desahucio</summary>
+                        <div class="legal-content">
+                            <h4>Bonificación del 25%</h4>
+                            <p>Pago del 25% de la última remuneración mensual por cada año de servicio completo al terminar la relación laboral.</p>
+                        </div>
+                    </details>
+
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Art. 188</span> Despido Intempestivo</summary>
+                        <div class="legal-content">
+                            <h4>Tabla de Indemnización</h4>
+                            <table class="tech-table">
+                                <tr><th>Tiempo</th><th>Pago</th></tr>
+                                <tr><td>Hasta 3 años</td><td>3 meses de sueldo (Mínimo legal).</td></tr>
+                                <tr><td>Más de 3 años</td><td>1 mes por año (Hasta 25 meses).</td></tr>
+                            </table>
+                        </div>
+                    </details>
+
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Art. 196</span> Fondos de Reserva</summary>
+                        <div class="legal-content">
+                            <h4>Ahorro del 8.33%</h4>
+                            <p>Derecho a partir del segundo año de trabajo (mes 13). Puede acumularse en el IESS o pagarse mensual.</p>
+                        </div>
+                    </details>
+
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Art. 216</span> Jubilación Patronal</summary>
+                        <div class="legal-content">
+                            <h4>Pensión Vitalicia</h4>
+                            <p>Derecho tras cumplir 25 años de servicio con el mismo empleador (continuos o interrumpidos).</p>
                         </div>
                     </details>
 
                     <details class="legal-item">
                         <summary><span class="art-badge">L.O.D.</span> Sustitutos y Discapacidad</summary>
                         <div class="legal-content">
-                            <h4>Derechos del Sustituto Laboral</h4>
-                            <p>El cuidador legal de una persona con discapacidad severa goza de los mismos beneficios de estabilidad.</p>
-                            <div class="tech-note"><strong>Indemnización:</strong> El despido de un sustituto genera el pago de 18 meses de sueldo adicionales.</div>
+                            <h4>Protección Especial</h4>
+                            <p>El cuidador de una persona con discapacidad severa tiene estabilidad laboral.</p>
+                            <div class="tech-note" style="border-color:#ef4444; background:#fef2f2; color:#b91c1c;">
+                                <strong>Indemnización Especial:</strong> 18 meses de sueldo extra si es despedido.
+                            </div>
                         </div>
                     </details>
 
                     <details class="legal-item">
-                        <summary><span class="art-badge">Art. 55</span> Horas Extras y Suplementarias</summary>
+                        <summary><span class="art-badge">Ley Salud</span> Enfermedades Catastróficas</summary>
                         <div class="legal-content">
-                            <h4>Recargos y Jornadas</h4>
-                            <p>Suplementarias (50%): Tras la jornada ordinaria hasta las 24H00. Extraordinarias (100%): Sábados, domingos y feriados.</p>
+                            <h4>Estabilidad Reforzada</h4>
+                            <p>Prohibición absoluta de despido para trabajadores con enfermedades raras o catastróficas.</p>
                         </div>
                     </details>
+
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Art. 347</span> Riesgos del Trabajo</summary>
+                        <div class="legal-content">
+                            <h4>Responsabilidad Patronal</h4>
+                            <p>El empleador debe indemnizar por accidentes ocurridos durante el trabajo o enfermedades profesionales derivadas del mismo.</p>
+                        </div>
+                    </details>
+
                 </div>
             </div>
         </div>
@@ -220,7 +338,7 @@
 
     </main>
 
-    <footer class="legal-footer">
+    <footer class="legal-footer" style="text-align:center; padding:20px; color:#64748b; font-size:0.9rem; margin-top:40px;">
         <p>LABORALEC PRO 2026 | Ingeniería Legal de Precisión.</p>
     </footer>
 

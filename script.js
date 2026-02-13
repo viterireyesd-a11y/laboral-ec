@@ -1,6 +1,6 @@
 /**
- * LABORALEC PRO - VERSIÓN DEFINITIVA 5.0
- * Corrección de Caché y Desglose Matemático Detallado
+ * LABORALEC PRO - VERSIÓN 5.1 (UX MEJORADA)
+ * Ajuste: Jubilación basada en Sueldo Mensual
  */
 
 const SBU = 482.00;
@@ -47,60 +47,45 @@ const calc = {
         html('res_he', `50%: ${fmt(h50 * vH * 1.5)} | 100%: ${fmt(h100 * vH * 2)} <br><b>Total: ${fmt((h50 * vH * 1.5) + (h100 * vH * 2))}</b>`);
     },
     decimos: () => {
-        // CORRECCIÓN ID CRÍTICA: Aseguramos que lea 'dec_sueldo'
         const sueldo = val('dec_sueldo'); 
         const meses = val('dec_meses');
-        
-        // 13ro: Si ganas $561 y trabajas 12 meses, recibes $561.
-        // Fórmula: (Sueldo * Meses) / 12
         const d3 = (sueldo * meses) / 12;
-        
-        // 14to: (482 * Meses) / 12
         const d4 = (SBU * meses) / 12; 
-        
         html('res_dec', `
-            <div style="display:flex; justify-content:space-between;">
-                <span>13ro (Sueldo):</span> <b>${fmt(d3)}</b>
-            </div>
-            <div style="display:flex; justify-content:space-between;">
-                <span>14to (Bono):</span> <b>${fmt(d4)}</b>
-            </div>
+            <div style="display:flex; justify-content:space-between;"><span>13ro (Sueldo):</span> <b>${fmt(d3)}</b></div>
+            <div style="display:flex; justify-content:space-between;"><span>14to (Bono):</span> <b>${fmt(d4)}</b></div>
             <div style="margin-top:5px; border-top:1px solid #ccc; padding-top:5px; text-align:right;">
                 Total a recibir: <b style="color:#2563eb; font-size:1.1rem">${fmt(d3 + d4)}</b>
             </div>
         `);
     },
     jubilacion: () => {
-        const p = val('jub_prom'), a = val('jub_anios'), edad = parseInt($('jub_edad').value) || 60;
+        const sueldoMensual = val('jub_prom'); // Leemos el mensual
+        const promedioAnual = sueldoMensual * 12; // LO ANUALIZAMOS AUTOMÁTICAMENTE
+        const a = val('jub_anios'); 
+        const edad = parseInt($('jub_edad').value) || 60;
         
         if (a < 20 && a < 25) return html('res_jub', '<b style="color:red">Mínimo 20 años requeridos.</b>');
         
-        // Coeficiente
         let coef = COEFICIENTES[edad];
         if (!coef) coef = edad < 40 ? 31.97 : 0.71; 
 
-        // Matemática Pura
-        const haber = (p * 0.05) * a;
+        // Fórmula: (Promedio Anual * 5% * Años) / Coeficiente
+        const haber = (promedioAnual * 0.05) * a;
         let anual = haber / coef;
         let mensualReal = anual / 12; 
 
-        // Aplicación de Topes Legales
         let mensualFinal = mensualReal;
         let nota = "";
         
-        if (mensualReal < 30) { 
-            mensualFinal = 30; 
-            nota = "⚠️ Sube a Mínimo Legal"; 
-        } else if (mensualReal > SBU) { 
-            mensualFinal = SBU; 
-            nota = "⚠️ Tope Máximo SBU"; 
-        }
+        if (mensualReal < 30) { mensualFinal = 30; nota = "⚠️ Sube a Mínimo Legal"; } 
+        else if (mensualReal > SBU) { mensualFinal = SBU; nota = "⚠️ Tope Máximo SBU"; }
 
         html('res_jub', `
             <div style="font-size:0.85rem; color:#555; background:#f8fafc; padding:8px; border-radius:4px;">
-                1. Haber (Prom ${fmt(p)} x 5% x ${a} años): <b>${fmt(haber)}</b><br>
-                2. Coeficiente (Edad ${edad}): <b>${coef}</b><br>
-                3. Cálculo Matemático: ${fmt(haber)} / ${coef} / 12 = <b>${fmt(mensualReal)}</b>
+                1. Promedio Anual Estimado: <b>${fmt(promedioAnual)}</b><br>
+                2. Haber (${fmt(promedioAnual)} x 5% x ${a} años): <b>${fmt(haber)}</b><br>
+                3. Coeficiente (Edad ${edad}): <b>${coef}</b><br>
             </div>
             <div style="margin-top:10px; text-align:center;">
                 Pensión Mensual a Pagar:<br>
@@ -154,6 +139,5 @@ const bot = {
 window.onload = () => { 
     legal.init(); 
     if(window.innerWidth <= 768) setTimeout(() => $('mobile-legal-footer').style.display = 'none', 3000); 
-    // Mapeo global
     window.app = app; window.calculators = calc; window.agreements = legal; window.cv = cv; window.chatbot = bot;
 };

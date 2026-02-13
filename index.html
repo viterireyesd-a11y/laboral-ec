@@ -4,72 +4,50 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LABORALEC PRO | Enciclopedia Técnica Legal 2026</title>
+    <title>LABORALEC PRO 2026 | Sistema Jurídico Integrado</title>
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=11.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=11.1">
 
     <style>
-        /* Estilos de Enciclopedia de Alto Nivel */
-        .legal-universe { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-        
+        /* Estilos de la Enciclopedia Pro */
+        .legal-universe { max-width: 1100px; margin: 0 auto; padding: 20px; }
         .hero-legal {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: white; padding: 50px; border-radius: 24px;
-            margin-bottom: 40px; text-align: center; border: 1px solid rgba(255,255,255,0.1);
+            color: white; padding: 40px; border-radius: 20px;
+            margin-bottom: 30px; text-align: center; border: 1px solid rgba(255,255,255,0.1);
         }
-
         .legal-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
-
         .legal-item {
             background: white; border: 1px solid #e2e8f0;
-            border-radius: 16px; transition: all 0.3s ease; overflow: hidden;
+            border-radius: 12px; margin-bottom: 15px; overflow: hidden;
+            transition: all 0.3s ease;
         }
-
-        .legal-item:hover { border-color: #3b82f6; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-
+        .legal-item:hover { border-color: #3b82f6; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
         summary {
-            padding: 22px; cursor: pointer; list-style: none;
+            padding: 20px; cursor: pointer; list-style: none;
             display: flex; align-items: center; font-weight: 700; color: #1e293b;
-            background: #ffffff; border-bottom: 1px solid transparent;
         }
-
-        details[open] summary { border-bottom: 1px solid #f1f5f9; background: #f8fafc; }
-
         .art-badge {
-            background: #3b82f6; color: white; padding: 5px 12px;
-            border-radius: 6px; font-size: 0.75rem; margin-right: 18px;
-            font-family: 'Roboto Mono', monospace; min-width: 80px; text-align: center;
+            background: #3b82f6; color: white; padding: 4px 12px;
+            border-radius: 6px; font-size: 0.75rem; margin-right: 15px;
         }
-
-        .legal-content { padding: 30px; line-height: 1.8; color: #475569; }
-
-        .legal-content h4 { color: #0f172a; margin: 25px 0 10px 0; display: flex; align-items: center; gap: 10px; }
-        .legal-content h4 i { color: #3b82f6; }
-
-        .law-block {
-            background: #f8fafc; padding: 20px; border-left: 4px solid #3b82f6;
-            border-radius: 4px; margin: 20px 0; font-size: 0.95rem;
-        }
-
-        .tech-table {
-            width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.9rem;
-        }
-
-        .tech-table th, .tech-table td {
-            padding: 12px; border: 1px solid #e2e8f0; text-align: left;
-        }
-
-        .tech-table th { background: #f1f5f9; color: #1e293b; }
-
-        .warning-box {
-            background: #fff7ed; border: 1px solid #ffedd5; padding: 15px;
-            border-radius: 8px; color: #9a3412; margin: 15px 0; font-size: 0.9rem;
-        }
-
-        .tab-pane { display: none; }
+        .legal-content { padding: 25px; border-top: 1px solid #f1f5f9; line-height: 1.8; color: #475569; }
+        .tech-note { background: #f1f5f9; padding: 15px; border-radius: 8px; border-left: 4px solid #3b82f6; margin: 15px 0; }
+        
+        /* Sistema de Tabs */
+        .tab-pane { display: none; animation: fadeIn 0.3s ease; }
         .tab-pane.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Estilos de Calculadoras en Grid */
+        .grid-calculadoras {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
     </style>
 </head>
 <body>
@@ -96,7 +74,7 @@
                 <i class="fas fa-calculator"></i> Calculadoras
             </button>
             <button class="tab-btn" onclick="app.navigate('tab-base-legal')">
-                <i class="fas fa-gavel"></i> Enciclopedia Legal
+                <i class="fas fa-book"></i> Enciclopedia Legal
             </button>
             <button class="tab-btn" onclick="app.navigate('tab-cv')">
                 <i class="fas fa-file-signature"></i> Hoja de Vida
@@ -107,119 +85,128 @@
     <main class="main-content">
 
         <div id="tab-calculadoras" class="tab-pane active">
-            <div class="grid-3">
+            <div class="grid-calculadoras">
+                
                 <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-hand-holding-medical"></i> Aportes IESS</h3></div>
+                    <div class="card-header"><h3><i class="fas fa-hand-holding-medical" style="color:#60a5fa"></i> Aportes IESS</h3></div>
                     <div class="card-body">
                         <div class="form-group"><label>Sueldo Nominal ($)</label><input type="number" id="iess_sueldo" value="482.00"></div>
-                        <button class="btn btn-primary" onclick="calculators.iess()">Calcular</button>
+                        <div class="form-group">
+                            <label>Régimen</label>
+                            <select id="iess_tipo">
+                                <option value="privado">Sector Privado (9.45%)</option>
+                                <option value="publico">Sector Público (11.45%)</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" onclick="calculators.iess()">CALCULAR</button>
                         <div id="res_iess" class="result-panel"></div>
                     </div>
                 </div>
+
+                <div class="card">
+                    <div class="card-header"><h3><i class="fas fa-door-open" style="color:#ef4444"></i> Liquidación Final</h3></div>
+                    <div class="card-body">
+                        <div class="form-group"><label>Remuneración ($)</label><input type="number" id="liq_sueldo"></div>
+                        <div class="form-group"><label>Años de Servicio</label><input type="number" id="liq_anios"></div>
+                        <div class="form-group">
+                            <label>Causal</label>
+                            <select id="liq_causa">
+                                <option value="intempestivo">Despido Intempestivo (Art. 188)</option>
+                                <option value="renuncia">Renuncia / Desahucio</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-action" onclick="calculators.liquidacion()">SIMULAR</button>
+                        <div id="res_liq" class="result-panel"></div>
+                    </div>
                 </div>
+
+                <div class="card">
+                    <div class="card-header"><h3><i class="fas fa-clock" style="color:#f59e0b"></i> Horas Extras</h3></div>
+                    <div class="card-body">
+                        <div class="form-group"><label>Sueldo ($)</label><input type="number" id="he_sueldo"></div>
+                        <div class="grid-2">
+                            <div class="form-group"><label>Horas 50%</label><input type="number" id="he_50"></div>
+                            <div class="form-group"><label>Horas 100%</label><input type="number" id="he_100"></div>
+                        </div>
+                        <button class="btn btn-primary" onclick="calculators.extras()">CALCULAR</button>
+                        <div id="res_he" class="result-panel"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h3><i class="fas fa-coins" style="color:#10b981"></i> Décimos</h3></div>
+                    <div class="card-body">
+                        <div class="form-group"><label>Sueldo Mensual ($)</label><input type="number" id="dec_sueldo"></div>
+                        <div class="form-group"><label>Meses Trabajados</label><input type="number" id="dec_meses" value="12" max="12"></div>
+                        <button class="btn btn-action" onclick="calculators.decimos()">CALCULAR</button>
+                        <div id="res_dec" class="result-panel"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h3><i class="fas fa-blind" style="color:#8b5cf6"></i> Jubilación Patronal</h3></div>
+                    <div class="card-body">
+                        <div class="form-group"><label>Sueldo Promedio (5 años)</label><input type="number" id="jub_prom"></div>
+                        <div class="form-group"><label>Años Servicio</label><input type="number" id="jub_anios"></div>
+                        <div class="form-group"><label>Edad Actual</label><input type="number" id="jub_edad"></div>
+                        <button class="btn btn-primary" onclick="calculators.jubilacion()">CALCULAR</button>
+                        <div id="res_jub" class="result-panel"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h3><i class="fas fa-landmark" style="color:#3b82f6"></i> LOSEP</h3></div>
+                    <div class="card-body">
+                        <div class="form-group"><label>RMU Actual ($)</label><input type="number" id="losep_rmu"></div>
+                        <div class="form-group"><label>Años Servicio</label><input type="number" id="losep_anios"></div>
+                        <button class="btn btn-action" onclick="calculators.losep()">SIMULAR</button>
+                        <div id="res_losep" class="result-panel"></div>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
         <div id="tab-base-legal" class="tab-pane">
             <div class="legal-universe">
                 <div class="hero-legal">
                     <h1>Códice Técnico del Trabajo Ecuador 2026</h1>
-                    <p>Desglose jurídico profundo de la normativa laboral vigente y leyes orgánicas transversales.</p>
+                    <p>Referencia técnica detallada sobre derechos, protecciones y estabilidad laboral.</p>
                 </div>
 
                 <div class="legal-grid">
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Art. 155</span> Guarderías y Cuidado Infantil</summary>
+                        <div class="legal-content">
+                            <h4>Obligación del Empleador</h4>
+                            <p>Empresas con 50 o más trabajadores deben establecer servicios de guardería gratuitos.</p>
+                        </div>
+                    </details>
                     
                     <details class="legal-item">
-                        <summary><span class="art-badge">Art. 172-173</span> Del Visto Bueno (Causales)</summary>
+                        <summary><span class="art-badge">Ley Salud</span> Enfermedades Catastróficas</summary>
                         <div class="legal-content">
-                            <h4><i class="fas fa-gavel"></i> Terminación por Visto Bueno</h4>
-                            <p>El Inspector del Trabajo podrá autorizar la terminación del contrato por las siguientes causas justificadas:</p>
-                            <div class="law-block">
-                                <strong>Por parte del Empleador:</strong> Faltas repetidas de puntualidad, indisciplina, falta de probidad o injurias graves al empleador.<br><br>
-                                <strong>Por parte del Trabajador:</strong> Injurias graves del empleador, falta de pago o puntualidad en la remuneración, o exigencia de tareas distintas al contrato.
-                            </div>
-                            <div class="warning-box">
-                                <strong>Importante:</strong> El proceso debe iniciarse ante un Inspector del Trabajo y requiere pruebas documentales o testimoniales sólidas.
-                            </div>
+                            <h4>Estabilidad Reforzada</h4>
+                            <p>Protección contra despido ineficaz para pacientes con patologías raras o catastróficas.</p>
                         </div>
                     </details>
 
                     <details class="legal-item">
-                        <summary><span class="art-badge">Ley Errad.</span> Acoso Laboral y Violencia</summary>
+                        <summary><span class="art-badge">L.O.D.</span> Personas con Discapacidad y Sustitutos</summary>
                         <div class="legal-content">
-                            <h4><i class="fas fa-user-shield"></i> Protección Integral</h4>
-                            <p>Bajo la nueva normativa de erradicación de la violencia en el trabajo, el acoso laboral se define como toda conducta que atente contra la dignidad, sea de forma física o psicológica.</p>
-                            <table class="tech-table">
-                                <tr><th>Conducta</th><th>Consecuencia Legal</th></tr>
-                                <tr><td>Acoso comprobado</td><td>Visto bueno a favor del trabajador + Indemnización.</td></tr>
-                                <tr><td>Discriminación</td><td>Reparación integral y sanciones administrativas.</td></tr>
-                            </table>
+                            <h4>Protección al Sustituto</h4>
+                            <p>El cuidador acreditado goza de la misma estabilidad y una indemnización especial de 18 meses de sueldo por despido.</p>
                         </div>
                     </details>
 
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 187</span> Despido Ineficaz (Dirigentes)</summary>
-                        <div class="legal-content">
-                            <h4><i class="fas fa-users"></i> Protección a la Libertad Sindical</h4>
-                            <p>Los dirigentes sindicales legalmente reconocidos gozan de estabilidad reforzada desde su elección hasta un año después de cesar en sus funciones.</p>
-                            <div class="tech-note">
-                                <strong>Indemnización:</strong> Si se comprueba el despido ineficaz, el empleador deberá pagar el valor de 12 meses de sueldo adicional a la liquidación de ley.
-                            </div>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 350+</span> Riesgos del Trabajo y Accidentes</summary>
-                        <div class="legal-content">
-                            <h4><i class="fas fa-ambulance"></i> Responsabilidad Patronal</h4>
-                            <p>El empleador es responsable por los accidentes que ocurran en el ejercicio o como consecuencia del trabajo.</p>
-                            <ul>
-                                <li><strong>Incapacidad Temporal:</strong> Pago del 75% al 100% del sueldo según el tiempo de recuperación.</li>
-                                <li><strong>Incapacidad Permanente:</strong> Indemnización basada en tablas de valuación de incapacidades (Art. 364).</li>
-                            </ul>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 155</span> Guarderías y Lactancia</summary>
-                        <div class="legal-content">
-                            <h4><i class="fas fa-baby-carriage"></i> Obligación de Guardería</h4>
-                            <p>Empresas con 50 o más trabajadores deben establecer centros de cuidado infantil gratuitos.</p>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">L.O.D.</span> Sustitutos y Discapacidad</summary>
-                        <div class="legal-content">
-                            <h4><i class="fas fa-hands-helping"></i> Estabilidad del Cuidador</h4>
-                            <p>El sustituto acreditado por el Ministerio de Salud goza de la misma estabilidad que la persona con discapacidad.</p>
-                            <div class="warning-box">Indemnización por despido a un sustituto: 18 meses de remuneración.</div>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">L.O.S.</span> Enfermedades Catastróficas</summary>
-                        <div class="legal-content">
-                            <h4><i class="fas fa-dna"></i> Protección Reforzada</h4>
-                            <p>Estabilidad laboral absoluta para pacientes con cáncer, insuficiencia renal u otras patologías raras certificadas.</p>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 216</span> Jubilación Patronal</summary>
-                        <div class="legal-content">
-                            <h4><i class="fas fa-user-tie"></i> Pensión Vitalicia</h4>
-                            <p>Cálculo basado en el promedio de los últimos 5 años de servicio y tablas de mortalidad IESS.</p>
-                        </div>
-                    </details>
-
-                </div>
+                    </div>
             </div>
         </div>
 
         <div id="tab-cv" class="tab-pane">
             <div class="legal-universe" style="text-align:center;">
                 <h2>Generador de Hoja de Vida</h2>
-                <p>Módulo de exportación PDF activo para perfiles profesionales.</p>
+                <p>Módulo de exportación profesional activo.</p>
             </div>
         </div>
 

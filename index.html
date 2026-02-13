@@ -118,9 +118,15 @@
                 <div class="card">
                     <div class="card-header"><h3><i class="fas fa-coins"></i> Décimos</h3></div>
                     <div class="card-body">
-                        <div class="form-group"><label>Ingreso Anual ($)</label><input type="number" id="dec_ingresos"></div>
-                        <div class="form-group"><label>Meses Trabajados</label><input type="number" id="dec_meses" max="12"></div>
-                        <button class="btn btn-action" onclick="calculators.decimos()">Calcular Provisión</button>
+                        <div class="form-group">
+                            <label>Sueldo Mensual ($)</label>
+                            <input type="number" id="dec_sueldo" placeholder="Ej: 561">
+                        </div>
+                        <div class="form-group">
+                            <label>Meses Trabajados</label>
+                            <input type="number" id="dec_meses" max="12" value="12">
+                        </div>
+                        <button class="btn btn-action" onclick="calculators.decimos()">Calcular Acumulado</button>
                         <div id="res_dec" class="result-panel"></div>
                     </div>
                 </div>
@@ -128,14 +134,24 @@
                 <div class="card">
                     <div class="card-header"><h3><i class="fas fa-blind"></i> Jubilación Patronal</h3></div>
                     <div class="card-body">
-                        <div class="form-group"><label>Promedio Anual (5 años)</label><input type="number" id="jub_prom"></div>
-                        <div class="form-group"><label>Años (Mínimo 20)</label><input type="number" id="jub_anios"></div>
-                        <button class="btn btn-primary" onclick="calculators.jubilacion()">Estimar Fondo</button>
+                        <div class="form-group">
+                            <label>Promedio Anual (5 años)</label>
+                            <input type="number" id="jub_prom" placeholder="Ej: 15600">
+                        </div>
+                        <div class="form-group">
+                            <label>Años (Mínimo 20)</label>
+                            <input type="number" id="jub_anios" placeholder="25">
+                        </div>
+                        <div class="form-group">
+                            <label>Edad del Jubilado</label>
+                            <input type="number" id="jub_edad" placeholder="Ej: 60">
+                        </div>
+                        <button class="btn btn-primary" onclick="calculators.jubilacion()">Calcular Pensión</button>
                         <div id="res_jub" class="result-panel"></div>
                     </div>
                 </div>
 
-                 <div class="card">
+                <div class="card">
                     <div class="card-header"><h3><i class="fas fa-landmark"></i> LOSEP</h3></div>
                     <div class="card-body">
                         <div class="form-group"><label>RMU Actual ($)</label><input type="number" id="losep_rmu"></div>
@@ -237,7 +253,7 @@
         Los cálculos generados no constituyen una liquidación oficial vinculante ni asesoría legal definitiva. 
         Para casos legales específicos, se recomienda consultar con un abogado laboralista o acudir al Ministerio del Trabajo. 
         LaboralEC no se responsabiliza por el uso indebido de esta información.</p>
-        <p style="margin-top:5px;">&copy; 2026 LaboralEC - Versión Pro 3.1.2</p>
+        <p style="margin-top:5px;">&copy; 2026 LaboralEC - Versión Pro 4.0</p>
     </footer>
 
     <div class="chat-fab" onclick="chatbot.toggle()">

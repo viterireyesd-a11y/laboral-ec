@@ -1,6 +1,7 @@
 /**
- * LABORALEC PRO - VERSIÓN 5.1 (UX MEJORADA)
- * Ajuste: Jubilación basada en Sueldo Mensual
+ * LABORALEC PRO - VERSIÓN 6.0 (FINANZAS DETALLADAS)
+ * - Desglose de IESS en Horas Extras
+ * - Cálculo explícito de Fondos de Reserva
  */
 
 const SBU = 482.00;
@@ -31,10 +32,36 @@ const app = {
 
 const calc = {
     iess: () => {
-        const s = val('iess_sueldo'), t = $('iess_tipo').value, fr = $('iess_fr').checked;
+        const s = val('iess_sueldo');
+        const t = $('iess_tipo').value;
+        
+        // Tasas: [Personal, Patronal]
         const [p, pt] = t === 'privado' ? [0.0945, 0.1215] : t === 'publico' ? [0.1145, 0.0915] : [0.1760, 0];
-        const vP = s * p, vPt = s * pt, vFr = fr ? s * 0.0833 : 0;
-        html('res_iess', `Per: <b>${fmt(vP)}</b> | Pat: <b>${fmt(vPt)}</b> ${fr ? `| FR: <b>${fmt(vFr)}</b>` : ''}<br>Total: <b>${fmt(vP + vPt + vFr)}</b>`);
+        
+        const vPersonal = s * p;
+        const vPatronal = s * pt;
+        const vFondos = s * 0.0833; // 8.33% Fijo
+        
+        // Líquido estimado (Sueldo - IESS + Fondos)
+        const liquido = s - vPersonal + vFondos;
+
+        html('res_iess', `
+            <div style="font-size:0.9rem; margin-bottom:10px;">
+                <div style="display:flex; justify-content:space-between; color:#ef4444;">
+                    <span>(-) Aporte Personal (${(p*100).toFixed(2)}%):</span> <b>${fmt(vPersonal)}</b>
+                </div>
+                <div style="display:flex; justify-content:space-between; color:#10b981;">
+                    <span>(+) Fondos Reserva (8.33%):</span> <b>${fmt(vFondos)}</b>
+                </div>
+                <div style="display:flex; justify-content:space-between; color:#64748b; font-size:0.8rem;">
+                    <span>(Ref) Aporte Patronal:</span> <span>${fmt(vPatronal)}</span>
+                </div>
+            </div>
+            <div style="border-top:1px solid #ccc; padding-top:5px; text-align:right;">
+                Total Mensual (Sueldo - IESS + FR):<br>
+                <b style="color:var(--color-primary); font-size:1.2rem;">${fmt(liquido)}</b>
+            </div>
+        `);
     },
     liquidacion: () => {
         const s = val('liq_sueldo'), a = val('liq_anios'), c = $('liq_causa').value;
@@ -43,8 +70,33 @@ const calc = {
         html('res_liq', `Desahucio: ${fmt(desahucio)} <br> Despido: ${fmt(despido)} <br><b>Total: ${fmt(desahucio + despido)}</b>`);
     },
     extras: () => {
-        const vH = val('he_sueldo') / 240, h50 = val('he_50'), h100 = val('he_100');
-        html('res_he', `50%: ${fmt(h50 * vH * 1.5)} | 100%: ${fmt(h100 * vH * 2)} <br><b>Total: ${fmt((h50 * vH * 1.5) + (h100 * vH * 2))}</b>`);
+        const s = val('he_sueldo');
+        const vHora = s / 240;
+        const h50 = val('he_50');
+        const h100 = val('he_100');
+        
+        // Cálculo Bruto
+        const total50 = h50 * vHora * 1.5;
+        const total100 = h100 * vHora * 2;
+        const bruto = total50 + total100;
+        
+        // Descuento IESS (9.45% sobre las horas extras)
+        const iessExtras = bruto * 0.0945;
+        const neto = bruto - iessExtras;
+
+        html('res_he', `
+            <div style="font-size:0.9rem;">
+                <div style="display:flex; justify-content:space-between;"><span>Ganado al 50%:</span> <b>${fmt(total50)}</b></div>
+                <div style="display:flex; justify-content:space-between;"><span>Ganado al 100%:</span> <b>${fmt(total100)}</b></div>
+                <hr style="border:0; border-top:1px dashed #ccc; margin:5px 0;">
+                <div style="display:flex; justify-content:space-between;"><span>Subtotal Extras:</span> <b>${fmt(bruto)}</b></div>
+                <div style="display:flex; justify-content:space-between; color:#ef4444;"><span>(-) IESS (9.45%):</span> <b>${fmt(iessExtras)}</b></div>
+            </div>
+            <div style="margin-top:8px; text-align:right; border-top:1px solid #3b82f6; padding-top:5px;">
+                Líquido Extras a Recibir:<br>
+                <b style="color:#10b981; font-size:1.2rem;">${fmt(neto)}</b>
+            </div>
+        `);
     },
     decimos: () => {
         const sueldo = val('dec_sueldo'); 
@@ -60,8 +112,8 @@ const calc = {
         `);
     },
     jubilacion: () => {
-        const sueldoMensual = val('jub_prom'); // Leemos el mensual
-        const promedioAnual = sueldoMensual * 12; // LO ANUALIZAMOS AUTOMÁTICAMENTE
+        const sueldoMensual = val('jub_prom');
+        const promedioAnual = sueldoMensual * 12; 
         const a = val('jub_anios'); 
         const edad = parseInt($('jub_edad').value) || 60;
         
@@ -70,22 +122,21 @@ const calc = {
         let coef = COEFICIENTES[edad];
         if (!coef) coef = edad < 40 ? 31.97 : 0.71; 
 
-        // Fórmula: (Promedio Anual * 5% * Años) / Coeficiente
         const haber = (promedioAnual * 0.05) * a;
         let anual = haber / coef;
         let mensualReal = anual / 12; 
-
         let mensualFinal = mensualReal;
         let nota = "";
         
-        if (mensualReal < 30) { mensualFinal = 30; nota = "⚠️ Sube a Mínimo Legal"; } 
+        if (mensualReal < 30) { mensualFinal = 30; nota = "⚠️ Sube a Mínimo Legal ($30)"; } 
         else if (mensualReal > SBU) { mensualFinal = SBU; nota = "⚠️ Tope Máximo SBU"; }
 
         html('res_jub', `
             <div style="font-size:0.85rem; color:#555; background:#f8fafc; padding:8px; border-radius:4px;">
-                1. Promedio Anual Estimado: <b>${fmt(promedioAnual)}</b><br>
-                2. Haber (${fmt(promedioAnual)} x 5% x ${a} años): <b>${fmt(haber)}</b><br>
+                1. Promedio Anual: <b>${fmt(promedioAnual)}</b><br>
+                2. Haber Global: <b>${fmt(haber)}</b><br>
                 3. Coeficiente (Edad ${edad}): <b>${coef}</b><br>
+                4. Matemático: ${fmt(haber)} / ${coef} / 12 = <b>${fmt(mensualReal)}</b>
             </div>
             <div style="margin-top:10px; text-align:center;">
                 Pensión Mensual a Pagar:<br>

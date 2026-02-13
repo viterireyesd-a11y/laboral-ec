@@ -2,176 +2,176 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LaboralEC | Sistema Técnico Laboral</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>LABORALEC PRO 2026 | Sistema Jurídico</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css?v=9.9">
     <style>
-        :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --accent: #e74c3c;
-            --bg: #f4f7f6;
-            --white: #ffffff;
+        /* Ajustes específicos para la nueva Tab Legal */
+        .legal-database {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
-
-        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; color: #333; }
-
-        /* Navegación Superior */
-        header { background: var(--primary); color: white; padding: 1.5rem; text-align: center; }
-        
-        nav {
-            background: #1a252f;
-            display: flex;
-            justify-content: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+        .art-card {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-left: 4px solid #3498db;
+            background: #f8fafc;
         }
-
-        .tab-button {
-            background: none;
-            color: #bdc3c7;
-            border: none;
-            padding: 15px 30px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-            border-bottom: 3px solid transparent;
+        .art-card h4 {
+            color: #1e40af;
+            margin-top: 0;
+            text-transform: uppercase;
+            font-size: 0.9rem;
         }
-
-        .tab-button.active {
-            color: white;
-            border-bottom: 3px solid var(--secondary);
-            background: rgba(255,255,255,0.05);
-        }
-
-        /* Contenedores */
-        .container { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
-        .tab-content { display: none; animation: fadeIn 0.5s; }
-        .tab-content.active { display: block; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* Estilo de Calculadoras (Pestaña 1) */
-        .calc-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--secondary);
-        }
-
-        /* Estilo de Base de Datos Legal (Pestaña 2) */
-        .legal-db {
-            background: var(--white);
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        .art-box {
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .art-num {
-            background: var(--accent);
-            color: white;
-            padding: 3px 10px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-
-        h3 { color: var(--primary); margin-bottom: 15px; }
-        p { line-height: 1.7; color: #555; }
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>LaboralEC</h1>
-    <p>Consultoría Automatizada bajo el Código del Trabajo</p>
-</header>
-
-<nav>
-    <button class="tab-button active" onclick="openTab(event, 'pestaña-calculadoras')">🔢 CALCULADORAS</button>
-    <button class="tab-button" onclick="openTab(event, 'pestaña-legal')">📜 BASE LEGAL DETALLADA</button>
-</nav>
-
-<div class="container">
-
-    <section id="pestaña-calculadoras" class="tab-content active">
-        <div class="calc-grid">
-            <div class="card">
-                <h3>Horas Extras y Suplementarias</h3>
-                <p>Calcula los recargos según la jornada legal.</p>
+    <header>
+        <div class="header-container">
+            <div class="brand-wrapper">
+               <img src="escudo.svg.png" class="escudo-img" alt="Escudo Ecuador">
+                <div class="brand-text">
+                    <h1>LABORALEC</h1>
+                    <span>SISTEMA JURÍDICO INTEGRADO 2026</span>
                 </div>
-
-            <div class="card">
-                <h3>Liquidación Laboral</h3>
-                <p>Cálculo de haberes y desahucio (Art. 185).</p>
-                </div>
-        </div>
-    </section>
-
-    <section id="pestaña-legal" class="tab-content">
-        <div class="legal-db">
-            <h2>Compendio Técnico del Código del Trabajo</h2>
-            <hr>
-            
-            <div class="art-box">
-                <h3><span class="art-num">Art. 55</span> Horas Suplementarias</h3>
-                <p>Si las faltas de puntualidad o el abandono del trabajo se debieren a causas justificadas, no habrá lugar a las sanciones... (Aquí incluyes el texto legal completo que necesites).</p>
             </div>
-
-            <div class="art-box">
-                <h3><span class="art-num">Art. 111</span> Décimo Tercera Remuneración</h3>
-                <p>El pago de la décima tercera remuneración o bono navideño se calculará sobre la doceava parte de lo percibido en el año...</p>
-            </div>
-
-            <div class="art-box">
-                <h3><span class="art-num">Art. 196</span> Fondos de Reserva</h3>
-                <p>Todo trabajador tiene derecho a la reserva legal a partir del primer día del segundo año de servicios...</p>
-            </div>
-            
-            <div class="art-box">
-                <h3><span class="art-num">Art. 216</span> Jubilación Patronal</h3>
-                <p>Los trabajadores que por veinticinco años o más hubieren prestado servicios continuada o interrumpidamente, tendrán derecho a ser jubilados por sus empleadores.</p>
+            <div class="system-status">
+                <span class="status-dot"></span>
+                <span>SBU 2026: <strong>$482.00</strong></span>
             </div>
         </div>
-    </section>
+    </header>
 
-</div>
+    <nav class="nav-wrapper">
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('tab-calculadoras', this)">
+                <i class="fas fa-calculator"></i> Calculadoras
+            </button>
+            <button class="tab-btn" onclick="switchTab('tab-base-legal', this)">
+                <i class="fas fa-book"></i> Base Legal Detallada
+            </button>
+            <button class="tab-btn" onclick="switchTab('tab-cv', this)">
+                <i class="fas fa-file-signature"></i> Hoja de Vida
+            </button>
+        </div>
+    </nav>
 
-<script>
-    // Función para cambiar entre pestañas
-    function openTab(evt, tabId) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tab-content");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-            tabcontent[i].classList.remove("active");
+    <main class="main-content">
+
+        <div id="tab-calculadoras" class="tab-pane active">
+            <div class="grid-3">
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-hand-holding-medical" style="color:#60a5fa"></i> Aportes IESS</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Sueldo Nominal ($)</label>
+                            <input type="number" id="iess_sueldo" value="482.00">
+                        </div>
+                        <div class="form-group">
+                            <label>Régimen</label>
+                            <select id="iess_tipo">
+                                <option value="privado">Sector Privado</option>
+                                <option value="publico">Sector Público</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" onclick="calculators.iess()">Calcular Aportaciones</button>
+                        <div id="res_iess" class="result-panel"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-door-open" style="color:#ef4444"></i> Liquidación Final</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group"><label>Remuneración ($)</label><input type="number" id="liq_sueldo"></div>
+                        <div class="form-group"><label>Años de Servicio</label><input type="number" id="liq_anios"></div>
+                        <button class="btn btn-action" onclick="calculators.liquidacion()">Simular Liquidación</button>
+                        <div id="res_liq" class="result-panel"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-clock" style="color:#f59e0b"></i> Horas Extras</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group"><label>Sueldo ($)</label><input type="number" id="he_sueldo"></div>
+                        <div class="grid-2">
+                            <div class="form-group"><label>Horas 50%</label><input type="number" id="he_50"></div>
+                            <div class="form-group"><label>Horas 100%</label><input type="number" id="he_100"></div>
+                        </div>
+                        <button class="btn btn-primary" onclick="calculators.extras()">Calcular Recargos</button>
+                        <div id="res_he" class="result-panel"></div>
+                    </div>
+                </div>
+
+                </div>
+        </div>
+
+        <div id="tab-base-legal" class="tab-pane">
+            <div class="legal-database">
+                <h2>Compendio del Código del Trabajo (Ecuador)</h2>
+                <p>Base normativa técnica para el cálculo de beneficios sociales.</p>
+                <hr>
+
+                <div class="art-card">
+                    <h4>Art. 55 - Horas Suplementarias y Extraordinarias</h4>
+                    <p>Las horas suplementarias no excederán de 4 diarias ni 12 semanales. Recargo del 50% hasta las 24:00 y 100% en jornadas nocturnas o días de descanso.</p>
+                </div>
+
+                <div class="art-card">
+                    <h4>Art. 111 y 113 - Décimos</h4>
+                    <p><strong>Décima Tercera:</strong> Doceava parte de lo percibido en el año. <strong>Décima Cuarta:</strong> Un SBU vigente ($482) dividido para el tiempo laborado.</p>
+                </div>
+
+                <div class="art-card">
+                    <h4>Art. 185 - Bonificación por Desahucio</h4>
+                    <p>El empleador bonificará con el 25% de la última remuneración mensual por cada año de servicio.</p>
+                </div>
+
+                <div class="art-card">
+                    <h4>Art. 216 - Jubilación Patronal</h4>
+                    <p>Derecho de trabajadores con 25 años o más de servicio continuo o interrumpido para el mismo empleador.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-cv" class="tab-pane">
+            <p style="text-align:center;">Módulo de Generación de Hoja de Vida Activo.</p>
+        </div>
+
+    </main>
+
+    <footer class="legal-footer">
+        <p><strong>AVISO LEGAL:</strong> Basado en Código del Trabajo 2026. LaboralEC Pro.</p>
+    </footer>
+
+    <script>
+        // Función simple para manejar las pestañas sin romper app.navigate
+        function switchTab(tabId, btn) {
+            // Ocultar todas
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            
+            // Mostrar seleccionada
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
         }
-        tablinks = document.getElementsByClassName("tab-button");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].classList.remove("active");
-        }
-        document.getElementById(tabId).style.display = "block";
-        document.getElementById(tabId).classList.add("active");
-        evt.currentTarget.classList.add("active");
-    }
-
-    // --- AQUÍ ABAJO PEGA TODOS TUS SCRIPTS (FUNCIONES JAVASCRIPT) DE LAS CALCULADORAS ---
-</script>
-
+    </script>
+    <script src="script.js?v=6.0"></script>
 </body>
 </html>

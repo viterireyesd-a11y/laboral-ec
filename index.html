@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaboralEC | Sistema Técnico Laboral</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+        }
+
+        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; color: #333; }
+
+        /* Navegación Superior */
+        header { background: var(--primary); color: white; padding: 1.5rem; text-align: center; }
+        
+        nav {
+            background: #1a252f;
+            display: flex;
+            justify-content: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .tab-button {
+            background: none;
+            color: #bdc3c7;
+            border: none;
+            padding: 15px 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-button.active {
+            color: white;
+            border-bottom: 3px solid var(--secondary);
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* Contenedores */
+        .container { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
+        .tab-content { display: none; animation: fadeIn 0.5s; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Estilo de Calculadoras (Pestaña 1) */
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--secondary);
+        }
+
+        /* Estilo de Base de Datos Legal (Pestaña 2) */
+        .legal-db {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .art-box {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .art-num {
+            background: var(--accent);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        h3 { color: var(--primary); margin-bottom: 15px; }
+        p { line-height: 1.7; color: #555; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>LaboralEC</h1>
+    <p>Consultoría Automatizada bajo el Código del Trabajo</p>
+</header>
+
+<nav>
+    <button class="tab-button active" onclick="openTab(event, 'pestaña-calculadoras')">🔢 CALCULADORAS</button>
+    <button class="tab-button" onclick="openTab(event, 'pestaña-legal')">📜 BASE LEGAL DETALLADA</button>
+</nav>
+
+<div class="container">
+
+    <section id="pestaña-calculadoras" class="tab-content active">
+        <div class="calc-grid">
+            <div class="card">
+                <h3>Horas Extras y Suplementarias</h3>
+                <p>Calcula los recargos según la jornada legal.</p>
+                </div>
+
+            <div class="card">
+                <h3>Liquidación Laboral</h3>
+                <p>Cálculo de haberes y desahucio (Art. 185).</p>
+                </div>
+        </div>
+    </section>
+
+    <section id="pestaña-legal" class="tab-content">
+        <div class="legal-db">
+            <h2>Compendio Técnico del Código del Trabajo</h2>
+            <hr>
+            
+            <div class="art-box">
+                <h3><span class="art-num">Art. 55</span> Horas Suplementarias</h3>
+                <p>Si las faltas de puntualidad o el abandono del trabajo se debieren a causas justificadas, no habrá lugar a las sanciones... (Aquí incluyes el texto legal completo que necesites).</p>
+            </div>
+
+            <div class="art-box">
+                <h3><span class="art-num">Art. 111</span> Décimo Tercera Remuneración</h3>
+                <p>El pago de la décima tercera remuneración o bono navideño se calculará sobre la doceava parte de lo percibido en el año...</p>
+            </div>
+
+            <div class="art-box">
+                <h3><span class="art-num">Art. 196</span> Fondos de Reserva</h3>
+                <p>Todo trabajador tiene derecho a la reserva legal a partir del primer día del segundo año de servicios...</p>
+            </div>
+            
+            <div class="art-box">
+                <h3><span class="art-num">Art. 216</span> Jubilación Patronal</h3>
+                <p>Los trabajadores que por veinticinco años o más hubieren prestado servicios continuada o interrumpidamente, tendrán derecho a ser jubilados por sus empleadores.</p>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+    // Función para cambiar entre pestañas
+    function openTab(evt, tabId) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+            tabcontent[i].classList.remove("active");
+        }
+        tablinks = document.getElementsByClassName("tab-button");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabId).style.display = "block";
+        document.getElementById(tabId).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+
+    // --- AQUÍ ABAJO PEGA TODOS TUS SCRIPTS (FUNCIONES JAVASCRIPT) DE LAS CALCULADORAS ---
+</script>
+
+</body>
+</html>

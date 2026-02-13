@@ -7,57 +7,62 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #0f172a; --card: #1e293b; --accent: #3b82f6; --text: #f8fafc; --danger: #ef4444; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
+        :root { --bg: #0f172a; --card: #1e293b; --accent: #3b82f6; --text: #f8fafc; --muted: #94a3b8; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.8; }
         .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
         .hero { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); padding: 50px; border-radius: 24px; text-align: center; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 40px; }
-        .art-item { background: var(--card); border-radius: 12px; margin-bottom: 15px; border: 1px solid #334155; }
-        summary { padding: 20px; cursor: pointer; display: flex; align-items: center; font-weight: 700; font-size: 1.1rem; list-style: none; }
-        .badge { background: var(--accent); color: white; padding: 4px 10px; border-radius: 6px; margin-right: 15px; font-size: 0.75rem; text-transform: uppercase; }
-        .content { padding: 0 25px 30px; color: #cbd5e1; border-top: 1px solid #334155; }
-        .law-quote { background: rgba(15, 23, 42, 0.5); padding: 15px; border-left: 4px solid var(--accent); margin: 15px 0; font-style: italic; }
-        .tech-table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9rem; }
-        .tech-table td, .tech-table th { border: 1px solid #334155; padding: 10px; }
+        .art-item { background: var(--card); border-radius: 16px; margin-bottom: 20px; border: 1px solid #334155; transition: 0.3s; }
+        .art-item:hover { border-color: var(--accent); }
+        summary { padding: 25px; cursor: pointer; display: flex; align-items: center; font-weight: 800; font-size: 1.2rem; list-style: none; }
+        .badge { background: var(--accent); color: white; padding: 5px 12px; border-radius: 6px; margin-right: 20px; font-size: 0.8rem; text-transform: uppercase; font-family: monospace; }
+        .content { padding: 0 30px 40px; color: #cbd5e1; border-top: 1px solid #334155; }
+        .law-quote { background: rgba(15, 23, 42, 0.5); padding: 20px; border-left: 4px solid var(--accent); margin: 20px 0; font-style: italic; border-radius: 0 8px 8px 0; }
+        .tech-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        .tech-table td, .tech-table th { border: 1px solid #334155; padding: 12px; text-align: left; }
         .tech-table th { background: #0f172a; color: var(--accent); }
-        h4 { color: var(--accent); margin-top: 25px; border-bottom: 1px solid #334155; padding-bottom: 5px; }
+        h4 { color: var(--accent); margin-top: 30px; border-bottom: 1px solid #334155; padding-bottom: 8px; display: flex; align-items: center; gap: 10px; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="hero">
-        <h1>Compendio Jurídico Laboral de Ecuador</h1>
-        <p>Referencia Técnica Avanzada 2026 - Código del Trabajo y Leyes Transversales</p>
+        <h1>Compendio Jurídic-Técnico Ecuador 2026</h1>
+        <p>Referencia Maestra: 15 Pilares del Código del Trabajo y Leyes Orgánicas</p>
     </div>
 
     <div class="legal-grid">
-        <details class="art-item">
+        <details class="art-item" open>
             <summary><span class="badge">Art. 55</span> Horas Suplementarias y Extraordinarias</summary>
             <div class="content">
-                <p>Regulación de recargos por jornada extendida.</p>
+                <h4><i class="fas fa-clock"></i> Análisis de Recargos y Límites</h4>
+                <p>El Código establece la remuneración obligatoria por el excedente de la jornada de 8 horas.</p>
                 <table class="tech-table">
-                    <tr><th>Tipo</th><th>Recargo</th><th>Límite</th></tr>
-                    <tr><td>Suplementaria</td><td>50% (hasta 24:00)</td><td>4 diarias / 12 semanales</td></tr>
-                    <tr><td>Extraordinaria</td><td>100% (24:00 a 06:00 / Descanso)</td><td>Días feriados y descanso obligatorio</td></tr>
+                    <tr><th>Jornada</th><th>Recargo</th><th>Detalle Técnico</th></tr>
+                    <tr><td>Suplementaria</td><td>50%</td><td>Hasta las 24H00. Máximo 4 diarias y 12 semanales.</td></tr>
+                    <tr><td>Extraordinaria</td><td>100%</td><td>Días de descanso, feriados o de 00H00 a 06H00.</td></tr>
                 </table>
+                <div class="law-quote">"El trabajo nocturno, por el hecho de serlo, tendrá un recargo del 25%."</div>
             </div>
         </details>
 
         <details class="art-item">
             <summary><span class="badge">Art. 69</span> Derecho a Vacaciones Anuales</summary>
             <div class="content">
-                <p>Todo trabajador tiene derecho a 15 días ininterrumpidos de descanso remunerado tras el primer año.</p>
-                <div class="law-quote">"A partir del quinto año, el trabajador tendrá derecho a un día adicional por cada año excedente."</div>
+                <h4><i class="fas fa-umbrella-beach"></i> Periodo de Descanso Remunerado</h4>
+                <p>Todo trabajador tiene derecho a gozar anualmente de un periodo ininterrumpido de quince días de descanso, incluidos los días no laborables.</p>
+                <div class="law-quote">"A partir del quinto año de trabajo, el trabajador tendrá derecho a gozar adicionalmente de un día de vacaciones por cada uno de los años excedentes."</div>
             </div>
         </details>
 
         <details class="art-item">
             <summary><span class="badge">Art. 97</span> Participación de Utilidades</summary>
             <div class="content">
-                <p>Distribución del 15% de las utilidades líquidas de la empresa.</p>
+                <h4><i class="fas fa-chart-line"></i> Distribución del Beneficio Empresarial</h4>
+                <p>El empleador reconocerá en beneficio de sus trabajadores el quince por ciento (15%) de las utilidades líquidas.</p>
                 <ul>
-                    <li><strong>10% Individual:</strong> Según el tiempo laborado.</li>
-                    <li><strong>5% Cargas:</strong> Según cargas familiares acreditadas.</li>
+                    <li><strong>10% Individual:</strong> Repartido entre todos los trabajadores.</li>
+                    <li><strong>5% por Cargas:</strong> Entregado proporcionalmente según las cargas familiares (hijos, cónyuge).</li>
                 </ul>
             </div>
         </details>
@@ -65,84 +70,98 @@
         <details class="art-item">
             <summary><span class="badge">Art. 111</span> Décima Tercera Remuneración</summary>
             <div class="content">
-                <p>Bono navideño equivalente a la doceava parte de todo lo percibido en el año.</p>
+                <h4><i class="fas fa-gift"></i> Bono Navideño</h4>
+                <p>Los trabajadores tienen derecho a la doceava parte de las remuneraciones percibidas en el año calendario.</p>
+                <p><strong>Periodo de cálculo:</strong> Desde el 1 de diciembre del año anterior al 30 de noviembre del año en curso.</p>
             </div>
         </details>
 
         <details class="art-item">
             <summary><span class="badge">Art. 113</span> Décima Cuarta Remuneración</summary>
             <div class="content">
-                <p>Bono escolar equivalente a un Salario Básico Unificado ($482.00).</p>
+                <h4><i class="fas fa-graduation-cap"></i> Bono Escolar</h4>
+                <p>Bonificación anual equivalente a un salario básico unificado ($482.00 en 2026).</p>
             </div>
         </details>
 
         <details class="art-item">
             <summary><span class="badge">Art. 152</span> Licencia por Maternidad</summary>
             <div class="content">
-                <p>Toda mujer trabajadora tiene derecho a una licencia remunerada de 12 semanas por el nacimiento de su hija o hijo.</p>
+                <h4><i class="fas fa-baby"></i> Protección a la Madre</h4>
+                <p>Toda mujer trabajadora tiene derecho a una licencia remunerada de doce (12) semanas por el nacimiento de su hija o hijo.</p>
             </div>
         </details>
 
         <details class="art-item">
-            <summary><span class="badge">Art. 155</span> Guarderías y Lactancia</summary>
+            <summary><span class="badge">Art. 155</span> Servicio de Guarderías</summary>
             <div class="content">
-                <p>Empresas con 50+ trabajadores deben ofrecer servicio de guardería gratuito.</p>
+                <h4><i class="fas fa-child"></i> Cuidado Infantil Obligatorio</h4>
+                <p>Empresas con cincuenta o más trabajadores deben establecer este servicio gratuito.</p>
+                <div class="law-box">"Se mantendrá hasta que el niño cumpla cinco años de edad."</div>
             </div>
         </details>
 
         <details class="art-item">
             <summary><span class="badge">Art. 172</span> Causales de Visto Bueno</summary>
             <div class="content">
-                <p>Terminación del contrato por faltas graves como indisciplina o falta de probidad.</p>
+                <h4><i class="fas fa-gavel"></i> Terminación Justificada por el Empleador</h4>
+                <p>Causas legales para terminar el contrato: indisciplina, falta de probidad o abandono del trabajo por más de tres días consecutivos.</p>
             </div>
         </details>
 
         <details class="art-item">
             <summary><span class="badge">Art. 185</span> Bonificación por Desahucio</summary>
             <div class="content">
-                <p>Bonificación del 25% de la última remuneración por cada año de servicio.</p>
+                <h4><i class="fas fa-door-open"></i> Aviso de Terminación</h4>
+                <p>Bonificación del 25% de la última remuneración mensual por cada uno de los años de servicio.</p>
             </div>
         </details>
 
         <details class="art-item">
-            <summary><span class="badge">Art. 188</span> Despido Intempestivo</summary>
+            <summary><span class="badge">Art. 188</span> Indemnización por Despido</summary>
             <div class="content">
-                <p>Indemnización según el tiempo de servicio: mínimo 3 meses de sueldo.</p>
+                <h4><i class="fas fa-user-times"></i> Ruptura Unilateral del Contrato</h4>
+                <p>Indemnización mínima de 3 meses de sueldo para trabajadores de hasta 3 años, y de 1 mes por año para los de más tiempo.</p>
             </div>
         </details>
 
         <details class="art-item">
             <summary><span class="badge">Art. 196</span> Fondos de Reserva</summary>
             <div class="content">
-                <p>Derecho al 8.33% de la remuneración mensual a partir del segundo año de servicio.</p>
+                <h4><i class="fas fa-vault"></i> Ahorro Obligatorio</h4>
+                <p>Derecho al 8.33% de la remuneración mensual a partir del primer día del segundo año de servicios.</p>
             </div>
         </details>
 
         <details class="art-item">
             <summary><span class="badge">Art. 216</span> Jubilación Patronal</summary>
             <div class="content">
-                <p>Pensión vitalicia para trabajadores con 25 años o más de servicio continuo.</p>
+                <h4><i class="fas fa-user-tie"></i> Pensión Vitalicia</h4>
+                <p>Derecho adquirido tras veinticinco años o más de servicio continuo para el mismo empleador.</p>
             </div>
         </details>
 
         <details class="art-item">
             <summary><span class="badge">L.O.D.</span> Sustitutos y Discapacidad</summary>
             <div class="content">
-                <p>Indemnización especial de 18 meses de sueldo para cuidadores acreditados.</p>
+                <h4><i class="fas fa-hands-helping"></i> Estabilidad del Cuidador</h4>
+                <p>Indemnización especial de 18 meses de la mejor remuneración por despido a sustitutos acreditados.</p>
             </div>
         </details>
 
         <details class="art-item">
             <summary><span class="badge">Ley Salud</span> Enfermedades Catastróficas</summary>
             <div class="content">
-                <p>Estabilidad reforzada y prohibición de despido ineficaz para pacientes críticos.</p>
+                <h4><i class="fas fa-briefcase-medical"></i> Estabilidad Reforzada</h4>
+                <p>Protección absoluta y prohibición de despido ineficaz para pacientes con patologías críticas.</p>
             </div>
         </details>
 
         <details class="art-item">
             <summary><span class="badge">Art. 347</span> Riesgos del Trabajo</summary>
             <div class="content">
-                <p>Responsabilidad del empleador por accidentes o enfermedades ocurridas por el ejercicio del trabajo.</p>
+                <h4><i class="fas fa-ambulance"></i> Accidentes y Enfermedades Profesionales</h4>
+                <p>Responsabilidad patronal por daños ocurridos en el ejercicio o como consecuencia del trabajo.</p>
             </div>
         </details>
     </div>

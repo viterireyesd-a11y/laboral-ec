@@ -1,0 +1,400 @@
+/* ==========================================================================
+   1. ARQUITECTURA DE DISEÑO & VARIABLES (CSS PRO)
+   ========================================================================== */
+:root {
+    /* Colores Institucionales */
+    --color-primary: #0f172a;       /* Azul Noche Profundo */
+    --color-primary-light: #1e293b; /* Azul Acero */
+    --color-accent: #3b82f6;        /* Azul Vibrante */
+    --color-accent-hover: #2563eb;
+    
+    /* Colores de Estado */
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+    
+    /* Colores Bandera Ecuador (Para el Logo LABORALEC) */
+    --flag-yellow: #FFD100;
+    --flag-blue: #005EB8;
+    --flag-red: #EF3340; /* Rojo Intenso */
+
+    /* Superficies y Fondos */
+    --bg-body: #f1f5f9;
+    --bg-card: #ffffff;
+    --border-color: #e2e8f0;
+    
+    /* Tipografía */
+    --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'Roboto Mono', monospace;
+    --text-main: #334155;
+    --text-light: #64748b;
+    
+    /* Sombras y Efectos */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reset Básico */
+* { box-sizing: border-box; outline: none; margin: 0; padding: 0; }
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    line-height: 1.6;
+    padding-bottom: 120px; /* Espacio para el footer fijo */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==========================================================================
+   2. HEADER Y NAVEGACIÓN
+   ========================================================================== */
+header {
+    background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    color: white;
+    padding: 1.5rem 0;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    z-index: 50;
+}
+
+.header-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* LOGO CON COLORES DE LA BANDERA DEL ECUADOR */
+.brand-logo h1 {
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    margin: 0;
+    text-transform: uppercase;
+    background: linear-gradient(180deg, 
+        var(--flag-yellow) 0%, 
+        var(--flag-yellow) 50%, 
+        var(--flag-blue) 50%, 
+        var(--flag-blue) 75%, 
+        var(--flag-red) 75%, 
+        var(--flag-red) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0px 2px 4px rgba(0,0,0,0.3);
+    display: inline-block;
+}
+
+.brand-logo span {
+    display: block;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-weight: 400;
+    letter-spacing: 2px;
+    margin-top: -5px;
+    -webkit-text-fill-color: #94a3b8;
+}
+
+.system-status {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    font-size: 0.9rem;
+    background: rgba(255,255,255,0.05);
+    padding: 8px 16px;
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.status-dot { height: 8px; width: 8px; background-color: var(--color-success); border-radius: 50%; display: inline-block; margin-right: 6px; box-shadow: 0 0 8px var(--color-success); }
+
+/* Navegación por Pestañas (Sticky) */
+.nav-wrapper {
+    background: var(--bg-card);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.nav-tabs {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 10px;
+}
+
+.tab-btn {
+    padding: 16px 24px;
+    background: transparent;
+    border: none;
+    color: var(--text-light);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tab-btn i { font-size: 1.1rem; }
+.tab-btn:hover { background-color: #f8fafc; color: var(--color-primary); }
+.tab-btn.active { color: var(--color-accent); border-bottom-color: var(--color-accent); background: linear-gradient(to top, #eff6ff 0%, transparent 100%); }
+
+/* ==========================================================================
+   3. ESTRUCTURA DEL CONTENIDO PRINCIPAL
+   ========================================================================== */
+.main-content {
+    max-width: 1280px;
+    margin: 40px auto;
+    padding: 0 24px;
+    width: 100%;
+    flex: 1;
+}
+
+.tab-pane { display: none; animation: fadeIn 0.5s ease-out; }
+.tab-pane.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ==========================================================================
+   4. COMPONENTES UI
+   ========================================================================== */
+.card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: #cbd5e1; }
+
+.card-header {
+    background: linear-gradient(to right, #f8fafc, #ffffff);
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.card-header h3 { margin: 0; font-size: 1.1rem; color: var(--color-primary); font-weight: 700; display: flex; align-items: center; gap: 10px; }
+.card-body { padding: 24px; flex-grow: 1; }
+
+/* Formularios */
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; color: var(--text-main); text-transform: uppercase; letter-spacing: 0.5px; }
+
+input[type="number"], input[type="text"], select, textarea {
+    width: 100%; padding: 12px 16px; 
+    border: 1px solid var(--border-color); 
+    border-radius: var(--radius-md);
+    font-size: 0.95rem; 
+    color: var(--color-primary);
+    background-color: #f8fafc;
+    transition: var(--transition);
+    font-family: var(--font-main);
+}
+
+input:focus, select:focus, textarea:focus { 
+    border-color: var(--color-accent); 
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); 
+}
+
+/* Botones */
+.btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 12px 24px; border-radius: var(--radius-md); border: none; 
+    font-weight: 600; cursor: pointer; transition: var(--transition);
+    width: 100%; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.btn-primary { background: var(--color-primary); color: white; box-shadow: 0 4px 6px rgba(15, 23, 42, 0.2); }
+.btn-primary:hover { background: var(--color-primary-light); transform: translateY(-1px); }
+.btn-action { background: var(--color-accent); color: white; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.25); }
+.btn-action:hover { background: var(--color-accent-hover); transform: translateY(-1px); }
+.btn-outline { background: transparent; border: 2px solid var(--color-primary); color: var(--color-primary); }
+.btn-outline:hover { background: var(--color-primary); color: white; }
+
+/* Grillas */
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 30px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+
+/* Paneles de Resultado */
+.result-panel {
+    margin-top: 20px; background: #eff6ff; border-radius: var(--radius-md); padding: 20px;
+    border-left: 5px solid var(--color-accent); display: none;
+    animation: slideDown 0.3s ease-out;
+}
+@keyframes slideDown { from {opacity:0; transform:translateY(-10px);} to {opacity:1; transform:translateY(0);} }
+
+.res-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; border-bottom: 1px dashed #cbd5e1; padding-bottom: 5px; }
+.res-total { 
+    margin-top: 15px; padding-top: 15px; border-top: 2px solid var(--color-accent); 
+    font-weight: 800; font-size: 1.2rem; color: var(--color-primary); 
+    display: flex; justify-content: space-between;
+}
+
+/* ==========================================================================
+   5. ESTILOS ESPECÍFICOS: ACUERDOS MINISTERIALES
+   ========================================================================== */
+.legal-layout { display: grid; grid-template-columns: 350px 1fr; gap: 24px; height: 650px; }
+
+.legal-sidebar { 
+    background: var(--bg-card); border-radius: var(--radius-lg); 
+    border: 1px solid var(--border-color); display: flex; flex-direction: column; 
+    overflow: hidden;
+}
+.search-box { padding: 16px; border-bottom: 1px solid var(--border-color); background: #f8fafc; }
+.legal-list { overflow-y: auto; flex: 1; }
+
+.doc-item { 
+    padding: 16px; border-bottom: 1px solid var(--border-color); 
+    cursor: pointer; transition: background 0.15s; position: relative;
+}
+.doc-item:hover { background: #f1f5f9; }
+.doc-item.active { background: #eff6ff; border-left: 4px solid var(--color-accent); }
+.doc-code { font-weight: 700; color: var(--color-primary); font-size: 0.9rem; }
+.doc-title { font-size: 0.85rem; color: var(--text-main); margin-top: 4px; line-height: 1.4; }
+.doc-tag { font-size: 0.7rem; background: #e2e8f0; padding: 2px 6px; border-radius: 4px; color: var(--text-light); margin-top: 6px; display: inline-block; }
+
+.legal-viewer { 
+    background: var(--bg-card); border-radius: var(--radius-lg); 
+    border: 1px solid var(--border-color); padding: 40px; 
+    overflow-y: auto; position: relative;
+}
+.pdf-placeholder {
+    text-align: center; color: var(--text-light); margin-top: 20%;
+}
+.pdf-content-sim {
+    background: white; border: 1px solid #ddd; padding: 40px; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05); min-height: 500px;
+}
+
+/* ==========================================================================
+   6. ESTILOS ESPECÍFICOS: HOJA DE VIDA (CV)
+   ========================================================================== */
+.cv-editor { background: var(--bg-card); padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); height: 800px; overflow-y: auto; }
+.cv-preview-container { 
+    background: #525659; padding: 20px; border-radius: var(--radius-lg); 
+    display: flex; justify-content: center; height: 800px; overflow-y: auto; 
+}
+
+.cv-paper {
+    background: white; width: 210mm; min-height: 297mm; padding: 25mm;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    font-family: 'Georgia', serif; color: #111;
+    transform: scale(0.85); transform-origin: top center;
+}
+
+.cv-paper h1 { font-size: 24pt; border-bottom: 2px solid #333; margin-bottom: 5mm; text-transform: uppercase; }
+.cv-paper h2 { font-size: 14pt; color: #444; margin-bottom: 15mm; font-weight: normal; }
+.cv-section-title { 
+    font-size: 12pt; font-weight: bold; text-transform: uppercase; 
+    background: #eee; padding: 5px; margin-top: 15px; margin-bottom: 10px; font-family: sans-serif; 
+}
+.cv-text { font-size: 11pt; line-height: 1.5; white-space: pre-line; margin-bottom: 10px; }
+
+/* ==========================================================================
+   7. CHATBOT INTELIGENTE Y MODALES
+   ========================================================================== */
+.chat-fab {
+    position: fixed; bottom: 80px; right: 30px; width: 64px; height: 64px;
+    background: var(--color-accent); color: white; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem; cursor: pointer; box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+    z-index: 100; transition: transform 0.3s;
+}
+.chat-fab:hover { transform: scale(1.1) rotate(10deg); background: var(--color-accent-hover); }
+
+.chat-window {
+    position: fixed; bottom: 160px; right: 30px; width: 380px; height: 550px;
+    background: white; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    display: none; flex-direction: column; overflow: hidden; z-index: 99;
+    border: 1px solid var(--border-color); animation: slideUpChat 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes slideUpChat { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.chat-header { 
+    background: var(--color-primary); padding: 16px; color: white; 
+    font-weight: 600; display: flex; justify-content: space-between; align-items: center; 
+}
+.chat-body { 
+    flex: 1; padding: 20px; overflow-y: auto; background: #f8fafc; 
+    display: flex; flex-direction: column; gap: 12px; 
+}
+
+.msg { max-width: 85%; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; line-height: 1.5; position: relative; }
+.msg.bot { background: white; border: 1px solid var(--border-color); align-self: flex-start; border-bottom-left-radius: 2px; color: var(--text-main); }
+.msg.user { background: var(--color-primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+
+.chat-footer { padding: 15px; border-top: 1px solid var(--border-color); display: flex; gap: 8px; background: white; }
+
+/* Modal de Descarga */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+    z-index: 2000; display: none; align-items: center; justify-content: center;
+}
+.modal-content {
+    background: white; padding: 30px; border-radius: var(--radius-lg); width: 400px;
+    text-align: center; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+.progress-bar { width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px; margin: 20px 0; overflow: hidden; }
+.progress-fill { height: 100%; width: 0%; background: var(--color-accent); transition: width 0.1s; }
+
+/* Footer Legal */
+.legal-footer {
+    background: #fff; border-top: 1px solid #e2e8f0; padding: 20px;
+    text-align: center; font-size: 0.75rem; color: #64748b;
+    position: fixed; bottom: 0; width: 100%; z-index: 30;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* ==========================================================================
+   8. ESTILOS DE IMPRESIÓN (SOLO PARA CV Y REPORTES)
+   ========================================================================== */
+@media print {
+    /* Ocultar todo lo que no queremos imprimir */
+    header, .nav-wrapper, .legal-footer, .chat-fab, .chat-window, .cv-editor, .btn, .card-header button {
+        display: none !important;
+    }
+
+    body {
+        background: white; padding: 0; margin: 0;
+    }
+
+    /* Ajustar el contenedor principal */
+    .main-content {
+        margin: 0; padding: 0; max-width: 100%;
+    }
+
+    /* Si estamos en la pestaña CV, hacemos que el papel ocupe toda la hoja */
+    .cv-preview-container {
+        display: block; height: auto; overflow: visible; background: white;
+        padding: 0; border: none;
+    }
+
+    .cv-paper {
+        transform: scale(1);
+        box-shadow: none; margin: 0; width: 100%; min-height: auto; padding: 0;
+    }
+    
+    /* Ocultar otras pestañas por si acaso */
+    #tab-calculadoras, #tab-acuerdos { display: none !important; }
+}

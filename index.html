@@ -7,7 +7,7 @@
     <title>LABORALEC PRO 2026 | Sistema Jurídico Integrado</title>
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css?v=11.1">
 
     <style>
@@ -32,9 +32,11 @@
         .art-badge {
             background: #3b82f6; color: white; padding: 4px 12px;
             border-radius: 6px; font-size: 0.75rem; margin-right: 15px;
+            font-family: 'Roboto Mono', monospace;
         }
         .legal-content { padding: 25px; border-top: 1px solid #f1f5f9; line-height: 1.8; color: #475569; }
-        .tech-note { background: #f1f5f9; padding: 15px; border-radius: 8px; border-left: 4px solid #3b82f6; margin: 15px 0; }
+        .law-box { background: #f8fafc; padding: 20px; border-left: 4px solid #3b82f6; border-radius: 0 8px 8px 0; font-style: italic; margin: 15px 0; }
+        .tech-note { background: #f1f5f9; padding: 15px; border-radius: 8px; border-left: 4px solid #3b82f6; margin: 15px 0; font-size: 0.9rem; }
         
         /* Sistema de Tabs */
         .tab-pane { display: none; animation: fadeIn 0.3s ease; }
@@ -143,27 +145,6 @@
                     </div>
                 </div>
 
-                <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-blind" style="color:#8b5cf6"></i> Jubilación Patronal</h3></div>
-                    <div class="card-body">
-                        <div class="form-group"><label>Sueldo Promedio (5 años)</label><input type="number" id="jub_prom"></div>
-                        <div class="form-group"><label>Años Servicio</label><input type="number" id="jub_anios"></div>
-                        <div class="form-group"><label>Edad Actual</label><input type="number" id="jub_edad"></div>
-                        <button class="btn btn-primary" onclick="calculators.jubilacion()">CALCULAR</button>
-                        <div id="res_jub" class="result-panel"></div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-landmark" style="color:#3b82f6"></i> LOSEP</h3></div>
-                    <div class="card-body">
-                        <div class="form-group"><label>RMU Actual ($)</label><input type="number" id="losep_rmu"></div>
-                        <div class="form-group"><label>Años Servicio</label><input type="number" id="losep_anios"></div>
-                        <button class="btn btn-action" onclick="calculators.losep()">SIMULAR</button>
-                        <div id="res_losep" class="result-panel"></div>
-                    </div>
-                </div>
-
             </div>
         </div>
 
@@ -171,35 +152,50 @@
             <div class="legal-universe">
                 <div class="hero-legal">
                     <h1>Códice Técnico del Trabajo Ecuador 2026</h1>
-                    <p>Referencia técnica detallada sobre derechos, protecciones y estabilidad laboral.</p>
+                    <p>Desglose jurídico de alta precisión sobre derechos y estabilidad laboral.</p>
                 </div>
 
                 <div class="legal-grid">
+                    
                     <details class="legal-item">
                         <summary><span class="art-badge">Art. 155</span> Guarderías y Cuidado Infantil</summary>
                         <div class="legal-content">
-                            <h4>Obligación del Empleador</h4>
-                            <p>Empresas con 50 o más trabajadores deben establecer servicios de guardería gratuitos.</p>
+                            <h4>Protección a la Familia</h4>
+                            <p>Toda empresa con 50 o más trabajadores tiene la obligación técnica de establecer servicios de guardería gratuitos.</p>
+                            <div class="law-box">"El servicio será mantenido por el empleador hasta que el niño cumpla 5 años de edad."</div>
                         </div>
                     </details>
-                    
+
                     <details class="legal-item">
-                        <summary><span class="art-badge">Ley Salud</span> Enfermedades Catastróficas</summary>
+                        <summary><span class="art-badge">L. Salud</span> Enfermedades Catastróficas y Raras</summary>
                         <div class="legal-content">
-                            <h4>Estabilidad Reforzada</h4>
-                            <p>Protección contra despido ineficaz para pacientes con patologías raras o catastróficas.</p>
+                            <h4>Inamovilidad Laboral</h4>
+                            <p>Se garantiza estabilidad reforzada para pacientes con cáncer, insuficiencia renal o patologías raras certificadas.</p>
+                            <div class="tech-note"><strong>Efecto Legal:</strong> El despido se considera nulo/ineficaz, obligando al pago de 12 meses de sueldo adicionales.</div>
                         </div>
                     </details>
 
                     <details class="legal-item">
                         <summary><span class="art-badge">L.O.D.</span> Personas con Discapacidad y Sustitutos</summary>
                         <div class="legal-content">
-                            <h4>Protección al Sustituto</h4>
-                            <p>El cuidador acreditado goza de la misma estabilidad y una indemnización especial de 18 meses de sueldo por despido.</p>
+                            <h4>Beneficios del Sustituto Laboral</h4>
+                            <p>El pariente que cuida a una persona con discapacidad severa hereda los beneficios de estabilidad de la ley.</p>
+                            <ul>
+                                <li>Inclusión en la cuota del 4% de la empresa.</li>
+                                <li>Indemnización por despido: 18 meses de la mejor remuneración.</li>
+                            </ul>
                         </div>
                     </details>
 
-                    </div>
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Art. 172</span> Causales de Visto Bueno</summary>
+                        <div class="legal-content">
+                            <h4>Terminación con Causa Justificada</h4>
+                            <p>El empleador puede solicitar el visto bueno por faltas de probidad, indisciplina o abandono del trabajo por más de 3 días.</p>
+                        </div>
+                    </details>
+
+                </div>
             </div>
         </div>
 

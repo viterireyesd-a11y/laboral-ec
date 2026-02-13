@@ -3,63 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Normativa Laboral Ecuador 2026 | LaboralEC</title>
+    <title>Enciclopedia Jurídica Laboral 2026 | LaboralEC</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        .normativa-container { max-width: 1100px; margin: 40px auto; padding: 20px; color: #fff; }
-        .art-card { background: #1e293b; border-radius: 12px; margin-bottom: 20px; border: 1px solid #334155; }
-        summary { padding: 25px; cursor: pointer; font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; }
-        .badge { background: #3b82f6; color: white; padding: 4px 10px; border-radius: 6px; margin-right: 15px; font-size: 0.8rem; }
-        .content { padding: 0 25px 30px; line-height: 1.8; color: #cbd5e1; border-top: 1px solid #334155; }
-        .law-box { background: #0f172a; padding: 20px; border-left: 4px solid #3b82f6; margin: 20px 0; border-radius: 0 8px 8px 0; }
-        h4 { color: #3b82f6; margin-top: 20px; }
+        :root {
+            --primary: #0f172a;
+            --accent: #3b82f6;
+            --text-muted: #94a3b8;
+            --card-bg: #1e293b;
+        }
+
+        body { font-family: 'Inter', sans-serif; background: var(--primary); color: #f8fafc; margin: 0; }
+
+        .normativa-container { max-width: 1000px; margin: 50px auto; padding: 0 20px; }
+
+        .hero-section {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            padding: 60px 40px;
+            border-radius: 24px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 40px;
+        }
+
+        .art-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            margin-bottom: 20px;
+            border: 1px solid #334155;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .art-card:hover { border-color: var(--accent); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+
+        summary {
+            padding: 25px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            list-style: none;
+        }
+
+        summary::-webkit-details-marker { display: none; }
+
+        .badge {
+            background: var(--accent);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 8px;
+            margin-right: 20px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-family: monospace;
+        }
+
+        .content {
+            padding: 0 30px 40px;
+            line-height: 1.8;
+            color: #cbd5e1;
+            border-top: 1px solid #334155;
+        }
+
+        .content h4 { color: var(--accent); margin: 25px 0 10px; display: flex; align-items: center; gap: 10px; }
+        
+        .law-box {
+            background: #0f172a;
+            padding: 20px;
+            border-left: 5px solid var(--accent);
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        .tech-note {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--accent);
+            margin: 15px 0;
+        }
     </style>
 </head>
 <body>
+
     <div class="normativa-container">
-        <h1>Enciclopedia Jurídica Laboral 2026</h1>
-        <p>Desglose técnico del Código del Trabajo y Leyes Orgánicas.</p>
-        <hr style="border: 0; border-top: 1px solid #334155; margin: 30px 0;">
+        <div class="hero-section">
+            <h1 style="font-size: 2.5rem; margin-bottom: 10px;">Códice Laboral Ecuador 2026</h1>
+            <p style="color: var(--text-muted);">Análisis exhaustivo del Código del Trabajo y Normativas Orgánicas Transversales.</p>
+        </div>
 
         <details class="art-card" open>
-            <summary><span class="badge">Art. 155</span> Guarderías y Cuidado Infantil</summary>
+            <summary><span class="badge">Art. 55</span> Horas Suplementarias y Extraordinarias</summary>
             <div class="content">
-                <h4>Obligación Patronal</h4>
-                <p>Las empresas con 50 o más trabajadores deben establecer centros de cuidado infantil gratuitos para hijos de trabajadores.</p>
-                <div class="law-box">"El servicio de guardería será gratuito y se mantendrá hasta que el niño cumpla 5 años."</div>
+                <h4><i class="fas fa-clock"></i> Recargos Técnicos sobre el Salario</h4>
+                <div class="law-box">"Si el trabajo se ejecutare fuera de la jornada ordinaria, se pagará con el 50% de recargo hasta las 24H00; y, con el 100% desde las 24H00 hasta las 06H00 o en días de descanso obligatorio."</div>
+                <div class="tech-note">
+                    <strong>Análisis:</strong> Las horas suplementarias tienen un tope legal de 4 diarias y 12 semanales. No respetar este límite puede acarrear sanciones administrativas severas ante el Ministerio del Trabajo.
+                </div>
             </div>
         </details>
 
         <details class="art-card">
-            <summary><span class="badge">Ley Salud</span> Enfermedades Catastróficas</summary>
+            <summary><span class="badge">Art. 97</span> Participación de Utilidades (15%)</summary>
             <div class="content">
-                <h4>Protección y Estabilidad</h4>
-                <p>Estabilidad absoluta para trabajadores con patologías raras o catastróficas debidamente certificadas.</p>
-                <div class="law-box">Cualquier despido se considera ineficaz, conllevando indemnizaciones de hasta un año de sueldo extra.</div>
-            </div>
-        </details>
-
-        <details class="art-card">
-            <summary><span class="badge">L.O.D.</span> Sustitutos Laborales</summary>
-            <div class="content">
-                <h4>Derechos del Cuidador</h4>
-                <p>El sustituto es el pariente que cuida a una persona con discapacidad severa.</p>
+                <h4><i class="fas fa-percent"></i> Distribución de Beneficios Líquidos</h4>
+                <p>El empleador reconocerá en beneficio de sus trabajadores el 15% de las utilidades líquidas.</p>
                 <ul>
-                    <li>Goza de la misma estabilidad que la persona con discapacidad.</li>
-                    <li><strong>Indemnización Especial:</strong> 18 meses de sueldo por despido intempestivo.</li>
+                    <li><strong>10% Individual:</strong> Repartido según el tiempo laborado en el ejercicio fiscal.</li>
+                    <li><strong>5% Cargas:</strong> Entregado en proporción a las cargas familiares debidamente acreditadas (cónyuge e hijos menores de 18 años o con discapacidad).</li>
                 </ul>
             </div>
         </details>
 
         <details class="art-card">
-            <summary><span class="badge">Art. 188</span> Despido Intempestivo</summary>
+            <summary><span class="badge">Art. 187</span> Despido Ineficaz (Protección Reforzada)</summary>
             <div class="content">
-                <h4>Cálculo de Indemnización</h4>
-                <p>Pago según el tiempo de servicio: hasta 3 años son 3 meses de sueldo; más de 3 años es 1 mes por año.</p>
+                <h4><i class="fas fa-shield-alt"></i> Inamovilidad Laboral</h4>
+                <p>Aplica para mujeres embarazadas, en periodo de lactancia, o dirigentes sindicales legalmente reconocidos.</p>
+                <div class="tech-note">
+                    <strong>Indemnización:</strong> Si se comprueba el despido ineficaz, el empleador deberá pagar una cuantía equivalente a un año de la última remuneración percibida, adicional a las indemnizaciones normales.
+                </div>
+            </div>
+        </details>
+
+        <details class="art-card">
+            <summary><span class="badge">Art. 172-173</span> Del Visto Bueno (Causales)</summary>
+            <div class="content">
+                <h4><i class="fas fa-gavel"></i> Terminación con Causa Justificada</h4>
+                <p><strong>Por parte del Empleador:</strong> Faltas de puntualidad, indisciplina, falta de probidad o injurias graves.</p>
+                <p><strong>Por parte del Trabajador:</strong> Injurias graves del empleador, falta de pago puntual o exigencia de tareas ajenas al contrato.</p>
+            </div>
+        </details>
+
+        <details class="art-card">
+            <summary><span class="badge">L. Errad.</span> Acoso Laboral y Violencia</summary>
+            <div class="content">
+                <h4><i class="fas fa-user-shield"></i> Erradicación de la Violencia en el Trabajo</h4>
+                <p>Toda conducta persistente y demostrable ejercida sobre un trabajador por parte de un empleador, jefe o compañero, con el fin de infundir miedo, intimidación o desmotivación.</p>
+                <div class="law-box">Sanciona actos de discriminación, acoso psicológico y conductas que atenten contra la integridad sexual o física.</div>
+            </div>
+        </details>
+
+        <details class="art-card">
+            <summary><span class="badge">Ley Especial</span> Protecciones de Sensibilidad Social</summary>
+            <div class="content">
+                <h4><i class="fas fa-baby-carriage"></i> Guarderías (Art. 155)</h4>
+                <p>Obligatorio para empresas con más de 50 trabajadores. Servicio gratuito hasta los 5 años.</p>
+                
+                <h4><i class="fas fa-hands-helping"></i> Sustitutos (L.O.D.)</h4>
+                <p>Cuidadores de personas con discapacidad severa tienen estabilidad reforzada y 18 meses de sueldo extra por despido.</p>
+                
+                <h4><i class="fas fa-notes-medical"></i> Enfermedades Catastróficas</h4>
+                <p>Protección absoluta para pacientes con patologías raras o catastróficas. El despido es nulo.</p>
             </div>
         </details>
     </div>
+
 </body>
 </html>

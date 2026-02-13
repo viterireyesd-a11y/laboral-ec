@@ -3,15 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SISTEMA DE GESTIÓN JURÍDICA | LABORALEC PRO 2026</title>
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-    
+    <link rel="icon" type="image/png" href="icono.png">
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <header>
+        <div class="header-container">
+            <div class="brand-logo">
+                <h1>LABORALEC</h1>
+                <span>SISTEMA JURÍDICO INTEGRADO 2026</span>
+            </div>
+            <div class="system-status">
+                <span class="status-dot"></span>
+                <span>SBU Vigente: <strong>$482.00</strong></span>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav-wrapper">
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="app.navigate('tab-calculadoras')">
+                <i class="fas fa-calculator"></i> Calculadoras
+            </button>
+            <button class="tab-btn" onclick="app.navigate('tab-acuerdos')">
+                <i class="fas fa-gavel"></i> Biblioteca Legal
+            </button>
+            <button class="tab-btn" onclick="app.navigate('tab-cv')">
+                <i class="fas fa-file-signature"></i> Hoja de Vida
+            </button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+
+        <div id="tab-calculadoras" class="tab-pane active">
+            <div class="grid-3">
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-hand-holding-medical" style="color:var(--color-accent)"></i> Aportes IESS</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Sueldo Nominal ($)</label>
+                            <input type="number" id="iess_sueldo" value="482.00">
+                        </div>
+                        <div class="form-group">
+                            <label>Régimen</label>
+                            <select id="iess_tipo">
+                                <option value="privado">Sector Privado (9.45% / 12.15%)</option>
+                                <option value="publico">Sector Público (11.45% / 9.15%)</option>
+                                <option value="voluntario">Voluntario (17.6%)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                             <label style="text-transform:none; font-weight:400; cursor:pointer;">
+                                <input type="checkbox" id="iess_fr" style="width:auto; margin-right:8px;"> Acumula Fondo de Reserva (8.33%)
+                             </label>
+                        </div>
+                        <button class="btn btn-primary" onclick="calculators.iess()">Calcular Aportaciones</button>
+                        <div id="res_iess" class="result-panel"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-door-open" style="color:var(--color-danger)"></i> Liquidación Final</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Última Remuneración ($)</label>
+                            <input type="number" id="liq_sueldo" placeholder="Ej: 600">
+                        </div>
+                        <div class="form-group">
+                            <label>Años de Servicio</label>
+                            <input type="number" id="liq_anios" placeholder="Ej: 3">
+                        </div>
+                        <div class="form-group">
+                            <label>Causal</label>
+                            <select id="liq_causa">
+                                <option value="intempestivo">Despido Intempestivo (Art. 188)</option>
+                                <option value="renuncia">Renuncia Voluntaria (Desahucio)</option>
+                                <option value="acuerdo">Mutuo Acuerdo</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-action" onclick="calculators.liquidacion()">Simular Liquidación</button>
+                        <div id="res_liq" class="result-panel"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-clock" style="color:var(--color-warning)"></i> Horas Extras</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group"><label>Sueldo ($)</label><input type="number" id="he_sueldo"></div>
+                        <div class="grid-2">
+                            <div class="form-group"><label>Horas 50%</label><input type="number" id="he_50" placeholder="0"></div>
+                            <div class="form-group"><label>Horas 100%</label><input type="number" id="he_100" placeholder="0"></div>
+                        </div>
+                        <button class="btn btn-primary" onclick="calculators.extras()">Calcular Recargos</button>
+                        <div id="res_he" class="result-panel"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h3><i class="fas fa-coins"></i> Décimos</h3></div>
+                    <div class="card-body">
+                        <div class="form-group"><label>Ingreso Anual ($)</label><input type="number" id="dec_ingresos"></div>
+                        <div class="form-group"><label>Meses Trabajados</label><input type="number" id="dec_meses" max="12"></div>
+                        <button class="btn btn-action" onclick="calculators.decimos()">Calcular Provisión</button>
+                        <div id="res_dec" class="result-panel"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h3><i class="fas fa-blind"></i> Jubilación Patronal</h3></div>
+                    <div class="card-body">
+                        <div class="form-group"><label>Promedio Anual (5 años)</label><input type="number" id="jub_prom"></div>
+                        <div class="form-group"><label>Años (Mínimo 20)</label><input type="number" id="jub_anios"></div>
+                        <button class="btn btn-primary" onclick="calculators.jubilacion()">Estimar Fondo</button>
+                        <div id="res_jub" class="result-panel"></div>
+                    </div>
+                </div>
+
+                 <div class="card">
+                    <div class="card-header"><h3><i class="fas fa-landmark"></i> LOSEP</h3></div>
+                    <div class="card-body">
+                        <div class="form-group"><label>RMU Actual ($)</label><input type="number" id="losep_rmu"></div>
+                        <div class="form-group"><label>Años Servicio</label><input type="number" id="losep_anios"></div>
+                        <button class="btn btn-action" onclick="calculators.losep()">Calcular Indemnización</button>
+                        <div id="res_losep" class="result-panel"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="tab-acuerdos" class="tab-pane">
+            <div class="legal-layout">
+                <div class="legal-sidebar">
+                    <div class="search-box">
+                        <input type="text" id="legalSearch" placeholder="🔍 Buscar acuerdo, tema o año..." onkeyup="agreements.search()">
+                    </div>
+                    <div class="legal-list" id="agreementList">
+                        </div>
+                </div>
+
+                <div class="legal-viewer" id="agreementViewer">
+                    <div class="pdf-placeholder">
+                        <i class="far fa-file-pdf fa-4x" style="color:#cbd5e1; margin-bottom:20px;"></i>
+                        <h2>Seleccione un documento</h2>
+                        <p>Navegue por la lista izquierda para ver el detalle de los Acuerdos Ministeriales vigentes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-cv" class="tab-pane">
+            <div class="grid-2" style="grid-template-columns: 1fr 1.2fr;">
+                
+                <div class="card cv-editor">
+                    <div class="card-header">
+                        <h3>Datos del Candidato</h3>
+                        <button class="btn btn-action" style="width:auto; padding:5px 15px; font-size:0.8rem;" onclick="cv.save()"><i class="fas fa-save"></i> Guardar</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Nombre Completo</label>
+                            <input type="text" id="cv_nombre" onkeyup="cv.update()">
+                        </div>
+                        <div class="form-group">
+                            <label>Título Profesional</label>
+                            <input type="text" id="cv_titulo" onkeyup="cv.update()">
+                        </div>
+                        <div class="form-group">
+                            <label>Contacto (Email | Teléfono)</label>
+                            <input type="text" id="cv_contacto" onkeyup="cv.update()">
+                        </div>
+
+                        <hr style="margin: 20px 0; border:0; border-top:1px solid #eee;">
+                        
+                        <div class="form-group">
+                            <label>Perfil Profesional</label>
+                            <textarea id="cv_perfil" rows="5" placeholder="Resumen de habilidades..." onkeyup="cv.update()"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Experiencia Laboral</label>
+                            <textarea id="cv_exp" rows="8" placeholder="Empresa - Cargo - Fechas..." onkeyup="cv.update()"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Formación Académica</label>
+                            <textarea id="cv_edu" rows="5" placeholder="Institución - Título..." onkeyup="cv.update()"></textarea>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="window.print()"><i class="fas fa-print"></i> Imprimir / Guardar PDF</button>
+                    </div>
+                </div>
+
+                <div class="cv-preview-container">
+                    <div class="cv-paper">
+                        <h1 id="p_nombre">JUAN PÉREZ</h1>
+                        <h2 id="p_titulo">PROFESIONAL</h2>
+                        <div style="font-size:10pt; color:#555; margin-bottom:10mm;" id="p_contacto">juan@email.com | 0991234567</div>
+                        
+                        <div class="cv-section-title">Perfil</div>
+                        <div class="cv-text" id="p_perfil">Describa su perfil aquí...</div>
+
+                        <div class="cv-section-title">Experiencia</div>
+                        <div class="cv-text" id="p_exp">...</div>
+
+                        <div class="cv-section-title">Educación</div>
+                        <div class="cv-text" id="p_edu">...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="legal-footer" id="mobile-legal-footer">
+        <p><strong>AVISO LEGAL:</strong> Esta herramienta es un simulador referencial basado en la normativa ecuatoriana vigente (SBU $482). 
+        Los cálculos generados no constituyen una liquidación oficial vinculante ni asesoría legal definitiva. 
+        Para casos legales específicos, se recomienda consultar con un abogado laboralista o acudir al Ministerio del Trabajo. 
+        LaboralEC no se responsabiliza por el uso indebido de esta información.</p>
+        <p style="margin-top:5px;">&copy; 2026 LaboralEC - Versión Pro 3.1.2</p>
+    </footer>
+
+    <div class="chat-fab" onclick="chatbot.toggle()">
+        <i class="fas fa-robot"></i>
+    </div>
+
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <span>Asistente Legal IA</span>
+            <span style="cursor:pointer;" onclick="chatbot.toggle()"><i class="fas fa-times"></i></span>
+        </div>
+        <div class="chat-body" id="chatLog">
+            <div class="msg bot">
+                Hola, soy tu asistente de LaboralEC. <br>
+                Puedo responder dudas sobre el <strong>Acuerdo Ministerial MDT-2026</strong>, cálculo de horas extras o despidos.
+            </div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="chatInput" placeholder="Escribe tu consulta..." onkeypress="chatbot.checkEnter(event)">
+            <button class="btn btn-action" style="width:auto; padding:0 15px;" onclick="chatbot.send()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="downloadModal">
+        <div class="modal-content">
+            <h3 style="color:var(--color-primary); margin-bottom:10px;">Conectando con Servidor MDT...</h3>
+            <p id="dlText" style="color:#666; font-size:0.9rem;">Solicitando archivo PDF original...</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="dlProgress"></div>
+            </div>
+            <p id="dlStatus" style="font-weight:bold; font-size:0.8rem; color:var(--color-accent);">Iniciando...</p>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

@@ -7,11 +7,10 @@
     <title>LABORALEC PRO 2026 | Sistema Jurídico Integrado</title>
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=11.1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=11.2">
 
     <style>
-        /* Estilos de la Enciclopedia Pro */
         .legal-universe { max-width: 1100px; margin: 0 auto; padding: 20px; }
         .hero-legal {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
@@ -32,18 +31,15 @@
         .art-badge {
             background: #3b82f6; color: white; padding: 4px 12px;
             border-radius: 6px; font-size: 0.75rem; margin-right: 15px;
-            font-family: 'Roboto Mono', monospace;
         }
         .legal-content { padding: 25px; border-top: 1px solid #f1f5f9; line-height: 1.8; color: #475569; }
         .law-box { background: #f8fafc; padding: 20px; border-left: 4px solid #3b82f6; border-radius: 0 8px 8px 0; font-style: italic; margin: 15px 0; }
-        .tech-note { background: #f1f5f9; padding: 15px; border-radius: 8px; border-left: 4px solid #3b82f6; margin: 15px 0; font-size: 0.9rem; }
+        .tech-note { background: #f1f5f9; padding: 15px; border-radius: 8px; border-left: 4px solid #3b82f6; margin: 15px 0; }
         
-        /* Sistema de Tabs */
         .tab-pane { display: none; animation: fadeIn 0.3s ease; }
         .tab-pane.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Estilos de Calculadoras en Grid */
         .grid-calculadoras {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -138,10 +134,31 @@
                 <div class="card">
                     <div class="card-header"><h3><i class="fas fa-coins" style="color:#10b981"></i> Décimos</h3></div>
                     <div class="card-body">
-                        <div class="form-group"><label>Sueldo Mensual ($)</label><input type="number" id="dec_sueldo"></div>
-                        <div class="form-group"><label>Meses Trabajados</label><input type="number" id="dec_meses" value="12" max="12"></div>
+                        <div class="form-group"><label>Sueldo ($)</label><input type="number" id="dec_sueldo"></div>
+                        <div class="form-group"><label>Meses</label><input type="number" id="dec_meses" value="12"></div>
                         <button class="btn btn-action" onclick="calculators.decimos()">CALCULAR</button>
                         <div id="res_dec" class="result-panel"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h3><i class="fas fa-blind" style="color:#8b5cf6"></i> Jubilación Patronal</h3></div>
+                    <div class="card-body">
+                        <div class="form-group"><label>Promedio 5 años ($)</label><input type="number" id="jub_prom"></div>
+                        <div class="form-group"><label>Años Servicio</label><input type="number" id="jub_anios"></div>
+                        <div class="form-group"><label>Edad Actual</label><input type="number" id="jub_edad"></div>
+                        <button class="btn btn-primary" onclick="calculators.jubilacion()">CALCULAR</button>
+                        <div id="res_jub" class="result-panel"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h3><i class="fas fa-landmark" style="color:#3b82f6"></i> LOSEP</h3></div>
+                    <div class="card-body">
+                        <div class="form-group"><label>RMU Actual ($)</label><input type="number" id="losep_rmu"></div>
+                        <div class="form-group"><label>Años Servicio</label><input type="number" id="losep_anios"></div>
+                        <button class="btn btn-action" onclick="calculators.losep()">SIMULAR</button>
+                        <div id="res_losep" class="result-panel"></div>
                     </div>
                 </div>
 
@@ -151,50 +168,45 @@
         <div id="tab-base-legal" class="tab-pane">
             <div class="legal-universe">
                 <div class="hero-legal">
-                    <h1>Códice Técnico del Trabajo Ecuador 2026</h1>
-                    <p>Desglose jurídico de alta precisión sobre derechos y estabilidad laboral.</p>
+                    <h1>Enciclopedia Jurídica del Trabajo 2026</h1>
+                    <p>Referencia técnica exhaustiva sobre derechos, estabilidad y protecciones especiales.</p>
                 </div>
 
                 <div class="legal-grid">
-                    
-                    <details class="legal-item">
+                    <details class="legal-item" open>
                         <summary><span class="art-badge">Art. 155</span> Guarderías y Cuidado Infantil</summary>
                         <div class="legal-content">
-                            <h4>Protección a la Familia</h4>
-                            <p>Toda empresa con 50 o más trabajadores tiene la obligación técnica de establecer servicios de guardería gratuitos.</p>
-                            <div class="law-box">"El servicio será mantenido por el empleador hasta que el niño cumpla 5 años de edad."</div>
+                            <h4>Protección a la Familia Trabajadora</h4>
+                            <p>Toda empresa con 50 o más trabajadores está obligada a proveer centros de cuidado gratuitos.</p>
+                            <div class="law-box">"El servicio será gratuito y se mantendrá hasta que el niño cumpla 5 años."</div>
+                        </div>
+                    </details>
+                    
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Ley Salud</span> Enfermedades Catastróficas</summary>
+                        <div class="legal-content">
+                            <h4>Estabilidad Laboral Reforzada</h4>
+                            <p>Protección contra el despido ineficaz para trabajadores con patologías catastróficas o raras.</p>
+                            <div class="tech-note"><strong>Efecto:</strong> El despido conlleva una indemnización de 12 meses de sueldo adicionales por ley.</div>
                         </div>
                     </details>
 
                     <details class="legal-item">
-                        <summary><span class="art-badge">L. Salud</span> Enfermedades Catastróficas y Raras</summary>
+                        <summary><span class="art-badge">L.O.D.</span> Sustitutos y Discapacidad</summary>
                         <div class="legal-content">
-                            <h4>Inamovilidad Laboral</h4>
-                            <p>Se garantiza estabilidad reforzada para pacientes con cáncer, insuficiencia renal o patologías raras certificadas.</p>
-                            <div class="tech-note"><strong>Efecto Legal:</strong> El despido se considera nulo/ineficaz, obligando al pago de 12 meses de sueldo adicionales.</div>
+                            <h4>Derechos del Sustituto Laboral</h4>
+                            <p>El cuidador legal de una persona con discapacidad severa goza de los mismos beneficios de estabilidad.</p>
+                            <div class="tech-note"><strong>Indemnización:</strong> El despido de un sustituto genera el pago de 18 meses de sueldo adicionales.</div>
                         </div>
                     </details>
 
                     <details class="legal-item">
-                        <summary><span class="art-badge">L.O.D.</span> Personas con Discapacidad y Sustitutos</summary>
+                        <summary><span class="art-badge">Art. 55</span> Horas Extras y Suplementarias</summary>
                         <div class="legal-content">
-                            <h4>Beneficios del Sustituto Laboral</h4>
-                            <p>El pariente que cuida a una persona con discapacidad severa hereda los beneficios de estabilidad de la ley.</p>
-                            <ul>
-                                <li>Inclusión en la cuota del 4% de la empresa.</li>
-                                <li>Indemnización por despido: 18 meses de la mejor remuneración.</li>
-                            </ul>
+                            <h4>Recargos y Jornadas</h4>
+                            <p>Suplementarias (50%): Tras la jornada ordinaria hasta las 24H00. Extraordinarias (100%): Sábados, domingos y feriados.</p>
                         </div>
                     </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 172</span> Causales de Visto Bueno</summary>
-                        <div class="legal-content">
-                            <h4>Terminación con Causa Justificada</h4>
-                            <p>El empleador puede solicitar el visto bueno por faltas de probidad, indisciplina o abandono del trabajo por más de 3 días.</p>
-                        </div>
-                    </details>
-
                 </div>
             </div>
         </div>

@@ -9,21 +9,25 @@
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="icono.png">
-
-    <link rel="stylesheet" href="style.css">
+    
+    <link rel="stylesheet" href="style.css?v=9.9">
 </head>
 <body>
 
     <header>
         <div class="header-container">
-            <div class="brand-logo">
-                <h1>LABORALEC</h1>
-                <span>SISTEMA JURÍDICO INTEGRADO 2026</span>
+            <div class="brand-wrapper">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Coat_of_arms_of_Ecuador.svg" class="escudo-img" alt="Escudo Ecuador">
+                
+                <div class="brand-text">
+                    <h1>LABORALEC</h1>
+                    <span>SISTEMA JURÍDICO INTEGRADO 2026</span>
+                </div>
             </div>
+
             <div class="system-status">
                 <span class="status-dot"></span>
-                <span>SBU Vigente: <strong>$482.00</strong></span>
+                <span>SBU 2026: <strong>$482.00</strong></span>
             </div>
         </div>
     </header>
@@ -49,7 +53,7 @@
                 
                 <div class="card">
                     <div class="card-header">
-                        <h3><i class="fas fa-hand-holding-medical" style="color:var(--color-accent)"></i> Aportes IESS</h3>
+                        <h3><i class="fas fa-hand-holding-medical" style="color:#60a5fa"></i> Aportes IESS</h3>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
@@ -76,7 +80,7 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3><i class="fas fa-door-open" style="color:var(--color-danger)"></i> Liquidación Final</h3>
+                        <h3><i class="fas fa-door-open" style="color:#ef4444"></i> Liquidación Final</h3>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
@@ -102,7 +106,7 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3><i class="fas fa-clock" style="color:var(--color-warning)"></i> Horas Extras</h3>
+                        <h3><i class="fas fa-clock" style="color:#f59e0b"></i> Horas Extras</h3>
                     </div>
                     <div class="card-body">
                         <div class="form-group"><label>Sueldo ($)</label><input type="number" id="he_sueldo"></div>
@@ -151,7 +155,7 @@
                     </div>
                 </div>
 
-                <div class="card">
+                 <div class="card">
                     <div class="card-header"><h3><i class="fas fa-landmark"></i> LOSEP</h3></div>
                     <div class="card-body">
                         <div class="form-group"><label>RMU Actual ($)</label><input type="number" id="losep_rmu"></div>
@@ -250,10 +254,7 @@
 
     <footer class="legal-footer" id="mobile-legal-footer">
         <p><strong>AVISO LEGAL:</strong> Esta herramienta es un simulador referencial basado en la normativa ecuatoriana vigente (SBU $482). 
-        Los cálculos generados no constituyen una liquidación oficial vinculante ni asesoría legal definitiva. 
-        Para casos legales específicos, se recomienda consultar con un abogado laboralista o acudir al Ministerio del Trabajo. 
-        LaboralEC no se responsabiliza por el uso indebido de esta información.</p>
-        <p style="margin-top:5px;">&copy; 2026 LaboralEC - Versión Pro 5.1</p>
+        LaboralEC Pro 2026.</p>
     </footer>
 
     <div class="chat-fab" onclick="chatbot.toggle()">
@@ -267,20 +268,19 @@
         </div>
         <div class="chat-body" id="chatLog">
             <div class="msg bot">
-                Hola, soy tu asistente de LaboralEC. <br>
-                Puedo responder dudas sobre el <strong>Acuerdo Ministerial MDT-2026</strong>, cálculo de horas extras o despidos.
+                Hola, soy tu asistente de LaboralEC.
             </div>
         </div>
         <div class="chat-footer">
-            <input type="text" id="chatInput" placeholder="Escribe tu consulta..." onkeypress="chatbot.checkEnter(event)">
+            <input type="text" id="chatInput" placeholder="Consulta..." onkeypress="chatbot.checkEnter(event)">
             <button class="btn btn-action" style="width:auto; padding:0 15px;" onclick="chatbot.send()"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
 
     <div class="modal-overlay" id="downloadModal">
         <div class="modal-content">
-            <h3 style="color:var(--color-primary); margin-bottom:10px;">Conectando con Servidor MDT...</h3>
-            <p id="dlText" style="color:#666; font-size:0.9rem;">Solicitando archivo PDF original...</p>
+            <h3 style="color:var(--text-main); margin-bottom:10px;">Procesando Solicitud...</h3>
+            <p id="dlText" style="color:var(--text-muted); font-size:0.9rem;">Generando PDF...</p>
             <div class="progress-bar">
                 <div class="progress-fill" id="dlProgress"></div>
             </div>

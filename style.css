@@ -1,400 +1,248 @@
 /* ==========================================================================
-   1. ARQUITECTURA DE DISEÑO & VARIABLES (CSS PRO)
+   LABORALEC PRO - DISEÑO "DARK ENGINEERING" (MODO OSCURO)
+   Ingeniero Alask - Optimizado para Descanso Visual
    ========================================================================== */
+
 :root {
-    /* Colores Institucionales */
-    --color-primary: #0f172a;       /* Azul Noche Profundo */
-    --color-primary-light: #1e293b; /* Azul Acero */
-    --color-accent: #3b82f6;        /* Azul Vibrante */
-    --color-accent-hover: #2563eb;
+    /* --- PALETA OSCURA PROFESIONAL --- */
+    --bg-body: #0f172a;       /* Fondo Principal (Azul Noche Profundo) */
+    --bg-card: #1e293b;       /* Fondo Tarjetas (Azul Acero Oscuro) */
+    --bg-input: #334155;      /* Fondo Inputs */
     
-    /* Colores de Estado */
-    --color-success: #10b981;
-    --color-warning: #f59e0b;
-    --color-danger: #ef4444;
+    /* --- ACENTOS & BORDES --- */
+    --color-primary: #3b82f6; /* Azul Brillante (Botones/Enlaces) */
+    --color-accent: #60a5fa;  /* Azul Claro (Hover) */
+    --border-color: #334155;  /* Bordes sutiles */
     
-    /* Colores Bandera Ecuador (Para el Logo LABORALEC) */
+    /* --- TEXTOS --- */
+    --text-main: #f1f5f9;     /* Texto Principal (Blanco Humo) */
+    --text-muted: #94a3b8;    /* Texto Secundario (Gris) */
+    
+    /* --- INDICADORES --- */
+    --color-success: #10b981; /* Verde Éxito */
+    --color-warning: #f59e0b; /* Amarillo Alerta */
+    --color-danger: #ef4444;  /* Rojo Error */
+
+    /* --- BANDERA ECUADOR (LOGO) --- */
     --flag-yellow: #FFD100;
     --flag-blue: #005EB8;
-    --flag-red: #EF3340; /* Rojo Intenso */
+    --flag-red: #EF3340;
 
-    /* Superficies y Fondos */
-    --bg-body: #f1f5f9;
-    --bg-card: #ffffff;
-    --border-color: #e2e8f0;
-    
-    /* Tipografía */
-    --font-main: 'Inter', system-ui, -apple-system, sans-serif;
-    --font-mono: 'Roboto Mono', monospace;
-    --text-main: #334155;
-    --text-light: #64748b;
-    
-    /* Sombras y Efectos */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    /* --- EFECTOS --- */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
     --radius-md: 8px;
     --radius-lg: 12px;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Reset Básico */
+/* === RESET & BASE === */
 * { box-sizing: border-box; outline: none; margin: 0; padding: 0; }
 
 body {
-    font-family: var(--font-main);
+    font-family: 'Inter', system-ui, sans-serif;
     background-color: var(--bg-body);
     color: var(--text-main);
     line-height: 1.6;
-    padding-bottom: 120px; /* Espacio para el footer fijo */
+    padding-bottom: 80px;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
 }
 
-/* ==========================================================================
-   2. HEADER Y NAVEGACIÓN
-   ========================================================================== */
+/* Scrollbar Personalizado (Estilo Hacker) */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-body); }
+::-webkit-scrollbar-thumb { background: var(--bg-input); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
+
+/* === HEADER (EL COMANDO) === */
 header {
-    background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
-    color: white;
+    background: rgba(15, 23, 42, 0.95); /* Semi-transparente */
+    border-bottom: 1px solid var(--border-color);
     padding: 1.5rem 0;
-    box-shadow: var(--shadow-md);
-    position: relative;
-    z-index: 50;
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(10px);
 }
 
 .header-container {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    max-width: 1200px; margin: 0 auto; padding: 0 20px;
+    display: flex; justify-content: space-between; align-items: center;
 }
 
-/* LOGO CON COLORES DE LA BANDERA DEL ECUADOR */
 .brand-logo h1 {
-    font-size: 2.2rem;
-    font-weight: 900;
-    letter-spacing: -1px;
-    margin: 0;
-    text-transform: uppercase;
-    background: linear-gradient(180deg, 
-        var(--flag-yellow) 0%, 
-        var(--flag-yellow) 50%, 
-        var(--flag-blue) 50%, 
-        var(--flag-blue) 75%, 
-        var(--flag-red) 75%, 
-        var(--flag-red) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0px 2px 4px rgba(0,0,0,0.3);
-    display: inline-block;
+    font-size: 2rem; font-weight: 900; letter-spacing: -1px; margin: 0;
+    background: linear-gradient(180deg, var(--flag-yellow) 30%, var(--flag-blue) 60%, var(--flag-red) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
 }
-
 .brand-logo span {
-    display: block;
-    font-size: 0.75rem;
-    color: #94a3b8;
-    font-weight: 400;
-    letter-spacing: 2px;
-    margin-top: -5px;
-    -webkit-text-fill-color: #94a3b8;
+    display: block; font-size: 0.75rem; color: var(--text-muted);
+    letter-spacing: 3px; font-weight: 500; margin-top: -5px;
 }
 
 .system-status {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    font-size: 0.9rem;
-    background: rgba(255,255,255,0.05);
-    padding: 8px 16px;
-    border-radius: 50px;
-    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--bg-input); padding: 6px 16px; border-radius: 50px;
+    font-size: 0.85rem; border: 1px solid var(--border-color);
+    display: flex; align-items: center; gap: 8px;
 }
+.status-dot { width: 8px; height: 8px; background: var(--color-success); border-radius: 50%; box-shadow: 0 0 8px var(--color-success); }
 
-.status-dot { height: 8px; width: 8px; background-color: var(--color-success); border-radius: 50%; display: inline-block; margin-right: 6px; box-shadow: 0 0 8px var(--color-success); }
-
-/* Navegación por Pestañas (Sticky) */
+/* === NAVEGACIÓN === */
 .nav-wrapper {
-    background: var(--bg-card);
-    box-shadow: var(--shadow-sm);
-    position: sticky;
-    top: 0;
-    z-index: 40;
-    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-card); border-bottom: 1px solid var(--border-color);
+    margin-bottom: 30px;
 }
-
 .nav-tabs {
-    max-width: 1280px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    padding: 0 10px;
+    max-width: 1200px; margin: 0 auto; display: flex; gap: 20px; padding: 0 20px;
 }
-
 .tab-btn {
-    padding: 16px 24px;
-    background: transparent;
-    border: none;
-    color: var(--text-light);
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    border-bottom: 3px solid transparent;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    background: transparent; border: none; padding: 15px 0;
+    color: var(--text-muted); font-weight: 500; cursor: pointer;
+    border-bottom: 3px solid transparent; transition: var(--transition);
+    display: flex; align-items: center; gap: 8px; font-size: 0.95rem;
 }
+.tab-btn:hover { color: var(--text-main); }
+.tab-btn.active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
 
-.tab-btn i { font-size: 1.1rem; }
-.tab-btn:hover { background-color: #f8fafc; color: var(--color-primary); }
-.tab-btn.active { color: var(--color-accent); border-bottom-color: var(--color-accent); background: linear-gradient(to top, #eff6ff 0%, transparent 100%); }
-
-/* ==========================================================================
-   3. ESTRUCTURA DEL CONTENIDO PRINCIPAL
-   ========================================================================== */
-.main-content {
-    max-width: 1280px;
-    margin: 40px auto;
-    padding: 0 24px;
-    width: 100%;
-    flex: 1;
-}
-
-.tab-pane { display: none; animation: fadeIn 0.5s ease-out; }
+/* === CONTENIDO & TARJETAS === */
+.main-content { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.tab-pane { display: none; animation: fadeIn 0.4s ease; }
 .tab-pane.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* ==========================================================================
-   4. COMPONENTES UI
-   ========================================================================== */
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
 .card {
-    background: var(--bg-card);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--border-color);
-    transition: var(--transition);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+    background: var(--bg-card); border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+    overflow: hidden; display: flex; flex-direction: column;
 }
-.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: #cbd5e1; }
+.card:hover { border-color: var(--text-muted); box-shadow: var(--shadow-lg); transform: translateY(-2px); }
 
 .card-header {
-    background: linear-gradient(to right, #f8fafc, #ffffff);
-    padding: 16px 24px;
+    background: rgba(0,0,0,0.2); padding: 15px 20px;
     border-bottom: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: flex; justify-content: space-between; align-items: center;
 }
-.card-header h3 { margin: 0; font-size: 1.1rem; color: var(--color-primary); font-weight: 700; display: flex; align-items: center; gap: 10px; }
-.card-body { padding: 24px; flex-grow: 1; }
+.card-header h3 { font-size: 1.1rem; color: var(--text-main); margin: 0; display: flex; align-items: center; gap: 10px; }
+.card-body { padding: 20px; }
 
-/* Formularios */
-.form-group { margin-bottom: 20px; }
-.form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; color: var(--text-main); text-transform: uppercase; letter-spacing: 0.5px; }
-
-input[type="number"], input[type="text"], select, textarea {
-    width: 100%; padding: 12px 16px; 
-    border: 1px solid var(--border-color); 
-    border-radius: var(--radius-md);
-    font-size: 0.95rem; 
-    color: var(--color-primary);
-    background-color: #f8fafc;
-    transition: var(--transition);
-    font-family: var(--font-main);
+/* === FORMULARIOS (MODO OSCURO) === */
+.form-group { margin-bottom: 18px; }
+.form-group label {
+    display: block; font-size: 0.8rem; font-weight: 600;
+    color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;
 }
-
-input:focus, select:focus, textarea:focus { 
-    border-color: var(--color-accent); 
-    background-color: #fff;
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); 
+input, select, textarea {
+    width: 100%; padding: 10px 14px;
+    background: var(--bg-body); border: 1px solid var(--border-color);
+    border-radius: var(--radius-md); color: var(--text-main);
+    font-size: 0.95rem; transition: var(--transition); font-family: inherit;
+}
+input:focus, select:focus, textarea:focus {
+    border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 
-/* Botones */
+/* === BOTONES === */
 .btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    padding: 12px 24px; border-radius: var(--radius-md); border: none; 
-    font-weight: 600; cursor: pointer; transition: var(--transition);
-    width: 100%; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;
+    width: 100%; padding: 12px; border: none; border-radius: var(--radius-md);
+    font-weight: 600; cursor: pointer; text-transform: uppercase; font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: var(--transition);
 }
-.btn-primary { background: var(--color-primary); color: white; box-shadow: 0 4px 6px rgba(15, 23, 42, 0.2); }
-.btn-primary:hover { background: var(--color-primary-light); transform: translateY(-1px); }
-.btn-action { background: var(--color-accent); color: white; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.25); }
-.btn-action:hover { background: var(--color-accent-hover); transform: translateY(-1px); }
-.btn-outline { background: transparent; border: 2px solid var(--color-primary); color: var(--color-primary); }
-.btn-outline:hover { background: var(--color-primary); color: white; }
+.btn-primary { background: var(--color-primary); color: white; }
+.btn-primary:hover { background: var(--color-accent); transform: scale(1.02); }
+.btn-action { background: var(--color-success); color: white; } /* Verde para acciones */
+.btn-action:hover { filter: brightness(1.1); transform: scale(1.02); }
 
-/* Grillas */
-.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 30px; }
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-
-/* Paneles de Resultado */
+/* === PANELES DE RESULTADOS === */
 .result-panel {
-    margin-top: 20px; background: #eff6ff; border-radius: var(--radius-md); padding: 20px;
-    border-left: 5px solid var(--color-accent); display: none;
-    animation: slideDown 0.3s ease-out;
+    margin-top: 20px; background: rgba(59, 130, 246, 0.1);
+    border: 1px solid var(--color-primary); border-radius: var(--radius-md);
+    padding: 15px; display: none; animation: slideDown 0.3s;
 }
-@keyframes slideDown { from {opacity:0; transform:translateY(-10px);} to {opacity:1; transform:translateY(0);} }
+@keyframes slideDown { from {opacity:0; height:0;} to {opacity:1; height:auto;} }
 
-.res-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; border-bottom: 1px dashed #cbd5e1; padding-bottom: 5px; }
-.res-total { 
-    margin-top: 15px; padding-top: 15px; border-top: 2px solid var(--color-accent); 
-    font-weight: 800; font-size: 1.2rem; color: var(--color-primary); 
-    display: flex; justify-content: space-between;
-}
+.result-panel b { color: var(--color-accent); font-size: 1.1rem; }
+.result-panel small { color: var(--text-muted); }
 
-/* ==========================================================================
-   5. ESTILOS ESPECÍFICOS: ACUERDOS MINISTERIALES
-   ========================================================================== */
-.legal-layout { display: grid; grid-template-columns: 350px 1fr; gap: 24px; height: 650px; }
-
-.legal-sidebar { 
-    background: var(--bg-card); border-radius: var(--radius-lg); 
-    border: 1px solid var(--border-color); display: flex; flex-direction: column; 
-    overflow: hidden;
-}
-.search-box { padding: 16px; border-bottom: 1px solid var(--border-color); background: #f8fafc; }
+/* === ESPECÍFICO: BIBLIOTECA LEGAL === */
+.legal-layout { display: grid; grid-template-columns: 320px 1fr; gap: 25px; height: 600px; }
+.legal-sidebar { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; display: flex; flex-direction: column; }
+.search-box { padding: 15px; background: rgba(0,0,0,0.2); border-bottom: 1px solid var(--border-color); }
 .legal-list { overflow-y: auto; flex: 1; }
 
-.doc-item { 
-    padding: 16px; border-bottom: 1px solid var(--border-color); 
-    cursor: pointer; transition: background 0.15s; position: relative;
+.doc-item {
+    padding: 15px; border-bottom: 1px solid var(--border-color); cursor: pointer; transition: 0.2s;
 }
-.doc-item:hover { background: #f1f5f9; }
-.doc-item.active { background: #eff6ff; border-left: 4px solid var(--color-accent); }
-.doc-code { font-weight: 700; color: var(--color-primary); font-size: 0.9rem; }
-.doc-title { font-size: 0.85rem; color: var(--text-main); margin-top: 4px; line-height: 1.4; }
-.doc-tag { font-size: 0.7rem; background: #e2e8f0; padding: 2px 6px; border-radius: 4px; color: var(--text-light); margin-top: 6px; display: inline-block; }
+.doc-item:hover { background: var(--bg-body); }
+.doc-item b { color: var(--color-primary); display: block; margin-bottom: 4px; }
+.doc-item div { font-size: 0.85rem; color: var(--text-muted); }
 
-.legal-viewer { 
-    background: var(--bg-card); border-radius: var(--radius-lg); 
-    border: 1px solid var(--border-color); padding: 40px; 
-    overflow-y: auto; position: relative;
-}
-.pdf-placeholder {
-    text-align: center; color: var(--text-light); margin-top: 20%;
+.legal-viewer {
+    background: var(--bg-card); border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg); padding: 30px; overflow-y: auto;
 }
 .pdf-content-sim {
-    background: white; border: 1px solid #ddd; padding: 40px; 
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05); min-height: 500px;
+    background: white; color: #1e293b; /* Simulación de papel blanco */
+    padding: 40px; border-radius: 4px; min-height: 500px;
 }
+.pdf-placeholder { text-align: center; color: var(--text-muted); margin-top: 25%; }
 
-/* ==========================================================================
-   6. ESTILOS ESPECÍFICOS: HOJA DE VIDA (CV)
-   ========================================================================== */
-.cv-editor { background: var(--bg-card); padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); height: 800px; overflow-y: auto; }
-.cv-preview-container { 
-    background: #525659; padding: 20px; border-radius: var(--radius-lg); 
-    display: flex; justify-content: center; height: 800px; overflow-y: auto; 
-}
-
-.cv-paper {
-    background: white; width: 210mm; min-height: 297mm; padding: 25mm;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    font-family: 'Georgia', serif; color: #111;
-    transform: scale(0.85); transform-origin: top center;
-}
-
-.cv-paper h1 { font-size: 24pt; border-bottom: 2px solid #333; margin-bottom: 5mm; text-transform: uppercase; }
-.cv-paper h2 { font-size: 14pt; color: #444; margin-bottom: 15mm; font-weight: normal; }
-.cv-section-title { 
-    font-size: 12pt; font-weight: bold; text-transform: uppercase; 
-    background: #eee; padding: 5px; margin-top: 15px; margin-bottom: 10px; font-family: sans-serif; 
-}
-.cv-text { font-size: 11pt; line-height: 1.5; white-space: pre-line; margin-bottom: 10px; }
-
-/* ==========================================================================
-   7. CHATBOT INTELIGENTE Y MODALES
-   ========================================================================== */
+/* === CHATBOT FLOTANTE === */
 .chat-fab {
-    position: fixed; bottom: 80px; right: 30px; width: 64px; height: 64px;
-    background: var(--color-accent); color: white; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.8rem; cursor: pointer; box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
-    z-index: 100; transition: transform 0.3s;
+    position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
+    background: var(--color-primary); color: white; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 24px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3); cursor: pointer; transition: 0.3s; z-index: 100;
 }
-.chat-fab:hover { transform: scale(1.1) rotate(10deg); background: var(--color-accent-hover); }
+.chat-fab:hover { transform: scale(1.1) rotate(15deg); }
 
 .chat-window {
-    position: fixed; bottom: 160px; right: 30px; width: 380px; height: 550px;
-    background: white; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    display: none; flex-direction: column; overflow: hidden; z-index: 99;
-    border: 1px solid var(--border-color); animation: slideUpChat 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: fixed; bottom: 100px; right: 30px; width: 350px; height: 500px;
+    background: var(--bg-card); border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg); display: none; flex-direction: column;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5); z-index: 99; overflow: hidden;
 }
-@keyframes slideUpChat { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.chat-header { background: var(--color-primary); color: white; padding: 15px; font-weight: bold; display: flex; justify-content: space-between; }
+.chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+.msg { padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; max-width: 85%; }
+.msg.bot { background: var(--bg-body); color: var(--text-main); align-self: flex-start; border: 1px solid var(--border-color); }
+.msg.user { background: var(--color-primary); color: white; align-self: flex-end; }
+.chat-footer { padding: 15px; border-top: 1px solid var(--border-color); display: flex; gap: 10px; }
 
-.chat-header { 
-    background: var(--color-primary); padding: 16px; color: white; 
-    font-weight: 600; display: flex; justify-content: space-between; align-items: center; 
+/* === FOOTER LEGAL === */
+.legal-footer {
+    text-align: center; font-size: 0.75rem; color: var(--text-muted);
+    padding: 20px; border-top: 1px solid var(--border-color);
+    background: var(--bg-body); position: fixed; bottom: 0; width: 100%; z-index: 40;
 }
-.chat-body { 
-    flex: 1; padding: 20px; overflow-y: auto; background: #f8fafc; 
-    display: flex; flex-direction: column; gap: 12px; 
-}
 
-.msg { max-width: 85%; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; line-height: 1.5; position: relative; }
-.msg.bot { background: white; border: 1px solid var(--border-color); align-self: flex-start; border-bottom-left-radius: 2px; color: var(--text-main); }
-.msg.user { background: var(--color-primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
-
-.chat-footer { padding: 15px; border-top: 1px solid var(--border-color); display: flex; gap: 8px; background: white; }
-
-/* Modal de Descarga */
+/* === MODALES === */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
-    z-index: 2000; display: none; align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+    display: none; align-items: center; justify-content: center; z-index: 2000;
 }
 .modal-content {
-    background: white; padding: 30px; border-radius: var(--radius-lg); width: 400px;
-    text-align: center; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-}
-.progress-bar { width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px; margin: 20px 0; overflow: hidden; }
-.progress-fill { height: 100%; width: 0%; background: var(--color-accent); transition: width 0.1s; }
-
-/* Footer Legal */
-.legal-footer {
-    background: #fff; border-top: 1px solid #e2e8f0; padding: 20px;
-    text-align: center; font-size: 0.75rem; color: #64748b;
-    position: fixed; bottom: 0; width: 100%; z-index: 30;
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    background: var(--bg-card); padding: 30px; border-radius: var(--radius-lg);
+    width: 400px; text-align: center; border: 1px solid var(--border-color);
 }
 
-/* ==========================================================================
-   8. ESTILOS DE IMPRESIÓN (SOLO PARA CV Y REPORTES)
-   ========================================================================== */
+/* === ESTILOS IMPRESIÓN (CV) === */
 @media print {
-    /* Ocultar todo lo que no queremos imprimir */
-    header, .nav-wrapper, .legal-footer, .chat-fab, .chat-window, .cv-editor, .btn, .card-header button {
-        display: none !important;
-    }
+    body { background: white; color: black; }
+    .nav-wrapper, .legal-footer, .chat-fab, .chat-window, header { display: none !important; }
+    .cv-preview-container { background: white; padding: 0; height: auto; border: none; }
+    .cv-paper { transform: scale(1); box-shadow: none; width: 100%; margin: 0; }
+    /* Ocultar botones y paneles innecesarios */
+    .btn, .card-header button, #tab-calculadoras, #tab-acuerdos { display: none !important; }
+}
 
-    body {
-        background: white; padding: 0; margin: 0;
-    }
-
-    /* Ajustar el contenedor principal */
-    .main-content {
-        margin: 0; padding: 0; max-width: 100%;
-    }
-
-    /* Si estamos en la pestaña CV, hacemos que el papel ocupe toda la hoja */
-    .cv-preview-container {
-        display: block; height: auto; overflow: visible; background: white;
-        padding: 0; border: none;
-    }
-
-    .cv-paper {
-        transform: scale(1);
-        box-shadow: none; margin: 0; width: 100%; min-height: auto; padding: 0;
-    }
-    
-    /* Ocultar otras pestañas por si acaso */
-    #tab-calculadoras, #tab-acuerdos { display: none !important; }
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+    .legal-layout { grid-template-columns: 1fr; height: auto; }
+    .legal-sidebar { height: 300px; }
+    .legal-viewer { height: 500px; }
+    .grid-2 { grid-template-columns: 1fr; }
 }

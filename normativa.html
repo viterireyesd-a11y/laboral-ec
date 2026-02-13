@@ -5,110 +5,146 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enciclopedia Jurídica Laboral 2026 | LaboralEC PRO</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #0f172a; --card: #1e293b; --accent: #3b82f6; --text: #f8fafc; --muted: #94a3b8; }
+        :root { --bg: #0f172a; --card: #1e293b; --accent: #3b82f6; --text: #f8fafc; --danger: #ef4444; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
         .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
-        
-        /* Encabezado Estilo Códice */
-        .hero-legal {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            padding: 60px 40px; border-radius: 24px; text-align: center;
-            border: 1px solid rgba(255,255,255,0.1); margin-bottom: 50px;
-        }
-
-        /* Tarjetas Desplegables de Alta Densidad */
-        .art-item { background: var(--card); border-radius: 16px; margin-bottom: 20px; border: 1px solid #334155; overflow: hidden; }
-        summary { padding: 25px; cursor: pointer; list-style: none; display: flex; align-items: center; font-weight: 800; font-size: 1.2rem; }
-        .badge { background: var(--accent); color: white; padding: 5px 12px; border-radius: 6px; margin-right: 20px; font-family: 'Roboto Mono', monospace; font-size: 0.8rem; }
-        
-        .content { padding: 0 30px 40px; color: #cbd5e1; border-top: 1px solid #334155; }
-        .law-quote { background: rgba(15, 23, 42, 0.6); padding: 20px; border-left: 4px solid var(--accent); margin: 20px 0; font-style: italic; border-radius: 0 8px 8px 0; }
-        
-        /* Tablas Técnicas */
-        .tech-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        .tech-table th, .tech-table td { padding: 12px; border: 1px solid #334155; text-align: left; }
+        .hero { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); padding: 50px; border-radius: 24px; text-align: center; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 40px; }
+        .art-item { background: var(--card); border-radius: 12px; margin-bottom: 15px; border: 1px solid #334155; }
+        summary { padding: 20px; cursor: pointer; display: flex; align-items: center; font-weight: 700; font-size: 1.1rem; list-style: none; }
+        .badge { background: var(--accent); color: white; padding: 4px 10px; border-radius: 6px; margin-right: 15px; font-size: 0.75rem; text-transform: uppercase; }
+        .content { padding: 0 25px 30px; color: #cbd5e1; border-top: 1px solid #334155; }
+        .law-quote { background: rgba(15, 23, 42, 0.5); padding: 15px; border-left: 4px solid var(--accent); margin: 15px 0; font-style: italic; }
+        .tech-table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9rem; }
+        .tech-table td, .tech-table th { border: 1px solid #334155; padding: 10px; }
         .tech-table th { background: #0f172a; color: var(--accent); }
-
-        h4 { color: var(--accent); margin-top: 30px; display: flex; align-items: center; gap: 10px; }
-        .warning { background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 15px; border-radius: 8px; color: #fca5a5; margin-top: 20px; }
+        h4 { color: var(--accent); margin-top: 25px; border-bottom: 1px solid #334155; padding-bottom: 5px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="hero-legal">
-        <h1>Compendio Técnico Laboral 2026</h1>
-        <p>Referencia exhaustiva de la normativa ecuatoriana: Código del Trabajo, LOSEP y Leyes Orgánicas.</p>
+    <div class="hero">
+        <h1>Compendio Jurídico Laboral de Ecuador</h1>
+        <p>Referencia Técnica Avanzada 2026 - Código del Trabajo y Leyes Transversales</p>
     </div>
 
     <div class="legal-grid">
-        
-        <details class="art-item" open>
-            <summary><span class="badge">Art. 155</span> Guarderías y Cuidado Infantil</summary>
+        <details class="art-item">
+            <summary><span class="badge">Art. 55</span> Horas Suplementarias y Extraordinarias</summary>
             <div class="content">
-                <h4><i class="fas fa-baby-carriage"></i> Obligación Patronal Colectiva</h4>
-                <p>La normativa exige una infraestructura de cuidado para garantizar la continuidad laboral de los padres.</p>
-                <div class="law-quote">"En las empresas que cuenten con cincuenta o más trabajadores, el empleador está obligado a establecer el servicio de guardería para los hijos de estos."</div>
-                <h4>Análisis Técnico del Ingeniero:</h4>
+                <p>Regulación de recargos por jornada extendida.</p>
+                <table class="tech-table">
+                    <tr><th>Tipo</th><th>Recargo</th><th>Límite</th></tr>
+                    <tr><td>Suplementaria</td><td>50% (hasta 24:00)</td><td>4 diarias / 12 semanales</td></tr>
+                    <tr><td>Extraordinaria</td><td>100% (24:00 a 06:00 / Descanso)</td><td>Días feriados y descanso obligatorio</td></tr>
+                </table>
+            </div>
+        </details>
+
+        <details class="art-item">
+            <summary><span class="badge">Art. 69</span> Derecho a Vacaciones Anuales</summary>
+            <div class="content">
+                <p>Todo trabajador tiene derecho a 15 días ininterrumpidos de descanso remunerado tras el primer año.</p>
+                <div class="law-quote">"A partir del quinto año, el trabajador tendrá derecho a un día adicional por cada año excedente."</div>
+            </div>
+        </details>
+
+        <details class="art-item">
+            <summary><span class="badge">Art. 97</span> Participación de Utilidades</summary>
+            <div class="content">
+                <p>Distribución del 15% de las utilidades líquidas de la empresa.</p>
                 <ul>
-                    <li><strong>Ámbito:</strong> Aplica a empresas con 50+ trabajadores.</li>
-                    <li><strong>Gratuidad:</strong> El servicio es 100% costo del empleador.</li>
-                    <li><strong>Alternativas:</strong> En caso de no contar con centro propio, se puede cumplir mediante la contratación de servicios externos autorizados o el pago de un bono sustitutivo debidamente legalizado.</li>
+                    <li><strong>10% Individual:</strong> Según el tiempo laborado.</li>
+                    <li><strong>5% Cargas:</strong> Según cargas familiares acreditadas.</li>
                 </ul>
             </div>
         </details>
 
         <details class="art-item">
-            <summary><span class="badge">L.O.D.</span> Personas con Discapacidad y Sustitutos</summary>
+            <summary><span class="badge">Art. 111</span> Décima Tercera Remuneración</summary>
             <div class="content">
-                <h4><i class="fas fa-hands-helping"></i> Estabilidad Laboral Reforzada</h4>
-                <p>Análisis de la Ley Orgánica de Discapacidades sobre la figura del sustituto.</p>
-                <div class="tech-table">
-                    <tr><th>Beneficio</th><th>Detalle Técnico</th></tr>
-                    <tr><td><strong>Cuota de Inclusión</strong></td><td>4% del total de la nómina en empresas de 25+ trabajadores.</td></tr>
-                    <tr><td><strong>Sustituto Legal</strong></td><td>Pariente que cuida a una persona con discapacidad severa y hereda la estabilidad laboral.</td></tr>
-                    <tr><td><strong>Indemnización</strong></td><td>18 meses de la mejor remuneración adicional a lo de ley.</td></tr>
-                </div>
-                <div class="warning"><strong>Nota:</strong> El sustituto debe estar acreditado por el Ministerio de Salud y el ente rector del trabajo para gozar de la protección contra despido.</div>
+                <p>Bono navideño equivalente a la doceava parte de todo lo percibido en el año.</p>
             </div>
         </details>
 
         <details class="art-item">
-            <summary><span class="badge">Ley Salud</span> Enfermedades Catastróficas y Raras</summary>
+            <summary><span class="badge">Art. 113</span> Décima Cuarta Remuneración</summary>
             <div class="content">
-                <h4><i class="fas fa-heartbeat"></i> Protección por Vulnerabilidad Extrema</h4>
-                <p>Protección contra la discriminación y el despido ineficaz por estado de salud crítico.</p>
-                <div class="law-quote">"Se garantiza la estabilidad laboral de quienes padezcan enfermedades catastróficas, raras o huérfanas."</div>
-                <h4>Efectos de la Protección:</h4>
-                <p>El despido de un trabajador en estas condiciones se considera **ineficaz**, lo que obliga al empleador a:</p>
-                <ol>
-                    <li>Reintegrar al trabajador a sus funciones.</li>
-                    <li>Pagar todos los sueldos dejados de percibir durante el tiempo de la desvinculación.</li>
-                    <li>Alternativamente, pagar una indemnización de 12 meses de sueldo extra si no hay reintegro.</li>
-                </ol>
+                <p>Bono escolar equivalente a un Salario Básico Unificado ($482.00).</p>
             </div>
         </details>
 
         <details class="art-item">
-            <summary><span class="badge">Art. 55</span> Horas Extras y Suplementarias</summary>
+            <summary><span class="badge">Art. 152</span> Licencia por Maternidad</summary>
             <div class="content">
-                <h4><i class="fas fa-clock"></i> Régimen de Recargos 2026</h4>
-                <p>Análisis de compensación por jornada extendida según el Código del Trabajo.</p>
-                <table class="tech-table">
-                    <thead>
-                        <tr><th>Tipo de Hora</th><th>Recargo</th><th>Límite Máximo</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Suplementaria</td><td>50%</td><td>4 diarias / 12 semanales</td></tr>
-                        <tr><td>Extraordinaria</td><td>100%</td><td>Sábados, Domingos y Feriados</td></tr>
-                        <tr><td>Nocturna</td><td>25%</td><td>De 19:00 a 06:00 (sobre hora normal)</td></tr>
-                    </tbody>
-                </table>
+                <p>Toda mujer trabajadora tiene derecho a una licencia remunerada de 12 semanas por el nacimiento de su hija o hijo.</p>
             </div>
         </details>
 
+        <details class="art-item">
+            <summary><span class="badge">Art. 155</span> Guarderías y Lactancia</summary>
+            <div class="content">
+                <p>Empresas con 50+ trabajadores deben ofrecer servicio de guardería gratuito.</p>
+            </div>
+        </details>
+
+        <details class="art-item">
+            <summary><span class="badge">Art. 172</span> Causales de Visto Bueno</summary>
+            <div class="content">
+                <p>Terminación del contrato por faltas graves como indisciplina o falta de probidad.</p>
+            </div>
+        </details>
+
+        <details class="art-item">
+            <summary><span class="badge">Art. 185</span> Bonificación por Desahucio</summary>
+            <div class="content">
+                <p>Bonificación del 25% de la última remuneración por cada año de servicio.</p>
+            </div>
+        </details>
+
+        <details class="art-item">
+            <summary><span class="badge">Art. 188</span> Despido Intempestivo</summary>
+            <div class="content">
+                <p>Indemnización según el tiempo de servicio: mínimo 3 meses de sueldo.</p>
+            </div>
+        </details>
+
+        <details class="art-item">
+            <summary><span class="badge">Art. 196</span> Fondos de Reserva</summary>
+            <div class="content">
+                <p>Derecho al 8.33% de la remuneración mensual a partir del segundo año de servicio.</p>
+            </div>
+        </details>
+
+        <details class="art-item">
+            <summary><span class="badge">Art. 216</span> Jubilación Patronal</summary>
+            <div class="content">
+                <p>Pensión vitalicia para trabajadores con 25 años o más de servicio continuo.</p>
+            </div>
+        </details>
+
+        <details class="art-item">
+            <summary><span class="badge">L.O.D.</span> Sustitutos y Discapacidad</summary>
+            <div class="content">
+                <p>Indemnización especial de 18 meses de sueldo para cuidadores acreditados.</p>
+            </div>
+        </details>
+
+        <details class="art-item">
+            <summary><span class="badge">Ley Salud</span> Enfermedades Catastróficas</summary>
+            <div class="content">
+                <p>Estabilidad reforzada y prohibición de despido ineficaz para pacientes críticos.</p>
+            </div>
+        </details>
+
+        <details class="art-item">
+            <summary><span class="badge">Art. 347</span> Riesgos del Trabajo</summary>
+            <div class="content">
+                <p>Responsabilidad del empleador por accidentes o enfermedades ocurridas por el ejercicio del trabajo.</p>
+            </div>
+        </details>
     </div>
 </div>
 

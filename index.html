@@ -15,7 +15,7 @@
 
     <style>
         /* --- ESTILOS GENERALES --- */
-        :root { --cv-bg: #ffffff; --cv-text: #1e293b; --cv-accent: #2563eb; --cv-gray: #64748b; }
+        :root { --cv-bg: #ffffff; --cv-text: #1e293b; --cv-accent: #2563eb; --cv-gray: #64748b; --btn-action: #10b981; }
         
         .legal-universe { max-width: 1100px; margin: 0 auto; padding: 20px; }
         .hero-legal { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; padding: 40px; border-radius: 20px; margin-bottom: 30px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
@@ -36,45 +36,60 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .grid-calculadoras { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; padding: 20px 0; }
 
-        /* --- ESTILOS DEL GENERADOR DE CV (NUEVO) --- */
+        /* --- ESTILOS DEL GENERADOR DE CV (MEJORADO) --- */
         .cv-builder-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 20px; align-items: start; }
         @media(max-width: 1024px) { .cv-builder-wrapper { grid-template-columns: 1fr; } }
 
         /* Panel Izquierdo: Editor */
         .cv-editor { background: #f8fafc; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0; }
-        .cv-section-title { font-size: 1.1rem; font-weight: 700; color: #1e293b; margin-bottom: 15px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .cv-input-group { margin-bottom: 15px; }
-        .cv-input-group label { display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 5px; font-weight: 500; }
-        .cv-input-group input, .cv-input-group textarea, .cv-input-group select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 0.9rem; transition: border 0.2s; }
+        .cv-section-title { font-size: 1.1rem; font-weight: 700; color: #1e293b; margin-top: 25px; margin-bottom: 15px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .cv-input-group { margin-bottom: 15px; position: relative; }
+        .cv-input-group label { display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 5px; font-weight: 600; }
+        .cv-input-group input, .cv-input-group textarea, .cv-input-group select { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.95rem; transition: border 0.2s; background: white; }
         .cv-input-group input:focus, .cv-input-group textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
-        .cv-btn-add { background: #eff6ff; color: #2563eb; border: 1px dashed #bfdbfe; padding: 10px; width: 100%; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
-        .cv-btn-add:hover { background: #dbeafe; border-color: #2563eb; }
-        .cv-btn-print { background: #2563eb; color: white; padding: 15px; width: 100%; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2); }
-        .cv-btn-print:hover { background: #1d4ed8; }
+        
+        /* Botones Mejorados */
+        .cv-btn-add { background: var(--btn-action); color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: 700; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2); }
+        .cv-btn-add:hover { background: #059669; transform: translateY(-2px); }
+        .cv-btn-print { background: #2563eb; color: white; padding: 18px; width: 100%; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: 800; cursor: pointer; margin-top: 30px; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3); transition: transform 0.2s; }
+        .cv-btn-print:hover { background: #1d4ed8; transform: scale(1.02); }
+
+        /* Upload de Foto */
+        .photo-upload-container { background: #eff6ff; padding: 15px; border-radius: 8px; border: 2px dashed #bfdbfe; text-align: center; cursor: pointer; }
+        .photo-upload-container:hover { background: #dbeafe; border-color: #3b82f6; }
 
         /* Panel Derecho: Vista Previa (Hoja A4) */
-        .cv-preview-container { background: #94a3b8; padding: 40px; border-radius: 12px; display: flex; justify-content: center; overflow-x: auto; }
-        .a4-page { width: 210mm; min-height: 297mm; background: white; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); box-sizing: border-box; position: relative; color: #334155; }
+        .cv-preview-container { background: #64748b; padding: 40px; border-radius: 12px; display: flex; justify-content: center; overflow-x: auto; }
+        .a4-page { width: 210mm; min-height: 297mm; background: white; padding: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); box-sizing: border-box; position: relative; color: #334155; }
         
         /* Diseño Interno del CV */
-        .cv-header { border-bottom: 2px solid #2563eb; padding-bottom: 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: flex-start; }
-        .cv-name { font-size: 2.2rem; font-weight: 900; color: #0f172a; text-transform: uppercase; letter-spacing: -0.5px; line-height: 1; }
-        .cv-role { font-size: 1.1rem; color: #2563eb; font-weight: 600; margin-top: 5px; }
-        .cv-contact-info { font-size: 0.85rem; text-align: right; line-height: 1.6; }
-        .cv-contact-item i { color: #64748b; margin-right: 5px; width: 15px; text-align: center; }
+        .cv-header-grid { display: grid; grid-template-columns: 1fr; gap: 20px; align-items: center; border-bottom: 3px solid #2563eb; padding-bottom: 25px; margin-bottom: 25px; }
+        .cv-header-grid.with-photo { grid-template-columns: auto 1fr; } /* Layout cambia si hay foto */
         
-        .cv-body { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
-        .cv-section-head { font-size: 0.9rem; font-weight: 700; color: #0f172a; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; }
+        .cv-photo-display { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 4px solid #f1f5f9; display: none; } /* Oculto por defecto */
+
+        .cv-name { font-size: 2.4rem; font-weight: 900; color: #0f172a; text-transform: uppercase; letter-spacing: -1px; line-height: 1; margin-bottom: 5px; }
+        .cv-role { font-size: 1.2rem; color: #2563eb; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        .cv-contact-info { font-size: 0.9rem; margin-top: 10px; display: flex; flex-wrap: wrap; gap: 15px; color: #475569; }
+        .cv-contact-item i { color: #2563eb; margin-right: 5px; }
         
-        .cv-item { margin-bottom: 15px; }
-        .cv-item-title { font-weight: 700; color: #1e293b; font-size: 1rem; }
-        .cv-item-subtitle { color: #2563eb; font-weight: 600; font-size: 0.85rem; }
-        .cv-item-date { font-size: 0.8rem; color: #64748b; font-style: italic; margin-bottom: 5px; display: block; }
-        .cv-item-desc { font-size: 0.9rem; text-align: justify; }
+        .cv-body { display: grid; grid-template-columns: 2fr 1.1fr; gap: 40px; }
+        .cv-section-head { font-size: 1rem; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; border-bottom: 2px solid #e2e8f0; padding-bottom: 5px; display: flex; align-items: center; gap: 10px; }
+        .cv-section-head i { color: #2563eb; }
+        
+        .cv-item { margin-bottom: 20px; position: relative; }
+        .cv-item::before { content: ''; position: absolute; left: -15px; top: 6px; width: 6px; height: 6px; background: #cbd5e1; border-radius: 50%; }
+        .cv-item-title { font-weight: 800; color: #1e293b; font-size: 1.05rem; }
+        .cv-item-subtitle { color: #2563eb; font-weight: 600; font-size: 0.9rem; }
+        .cv-item-date { font-size: 0.85rem; color: #64748b; font-style: italic; margin-bottom: 5px; display: block; }
+        .cv-item-desc { font-size: 0.95rem; text-align: justify; line-height: 1.5; color: #334155; }
 
-        .cv-skill-tag { display: inline-block; background: #f1f5f9; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; color: #334155; margin: 0 5px 5px 0; font-weight: 500; }
+        .cv-skill-tag { display: inline-block; background: #e0f2fe; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; color: #0369a1; margin: 0 5px 5px 0; font-weight: 600; border: 1px solid #bae6fd; }
 
-        /* --- ESTILOS DE IMPRESIÓN (MAGIA PURA) --- */
+        .ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .ref-card { background: #f8fafc; padding: 10px; border-radius: 6px; border: 1px solid #e2e8f0; }
+
+        /* --- ESTILOS DE IMPRESIÓN --- */
         @media print {
             body * { visibility: hidden; }
             .cv-preview-container, .a4-page, .a4-page * { visibility: visible; }
@@ -215,13 +230,27 @@
                             </table>
                         </div>
                     </details>
-                    <details class="legal-item">
+                    
+                     <details class="legal-item">
                         <summary><span class="art-badge">Art. 69</span> Derecho a Vacaciones</summary>
                         <div class="legal-content">
                             <h4>Periodo de Descanso</h4>
                             <p>Derecho irrenunciable a 15 días de descanso tras un año de trabajo.</p>
                         </div>
                     </details>
+
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Art. 97</span> Participación de Utilidades</summary>
+                        <div class="legal-content">
+                            <h4>Distribución del 15%</h4>
+                            <p>El empleador debe repartir el 15% de las utilidades líquidas.</p>
+                            <ul>
+                                <li><strong>10% Individual:</strong> Para todos los trabajadores por igual (según días laborados).</li>
+                                <li><strong>5% Cargas:</strong> Proporcional a cargas familiares (hijos/cónyuge).</li>
+                            </ul>
+                        </div>
+                    </details>
+
                     <details class="legal-item">
                         <summary><span class="art-badge">Art. 188</span> Despido Intempestivo</summary>
                         <div class="legal-content">
@@ -233,81 +262,110 @@
                             </table>
                         </div>
                     </details>
+
+                     <details class="legal-item">
+                        <summary><span class="art-badge">Art. 216</span> Jubilación Patronal</summary>
+                        <div class="legal-content">
+                            <h4>Pensión Vitalicia</h4>
+                            <p>Derecho tras cumplir 25 años de servicio con el mismo empleador (continuos o interrumpidos).</p>
+                        </div>
+                    </details>
                 </div>
             </div>
         </div>
 
         <div id="tab-cv" class="tab-pane">
             <div class="legal-universe">
-                <h2 style="text-align:center; color:#1e293b;">Generador de Hoja de Vida Profesional</h2>
-                <p style="text-align:center; color:#64748b; margin-bottom:20px;">Diseñado para el mercado laboral ecuatoriano. Rellena y descarga.</p>
+                <h2 style="text-align:center; color:#1e293b; margin-bottom:5px;">Generador de Hoja de Vida Profesional</h2>
+                <p style="text-align:center; color:#64748b; margin-bottom:30px;">Edición en tiempo real • Formato Harvard • Optimizado para impresión</p>
                 
                 <div class="cv-builder-wrapper">
                     
                     <div class="cv-editor">
-                        <div class="cv-section-title">Datos Personales</div>
+                        
+                        <div class="cv-section-title">1. Fotografía</div>
+                        <div class="photo-upload-container" onclick="document.getElementById('photo-input').click()">
+                            <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color:#3b82f6; margin-bottom:10px;"></i>
+                            <p style="margin:0; font-weight:600; color:#475569;">Clic para subir tu foto</p>
+                            <input type="file" id="photo-input" accept="image/*" style="display:none;" onchange="loadPhoto(event)">
+                        </div>
+
+                        <div class="cv-section-title">2. Datos Personales</div>
                         <div class="cv-input-group"><label>Nombre Completo</label><input type="text" oninput="updateCV('name', this.value)" placeholder="Ej: Juan Pérez"></div>
-                        <div class="cv-input-group"><label>Cargo / Título Profesional</label><input type="text" oninput="updateCV('role', this.value)" placeholder="Ej: Abogado Laboral | Contador CPA"></div>
+                        <div class="cv-input-group"><label>Cargo / Título</label><input type="text" oninput="updateCV('role', this.value)" placeholder="Ej: Abogado Laboral | Contador CPA"></div>
                         <div class="cv-input-group"><label>Email</label><input type="email" oninput="updateCV('email', this.value)" placeholder="email@ejemplo.com"></div>
                         <div class="cv-input-group"><label>Teléfono</label><input type="text" oninput="updateCV('phone', this.value)" placeholder="099 999 9999"></div>
-                        <div class="cv-input-group"><label>Ciudad, Ecuador</label><input type="text" oninput="updateCV('location', this.value)" placeholder="Quito, Ecuador"></div>
+                        <div class="cv-input-group"><label>Ciudad</label><input type="text" oninput="updateCV('location', this.value)" placeholder="Quito, Ecuador"></div>
                         
-                        <div class="cv-section-title">Perfil Profesional</div>
+                        <div class="cv-section-title">3. Perfil Profesional</div>
                         <div class="cv-input-group">
                             <textarea rows="4" oninput="updateCV('profile', this.value)" placeholder="Resumen breve de tu experiencia y objetivos..."></textarea>
                         </div>
 
-                        <div class="cv-section-title">Experiencia Laboral <button class="cv-btn-add" onclick="addJob()">+ Agregar</button></div>
-                        <div id="editor-jobs">
-                            </div>
+                        <div class="cv-section-title" style="margin-top:30px;">4. Experiencia Laboral</div>
+                        <button class="cv-btn-add" onclick="addJob()"><i class="fas fa-plus-circle"></i> AGREGAR EXPERIENCIA</button>
+                        <div id="editor-jobs"></div>
 
-                        <div class="cv-section-title">Formación Académica <button class="cv-btn-add" onclick="addEdu()">+ Agregar</button></div>
-                        <div id="editor-edu">
-                            </div>
+                        <div class="cv-section-title" style="margin-top:30px;">5. Formación Académica</div>
+                        <button class="cv-btn-add" onclick="addEdu()"><i class="fas fa-plus-circle"></i> AGREGAR ESTUDIO</button>
+                        <div id="editor-edu"></div>
 
-                        <div class="cv-section-title">Habilidades (Separar por comas)</div>
+                         <div class="cv-section-title" style="margin-top:30px;">6. Referencias Laborales</div>
+                         <button class="cv-btn-add" onclick="addRefJob()"><i class="fas fa-user-tie"></i> AGREGAR REF. LABORAL</button>
+                         <div id="editor-ref-job"></div>
+ 
+                         <div class="cv-section-title" style="margin-top:30px;">7. Referencias Personales</div>
+                         <button class="cv-btn-add" onclick="addRefPers()"><i class="fas fa-user-friends"></i> AGREGAR REF. PERSONAL</button>
+                         <div id="editor-ref-pers"></div>
+
+                        <div class="cv-section-title">8. Habilidades (Separar por comas)</div>
                         <div class="cv-input-group">
                             <input type="text" oninput="updateSkills(this.value)" placeholder="Ej: Derecho Laboral, Excel Avanzado, Inglés B2">
                         </div>
 
-                        <button class="cv-btn-print" onclick="window.print()"><i class="fas fa-file-pdf"></i> DESCARGAR PDF</button>
+                        <button class="cv-btn-print" onclick="window.print()"><i class="fas fa-file-pdf"></i> GUARDAR PDF</button>
                     </div>
 
                     <div class="cv-preview-container">
                         <div class="a4-page" id="cv-document">
                             
-                            <div class="cv-header">
+                            <div class="cv-header-grid" id="cv-header-grid">
+                                <img src="" id="cv-photo-display" class="cv-photo-display">
                                 <div>
-                                    <div class="cv-name" id="prev-name">TU NOMBRE AQUÍ</div>
+                                    <div class="cv-name" id="prev-name">TU NOMBRE</div>
                                     <div class="cv-role" id="prev-role">TU TÍTULO PROFESIONAL</div>
-                                </div>
-                                <div class="cv-contact-info">
-                                    <div class="cv-contact-item"><i class="fas fa-envelope"></i> <span id="prev-email">email@ejemplo.com</span></div>
-                                    <div class="cv-contact-item"><i class="fas fa-phone"></i> <span id="prev-phone">099 999 9999</span></div>
-                                    <div class="cv-contact-item"><i class="fas fa-map-marker-alt"></i> <span id="prev-location">Ciudad, País</span></div>
+                                    <div class="cv-contact-info">
+                                        <div class="cv-contact-item"><i class="fas fa-envelope"></i> <span id="prev-email">email@ejemplo.com</span></div>
+                                        <div class="cv-contact-item"><i class="fas fa-phone"></i> <span id="prev-phone">099 999 9999</span></div>
+                                        <div class="cv-contact-item"><i class="fas fa-map-marker-alt"></i> <span id="prev-location">Ciudad, País</span></div>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="cv-body">
                                 <div class="cv-main-col">
                                     <div class="cv-section-head"><i class="fas fa-user-tie"></i> Perfil</div>
-                                    <p id="prev-profile" style="margin-bottom: 25px; font-size: 0.95rem;">
-                                        Aquí aparecerá tu descripción profesional. Escribe en el editor para ver los cambios en tiempo real.
+                                    <p id="prev-profile" style="margin-bottom: 25px; font-size: 0.95rem; color:#475569;">
+                                        Tu descripción profesional aparecerá aquí.
                                     </p>
 
                                     <div class="cv-section-head"><i class="fas fa-briefcase"></i> Experiencia Laboral</div>
-                                    <div id="prev-jobs-container">
-                                        </div>
+                                    <div id="prev-jobs-container"></div>
+                                    
+                                    <div class="cv-section-head" style="margin-top:20px;"><i class="fas fa-address-book"></i> Referencias</div>
+                                    <div style="margin-bottom:10px; font-weight:700; color:#64748b; font-size:0.85rem;">LABORALES</div>
+                                    <div class="ref-grid" id="prev-ref-job-container"></div>
+                                    
+                                    <div style="margin-top:15px; margin-bottom:10px; font-weight:700; color:#64748b; font-size:0.85rem;">PERSONALES</div>
+                                    <div class="ref-grid" id="prev-ref-pers-container"></div>
                                 </div>
 
                                 <div class="cv-side-col">
                                     <div class="cv-section-head"><i class="fas fa-graduation-cap"></i> Educación</div>
-                                    <div id="prev-edu-container">
-                                        </div>
+                                    <div id="prev-edu-container"></div>
 
                                     <div class="cv-section-head" style="margin-top: 25px;"><i class="fas fa-star"></i> Habilidades</div>
-                                    <div id="prev-skills-container">
-                                        </div>
+                                    <div id="prev-skills-container"></div>
                                 </div>
                             </div>
 
@@ -326,13 +384,23 @@
     <script src="script.js?v=6.0"></script>
     
     <script>
-        // Funciones del CV en línea para no depender de archivos externos por ahora
+        // Lógica de Foto
+        function loadPhoto(event) {
+            const output = document.getElementById('cv-photo-display');
+            const headerGrid = document.getElementById('cv-header-grid');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function() {
+                URL.revokeObjectURL(output.src); // Liberar memoria
+            }
+            output.style.display = 'block';
+            headerGrid.classList.add('with-photo');
+        }
+
         function updateCV(field, value) {
             const el = document.getElementById('prev-' + field);
             if(el) {
                 if(value.trim() === "") {
-                    // Texto por defecto si está vacío
-                    if(field === 'name') el.innerText = "TU NOMBRE AQUÍ";
+                    if(field === 'name') el.innerText = "TU NOMBRE";
                     else if(field === 'role') el.innerText = "TU TÍTULO";
                     else el.innerText = "";
                 } else {
@@ -361,28 +429,25 @@
             const editorContainer = document.getElementById('editor-jobs');
             const prevContainer = document.getElementById('prev-jobs-container');
             
-            // Crear inputs en editor
             const jobDiv = document.createElement('div');
             jobDiv.className = 'cv-input-group';
-            jobDiv.style.borderLeft = "3px solid #cbd5e1";
+            jobDiv.style.borderLeft = "4px solid #10b981";
             jobDiv.style.paddingLeft = "10px";
-            jobDiv.style.marginBottom = "20px";
             jobDiv.innerHTML = `
                 <input type="text" placeholder="Cargo" oninput="document.getElementById('job-title-${jobCount}').innerText = this.value" style="margin-bottom:5px; font-weight:bold;">
                 <input type="text" placeholder="Empresa" oninput="document.getElementById('job-company-${jobCount}').innerText = this.value" style="margin-bottom:5px;">
-                <input type="text" placeholder="Período (Ej: 2020 - Presente)" oninput="document.getElementById('job-date-${jobCount}').innerText = this.value" style="margin-bottom:5px;">
-                <textarea placeholder="Logros y responsabilidades..." oninput="document.getElementById('job-desc-${jobCount}').innerText = this.value" rows="2"></textarea>
+                <input type="text" placeholder="Período" oninput="document.getElementById('job-date-${jobCount}').innerText = this.value" style="margin-bottom:5px;">
+                <textarea placeholder="Funciones..." oninput="document.getElementById('job-desc-${jobCount}').innerText = this.value" rows="2"></textarea>
             `;
             editorContainer.appendChild(jobDiv);
 
-            // Crear vista previa
             const prevDiv = document.createElement('div');
             prevDiv.className = 'cv-item';
             prevDiv.innerHTML = `
                 <div class="cv-item-title" id="job-title-${jobCount}">Cargo</div>
                 <div class="cv-item-subtitle" id="job-company-${jobCount}">Empresa</div>
                 <span class="cv-item-date" id="job-date-${jobCount}">Período</span>
-                <div class="cv-item-desc" id="job-desc-${jobCount}">Descripción del puesto...</div>
+                <div class="cv-item-desc" id="job-desc-${jobCount}">Descripción...</div>
             `;
             prevContainer.appendChild(prevDiv);
         }
@@ -393,19 +458,17 @@
             const editorContainer = document.getElementById('editor-edu');
             const prevContainer = document.getElementById('prev-edu-container');
             
-            // Crear inputs
             const eduDiv = document.createElement('div');
             eduDiv.className = 'cv-input-group';
-            eduDiv.style.borderLeft = "3px solid #cbd5e1";
+            eduDiv.style.borderLeft = "4px solid #10b981";
             eduDiv.style.paddingLeft = "10px";
             eduDiv.innerHTML = `
-                <input type="text" placeholder="Título Obtenido" oninput="document.getElementById('edu-title-${eduCount}').innerText = this.value" style="margin-bottom:5px; font-weight:bold;">
+                <input type="text" placeholder="Título" oninput="document.getElementById('edu-title-${eduCount}').innerText = this.value" style="margin-bottom:5px; font-weight:bold;">
                 <input type="text" placeholder="Institución" oninput="document.getElementById('edu-school-${eduCount}').innerText = this.value" style="margin-bottom:5px;">
                 <input type="text" placeholder="Año" oninput="document.getElementById('edu-date-${eduCount}').innerText = this.value">
             `;
             editorContainer.appendChild(eduDiv);
 
-            // Crear preview
             const prevDiv = document.createElement('div');
             prevDiv.className = 'cv-item';
             prevDiv.innerHTML = `
@@ -416,7 +479,59 @@
             prevContainer.appendChild(prevDiv);
         }
 
-        // Inicializar con un campo vacío
+        let refJobCount = 0;
+        function addRefJob() {
+            refJobCount++;
+            const editorContainer = document.getElementById('editor-ref-job');
+            const prevContainer = document.getElementById('prev-ref-job-container');
+
+            const div = document.createElement('div');
+            div.className = 'cv-input-group';
+            div.style.borderLeft = "4px solid #6366f1";
+            div.style.paddingLeft = "10px";
+            div.innerHTML = `
+                <input type="text" placeholder="Nombre Contacto" oninput="document.getElementById('rj-name-${refJobCount}').innerText = this.value" style="margin-bottom:5px;">
+                <input type="text" placeholder="Cargo/Empresa" oninput="document.getElementById('rj-role-${refJobCount}').innerText = this.value" style="margin-bottom:5px;">
+                <input type="text" placeholder="Teléfono" oninput="document.getElementById('rj-tel-${refJobCount}').innerText = this.value">
+            `;
+            editorContainer.appendChild(div);
+
+            const prevDiv = document.createElement('div');
+            prevDiv.className = 'ref-card';
+            prevDiv.innerHTML = `
+                <div style="font-weight:700; font-size:0.85rem;" id="rj-name-${refJobCount}">Nombre</div>
+                <div style="font-size:0.8rem; color:#64748b;" id="rj-role-${refJobCount}">Cargo</div>
+                <div style="font-size:0.8rem; color:#2563eb;" id="rj-tel-${refJobCount}">Teléfono</div>
+            `;
+            prevContainer.appendChild(prevDiv);
+        }
+
+        let refPersCount = 0;
+        function addRefPers() {
+            refPersCount++;
+            const editorContainer = document.getElementById('editor-ref-pers');
+            const prevContainer = document.getElementById('prev-ref-pers-container');
+
+            const div = document.createElement('div');
+            div.className = 'cv-input-group';
+            div.style.borderLeft = "4px solid #f43f5e";
+            div.style.paddingLeft = "10px";
+            div.innerHTML = `
+                <input type="text" placeholder="Nombre" oninput="document.getElementById('rp-name-${refPersCount}').innerText = this.value" style="margin-bottom:5px;">
+                <input type="text" placeholder="Teléfono" oninput="document.getElementById('rp-tel-${refPersCount}').innerText = this.value">
+            `;
+            editorContainer.appendChild(div);
+
+            const prevDiv = document.createElement('div');
+            prevDiv.className = 'ref-card';
+            prevDiv.innerHTML = `
+                <div style="font-weight:700; font-size:0.85rem;" id="rp-name-${refPersCount}">Nombre</div>
+                <div style="font-size:0.8rem; color:#2563eb;" id="rp-tel-${refPersCount}">Teléfono</div>
+            `;
+            prevContainer.appendChild(prevDiv);
+        }
+
+        // Init
         addJob();
         addEdu();
     </script>

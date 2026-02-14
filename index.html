@@ -14,46 +14,74 @@
     <link rel="stylesheet" href="style.css?v=11.5">
 
     <style>
-        /* Estilos Base Preservados */
+        /* --- ESTILOS GENERALES --- */
+        :root { --cv-bg: #ffffff; --cv-text: #1e293b; --cv-accent: #2563eb; --cv-gray: #64748b; }
+        
         .legal-universe { max-width: 1100px; margin: 0 auto; padding: 20px; }
-        .hero-legal {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: white; padding: 40px; border-radius: 20px;
-            margin-bottom: 30px; text-align: center; border: 1px solid rgba(255,255,255,0.1);
-        }
+        .hero-legal { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; padding: 40px; border-radius: 20px; margin-bottom: 30px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
         .legal-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
-        .legal-item {
-            background: white; border: 1px solid #e2e8f0;
-            border-radius: 12px; overflow: hidden;
-            transition: all 0.3s ease;
-        }
+        .legal-item { background: white; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; transition: all 0.3s ease; }
         .legal-item:hover { border-color: #3b82f6; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
-        summary {
-            padding: 20px; cursor: pointer; list-style: none;
-            display: flex; align-items: center; font-weight: 700; color: #1e293b;
-            background: #fff;
-        }
+        summary { padding: 20px; cursor: pointer; list-style: none; display: flex; align-items: center; font-weight: 700; color: #1e293b; background: #fff; }
         summary:hover { background: #f8fafc; }
-        .art-badge {
-            background: #3b82f6; color: white; padding: 4px 12px;
-            border-radius: 6px; font-size: 0.75rem; margin-right: 15px; font-family: 'Roboto Mono', monospace; min-width: 80px; text-align: center;
-        }
+        .art-badge { background: #3b82f6; color: white; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; margin-right: 15px; font-family: 'Roboto Mono', monospace; min-width: 80px; text-align: center; }
         .legal-content { padding: 25px; border-top: 1px solid #f1f5f9; line-height: 1.8; color: #475569; }
         .law-box { background: #f8fafc; padding: 15px; border-left: 4px solid #3b82f6; border-radius: 0 6px 6px 0; font-style: italic; margin: 15px 0; font-size: 0.95rem; }
         .tech-note { background: #eff6ff; padding: 15px; border-radius: 8px; border: 1px solid #bfdbfe; margin: 15px 0; font-size: 0.9rem; }
         .tech-table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9rem; }
         .tech-table th, .tech-table td { border: 1px solid #e2e8f0; padding: 8px; text-align: left; }
         .tech-table th { background: #f1f5f9; color: #1e293b; }
-
         .tab-pane { display: none; animation: fadeIn 0.3s ease; }
         .tab-pane.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .grid-calculadoras { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; padding: 20px 0; }
 
-        .grid-calculadoras {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 20px;
-            padding: 20px 0;
+        /* --- ESTILOS DEL GENERADOR DE CV (NUEVO) --- */
+        .cv-builder-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 20px; align-items: start; }
+        @media(max-width: 1024px) { .cv-builder-wrapper { grid-template-columns: 1fr; } }
+
+        /* Panel Izquierdo: Editor */
+        .cv-editor { background: #f8fafc; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0; }
+        .cv-section-title { font-size: 1.1rem; font-weight: 700; color: #1e293b; margin-bottom: 15px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .cv-input-group { margin-bottom: 15px; }
+        .cv-input-group label { display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 5px; font-weight: 500; }
+        .cv-input-group input, .cv-input-group textarea, .cv-input-group select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 0.9rem; transition: border 0.2s; }
+        .cv-input-group input:focus, .cv-input-group textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        .cv-btn-add { background: #eff6ff; color: #2563eb; border: 1px dashed #bfdbfe; padding: 10px; width: 100%; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+        .cv-btn-add:hover { background: #dbeafe; border-color: #2563eb; }
+        .cv-btn-print { background: #2563eb; color: white; padding: 15px; width: 100%; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2); }
+        .cv-btn-print:hover { background: #1d4ed8; }
+
+        /* Panel Derecho: Vista Previa (Hoja A4) */
+        .cv-preview-container { background: #94a3b8; padding: 40px; border-radius: 12px; display: flex; justify-content: center; overflow-x: auto; }
+        .a4-page { width: 210mm; min-height: 297mm; background: white; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); box-sizing: border-box; position: relative; color: #334155; }
+        
+        /* Diseño Interno del CV */
+        .cv-header { border-bottom: 2px solid #2563eb; padding-bottom: 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: flex-start; }
+        .cv-name { font-size: 2.2rem; font-weight: 900; color: #0f172a; text-transform: uppercase; letter-spacing: -0.5px; line-height: 1; }
+        .cv-role { font-size: 1.1rem; color: #2563eb; font-weight: 600; margin-top: 5px; }
+        .cv-contact-info { font-size: 0.85rem; text-align: right; line-height: 1.6; }
+        .cv-contact-item i { color: #64748b; margin-right: 5px; width: 15px; text-align: center; }
+        
+        .cv-body { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+        .cv-section-head { font-size: 0.9rem; font-weight: 700; color: #0f172a; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; }
+        
+        .cv-item { margin-bottom: 15px; }
+        .cv-item-title { font-weight: 700; color: #1e293b; font-size: 1rem; }
+        .cv-item-subtitle { color: #2563eb; font-weight: 600; font-size: 0.85rem; }
+        .cv-item-date { font-size: 0.8rem; color: #64748b; font-style: italic; margin-bottom: 5px; display: block; }
+        .cv-item-desc { font-size: 0.9rem; text-align: justify; }
+
+        .cv-skill-tag { display: inline-block; background: #f1f5f9; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; color: #334155; margin: 0 5px 5px 0; font-weight: 500; }
+
+        /* --- ESTILOS DE IMPRESIÓN (MAGIA PURA) --- */
+        @media print {
+            body * { visibility: hidden; }
+            .cv-preview-container, .a4-page, .a4-page * { visibility: visible; }
+            .cv-preview-container { position: absolute; left: 0; top: 0; width: 100%; height: 100%; margin: 0; padding: 0; background: white; }
+            .a4-page { width: 100%; box-shadow: none; margin: 0; border: none; }
+            header, nav, footer, .cv-editor { display: none !important; }
+            @page { margin: 0; }
         }
     </style>
 </head>
@@ -108,7 +136,6 @@
                         <div id="res_iess" class="result-panel"></div>
                     </div>
                 </div>
-
                 <div class="card">
                     <div class="card-header"><h3><i class="fas fa-door-open" style="color:#ef4444"></i> Liquidación Final</h3></div>
                     <div class="card-body">
@@ -125,7 +152,6 @@
                         <div id="res_liq" class="result-panel"></div>
                     </div>
                 </div>
-
                 <div class="card">
                     <div class="card-header"><h3><i class="fas fa-clock" style="color:#f59e0b"></i> Horas Extras</h3></div>
                     <div class="card-body">
@@ -138,7 +164,6 @@
                         <div id="res_he" class="result-panel"></div>
                     </div>
                 </div>
-
                 <div class="card">
                     <div class="card-header"><h3><i class="fas fa-coins" style="color:#10b981"></i> Décimos</h3></div>
                     <div class="card-body">
@@ -148,7 +173,6 @@
                         <div id="res_dec" class="result-panel"></div>
                     </div>
                 </div>
-
                 <div class="card">
                     <div class="card-header"><h3><i class="fas fa-blind" style="color:#8b5cf6"></i> Jubilación Patronal</h3></div>
                     <div class="card-body">
@@ -159,7 +183,6 @@
                         <div id="res_jub" class="result-panel"></div>
                     </div>
                 </div>
-
                 <div class="card">
                     <div class="card-header"><h3><i class="fas fa-landmark" style="color:#3b82f6"></i> LOSEP</h3></div>
                     <div class="card-body">
@@ -180,7 +203,6 @@
                 </div>
 
                 <div class="legal-grid">
-                    
                     <details class="legal-item" open>
                         <summary><span class="art-badge">Art. 55</span> Horas Suplementarias y Extraordinarias</summary>
                         <div class="legal-content">
@@ -193,149 +215,105 @@
                             </table>
                         </div>
                     </details>
-
                     <details class="legal-item">
                         <summary><span class="art-badge">Art. 69</span> Derecho a Vacaciones</summary>
                         <div class="legal-content">
                             <h4>Periodo de Descanso</h4>
                             <p>Derecho irrenunciable a 15 días de descanso tras un año de trabajo.</p>
-                            <div class="tech-note"><strong>Regla de Antigüedad:</strong> A partir del 5to año en la misma empresa, se suma 1 día extra de vacaciones por cada año adicional (hasta 15 extra).</div>
                         </div>
                     </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 97</span> Participación de Utilidades</summary>
-                        <div class="legal-content">
-                            <h4>Distribución del 15%</h4>
-                            <p>El empleador debe repartir el 15% de las utilidades líquidas.</p>
-                            <ul>
-                                <li><strong>10% Individual:</strong> Para todos los trabajadores por igual (según días laborados).</li>
-                                <li><strong>5% Cargas:</strong> Proporcional a cargas familiares (hijos/cónyuge).</li>
-                            </ul>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 111</span> Décimo Tercero (Bono Navideño)</summary>
-                        <div class="legal-content">
-                            <h4>Doceava Remuneración</h4>
-                            <p>Corresponde a la doceava parte de todo lo ganado en el año calendario.</p>
-                            <div class="law-box">Fecha máxima de pago: 24 de diciembre.</div>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 113</span> Décimo Cuarto (Bono Escolar)</summary>
-                        <div class="legal-content">
-                            <h4>Bonificación Escolar</h4>
-                            <p>Un Salario Básico Unificado completo ($482.00 en 2026).</p>
-                            <p><strong>Costa:</strong> Marzo. <strong>Sierra:</strong> Agosto.</p>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 152</span> Licencia por Maternidad</summary>
-                        <div class="legal-content">
-                            <h4>Protección a la Madre</h4>
-                            <p>12 semanas de licencia remunerada por el nacimiento.</p>
-                            <div class="tech-note" style="border-color:#ef4444; background:#fef2f2; color:#b91c1c;">
-                                <strong>Despido Ineficaz:</strong> Prohibido despedir a embarazadas. Multa: 12 sueldos extra.
-                            </div>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 155</span> Guarderías y Cuidado Infantil</summary>
-                        <div class="legal-content">
-                            <h4>Obligación Patronal</h4>
-                            <p>Empresas con 50 o más trabajadores deben tener guardería o pagar servicio externo gratuito para el empleado.</p>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 172</span> Causales de Visto Bueno</summary>
-                        <div class="legal-content">
-                            <h4>Despido Justificado</h4>
-                            <p>El empleador puede terminar el contrato sin indemnización por:</p>
-                            <ul>
-                                <li>Faltas repetidas e injustificadas de puntualidad.</li>
-                                <li>Indisciplina o desobediencia grave.</li>
-                                <li>Falta de probidad (conducta inmoral).</li>
-                            </ul>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 185</span> Bonificación por Desahucio</summary>
-                        <div class="legal-content">
-                            <h4>Bonificación del 25%</h4>
-                            <p>Pago del 25% de la última remuneración mensual por cada año de servicio completo al terminar la relación laboral.</p>
-                        </div>
-                    </details>
-
                     <details class="legal-item">
                         <summary><span class="art-badge">Art. 188</span> Despido Intempestivo</summary>
                         <div class="legal-content">
                             <h4>Tabla de Indemnización</h4>
-                            <table class="tech-table">
+                             <table class="tech-table">
                                 <tr><th>Tiempo</th><th>Pago</th></tr>
                                 <tr><td>Hasta 3 años</td><td>3 meses de sueldo (Mínimo legal).</td></tr>
                                 <tr><td>Más de 3 años</td><td>1 mes por año (Hasta 25 meses).</td></tr>
                             </table>
                         </div>
                     </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 196</span> Fondos de Reserva</summary>
-                        <div class="legal-content">
-                            <h4>Ahorro del 8.33%</h4>
-                            <p>Derecho a partir del segundo año de trabajo (mes 13). Puede acumularse en el IESS o pagarse mensual.</p>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 216</span> Jubilación Patronal</summary>
-                        <div class="legal-content">
-                            <h4>Pensión Vitalicia</h4>
-                            <p>Derecho tras cumplir 25 años de servicio con el mismo empleador (continuos o interrumpidos).</p>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">L.O.D.</span> Sustitutos y Discapacidad</summary>
-                        <div class="legal-content">
-                            <h4>Protección Especial</h4>
-                            <p>El cuidador de una persona con discapacidad severa tiene estabilidad laboral.</p>
-                            <div class="tech-note" style="border-color:#ef4444; background:#fef2f2; color:#b91c1c;">
-                                <strong>Indemnización Especial:</strong> 18 meses de sueldo extra si es despedido.
-                            </div>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Ley Salud</span> Enfermedades Catastróficas</summary>
-                        <div class="legal-content">
-                            <h4>Estabilidad Reforzada</h4>
-                            <p>Prohibición absoluta de despido para trabajadores con enfermedades raras o catastróficas.</p>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 347</span> Riesgos del Trabajo</summary>
-                        <div class="legal-content">
-                            <h4>Responsabilidad Patronal</h4>
-                            <p>El empleador debe indemnizar por accidentes ocurridos durante el trabajo o enfermedades profesionales derivadas del mismo.</p>
-                        </div>
-                    </details>
-
                 </div>
             </div>
         </div>
 
         <div id="tab-cv" class="tab-pane">
-            <div class="legal-universe" style="text-align:center;">
-                <h2>Generador de Hoja de Vida</h2>
-                <p>Módulo de exportación profesional activo.</p>
+            <div class="legal-universe">
+                <h2 style="text-align:center; color:#1e293b;">Generador de Hoja de Vida Profesional</h2>
+                <p style="text-align:center; color:#64748b; margin-bottom:20px;">Diseñado para el mercado laboral ecuatoriano. Rellena y descarga.</p>
+                
+                <div class="cv-builder-wrapper">
+                    
+                    <div class="cv-editor">
+                        <div class="cv-section-title">Datos Personales</div>
+                        <div class="cv-input-group"><label>Nombre Completo</label><input type="text" oninput="updateCV('name', this.value)" placeholder="Ej: Juan Pérez"></div>
+                        <div class="cv-input-group"><label>Cargo / Título Profesional</label><input type="text" oninput="updateCV('role', this.value)" placeholder="Ej: Abogado Laboral | Contador CPA"></div>
+                        <div class="cv-input-group"><label>Email</label><input type="email" oninput="updateCV('email', this.value)" placeholder="email@ejemplo.com"></div>
+                        <div class="cv-input-group"><label>Teléfono</label><input type="text" oninput="updateCV('phone', this.value)" placeholder="099 999 9999"></div>
+                        <div class="cv-input-group"><label>Ciudad, Ecuador</label><input type="text" oninput="updateCV('location', this.value)" placeholder="Quito, Ecuador"></div>
+                        
+                        <div class="cv-section-title">Perfil Profesional</div>
+                        <div class="cv-input-group">
+                            <textarea rows="4" oninput="updateCV('profile', this.value)" placeholder="Resumen breve de tu experiencia y objetivos..."></textarea>
+                        </div>
+
+                        <div class="cv-section-title">Experiencia Laboral <button class="cv-btn-add" onclick="addJob()">+ Agregar</button></div>
+                        <div id="editor-jobs">
+                            </div>
+
+                        <div class="cv-section-title">Formación Académica <button class="cv-btn-add" onclick="addEdu()">+ Agregar</button></div>
+                        <div id="editor-edu">
+                            </div>
+
+                        <div class="cv-section-title">Habilidades (Separar por comas)</div>
+                        <div class="cv-input-group">
+                            <input type="text" oninput="updateSkills(this.value)" placeholder="Ej: Derecho Laboral, Excel Avanzado, Inglés B2">
+                        </div>
+
+                        <button class="cv-btn-print" onclick="window.print()"><i class="fas fa-file-pdf"></i> DESCARGAR PDF</button>
+                    </div>
+
+                    <div class="cv-preview-container">
+                        <div class="a4-page" id="cv-document">
+                            
+                            <div class="cv-header">
+                                <div>
+                                    <div class="cv-name" id="prev-name">TU NOMBRE AQUÍ</div>
+                                    <div class="cv-role" id="prev-role">TU TÍTULO PROFESIONAL</div>
+                                </div>
+                                <div class="cv-contact-info">
+                                    <div class="cv-contact-item"><i class="fas fa-envelope"></i> <span id="prev-email">email@ejemplo.com</span></div>
+                                    <div class="cv-contact-item"><i class="fas fa-phone"></i> <span id="prev-phone">099 999 9999</span></div>
+                                    <div class="cv-contact-item"><i class="fas fa-map-marker-alt"></i> <span id="prev-location">Ciudad, País</span></div>
+                                </div>
+                            </div>
+
+                            <div class="cv-body">
+                                <div class="cv-main-col">
+                                    <div class="cv-section-head"><i class="fas fa-user-tie"></i> Perfil</div>
+                                    <p id="prev-profile" style="margin-bottom: 25px; font-size: 0.95rem;">
+                                        Aquí aparecerá tu descripción profesional. Escribe en el editor para ver los cambios en tiempo real.
+                                    </p>
+
+                                    <div class="cv-section-head"><i class="fas fa-briefcase"></i> Experiencia Laboral</div>
+                                    <div id="prev-jobs-container">
+                                        </div>
+                                </div>
+
+                                <div class="cv-side-col">
+                                    <div class="cv-section-head"><i class="fas fa-graduation-cap"></i> Educación</div>
+                                    <div id="prev-edu-container">
+                                        </div>
+
+                                    <div class="cv-section-head" style="margin-top: 25px;"><i class="fas fa-star"></i> Habilidades</div>
+                                    <div id="prev-skills-container">
+                                        </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -346,5 +324,101 @@
     </footer>
 
     <script src="script.js?v=6.0"></script>
+    
+    <script>
+        // Funciones del CV en línea para no depender de archivos externos por ahora
+        function updateCV(field, value) {
+            const el = document.getElementById('prev-' + field);
+            if(el) {
+                if(value.trim() === "") {
+                    // Texto por defecto si está vacío
+                    if(field === 'name') el.innerText = "TU NOMBRE AQUÍ";
+                    else if(field === 'role') el.innerText = "TU TÍTULO";
+                    else el.innerText = "";
+                } else {
+                    el.innerText = value;
+                }
+            }
+        }
+
+        function updateSkills(value) {
+            const container = document.getElementById('prev-skills-container');
+            container.innerHTML = '';
+            const skills = value.split(',');
+            skills.forEach(skill => {
+                if(skill.trim() !== '') {
+                    const tag = document.createElement('span');
+                    tag.className = 'cv-skill-tag';
+                    tag.innerText = skill.trim();
+                    container.appendChild(tag);
+                }
+            });
+        }
+
+        let jobCount = 0;
+        function addJob() {
+            jobCount++;
+            const editorContainer = document.getElementById('editor-jobs');
+            const prevContainer = document.getElementById('prev-jobs-container');
+            
+            // Crear inputs en editor
+            const jobDiv = document.createElement('div');
+            jobDiv.className = 'cv-input-group';
+            jobDiv.style.borderLeft = "3px solid #cbd5e1";
+            jobDiv.style.paddingLeft = "10px";
+            jobDiv.style.marginBottom = "20px";
+            jobDiv.innerHTML = `
+                <input type="text" placeholder="Cargo" oninput="document.getElementById('job-title-${jobCount}').innerText = this.value" style="margin-bottom:5px; font-weight:bold;">
+                <input type="text" placeholder="Empresa" oninput="document.getElementById('job-company-${jobCount}').innerText = this.value" style="margin-bottom:5px;">
+                <input type="text" placeholder="Período (Ej: 2020 - Presente)" oninput="document.getElementById('job-date-${jobCount}').innerText = this.value" style="margin-bottom:5px;">
+                <textarea placeholder="Logros y responsabilidades..." oninput="document.getElementById('job-desc-${jobCount}').innerText = this.value" rows="2"></textarea>
+            `;
+            editorContainer.appendChild(jobDiv);
+
+            // Crear vista previa
+            const prevDiv = document.createElement('div');
+            prevDiv.className = 'cv-item';
+            prevDiv.innerHTML = `
+                <div class="cv-item-title" id="job-title-${jobCount}">Cargo</div>
+                <div class="cv-item-subtitle" id="job-company-${jobCount}">Empresa</div>
+                <span class="cv-item-date" id="job-date-${jobCount}">Período</span>
+                <div class="cv-item-desc" id="job-desc-${jobCount}">Descripción del puesto...</div>
+            `;
+            prevContainer.appendChild(prevDiv);
+        }
+
+        let eduCount = 0;
+        function addEdu() {
+            eduCount++;
+            const editorContainer = document.getElementById('editor-edu');
+            const prevContainer = document.getElementById('prev-edu-container');
+            
+            // Crear inputs
+            const eduDiv = document.createElement('div');
+            eduDiv.className = 'cv-input-group';
+            eduDiv.style.borderLeft = "3px solid #cbd5e1";
+            eduDiv.style.paddingLeft = "10px";
+            eduDiv.innerHTML = `
+                <input type="text" placeholder="Título Obtenido" oninput="document.getElementById('edu-title-${eduCount}').innerText = this.value" style="margin-bottom:5px; font-weight:bold;">
+                <input type="text" placeholder="Institución" oninput="document.getElementById('edu-school-${eduCount}').innerText = this.value" style="margin-bottom:5px;">
+                <input type="text" placeholder="Año" oninput="document.getElementById('edu-date-${eduCount}').innerText = this.value">
+            `;
+            editorContainer.appendChild(eduDiv);
+
+            // Crear preview
+            const prevDiv = document.createElement('div');
+            prevDiv.className = 'cv-item';
+            prevDiv.innerHTML = `
+                <div class="cv-item-title" id="edu-title-${eduCount}" style="font-size:0.9rem">Título</div>
+                <div class="cv-item-subtitle" id="edu-school-${eduCount}" style="font-size:0.8rem">Institución</div>
+                <span class="cv-item-date" id="edu-date-${eduCount}">Año</span>
+            `;
+            prevContainer.appendChild(prevDiv);
+        }
+
+        // Inicializar con un campo vacío
+        addJob();
+        addEdu();
+    </script>
 </body>
 </html>

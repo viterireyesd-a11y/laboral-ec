@@ -98,6 +98,21 @@
             header, nav, footer, .cv-editor { display: none !important; }
             @page { margin: 0; }
         }
+
+        /* --- ESTILOS DEL FOOTER RESPONSIVE --- */
+        .legal-footer { text-align: center; padding: 25px 20px; color: #64748b; font-size: 0.9rem; margin-top: 40px; border-top: 1px solid #e2e8f0; }
+        .footer-title { font-weight: 800; color: #1e293b; margin: 0; }
+        .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 15px; }
+        .footer-links a { color: #64748b; text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+        .footer-links a:hover { color: #1e293b; }
+        .footer-links a.highlight { color: #2563eb; font-weight: 600; }
+
+        @media (max-width: 600px) {
+            .legal-footer { padding: 15px 10px; margin-top: 20px; }
+            .footer-title { font-size: 0.85rem; }
+            .footer-links { gap: 10px 15px; margin-top: 10px; }
+            .footer-links a { font-size: 0.75rem; }
+        }
     </style>
 </head>
 <body>
@@ -301,7 +316,8 @@
                         </div>
                     </details>
                     
-                    <details class="legal-item"> <summary><span class="art-badge">Art. 55</span> Horas Suplementarias y Extraordinarias</summary>
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Art. 55</span> Horas Suplementarias y Extraordinarias</summary>
                         <div class="legal-content">
                             <h4>Régimen de Recargos</h4>
                             <p>Compensación obligatoria por trabajo fuera de la jornada legal.</p>
@@ -554,14 +570,14 @@
 
     </main>
 
-    <footer class="legal-footer" style="text-align:center; padding:20px; color:#64748b; font-size:0.9rem; margin-top:40px; border-top: 1px solid #e2e8f0;">
-        <p style="font-weight: bold; color: #1e293b;">LABORALEC PRO 2026 | Ingeniería Legal de Precisión.</p>
-        <p style="margin-top: 15px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-            <a href="despido-intempestivo.html" style="color:#2563eb; text-decoration:none; font-weight:600;"><i class="fas fa-file-alt"></i> Guías Laborales</a>
-            <a href="privacidad.html" style="color:#64748b; text-decoration:none;"><i class="fas fa-user-shield"></i> Privacidad</a>
-            <a href="terminos.html" style="color:#64748b; text-decoration:none;"><i class="fas fa-balance-scale"></i> Términos Legales</a>
-            <a href="contacto.html" style="color:#64748b; text-decoration:none;"><i class="fas fa-envelope"></i> Contacto y Asesoría</a>
-        </p>
+    <footer class="legal-footer">
+        <p class="footer-title">LABORALEC PRO 2026 | Ingeniería Legal de Precisión.</p>
+        <div class="footer-links">
+            <a href="despido-intempestivo.html" class="highlight"><i class="fas fa-file-alt"></i> Guías</a>
+            <a href="privacidad.html"><i class="fas fa-user-shield"></i> Privacidad</a>
+            <a href="terminos.html"><i class="fas fa-balance-scale"></i> Términos</a>
+            <a href="contacto.html"><i class="fas fa-envelope"></i> Contacto</a>
+        </div>
     </footer>
 
     <script src="script.js?v=6.0"></script>

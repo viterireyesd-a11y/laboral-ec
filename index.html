@@ -424,8 +424,9 @@
                         <p style="font-size:0.75rem; color:var(--cv-gray); margin-top:-5px; margin-bottom:15px; line-height:1.3;">
                             *Hijos hasta 18 años o con discapacidad. Aplica Art. 23 (1% SBU) y Art. 24 (0.25% RMU).
                         </p>
-                        <button class="btn btn-action" onclick="calcularBeneficioSocial()" style="background:#d946ef; color:white; padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">CALCULAR</button>
-                        <div id="res_bs" class="result-panel"></div>
+                        <button type="button" class="btn btn-action" onclick="calcularBeneficioAlask()" style="background:#d946ef; color:white; padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">CALCULAR</button>
+                        
+                        <div id="res_bs" style="margin-top: 15px;"></div>
                     </div>
                 </div>
 
@@ -954,31 +955,33 @@
             prevContainer.appendChild(prevDiv);
         }
 
-        // --- LÓGICA EXCLUSIVA PARA LA CALCULADORA DE BENEFICIO SOCIAL ---
-        // Se asocia directamente al objeto window para romper cualquier conflicto con script.js externo
-        window.calcularBeneficioSocial = function() {
-            // 1. Obtener los valores ingresados por el usuario
-            let rmu = parseFloat(document.getElementById('bs_rmu').value) || 0;
-            let sbu = parseFloat(document.getElementById('bs_sbu').value) || 482;
-            let anios = parseInt(document.getElementById('bs_anios').value) || 0;
-            let hijos = parseInt(document.getElementById('bs_hijos').value) || 0;
+        // --- LÓGICA EXCLUSIVA Y BLINDADA PARA BENEFICIO SOCIAL ---
+        window.calcularBeneficioAlask = function() {
+            // Obtener y limpiar los valores
+            let rmuInput = document.getElementById('bs_rmu').value;
+            let sbuInput = document.getElementById('bs_sbu').value;
+            let aniosInput = document.getElementById('bs_anios').value;
+            let hijosInput = document.getElementById('bs_hijos').value;
 
-            // 2. Calcular según normativas (Art. 23 y Art. 24)
-            let subFamiliar = sbu * 0.01 * hijos; // 1% del SBU por cada hijo
-            let subAntiguedad = rmu * 0.0025 * anios; // 0.25% de la RMU por año de servicio
+            // Convertir a números (si está vacío, asume 0)
+            let rmu = parseFloat(rmuInput) || 0;
+            let sbu = parseFloat(sbuInput) || 482;
+            let anios = parseInt(aniosInput) || 0;
+            let hijos = parseInt(hijosInput) || 0;
+
+            // Calcular según normativas (Art. 23 y Art. 24)
+            let subFamiliar = sbu * 0.01 * hijos; 
+            let subAntiguedad = rmu * 0.0025 * anios; 
             let total = subFamiliar + subAntiguedad;
 
-            // 3. Mostrar el resultado en el panel forzando la visibilidad
+            // Inyectar en el HTML creando los estilos en línea
             let resDiv = document.getElementById('res_bs');
-            resDiv.style.display = 'block';   // Fuerza a que se muestre, ignorando el CSS externo
-            resDiv.style.opacity = '1';       // Fuerza la opacidad
-            
             resDiv.innerHTML = `
-                <div style="margin-top: 15px; padding: 15px; background: rgba(217, 70, 239, 0.1); border-radius: 8px; border-left: 4px solid #d946ef;">
-                    <p style="margin:0 0 5px 0; color: #f8fafc; font-weight:bold;">Subsidio Familiar: <span style="color:#d946ef">$${subFamiliar.toFixed(2)}</span></p>
-                    <p style="margin:0 0 5px 0; color: #f8fafc; font-weight:bold;">Subsidio Antigüedad: <span style="color:#d946ef">$${subAntiguedad.toFixed(2)}</span></p>
+                <div style="padding: 15px; background: rgba(217, 70, 239, 0.1); border-radius: 8px; border-left: 4px solid #d946ef;">
+                    <p style="margin:0 0 5px 0; color: #f8fafc; font-weight:bold; font-size:0.95rem;">Subsidio Familiar: <span style="color:#d946ef; float:right;">$${subFamiliar.toFixed(2)}</span></p>
+                    <p style="margin:0 0 5px 0; color: #f8fafc; font-weight:bold; font-size:0.95rem;">Subsidio Antigüedad: <span style="color:#d946ef; float:right;">$${subAntiguedad.toFixed(2)}</span></p>
                     <hr style="border-color: #334155; margin: 10px 0;">
-                    <p style="margin:0; color: #f8fafc; font-weight:bold; font-size:1.1em;">Total a Recibir: <span style="color:#10b981">$${total.toFixed(2)}</span></p>
+                    <p style="margin:0; color: #10b981; font-weight:900; font-size:1.2rem;">Total Mensual: <span style="float:right;">$${total.toFixed(2)}</span></p>
                 </div>
             `;
         };

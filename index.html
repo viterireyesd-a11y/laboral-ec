@@ -134,7 +134,10 @@
 
     <nav class="nav-wrapper">
         <div class="nav-tabs">
-            <button class="tab-btn active" onclick="app.navigate('tab-calculadoras')">
+            <button class="tab-btn active" onclick="app.navigate('tab-sindical')">
+                <i class="fas fa-users-cog"></i> Org. Sindical
+            </button>
+            <button class="tab-btn" onclick="app.navigate('tab-calculadoras')">
                 <i class="fas fa-calculator"></i> Calculadoras
             </button>
             <button class="tab-btn" onclick="app.navigate('tab-base-legal')">
@@ -148,7 +151,26 @@
 
     <main class="main-content">
 
-        <div id="tab-calculadoras" class="tab-pane active">
+        <div id="tab-sindical" class="tab-pane active">
+            <div class="legal-universe">
+                <div class="hero-legal" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);">
+                    <h1>Lo que una Organización Sindical Debería Saber</h1>
+                    <p>Fundamentos, derechos colectivos y estrategias para el fortalecimiento de las bases trabajadoras.</p>
+                </div>
+
+                <div class="legal-grid">
+                    <details class="legal-item" open>
+                        <summary><span class="art-badge" style="background:#8b5cf6;">Módulo 1</span> Formación y Estructura Sindical</summary>
+                        <div class="legal-content">
+                            <h3 style="margin-top: 0; color: #0f172a;">Próximamente...</h3>
+                            <p>En este espacio puedes integrar artículos sobre el Código del Trabajo respecto al derecho de asociación, requisitos para conformar un sindicato, fueros sindicales, etc.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-calculadoras" class="tab-pane">
             <div class="grid-calculadoras">
                 <div class="card">
                     <div class="card-header"><h3><i class="fas fa-hand-holding-medical" style="color:#60a5fa"></i> Aportes IESS</h3></div>

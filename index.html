@@ -330,6 +330,7 @@
 
         <div id="tab-calculadoras" class="tab-pane">
             <div class="grid-calculadoras">
+                
                 <div class="card">
                     <div class="card-header"><h3><i class="fas fa-hand-holding-medical" style="color:#60a5fa"></i> Aportes IESS</h3></div>
                     <div class="card-body">
@@ -345,6 +346,7 @@
                         <div id="res_iess" class="result-panel"></div>
                     </div>
                 </div>
+
                 <div class="card">
                     <div class="card-header"><h3><i class="fas fa-door-open" style="color:#ef4444"></i> Liquidación Final</h3></div>
                     <div class="card-body">
@@ -361,6 +363,7 @@
                         <div id="res_liq" class="result-panel"></div>
                     </div>
                 </div>
+
                 <div class="card">
                     <div class="card-header"><h3><i class="fas fa-clock" style="color:#f59e0b"></i> Horas Extras</h3></div>
                     <div class="card-body">
@@ -373,6 +376,7 @@
                         <div id="res_he" class="result-panel"></div>
                     </div>
                 </div>
+
                 <div class="card">
                     <div class="card-header"><h3><i class="fas fa-coins" style="color:#10b981"></i> Décimos</h3></div>
                     <div class="card-body">
@@ -382,6 +386,7 @@
                         <div id="res_dec" class="result-panel"></div>
                     </div>
                 </div>
+
                 <div class="card">
                     <div class="card-header"><h3><i class="fas fa-blind" style="color:#8b5cf6"></i> Jubilación Patronal</h3></div>
                     <div class="card-body">
@@ -392,6 +397,7 @@
                         <div id="res_jub" class="result-panel"></div>
                     </div>
                 </div>
+
                 <div class="card">
                     <div class="card-header"><h3><i class="fas fa-landmark" style="color:#3b82f6"></i> LOSEP</h3></div>
                     <div class="card-body">
@@ -401,6 +407,28 @@
                         <div id="res_losep" class="result-panel"></div>
                     </div>
                 </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 style="color:#d946ef;"><i class="fas fa-hand-holding-heart"></i> Beneficio Social</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                            <div class="form-group"><label>Sueldo/RMU ($)</label><input type="number" id="bs_rmu" placeholder="Ej: 800"></div>
+                            <div class="form-group"><label>SBU Actual ($)</label><input type="number" id="bs_sbu" value="482.00"></div>
+                        </div>
+                        <div class="grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                            <div class="form-group"><label>Años Servicio</label><input type="number" id="bs_anios" placeholder="Ej: 5"></div>
+                            <div class="form-group"><label>N° de Hijos</label><input type="number" id="bs_hijos" placeholder="Ej: 2"></div>
+                        </div>
+                        <p style="font-size:0.75rem; color:var(--cv-gray); margin-top:-5px; margin-bottom:15px; line-height:1.3;">
+                            *Hijos hasta 18 años o con discapacidad. Aplica Art. 23 (1% SBU) y Art. 24 (0.25% RMU).
+                        </p>
+                        <button class="btn btn-action" onclick="calcularBeneficioSocial()" style="background:#d946ef; color:white; padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">CALCULAR</button>
+                        <div id="res_bs" class="result-panel"></div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -924,6 +952,31 @@
                 <div style="font-size:0.8rem; color:#2563eb !important;" id="rp-tel-${refPersCount}">Teléfono</div>
             `;
             prevContainer.appendChild(prevDiv);
+        }
+
+        // --- LÓGICA EXCLUSIVA PARA LA CALCULADORA DE BENEFICIO SOCIAL ---
+        function calcularBeneficioSocial() {
+            // Obtener los valores ingresados por el usuario
+            let rmu = parseFloat(document.getElementById('bs_rmu').value) || 0;
+            let sbu = parseFloat(document.getElementById('bs_sbu').value) || 482;
+            let anios = parseInt(document.getElementById('bs_anios').value) || 0;
+            let hijos = parseInt(document.getElementById('bs_hijos').value) || 0;
+
+            // Calcular según normativas
+            let subFamiliar = sbu * 0.01 * hijos; // 1% del SBU por cada hijo
+            let subAntiguedad = rmu * 0.0025 * anios; // 0.25% de la RMU por año de servicio
+            let total = subFamiliar + subAntiguedad;
+
+            // Mostrar el resultado en el panel
+            let resDiv = document.getElementById('res_bs');
+            resDiv.innerHTML = `
+                <div style="margin-top: 15px; padding: 15px; background: rgba(217, 70, 239, 0.1); border-radius: 8px; border-left: 4px solid #d946ef;">
+                    <p style="margin:0 0 5px 0; color: #f8fafc; font-weight:bold;">Subsidio Familiar: <span style="color:#d946ef">$${subFamiliar.toFixed(2)}</span></p>
+                    <p style="margin:0 0 5px 0; color: #f8fafc; font-weight:bold;">Subsidio Antigüedad: <span style="color:#d946ef">$${subAntiguedad.toFixed(2)}</span></p>
+                    <hr style="border-color: #334155; margin: 10px 0;">
+                    <p style="margin:0; color: #f8fafc; font-weight:bold; font-size:1.1em;">Total a Recibir: <span style="color:#10b981">$${total.toFixed(2)}</span></p>
+                </div>
+            `;
         }
 
         // Init

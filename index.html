@@ -955,20 +955,24 @@
         }
 
         // --- LÓGICA EXCLUSIVA PARA LA CALCULADORA DE BENEFICIO SOCIAL ---
-        function calcularBeneficioSocial() {
-            // Obtener los valores ingresados por el usuario
+        // Se asocia directamente al objeto window para romper cualquier conflicto con script.js externo
+        window.calcularBeneficioSocial = function() {
+            // 1. Obtener los valores ingresados por el usuario
             let rmu = parseFloat(document.getElementById('bs_rmu').value) || 0;
             let sbu = parseFloat(document.getElementById('bs_sbu').value) || 482;
             let anios = parseInt(document.getElementById('bs_anios').value) || 0;
             let hijos = parseInt(document.getElementById('bs_hijos').value) || 0;
 
-            // Calcular según normativas
+            // 2. Calcular según normativas (Art. 23 y Art. 24)
             let subFamiliar = sbu * 0.01 * hijos; // 1% del SBU por cada hijo
             let subAntiguedad = rmu * 0.0025 * anios; // 0.25% de la RMU por año de servicio
             let total = subFamiliar + subAntiguedad;
 
-            // Mostrar el resultado en el panel
+            // 3. Mostrar el resultado en el panel forzando la visibilidad
             let resDiv = document.getElementById('res_bs');
+            resDiv.style.display = 'block';   // Fuerza a que se muestre, ignorando el CSS externo
+            resDiv.style.opacity = '1';       // Fuerza la opacidad
+            
             resDiv.innerHTML = `
                 <div style="margin-top: 15px; padding: 15px; background: rgba(217, 70, 239, 0.1); border-radius: 8px; border-left: 4px solid #d946ef;">
                     <p style="margin:0 0 5px 0; color: #f8fafc; font-weight:bold;">Subsidio Familiar: <span style="color:#d946ef">$${subFamiliar.toFixed(2)}</span></p>
@@ -977,7 +981,7 @@
                     <p style="margin:0; color: #f8fafc; font-weight:bold; font-size:1.1em;">Total a Recibir: <span style="color:#10b981">$${total.toFixed(2)}</span></p>
                 </div>
             `;
-        }
+        };
 
         // Init
         addJob();

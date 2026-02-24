@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre el Autor | LABORALEC PRO 2026</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=11.5">
+
+    <style>
+        /* Variables heredadas de tu diseño original */
+        :root { 
+            --bg-main: #0f172a; 
+            --card-bg: #1e293b; 
+            --card-border: #334155; 
+            --text-main: #cbd5e1; 
+            --text-heading: #f8fafc; 
+            --cv-accent: #3b82f6; 
+            --btn-action: #10b981; 
+            --cv-gray: #94a3b8; 
+        }
+        
+        body { background-color: var(--bg-main); color: var(--text-main); font-family: 'Inter', sans-serif; margin: 0; }
+        h1, h2, h3 { color: var(--text-heading); }
+
+        .legal-universe { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .hero-legal { background: linear-gradient(135deg, #1e293b 0%, #020617 100%); color: white; padding: 40px; border-radius: 20px; margin-bottom: 30px; text-align: center; border: 1px solid var(--card-border); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        
+        .profile-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 30px; margin-bottom: 30px; display: flex; gap: 30px; align-items: flex-start; }
+        @media(max-width: 768px) { .profile-card { flex-direction: column; align-items: center; text-align: center; } }
+        
+        /* Contenedor de foto - Puedes cambiar el icono por una foto tuya usando un <img> si lo deseas */
+        .profile-icon { background: rgba(59,130,246,0.1); width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--cv-accent); flex-shrink: 0; overflow: hidden; }
+        .profile-icon i { font-size: 4rem; color: var(--cv-accent); }
+        
+        .profile-content h2 { margin-top: 0; font-size: 1.8rem; margin-bottom: 5px; }
+        .profile-badge { display: inline-block; background: var(--btn-action); color: white; padding: 5px 12px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; margin-bottom: 15px; }
+        .profile-content p { line-height: 1.7; font-size: 1.05rem; color: var(--text-main); margin-bottom: 15px; }
+
+        .milestones { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px; }
+        .milestone-item { background: rgba(0,0,0,0.2); border: 1px solid var(--card-border); padding: 15px; border-radius: 8px; border-left: 4px solid var(--cv-accent); }
+        .milestone-item.green { border-left-color: var(--btn-action); }
+        .milestone-year { font-weight: 900; color: var(--text-heading); font-size: 1.2rem; margin-bottom: 5px; }
+        
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; background: var(--card-bg); color: var(--text-heading); padding: 10px 20px; text-decoration: none; border: 1px solid var(--card-border); border-radius: 8px; font-weight: bold; transition: all 0.2s; margin-bottom: 20px; }
+        .btn-back:hover { background: var(--cv-accent); border-color: var(--cv-accent); color: white; }
+
+        /* Footer heredado */
+        .legal-footer { text-align: center; padding: 12px 20px; color: var(--cv-gray); font-size: 0.85rem; margin-top: 40px; border-top: 1px solid var(--card-border); }
+        .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 8px; }
+        .footer-links a { color: var(--cv-gray); text-decoration: none; display: flex; align-items: center; gap: 6px; }
+        .footer-links a:hover { color: var(--cv-accent); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container" style="background: var(--card-bg); border-bottom: 1px solid var(--card-border); padding: 15px;">
+            <div class="brand-wrapper" style="display:flex; align-items:center; justify-content:center; gap: 15px;">
+               <img src="escudo.svg.png" class="escudo-img" alt="Escudo Ecuador" style="height: 50px;">
+                <div class="brand-text">
+                    <h1 style="margin:0; font-size:1.5rem;">LABORALEC</h1>
+                    <span style="font-size:0.8rem; color:var(--cv-gray);">SISTEMA JURÍDICO INTEGRADO 2026</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="legal-universe">
+            
+            <a href="index.html" class="btn-back"><i class="fas fa-arrow-left"></i> Volver al Inicio</a>
+
+            <div class="hero-legal">
+                <h1>Detrás de Laboralec</h1>
+                <p style="color:var(--cv-gray); font-size: 1.1rem;">De la teoría a la trinchera: Experiencia real al servicio de los trabajadores del Ecuador.</p>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-icon">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="profile-content">
+                    <h2>Diego Viteri Reyes</h2>
+                    <span class="profile-badge"><i class="fas fa-check-circle"></i> Especialista Práctico & Ex Dirigente Sindical</span>
+                    
+                    <p><strong>Laboralec no es un bufete de abogados teóricos.</strong> Soy Diego Viteri, ecuatoriano y trabajador amparado bajo el Código del Trabajo. Conozco las entrañas del sistema desde adentro y este portal nació con un objetivo claro: democratizar el conocimiento legal y laboral para que ningún trabajador sea vulnerado por falta de información.</p>
+                    
+                    <p>Mi experiencia no viene de leer manuales, sino de la gestión diaria y la defensa activa de los derechos en las trincheras. Sé cómo funciona el SUT, cómo se estructuran los contratos y cómo organizar las bases para exigir justicia laboral.</p>
+
+                    <div class="milestones">
+                        <div class="milestone-item">
+                            <div class="milestone-year">2011 - Presente</div>
+                            <div style="font-size: 0.9rem;"><strong>Ministerio del Trabajo</strong><br>Más de una década de servicio continuo bajo el régimen del Código del Trabajo, conociendo de primera mano los procesos, reformas y el día a día institucional.</div>
+                        </div>
+                        <div class="milestone-item green">
+                            <div class="milestone-year">2020 - 2022</div>
+                            <div style="font-size: 0.9rem;"><strong>Dirigencia Sindical</strong><br>Liderazgo directo y defensa de derechos colectivos durante uno de los periodos más críticos de la historia laboral ecuatoriana.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid var(--btn-action); border-radius: 12px; padding: 25px; text-align: center;">
+                <h3 style="color: var(--btn-action); margin-top: 0;"><i class="fas fa-bullseye"></i> Nuestro Compromiso</h3>
+                <p style="margin-bottom: 0; color: var(--text-main);">Las calculadoras, las plantillas y las guías de Laboralec están diseñadas con la precisión de quien ha estado en ambas caras de la moneda. Aquí traducimos el complejo lenguaje jurídico en herramientas prácticas para tu defensa.</p>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="legal-footer">
+        <p class="footer-title">LABORALEC PRO 2026 | Ingeniería Legal de Precisión.</p>
+        <div class="footer-links">
+            <a href="index.html"><i class="fas fa-home"></i> Inicio</a>
+            <a href="privacidad.html"><i class="fas fa-user-shield"></i> Privacidad</a>
+            <a href="terminos.html"><i class="fas fa-balance-scale"></i> Términos</a>
+            <a href="contacto.html"><i class="fas fa-envelope"></i> Contacto</a>
+        </div>
+    </footer>
+
+</body>
+</html>

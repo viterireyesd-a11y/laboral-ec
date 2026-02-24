@@ -2,89 +2,189 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guía Completa: Pago de Utilidades en Ecuador (2026) | LaboralEC</title>
-    <meta name="description" content="Aprende cómo se calcula el pago del 15% de utilidades en Ecuador, fechas máximas de pago, y cómo influyen tus cargas familiares.">
+    <title>Guía Completa: Pago de Utilidades en Ecuador 2026 | LABORALEC</title>
+    <meta name="description" content="Aprende cómo se calcula el 15% de utilidades en Ecuador (2026), fechas máximas de pago, cargas familiares y límites legales. Escrito por Diego Viteri.">
+    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=11.5">
+
     <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
-        h1 { color: #0f172a; border-bottom: 2px solid #3b82f6; padding-bottom: 10px; }
-        h2 { color: #2563eb; margin-top: 30px; }
-        h3 { color: #334155; }
-        .alert-box { background-color: #fffbeb; color: #92400e; padding: 15px; border-left: 5px solid #f59e0b; margin: 20px 0; border-radius: 4px; }
-        .example-box { background-color: #f0fdf4; padding: 15px; border-left: 5px solid #10b981; margin: 20px 0; border-radius: 4px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { border: 1px solid #cbd5e1; padding: 10px; text-align: left; }
-        th { background-color: #f8fafc; color: #1e293b; }
-        .nav-link { color: #2563eb; text-decoration: none; font-weight: bold; }
-        .nav-link:hover { text-decoration: underline; }
+        /* --- ESTILOS HEREDADOS Y ESPECÍFICOS PARA ARTÍCULOS --- */
+        :root { 
+            --bg-main: #0f172a; 
+            --card-bg: #1e293b; 
+            --card-border: #334155; 
+            --text-main: #cbd5e1; 
+            --text-heading: #f8fafc; 
+            --cv-accent: #3b82f6; 
+            --btn-action: #10b981; 
+            --cv-gray: #94a3b8; 
+            --alert-red: #ef4444;
+            --alert-bg: rgba(239, 68, 68, 0.1);
+        }
+        
+        body { background-color: var(--bg-main); color: var(--text-main); font-family: 'Inter', sans-serif; line-height: 1.7; margin: 0; }
+        h1, h2, h3, h4 { color: var(--text-heading); font-weight: 700; margin-top: 1.5em; margin-bottom: 0.5em; }
+        
+        .article-container { max-width: 800px; margin: 0 auto; padding: 30px 20px; }
+        
+        /* Cabecera del Artículo */
+        .article-header { border-bottom: 1px solid var(--card-border); padding-bottom: 20px; margin-bottom: 30px; }
+        .article-title { font-size: 2.5rem; font-weight: 900; line-height: 1.2; margin-bottom: 15px; margin-top: 0; }
+        .article-meta { display: flex; align-items: center; gap: 15px; color: var(--cv-gray); font-size: 0.9rem; flex-wrap: wrap; }
+        .author-badge { background: rgba(16,185,129,0.15); color: var(--btn-action); padding: 5px 12px; border-radius: 20px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
+        
+        /* Cuerpo del Artículo */
+        .article-content p { font-size: 1.05rem; margin-bottom: 1.5em; }
+        .article-content ul, .article-content ol { font-size: 1.05rem; margin-bottom: 1.5em; padding-left: 20px; }
+        .article-content li { margin-bottom: 0.5em; }
+        
+        /* Cajas de Alerta / Ley */
+        .law-highlight { background: var(--card-bg); border-left: 4px solid var(--cv-accent); padding: 20px; border-radius: 0 8px 8px 0; margin: 25px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .law-highlight h4 { margin-top: 0; color: var(--cv-accent); display: flex; align-items: center; gap: 8px; font-size: 1.1rem; }
+        .law-highlight p:last-child { margin-bottom: 0; }
+
+        .alert-box { background: var(--alert-bg); border: 1px solid var(--alert-red); border-left: 4px solid var(--alert-red); padding: 20px; border-radius: 8px; margin: 25px 0; color: #fca5a5; }
+        .alert-box strong { color: #f87171; }
+
+        .success-box { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--btn-action); border-left: 4px solid var(--btn-action); padding: 20px; border-radius: 8px; margin: 25px 0; color: #6ee7b7; }
+
+        /* Tabla de Cálculo */
+        .calc-table { width: 100%; border-collapse: collapse; margin: 25px 0; background: var(--card-bg); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .calc-table th, .calc-table td { padding: 15px; text-align: left; border-bottom: 1px solid var(--card-border); }
+        .calc-table th { background: rgba(0,0,0,0.3); color: var(--text-heading); font-weight: 700; }
+        .calc-table tr:last-child td { border-bottom: none; }
+        
+        /* CTA (Llamado a la acción) */
+        .cta-box { background: linear-gradient(135deg, #1e293b 0%, #020617 100%); border: 1px solid var(--cv-accent); padding: 30px; border-radius: 12px; text-align: center; margin: 40px 0; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .cta-box h3 { margin-top: 0; color: white; }
+        .btn-primary { display: inline-block; background: var(--cv-accent); color: white; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.1rem; transition: background 0.3s, transform 0.2s; margin-top: 15px; }
+        .btn-primary:hover { background: #2563eb; transform: translateY(-2px); }
+
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; color: var(--cv-gray); text-decoration: none; font-weight: 600; margin-bottom: 20px; transition: color 0.2s; }
+        .btn-back:hover { color: var(--text-heading); }
+
+        /* Footer */
+        .legal-footer { text-align: center; padding: 20px; color: var(--cv-gray); font-size: 0.85rem; border-top: 1px solid var(--card-border); margin-top: 40px; }
     </style>
 </head>
 <body>
 
     <header>
-        <nav>
-            <p><a href="index.html" class="nav-link">&larr; Volver al Inicio (LaboralEC)</a></p>
-        </nav>
+        <div class="header-container" style="background: var(--card-bg); border-bottom: 1px solid var(--card-border); padding: 15px;">
+            <div class="brand-wrapper" style="display:flex; align-items:center; justify-content:center; gap: 15px;">
+               <img src="escudo.svg.png" class="escudo-img" alt="Escudo Ecuador" style="height: 50px;">
+                <div class="brand-text">
+                    <h1 style="margin:0; font-size:1.5rem;">LABORALEC</h1>
+                    <span style="font-size:0.8rem; color:var(--cv-gray);">SISTEMA JURÍDICO INTEGRADO 2026</span>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <main>
+    <main class="article-container">
+        <a href="index.html" class="btn-back"><i class="fas fa-arrow-left"></i> Volver al Inicio</a>
+
         <article>
-            <h1>Guía Completa: El Pago de Utilidades en Ecuador (2026)</h1>
-            
-            <p>El mes de abril es uno de los más esperados por los trabajadores ecuatorianos en relación de dependencia del sector privado. Según el Código del Trabajo, los empleadores (empresas o personas naturales obligadas a llevar contabilidad) que hayan generado ganancias en el año fiscal anterior, deben repartir un porcentaje de estas con sus empleados.</p>
+            <header class="article-header">
+                <h1 class="article-title">Guía Definitiva 2026: Todo lo que debes saber sobre el Pago de Utilidades</h1>
+                <div class="article-meta">
+                    <span class="author-badge"><i class="fas fa-user-check"></i> Por Diego Viteri</span>
+                    <span><i class="fas fa-calendar-check"></i> Actualizado: Ejercicio Fiscal 2025/2026</span>
+                    <span><i class="fas fa-clock"></i> Tiempo de lectura: 5 min</span>
+                </div>
+            </header>
 
-            <h2>1. ¿Cuánto se debe repartir y cómo se divide?</h2>
-            <p>La ley establece que se debe repartir el <strong>15% de las utilidades líquidas</strong> de la empresa. Este porcentaje no se entrega por igual a todos, sino que se divide en dos partes:</p>
-            <ul>
-                <li><strong>El 10% (Individual):</strong> Se reparte entre todos los trabajadores (incluyendo ex-trabajadores del año respectivo) de forma proporcional a los días laborados durante el año.</li>
-                <li><strong>El 5% (Cargas Familiares):</strong> Se reparte solo entre los trabajadores que tengan cargas familiares, en proporción a los días trabajados y al número de cargas.</li>
-            </ul>
+            <div class="article-content">
+                <p>Si la empresa para la que trabajas genera ganancias líquidas a lo largo del año, la ley ecuatoriana establece que una parte de esa riqueza te pertenece. Como funcionario del Ministerio del Trabajo desde 2011, he visto de todo: desde empresas que pagan puntualmente hasta empleadores que "esconden" las utilidades o ex trabajadores que pierden su dinero por no saber cómo reclamarlo.</p>
 
-            <div class="alert-box">
-                <strong><i class="fas fa-info-circle"></i> ¿Qué se considera una "Carga Familiar"?</strong><br>
-                Para el cálculo de utilidades, son cargas familiares: el cónyuge o conviviente en unión de hecho legalmente reconocida, los hijos menores de 18 años, y los hijos con discapacidad de cualquier edad. Es vital que registres estas cargas en el departamento de Recursos Humanos de tu empresa antes de que finalice el año fiscal.
-            </div>
+                <p>En esta guía, vamos a desglosar cómo funciona la repartición del <strong>15% de utilidades</strong>, quiénes tienen derecho, los plazos inamovibles y el famoso límite o "techo" de los 24 Salarios Básicos.</p>
 
-            <h2>2. Fecha Máxima de Pago</h2>
-            <p>El empleador tiene la obligación legal de pagar las utilidades hasta el <strong>15 de abril</strong> de cada año (correspondiendo a las ganancias generadas entre el 1 de enero y el 31 de diciembre del año anterior). Si no se paga en esta fecha, la empresa es sujeta a multas por parte del Ministerio del Trabajo.</p>
+                <h2>1. ¿Cómo se divide el 15% de las Utilidades?</h2>
+                <p>El Artículo 97 del Código del Trabajo es claro: el empleador o empresa reconocerá en beneficio de sus trabajadores el <strong>quince por ciento (15%)</strong> de sus utilidades líquidas. Este porcentaje no se entrega al azar; se divide en dos grandes rubros:</p>
 
-            <h2>3. Ejemplo Práctico: ¿Cómo se calculan?</h2>
-            
-            <div class="example-box">
-                <h3>El caso de "Carlos"</h3>
-                <p>La empresa "TechEcuador" generó $100,000 en utilidades líquidas. Debe repartir el 15% ($15,000).</p>
                 <ul>
-                    <li>10% para todos = $10,000</li>
-                    <li>5% para cargas = $5,000</li>
+                    <li><strong>El 10% Individual:</strong> Se reparte entre <strong>todos</strong> los trabajadores de la empresa, sin importar su cargo. El cálculo se hace proporcionalmente a los <strong>días efectivamente trabajados</strong> por cada persona durante el año fiscal.</li>
+                    <li><strong>El 5% por Cargas Familiares:</strong> Este rubro es un beneficio adicional para los trabajadores que tienen familia. Se entrega en proporción a los días trabajados y al número de cargas familiares.</li>
                 </ul>
-                <p>Carlos trabajó los 365 días del año y tiene 2 hijos (2 cargas). La empresa tiene en total 10 empleados que sumaron 3,650 días trabajados en total.</p>
+
+                <h2>2. ¿Quiénes son considerados "Cargas Familiares"?</h2>
+                <p>Para recibir una tajada del 5% adicional, debes tener cargas legalmente reconocidas y reportadas a tu empleador en el tiempo establecido. Se consideran cargas familiares a:</p>
                 
-                <p><strong>Factor del 10%:</strong> $10,000 / 3,650 días = $2.73 por día.<br>
-                <em>Carlos recibe: $2.73 x 365 días = <strong>$996.45</strong></em></p>
+                <ol>
+                    <li>El cónyuge o conviviente en unión de hecho legalmente reconocida.</li>
+                    <li>Los hijos e hijas <strong>menores de 18 años</strong>.</li>
+                    <li>Los hijos e hijas con discapacidad de <strong>cualquier edad</strong>.</li>
+                </ol>
 
-                <p><strong>Factor del 5%:</strong> Se hace un cálculo cruzando días trabajados y número de cargas de toda la empresa. Supongamos que el factor resultante por carga/día es $1.50.<br>
-                <em>Carlos recibe (2 cargas): $1.50 x 365 días x 2 = <strong>$1,095.00</strong></em></p>
+                <div class="alert-box">
+                    <strong><i class="fas fa-calendar-times"></i> ¡El tiempo vuela!</strong>
+                    Por lo general, los trabajadores deben presentar a Recursos Humanos los documentos que avalan sus cargas familiares (partidas de nacimiento, matrimonio, carnet de discapacidad) <strong>hasta el mes de marzo</strong>. Si no entregas los documentos a tiempo, perderás tu derecho a cobrar el 5%.
+                </div>
 
-                <p><strong>Total a recibir por Carlos:</strong> $996.45 + $1,095.00 = <strong>$2,091.45</strong></p>
+                <h2>3. Fechas Clave: ¿Cuándo te deben pagar?</h2>
+                <p>El proceso tiene fechas límite dictadas por el Ministerio del Trabajo y el SRI (Servicio de Rentas Internas):</p>
+                <table class="calc-table">
+                    <thead>
+                        <tr>
+                            <th>Proceso</th>
+                            <th>Fecha Límite Máxima</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Declaración del Impuesto a la Renta</td>
+                            <td>Marzo - Abril (Según noveno dígito del RUC)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pago de Utilidades al Trabajador</strong></td>
+                            <td><strong>15 de abril</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Registro del pago en el SUT</td>
+                            <td>Generalmente en mayo (cronograma del MDT)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="law-highlight">
+                    <h4><i class="fas fa-coins"></i> El Límite Legal (El Techo de los 24 SBU)</h4>
+                    <p>Existe un límite máximo al valor que un trabajador puede recibir por utilidades. Ningún empleado podrá recibir por este concepto un valor que supere los <strong>24 Salarios Básicos Unificados (SBU)</strong>.</p>
+                    <p>Considerando que en 2026 el SBU es de <strong>$482.00</strong>, el límite máximo que te pueden pagar por utilidades es de <strong>$11,568.00</strong>. Si la empresa generó tantas ganancias que tu parte supera ese techo, el excedente no se lo queda el empleador, sino que debe ser depositado al Régimen de Prestaciones Solidarias del IESS.</p>
+                </div>
+
+                <h2>4. ¿Qué pasa si renuncié o me despidieron el año pasado?</h2>
+                <p><strong>Los ex trabajadores SÍ tienen derecho a cobrar utilidades.</strong> Si trabajaste al menos un día en el año fiscal en el que la empresa generó ganancias, te corresponde una parte proporcional a los días que laboraste.</p>
+                
+                <p><strong>¿Cómo enterarte?</strong> Los empleadores están obligados a publicar a través de medios de comunicación (prensa, página web de la empresa, redes sociales) el aviso para que los ex trabajadores se acerquen a cobrar o envíen sus datos bancarios.</p>
+
+                <div class="success-box">
+                    <strong><i class="fas fa-check-circle"></i> Tip de Especialista:</strong> No esperes a que te llamen. En la primera semana de abril, comunícate con el departamento contable o de RRHH de tu ex empresa. Envíales un correo formal adjuntando tu certificado bancario actualizado para facilitar el depósito.
+                </div>
+
+                <div class="cta-box">
+                    <h3>Consulta la Base Legal y Organiza tus Finanzas</h3>
+                    <p style="color: #cbd5e1; margin-bottom: 20px;">Vuelve al panel principal de Laboralec para acceder al compendio legal completo, calcular tus aportes al IESS o usar el generador de hoja de vida en tu búsqueda de nuevas oportunidades.</p>
+                    <a href="index.html" class="btn-primary"><i class="fas fa-home"></i> Volver al Sistema Integrado</a>
+                </div>
+
+                <h2>Resumen</h2>
+                <p>Las utilidades son el reflejo del esfuerzo conjunto entre la empresa y la fuerza laboral. Infórmate, entrega los documentos de tus hijos a tiempo y, si llega el 16 de abril y no has recibido tu pago (y la empresa sí reportó ganancias), tienes todo el derecho de acudir al Ministerio del Trabajo a ingresar una denuncia anónima o formal para que se realice una inspección focalizada.</p>
+
             </div>
-
-            <h2>4. ¿Qué pasa si ya no trabajo en la empresa? (Ex-empleados)</h2>
-            <p>Si trabajaste en una empresa durante el año anterior, aunque sea por un mes, <strong>tienes derecho a cobrar el proporcional de las utilidades</strong> de ese año. Las empresas deben publicar en medios de circulación nacional o en su página web el llamado a los ex-trabajadores para que cobren sus valores.</p>
-
-            <h2>5. Preguntas Frecuentes (FAQ)</h2>
-            
-            <h3>¿Las utilidades sufren descuentos?</h3>
-            <p>No, sobre el valor de las utilidades no se realizan descuentos para el IESS (Seguro Social). Sin embargo, si el monto es alto, sí podría estar sujeto a retención del Impuesto a la Renta.</p>
-
-            <h3>¿Qué pasa si la empresa dice que no hubo ganancias?</h3>
-            <p>El empleador debe demostrar esto mediante su declaración del Impuesto a la Renta ante el SRI. Si los trabajadores sospechan de fraude, pueden solicitar al SRI o al Ministerio del Trabajo una auditoría.</p>
-
         </article>
     </main>
 
-    <footer style="margin-top: 40px; border-top: 1px solid #e2e8f0; padding-top: 20px; text-align: center; font-size: 0.9rem;">
-        <p>&copy; 2026 LaboralEC | <a href="privacidad.html" class="nav-link">Política de Privacidad</a> | <a href="terminos.html" class="nav-link">Términos Legales</a> | <a href="contacto.html" class="nav-link">Contacto</a></p>
+    <footer class="legal-footer">
+        <p>LABORALEC PRO 2026 | Ingeniería Legal de Precisión.</p>
+        <div style="display: flex; justify-content: center; gap: 15px; margin-top: 10px;">
+            <a href="index.html" style="color: var(--cv-gray); text-decoration: none;">Inicio</a>
+            <a href="nosotros.html" style="color: var(--cv-gray); text-decoration: none;">Sobre el Autor</a>
+            <a href="privacidad.html" style="color: var(--cv-gray); text-decoration: none;">Privacidad</a>
+        </div>
     </footer>
 
 </body>

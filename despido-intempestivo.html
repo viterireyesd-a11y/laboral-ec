@@ -2,132 +2,186 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guía Completa: Despido Intempestivo en Ecuador (Actualizado 2026) | LaboralEC</title>
-    <meta name="description" content="Aprende qué es el despido intempestivo en Ecuador, cómo calcular tu liquidación exacta en 2026 y qué pasos legales debes seguir para proteger tus derechos laborales.">
+    <title>Guía Completa: Despido Intempestivo en Ecuador 2026 | LABORALEC</title>
+    <meta name="description" content="Guía práctica y legal sobre el despido intempestivo en Ecuador (2026). Conoce tus derechos, cómo calcular tu liquidación y qué hacer si te despiden injustificadamente. Escrito por Diego Viteri, Especialista Laboral.">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=11.5">
+
     <style>
-        /* Estilos básicos para que sea legible y profesional */
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
-        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
-        h2 { color: #2980b9; margin-top: 30px; }
-        h3 { color: #34495e; }
-        .alert-box { background-color: #f8d7da; color: #721c24; padding: 15px; border-left: 5px solid #f5c6cb; margin: 20px 0; }
-        .example-box { background-color: #e8f4f8; padding: 15px; border-left: 5px solid #3498db; margin: 20px 0; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
+        /* --- ESTILOS HEREDADOS Y ESPECÍFICOS PARA ARTÍCULOS --- */
+        :root { 
+            --bg-main: #0f172a; 
+            --card-bg: #1e293b; 
+            --card-border: #334155; 
+            --text-main: #cbd5e1; 
+            --text-heading: #f8fafc; 
+            --cv-accent: #3b82f6; 
+            --btn-action: #10b981; 
+            --cv-gray: #94a3b8; 
+            --alert-red: #ef4444;
+            --alert-bg: rgba(239, 68, 68, 0.1);
+        }
+        
+        body { background-color: var(--bg-main); color: var(--text-main); font-family: 'Inter', sans-serif; line-height: 1.7; margin: 0; }
+        h1, h2, h3, h4 { color: var(--text-heading); font-weight: 700; margin-top: 1.5em; margin-bottom: 0.5em; }
+        
+        .article-container { max-width: 800px; margin: 0 auto; padding: 30px 20px; }
+        
+        /* Cabecera del Artículo */
+        .article-header { border-bottom: 1px solid var(--card-border); padding-bottom: 20px; margin-bottom: 30px; }
+        .article-title { font-size: 2.5rem; font-weight: 900; line-height: 1.2; margin-bottom: 15px; margin-top: 0; }
+        .article-meta { display: flex; align-items: center; gap: 15px; color: var(--cv-gray); font-size: 0.9rem; }
+        .author-badge { background: rgba(59,130,246,0.15); color: var(--cv-accent); padding: 5px 12px; border-radius: 20px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
+        
+        /* Cuerpo del Artículo */
+        .article-content p { font-size: 1.05rem; margin-bottom: 1.5em; }
+        .article-content ul, .article-content ol { font-size: 1.05rem; margin-bottom: 1.5em; padding-left: 20px; }
+        .article-content li { margin-bottom: 0.5em; }
+        
+        /* Cajas de Alerta / Ley */
+        .law-highlight { background: var(--card-bg); border-left: 4px solid var(--cv-accent); padding: 20px; border-radius: 0 8px 8px 0; margin: 25px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .law-highlight h4 { margin-top: 0; color: var(--cv-accent); display: flex; align-items: center; gap: 8px; font-size: 1.1rem; }
+        .law-highlight p:last-child { margin-bottom: 0; }
+
+        .alert-box { background: var(--alert-bg); border: 1px solid var(--alert-red); border-left: 4px solid var(--alert-red); padding: 20px; border-radius: 8px; margin: 25px 0; color: #fca5a5; }
+        .alert-box strong { color: #f87171; }
+
+        /* Tabla de Cálculo */
+        .calc-table { width: 100%; border-collapse: collapse; margin: 25px 0; background: var(--card-bg); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .calc-table th, .calc-table td { padding: 15px; text-align: left; border-bottom: 1px solid var(--card-border); }
+        .calc-table th { background: rgba(0,0,0,0.3); color: var(--text-heading); font-weight: 700; }
+        .calc-table tr:last-child td { border-bottom: none; }
+        
+        /* CTA (Llamado a la acción) */
+        .cta-box { background: linear-gradient(135deg, #1e293b 0%, #020617 100%); border: 1px solid var(--cv-accent); padding: 30px; border-radius: 12px; text-align: center; margin: 40px 0; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .cta-box h3 { margin-top: 0; color: white; }
+        .btn-primary { display: inline-block; background: var(--btn-action); color: white; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.1rem; transition: background 0.3s, transform 0.2s; margin-top: 15px; }
+        .btn-primary:hover { background: #059669; transform: translateY(-2px); }
+
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; color: var(--cv-gray); text-decoration: none; font-weight: 600; margin-bottom: 20px; transition: color 0.2s; }
+        .btn-back:hover { color: var(--text-heading); }
+
+        /* Footer */
+        .legal-footer { text-align: center; padding: 20px; color: var(--cv-gray); font-size: 0.85rem; border-top: 1px solid var(--card-border); margin-top: 40px; }
     </style>
 </head>
 <body>
 
     <header>
-        <nav>
-            <p><a href="index.html">&larr; Volver al Inicio (LaboralEC)</a></p>
-        </nav>
+        <div class="header-container" style="background: var(--card-bg); border-bottom: 1px solid var(--card-border); padding: 15px;">
+            <div class="brand-wrapper" style="display:flex; align-items:center; justify-content:center; gap: 15px;">
+               <img src="escudo.svg.png" class="escudo-img" alt="Escudo Ecuador" style="height: 50px;">
+                <div class="brand-text">
+                    <h1 style="margin:0; font-size:1.5rem;">LABORALEC</h1>
+                    <span style="font-size:0.8rem; color:var(--cv-gray);">SISTEMA JURÍDICO INTEGRADO 2026</span>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <main>
+    <main class="article-container">
+        <a href="index.html" class="btn-back"><i class="fas fa-arrow-left"></i> Volver al Inicio</a>
+
         <article>
-            <h1>Guía Completa sobre el Despido Intempestivo en Ecuador (2026)</h1>
-            
-            <p>Perder el trabajo de forma repentina es una de las situaciones más estresantes que puede enfrentar un trabajador. En Ecuador, cuando el empleador decide terminar la relación laboral de forma unilateral, sin una causa justa comprobada o sin seguir el trámite legal del visto bueno, nos encontramos ante un <strong>despido intempestivo</strong>.</p>
-            
-            <p>Es fundamental que conozcas tus derechos amparados por el Código de Trabajo ecuatoriano para garantizar que recibas la liquidación y las indemnizaciones justas que por ley te corresponden.</p>
+            <header class="article-header">
+                <h1 class="article-title">Guía Definitiva 2026: Cómo Defenderte ante un Despido Intempestivo en Ecuador</h1>
+                <div class="article-meta">
+                    <span class="author-badge"><i class="fas fa-check-circle"></i> Por Diego Viteri</span>
+                    <span><i class="fas fa-calendar-alt"></i> Actualizado: Febrero 2026</span>
+                    <span><i class="fas fa-book-open"></i> Tiempo de lectura: 6 min</span>
+                </div>
+            </header>
 
-            <h2>1. ¿Qué se considera Despido Intempestivo?</h2>
-            <p>El despido intempestivo ocurre cuando el empleador te comunica, ya sea de forma verbal o escrita, que ya no requiere tus servicios, sin que exista una justificación legal previa (como faltas graves comprobadas mediante un visto bueno en el Ministerio del Trabajo).</p>
+            <div class="article-content">
+                <p>El momento en que te notifican un despido es tenso, confuso y, muchas veces, injusto. Como trabajador amparado bajo el Código del Trabajo y con más de una década de experiencia en las trincheras del Ministerio del Trabajo, te puedo asegurar algo: <strong>el desconocimiento es el mejor aliado de un empleador abusivo.</strong></p>
 
-            <div class="alert-box">
-                <strong>⚠️ Atención Legal:</strong> Si tu empleador te presiona u obliga a firmar un documento de "Renuncia Voluntaria", esto sigue siendo un despido de hecho, aunque en la práctica legal sea mucho más complejo de probar. Nunca firmes documentos en blanco o renuncias bajo coacción.
-            </div>
+                <p>En esta guía, vamos a desmenuzar qué es exactamente el despido intempestivo, cuáles son tus derechos irrenunciables, cómo se calcula tu indemnización peso a peso y, lo más importante, qué pasos debes dar inmediatamente para que no te obliguen a firmar documentos que perjudiquen tu liquidación.</p>
 
-            <h3>¿Qué pasa si el despido es verbal?</h3>
-            <p>Muchos empleadores intentan evitar el pago de indemnizaciones despidiendo verbalmente y luego alegando "abandono de trabajo" cuando el empleado deja de asistir. Si te despiden verbalmente, debes acudir <strong>inmediatamente</strong> (idealmente el mismo día o al día siguiente) al Ministerio del Trabajo para presentar una denuncia por despido intempestivo, dejando constancia de que te impidieron el ingreso a tu lugar de trabajo.</p>
+                <h2>1. ¿Qué es realmente el Despido Intempestivo?</h2>
+                <p>En términos prácticos, el despido intempestivo ocurre cuando el empleador decide terminar la relación laboral de manera <strong>unilateral, sorpresiva y sin una causa justificada</strong> (sin haber tramitado previamente un Visto Bueno a su favor).</p>
+                <p>No importa si te lo dicen verbalmente, por un mensaje de WhatsApp o con una carta formal. Si te impiden el ingreso a tu lugar de trabajo o te notifican que "ya no requieren tus servicios" sin un proceso legal previo, estás frente a un despido intempestivo (Art. 188 del Código del Trabajo).</p>
 
-            <h2>2. ¿Qué valores componen tu Liquidación por Despido?</h2>
-            <p>Cuando eres víctima de un despido intempestivo, tu liquidación (Acta de Finiquito) debe incluir dos grandes grupos de pagos: tus derechos adquiridos y las indemnizaciones penales.</p>
+                <div class="alert-box">
+                    <strong><i class="fas fa-exclamation-triangle"></i> La Trampa de la "Renuncia Voluntaria":</strong>
+                    Muchos empleadores te dirán: <em>"Firma esta renuncia para darte tu liquidación más rápido"</em>. <strong>NO LO HAGAS.</strong> Si firmas una renuncia voluntaria, pierdes automáticamente el derecho a la indemnización por despido (que suele ser el rubro más grande de tu liquidación). La ley ecuatoriana es clara: los derechos laborales son irrenunciables.
+                </div>
 
-            <h3>A. Derechos Adquiridos (Valores proporcionales)</h3>
-            <p>Estos son los valores que te corresponden por el tiempo trabajado en el año en curso, independientemente de la causa de salida:</p>
-            <ul>
-                <li><strong>Proporcional del Décimo Tercer Sueldo:</strong> Calculado desde el 1 de diciembre hasta tu último día de trabajo.</li>
-                <li><strong>Proporcional del Décimo Cuarto Sueldo:</strong> Depende de la región (Costa/Insular o Sierra/Amazonía).</li>
-                <li><strong>Vacaciones no gozadas:</strong> Si no tomaste tus vacaciones anuales, deben pagártelas en dinero.</li>
-                <li><strong>Sueldo pendiente:</strong> Los días trabajados en el mes del despido.</li>
-            </ul>
+                <h2>2. ¿Qué te deben pagar si te despiden de forma intempestiva?</h2>
+                <p>Cuando eres víctima de este tipo de despido, la ley te protege económicamente para que puedas sostenerte mientras encuentras un nuevo empleo. Tu liquidación final debe incluir <strong>obligatoriamente</strong> tres grandes bloques:</p>
 
-            <h3>B. Indemnizaciones por Despido Intempestivo</h3>
-            <p>Según el Artículo 188 del Código de Trabajo, estas son las multas que el empleador debe pagarte por terminar el contrato abruptamente:</p>
-            <ul>
-                <li><strong>Bonificación por Desahucio (Art. 185):</strong> Te corresponde el 25% de la última remuneración mensual por cada año completo de servicio.</li>
-                <li><strong>Indemnización por Despido (Art. 188):</strong>
-                    <ul>
-                        <li>Si trabajaste hasta 3 años: Te corresponden 3 meses de tu última remuneración.</li>
-                        <li>Si trabajaste más de 3 años: Te corresponde 1 mes de remuneración por cada año de servicio (con un tope máximo de 25 meses). La fracción de año (ej. 3 años y 1 mes) se considera como un año completo.</li>
-                    </ul>
-                </li>
-            </ul>
+                <ol>
+                    <li><strong>Derechos Adquiridos (Proporcionales):</strong> Es el dinero que ya te ganaste por el tiempo trabajado. Incluye la parte proporcional del Décimo Tercer Sueldo, Décimo Cuarto Sueldo y las vacaciones no gozadas.</li>
+                    <li><strong>Bonificación por Desahucio (Art. 185):</strong> Te corresponde el 25% de tu última remuneración mensual por cada año (o fracción) de servicio completo.</li>
+                    <li><strong>Indemnización por Despido Intempestivo (Art. 188):</strong> Es la "multa" que paga el empleador por despedirte sin justificación. Esta es la tabla de cálculo:</li>
+                </ol>
 
-            <h2>3. Caso Práctico: ¿Cómo calcular la indemnización?</h2>
-            
-            <div class="example-box">
-                <h3>El Caso de "María"</h3>
-                <p>María trabajaba como asistente administrativa con un sueldo de <strong>$600 mensuales</strong>. Ingresó el 1 de enero de 2022 y fue despedida intempestivamente el 15 de febrero de 2026. Es decir, trabajó 4 años y 1 mes y medio.</p>
-                
-                <p><strong>Cálculo de Indemnizaciones:</strong></p>
-                <table>
-                    <tr>
-                        <th>Concepto</th>
-                        <th>Cálculo</th>
-                        <th>Total a recibir</th>
-                    </tr>
-                    <tr>
-                        <td><strong>Tiempo de Servicio para indemnización</strong></td>
-                        <td>4 años y fracción = Se calculan como 5 años.</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Bonificación por Desahucio</strong></td>
-                        <td>25% de $600 ($150) x 4 años completos.</td>
-                        <td>$600.00</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Indemnización Art. 188 (Despido)</strong></td>
-                        <td>1 mes de sueldo ($600) x 5 años.</td>
-                        <td>$3,000.00</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Total de Indemnizaciones</strong></td>
-                        <td><em>(No incluye proporcionales de décimos ni vacaciones)</em></td>
-                        <td><strong>$3,600.00</strong></td>
-                    </tr>
+                <table class="calc-table">
+                    <thead>
+                        <tr>
+                            <th>Tiempo de Servicio</th>
+                            <th>Cálculo de la Indemnización (Art. 188)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Hasta 3 años de trabajo</td>
+                            <td>3 meses de remuneración (Este es el piso mínimo legal).</td>
+                        </tr>
+                        <tr>
+                            <td>Más de 3 años de trabajo</td>
+                            <td>1 mes de remuneración por cada año de servicio (con un tope máximo de 25 meses).</td>
+                        </tr>
+                    </tbody>
                 </table>
-                <p><em>Nota: Este cálculo es referencial. El acta de finiquito real sumará a este valor los proporcionales de ley mencionados en la sección anterior.</em></p>
+                <p><em>*Ojo: La ley establece que la fracción de un año se considera como un año completo para este cálculo. Es decir, si trabajaste 3 años y 1 día, se calcula como si hubieras trabajado 4 años.</em></p>
+
+                <h2>3. Despidos con "Blindaje Especial" (Despido Ineficaz)</h2>
+                <p>Hay situaciones donde el despido no solo es intempestivo, sino que atenta contra derechos humanos fundamentales, convirtiéndose en un <strong>Despido Ineficaz</strong>. Si estás en uno de estos grupos, la sanción para el empleador es drástica:</p>
+
+                <ul>
+                    <li><strong>Mujeres Embarazadas o en periodo de lactancia (Art. 153 y 195.1):</strong> Prohibición absoluta de despido.</li>
+                    <li><strong>Dirigentes Sindicales:</strong> Protegidos por el fuero sindical durante su periodo y hasta un año después.</li>
+                    <li><strong>Personas con Discapacidad o Sustitutos (Ley Orgánica de Discapacidades):</strong> Cuentan con estabilidad laboral reforzada.</li>
+                </ul>
+
+                <div class="law-highlight">
+                    <h4><i class="fas fa-gavel"></i> La Penalización (Art. 195.3)</h4>
+                    <p>Si un juez califica el despido como Ineficaz, el trabajador tiene derecho a exigir su reintegro inmediato o, si decide no volver, el empleador deberá pagar la liquidación normal <strong>MÁS una indemnización especial equivalente a 12 meses de sueldo</strong>.</p>
+                </div>
+
+                <h2>4. ¿Qué hacer en las primeras 24 horas tras el despido?</h2>
+                <p>La rapidez con la que actúes define el éxito de tu reclamo. Sigue estos pasos tácticos:</p>
+                
+                <ol>
+                    <li><strong>No firmes nada en el momento:</strong> Si te presentan un acta de finiquito o una carta, exige leerla con calma. Tienes derecho a llevarla para que la revise un especialista. Si te presionan, firma añadiendo la frase: <em>"Recibido bajo protesta, me reservo el derecho a reclamar"</em>.</li>
+                    <li><strong>Acude al Ministerio del Trabajo:</strong> Debes presentar una denuncia por despido intempestivo en la Inspectoría del Trabajo de tu jurisdicción. Solicita la boleta de citación para tu exempleador.</li>
+                    <li><strong>Reúne tus pruebas:</strong> Guarda copias de tus contratos, roles de pago, correos electrónicos, mensajes de WhatsApp y cualquier evidencia que demuestre tu relación de dependencia y tu último día de trabajo.</li>
+                </ol>
+
+                <div class="cta-box">
+                    <h3>¿Necesitas calcular cuánto te deben exactamente?</h3>
+                    <p style="color: #cbd5e1; margin-bottom: 20px;">No dependas de los cálculos de la empresa. Usa nuestra herramienta gratuita y automatizada basada en el Código del Trabajo vigente para simular tu liquidación final al centavo.</p>
+                    <a href="index.html" class="btn-primary"><i class="fas fa-calculator"></i> Ir a la Calculadora de Liquidación</a>
+                </div>
+
+                <h2>Conclusión del Especialista</h2>
+                <p>El sistema laboral está diseñado para protegerte, pero solo si sabes cómo usarlo. El despido intempestivo no es el fin del mundo, es un proceso legal que debe ser compensado económicamente de forma justa. Mantén la calma, no firmes renuncias disfrazadas y exige que se respete tu trabajo.</p>
+
             </div>
-
-            <h2>4. ¿Qué hacer inmediatamente después de un Despido Intempestivo?</h2>
-            <ol>
-                <li><strong>No firmes nada bajo presión:</strong> Especialmente si el documento dice "Renuncia" o "Mutuo Acuerdo" y tú no estás de acuerdo. Tampoco firmes el Acta de Finiquito si los valores no cuadran con tu cálculo o no te han depositado el dinero.</li>
-                <li><strong>Acude al Ministerio del Trabajo:</strong> Tienes un plazo para interponer un reclamo administrativo o presentar una demanda laboral ante un juez.</li>
-                <li><strong>Reúne evidencias:</strong> Guarda correos electrónicos, mensajes de WhatsApp, tu contrato de trabajo, roles de pago y cualquier documento que demuestre tu relación laboral y la fecha del despido.</li>
-            </ol>
-
-            <h2>5. Preguntas Frecuentes (FAQ)</h2>
-            
-            <h3>¿Me pueden despedir si estoy embarazada?</h3>
-            <p>Es ilegal despedir a una mujer embarazada o en periodo de lactancia. Si ocurre, se considera "Despido Ineficaz" y la trabajadora tiene derecho a una indemnización adicional equivalente a un año de remuneración, además de la opción de exigir el reintegro a su puesto de trabajo.</p>
-
-            <h3>¿Cuánto tiempo tiene la empresa para pagarme la liquidación?</h3>
-            <p>La ley establece que el empleador debe elaborar y registrar el Acta de Finiquito y realizar el pago en un plazo máximo de 30 días posteriores a la terminación de la relación laboral. Si no lo hace en este plazo, puedes exigir multas por mora patronal.</p>
-
-            <hr>
-            <p><em>La información contenida en este artículo es de carácter educativo e informativo y no constituye asesoría legal formal. Para casos específicos, recomendamos consultar con un abogado laboralista calificado en Ecuador.</em></p>
-
         </article>
     </main>
 
-    <footer>
-        <p>&copy; 2026 LaboralEC | <a href="privacidad.html">Política de Privacidad</a></p>
+    <footer class="legal-footer">
+        <p>LABORALEC PRO 2026 | Ingeniería Legal de Precisión.</p>
+        <div style="display: flex; justify-content: center; gap: 15px; margin-top: 10px;">
+            <a href="index.html" style="color: var(--cv-gray); text-decoration: none;">Inicio</a>
+            <a href="nosotros.html" style="color: var(--cv-gray); text-decoration: none;">Sobre el Autor</a>
+            <a href="privacidad.html" style="color: var(--cv-gray); text-decoration: none;">Privacidad</a>
+        </div>
     </footer>
 
 </body>

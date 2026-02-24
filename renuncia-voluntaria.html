@@ -2,76 +2,170 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Renuncia Voluntaria y Desahucio en Ecuador (2026) | LaboralEC</title>
-    <meta name="description" content="Aprende la diferencia entre renuncia y desahucio en Ecuador, cuántos días de aviso debes dar y qué te corresponde cobrar en tu liquidación.">
+    <title>Guía 2026: Renuncia Voluntaria y Desahucio en Ecuador | LABORALEC</title>
+    <meta name="description" content="Aprende cómo presentar tu renuncia voluntaria (desahucio) en el SUT, el preaviso de 15 días y cómo calcular tu bonificación del 25%. Por Diego Viteri.">
+    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=11.5">
+
     <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
-        h1 { color: #0f172a; border-bottom: 2px solid #3b82f6; padding-bottom: 10px; }
-        h2 { color: #2563eb; margin-top: 30px; }
-        h3 { color: #334155; }
-        .alert-box { background-color: #eff6ff; color: #1e3a8a; padding: 15px; border-left: 5px solid #3b82f6; margin: 20px 0; border-radius: 4px; }
-        ul { margin-bottom: 20px; }
-        li { margin-bottom: 10px; }
-        .nav-link { color: #2563eb; text-decoration: none; font-weight: bold; }
-        .nav-link:hover { text-decoration: underline; }
+        /* --- ESTILOS HEREDADOS Y ESPECÍFICOS PARA ARTÍCULOS --- */
+        :root { 
+            --bg-main: #0f172a; 
+            --card-bg: #1e293b; 
+            --card-border: #334155; 
+            --text-main: #cbd5e1; 
+            --text-heading: #f8fafc; 
+            --cv-accent: #3b82f6; 
+            --btn-action: #10b981; 
+            --cv-gray: #94a3b8; 
+            --alert-red: #ef4444;
+            --alert-bg: rgba(239, 68, 68, 0.1);
+            --warning-yellow: #f59e0b;
+        }
+        
+        body { background-color: var(--bg-main); color: var(--text-main); font-family: 'Inter', sans-serif; line-height: 1.7; margin: 0; }
+        h1, h2, h3, h4 { color: var(--text-heading); font-weight: 700; margin-top: 1.5em; margin-bottom: 0.5em; }
+        
+        .article-container { max-width: 800px; margin: 0 auto; padding: 30px 20px; }
+        
+        /* Cabecera del Artículo */
+        .article-header { border-bottom: 1px solid var(--card-border); padding-bottom: 20px; margin-bottom: 30px; }
+        .article-title { font-size: 2.5rem; font-weight: 900; line-height: 1.2; margin-bottom: 15px; margin-top: 0; }
+        .article-meta { display: flex; align-items: center; gap: 15px; color: var(--cv-gray); font-size: 0.9rem; flex-wrap: wrap; }
+        .author-badge { background: rgba(59,130,246,0.15); color: var(--cv-accent); padding: 5px 12px; border-radius: 20px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
+        
+        /* Cuerpo del Artículo */
+        .article-content p { font-size: 1.05rem; margin-bottom: 1.5em; }
+        .article-content ul, .article-content ol { font-size: 1.05rem; margin-bottom: 1.5em; padding-left: 20px; }
+        .article-content li { margin-bottom: 0.5em; }
+        
+        /* Cajas de Alerta / Ley */
+        .law-highlight { background: var(--card-bg); border-left: 4px solid var(--cv-accent); padding: 20px; border-radius: 0 8px 8px 0; margin: 25px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .law-highlight h4 { margin-top: 0; color: var(--cv-accent); display: flex; align-items: center; gap: 8px; font-size: 1.1rem; }
+        .law-highlight p:last-child { margin-bottom: 0; }
+
+        .warning-box { background: rgba(245, 158, 11, 0.1); border: 1px solid var(--warning-yellow); border-left: 4px solid var(--warning-yellow); padding: 20px; border-radius: 8px; margin: 25px 0; color: #fcd34d; }
+        .warning-box strong { color: #fbbf24; }
+
+        .alert-box { background: var(--alert-bg); border: 1px solid var(--alert-red); border-left: 4px solid var(--alert-red); padding: 20px; border-radius: 8px; margin: 25px 0; color: #fca5a5; }
+
+        /* CTA (Llamado a la acción) */
+        .cta-box { background: linear-gradient(135deg, #1e293b 0%, #020617 100%); border: 1px solid var(--btn-action); padding: 30px; border-radius: 12px; text-align: center; margin: 40px 0; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .cta-box h3 { margin-top: 0; color: white; }
+        .btn-primary { display: inline-block; background: var(--btn-action); color: white; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.1rem; transition: background 0.3s, transform 0.2s; margin-top: 15px; }
+        .btn-primary:hover { background: #059669; transform: translateY(-2px); }
+
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; color: var(--cv-gray); text-decoration: none; font-weight: 600; margin-bottom: 20px; transition: color 0.2s; }
+        .btn-back:hover { color: var(--text-heading); }
+
+        /* Footer */
+        .legal-footer { text-align: center; padding: 20px; color: var(--cv-gray); font-size: 0.85rem; border-top: 1px solid var(--card-border); margin-top: 40px; }
     </style>
 </head>
 <body>
 
     <header>
-        <nav>
-            <p><a href="index.html" class="nav-link">&larr; Volver al Inicio (LaboralEC)</a></p>
-        </nav>
+        <div class="header-container" style="background: var(--card-bg); border-bottom: 1px solid var(--card-border); padding: 15px;">
+            <div class="brand-wrapper" style="display:flex; align-items:center; justify-content:center; gap: 15px;">
+               <img src="escudo.svg.png" class="escudo-img" alt="Escudo Ecuador" style="height: 50px;">
+                <div class="brand-text">
+                    <h1 style="margin:0; font-size:1.5rem;">LABORALEC</h1>
+                    <span style="font-size:0.8rem; color:var(--cv-gray);">SISTEMA JURÍDICO INTEGRADO 2026</span>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <main>
+    <main class="article-container">
+        <a href="index.html" class="btn-back"><i class="fas fa-arrow-left"></i> Volver al Inicio</a>
+
         <article>
-            <h1>Renuncia Voluntaria y Desahucio: Guía Paso a Paso (2026)</h1>
-            
-            <p>Decidir dejar un trabajo es un paso importante en la carrera de cualquier profesional. En la legislación ecuatoriana, la forma correcta de terminar tu contrato de trabajo por tu propia voluntad se conoce legalmente como <strong>Desahucio</strong>. A continuación, te explicamos cómo hacerlo correctamente para no perder tus beneficios de ley.</p>
+            <header class="article-header">
+                <h1 class="article-title">Guía 2026: Cómo presentar tu Renuncia Voluntaria y cobrar el 25% de Desahucio</h1>
+                <div class="article-meta">
+                    <span class="author-badge"><i class="fas fa-pen-nib"></i> Por Diego Viteri</span>
+                    <span><i class="fas fa-calendar-alt"></i> Actualizado: Febrero 2026</span>
+                    <span><i class="fas fa-book-open"></i> Tiempo de lectura: 6 min</span>
+                </div>
+            </header>
 
-            <h2>1. ¿Qué es el Desahucio? (La forma legal de renunciar)</h2>
-            <p>El desahucio es el aviso por escrito mediante el cual el trabajador le comunica a su empleador que su voluntad es dar por terminado el contrato de trabajo. A diferencia de un despido, aquí es el empleado quien toma la decisión.</p>
+            <div class="article-content">
+                <p>Tomar la decisión de dejar un trabajo nunca es fácil, pero hacerlo mal te puede salir muy caro. A lo largo de mi trayectoria desde 2011 en el Ministerio del Trabajo, y especialmente durante mis años en la dirigencia sindical, he visto cientos de actas de finiquito donde el trabajador pierde dinero simplemente por no saber redactar una renuncia o por no respetar los plazos de ley.</p>
 
-            <div class="alert-box">
-                <strong><i class="fas fa-clock"></i> Regla de Oro: Los 15 días</strong><br>
-                Según el Código de Trabajo de Ecuador, el trabajador debe presentar su solicitud de desahucio con al menos <strong>15 días de anticipación</strong> a la fecha en que planea dejar de trabajar. Durante esos 15 días, el trabajador debe seguir cumpliendo sus funciones con normalidad.
+                <p>En Ecuador, no se trata solo de decir "me voy". Existe un procedimiento legal llamado <strong>Desahucio</strong> que protege tanto al trabajador como a la empresa. Aquí te explico paso a paso cómo hacerlo para asegurar el 100% de tu liquidación.</p>
+
+                <h2>1. La diferencia vital: Desahucio vs. Renuncia Verbal</h2>
+                <p>El <strong>Desahucio (Art. 184)</strong> es el aviso legal por el cual una de las partes le hace saber a la otra que su voluntad es dar por terminado el contrato de trabajo. Al hacerlo formalmente, garantizas tu derecho a recibir una bonificación económica.</p>
+                <p>Si simplemente dejas de ir a trabajar o avisas de un día para otro, el empleador puede solicitar un Visto Bueno por abandono de trabajo, lo que manchará tu récord y complicará el cobro de tu liquidación.</p>
+
+                
+
+                <h2>2. Los famosos "15 días de preaviso"</h2>
+                <p>La regla de oro de la renuncia en Ecuador es el tiempo. La ley establece que el trabajador debe notificar a su empleador con <strong>al menos 15 días de anticipación</strong> a la fecha en la que desea salir definitivamente.</p>
+                
+                <div class="alert-box">
+                    <strong><i class="fas fa-exclamation-circle"></i> ¿Qué pasa si me voy de un día para otro?</strong>
+                    Si no cumples con los 15 días de preaviso, el empleador está amparado por la ley para <strong>descontarte el equivalente a 15 días de tu sueldo</strong> directamente de tu liquidación final. ¡No regales tu dinero!
+                </div>
+
+                <h2>3. ¿Cómo se hace el trámite en 2026? (El proceso en el SUT)</h2>
+                <p>Ya no necesitas llevar cartas notariadas ni hacer largas filas. El proceso está digitalizado y debes hacerlo obligatoriamente a través del Sistema Único de Trabajo (SUT):</p>
+                
+                <ol>
+                    <li>Ingresa a la página oficial del SUT (Ministerio del Trabajo).</li>
+                    <li>Selecciona la opción "Sistema de Trabajadores" y luego "Generar Desahucio".</li>
+                    <li>Llena los datos de tu empleador (necesitarás el RUC de la empresa).</li>
+                    <li>El sistema generará la solicitud. Una vez aprobada, el Ministerio notificará electrónicamente a tu empleador.</li>
+                    <li><strong>Consejo de Especialista:</strong> Aunque el SUT notifique a la empresa, siempre imprime el comprobante y entrégalo formalmente a Recursos Humanos con una firma de recibido.</li>
+                </ol>
+
+                <h2>4. ¿Cuánto te toca recibir? (La Bonificación del 25%)</h2>
+                <p>Al presentar tu renuncia por la vía del Desahucio, tienes derecho a recibir tu liquidación, que se compone de dos partes:</p>
+
+                <p><strong>A. Los Proporcionales (Derechos irrenunciables):</strong></p>
+                <ul>
+                    <li>La fracción de tus vacaciones no gozadas.</li>
+                    <li>El proporcional del Décimo Tercer Sueldo.</li>
+                    <li>El proporcional del Décimo Cuarto Sueldo.</li>
+                    <li>Tus fondos de reserva (si no estaban mensualizados o depositados en el IESS).</li>
+                </ul>
+
+                <div class="law-highlight">
+                    <h4><i class="fas fa-coins"></i> B. La Bonificación por Desahucio (Art. 185)</h4>
+                    <p>Este es el premio por avisar con tiempo y terminar la relación en buenos términos. Te corresponde el <strong>25% de la última remuneración mensual</strong> por cada año completo de servicio que hayas prestado a la empresa.</p>
+                </div>
+
+                <div class="warning-box">
+                    <strong><i class="fas fa-info-circle"></i> Ejemplo Práctico:</strong>
+                    Si tu último sueldo fue de $800 y trabajaste 4 años en la empresa, el cálculo es: <br>
+                    25% de $800 = $200. <br>
+                    $200 x 4 años = <strong>$800 por concepto exclusivo de desahucio</strong> (a esto se suman tus proporcionales).
+                </div>
+
+                <div class="cta-box">
+                    <h3>Simula tu Liquidación por Renuncia</h3>
+                    <p style="color: #f8fafc; margin-bottom: 20px;">No te quedes con la duda. Ve a nuestra calculadora interactiva, selecciona la causal "Renuncia / Desahucio", ingresa tus años de servicio y conoce al instante cuánto dinero te corresponde por ley.</p>
+                    <a href="index.html" class="btn-primary"><i class="fas fa-calculator"></i> Usar Calculadora de Liquidación</a>
+                </div>
+
+                <h2>Conclusión</h2>
+                <p>La renuncia es tu derecho, pero ejecutarla correctamente es tu responsabilidad. Planifica tu salida, usa la plataforma del SUT para el preaviso de 15 días y asegúrate de cobrar hasta el último centavo de tu bonificación por desahucio. Como siempre digo: trabajador informado, trabajador blindado.</p>
+
             </div>
-
-            <h2>2. ¿Cómo presentar la renuncia o desahucio?</h2>
-            <p>Ya no necesitas llevar cartas notariadas ni hacer trámites presenciales engorrosos. El proceso ahora es digital:</p>
-            <ol>
-                <li>Ingresa al Sistema Único de Trabajo (SUT) del Ministerio del Trabajo con tu número de cédula.</li>
-                <li>Genera la solicitud de desahucio en línea.</li>
-                <li>Imprime el documento generado, fírmalo y entrégalo al departamento de Recursos Humanos de tu empresa o a tu jefe directo (pide que te firmen o sellen una copia como "recibido").</li>
-                <li>Trabaja los 15 días correspondientes, a menos que llegues a un acuerdo mutuo con el empleador para salir antes.</li>
-            </ol>
-
-            <h2>3. ¿Qué me deben pagar en la liquidación por Renuncia?</h2>
-            <p>A diferencia del despido intempestivo, donde hay multas fuertes para la empresa, en la renuncia voluntaria tienes derecho a recibir:</p>
-            <ul>
-                <li><strong>Derechos Adquiridos (Proporcionales):</strong>
-                    <ul>
-                        <li>Proporcional del Décimo Tercer Sueldo.</li>
-                        <li>Proporcional del Décimo Cuarto Sueldo.</li>
-                        <li>Días de vacaciones que no hayas gozado.</li>
-                        <li>Los días de sueldo trabajados en ese último mes.</li>
-                    </ul>
-                </li>
-                <li><strong>Bonificación por Desahucio (Art. 185):</strong> Este es el beneficio más importante. La empresa debe pagarte el <strong>25% de tu última remuneración mensual por cada año completo de servicio</strong>. (Si trabajaste menos de un año, se paga un valor proporcional a los meses trabajados).</li>
-            </ul>
-
-            <h2>4. ¿Qué pasa si me voy sin dar los 15 días de aviso?</h2>
-            <p>Si dejas de ir al trabajo de un día para el otro sin presentar el desahucio, el empleador puede solicitar un "Visto Bueno" por abandono de trabajo. Si esto ocurre, <strong>pierdes el derecho a cobrar la Bonificación por Desahucio (el 25% por año)</strong>, aunque la empresa siempre estará obligada a pagarte tus derechos proporcionales (décimos y vacaciones).</p>
-            <p>Por otro lado, si presentas la renuncia y el empleador te dice "puedes irte hoy mismo, no cumplas los 15 días", asegúrate de que eso quede por escrito (Acuerdo Mutuo) para garantizar que te paguen tu bonificación completa.</p>
-
         </article>
     </main>
 
-    <footer style="margin-top: 40px; border-top: 1px solid #e2e8f0; padding-top: 20px; text-align: center; font-size: 0.9rem;">
-        <p>&copy; 2026 LaboralEC | <a href="privacidad.html" class="nav-link">Política de Privacidad</a> | <a href="terminos.html" class="nav-link">Términos Legales</a> | <a href="contacto.html" class="nav-link">Contacto</a></p>
+    <footer class="legal-footer">
+        <p>LABORALEC PRO 2026 | Ingeniería Legal de Precisión.</p>
+        <div style="display: flex; justify-content: center; gap: 15px; margin-top: 10px;">
+            <a href="index.html" style="color: var(--cv-gray); text-decoration: none;">Inicio</a>
+            <a href="nosotros.html" style="color: var(--cv-gray); text-decoration: none;">Sobre el Autor</a>
+            <a href="privacidad.html" style="color: var(--cv-gray); text-decoration: none;">Privacidad</a>
+        </div>
     </footer>
 
 </body>

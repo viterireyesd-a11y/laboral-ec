@@ -421,8 +421,12 @@
                             <div class="form-group"><label>Años Servicio</label><input type="number" id="bs_anios" placeholder="Ej: 5"></div>
                             <div class="form-group"><label>N° de Hijos</label><input type="number" id="bs_hijos" placeholder="Ej: 2"></div>
                         </div>
+                        <div class="form-group">
+                            <label>Días Laborados (Para Alimentación)</label>
+                            <input type="number" id="bs_dias_laborados" placeholder="Ej: 20">
+                        </div>
                         <p style="font-size:0.75rem; color:var(--cv-gray); margin-top:-5px; margin-bottom:15px; line-height:1.3;">
-                            *Hijos hasta 18 años o con discapacidad. Aplica Art. 23 (1% SBU) y Art. 24 (0.25% RMU).
+                            *Hijos hasta 18 años o con discapacidad. Aplica Art. 23 (1% SBU) y Art. 24 (0.25% RMU). Alimentación calculada a $4.50 por día laborado.
                         </p>
                         
                         <button type="button" id="btnCalcBS" style="background:#d946ef; color:white; padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">CALCULAR</button>
@@ -474,7 +478,7 @@
                         <summary><span class="art-badge" style="background:#ef4444;">NUEVO</span> Acuerdo MDT-2026-046: El Fin de las 8 Horas</summary>
                         <div class="legal-content">
                             <h3 style="margin-top: 0; color: var(--text-heading);">Análisis de la Normativa: Jornadas de 10 y 12 horas sin horas extras</h3>
-                            <p>El 18 de febrero de 2026, el Ministerio del Trabajo expidió el <strong>Acuerdo MDT-2026-046</strong>, redefiniendo la estructura del tiempo de trabajo en Ecuador bajo la bandera de la "empleabilidad" y la "eficiencia".</p>
+                            <p>El 18 de febrero de 2026, el Ministerio del Trabajo expidió el <strong>Acuerdo MDT-2026-046</strong>, redefiniendo la structure del tiempo de trabajo en Ecuador bajo la bandera de la "empleabilidad" y la "eficiencia".</p>
                     
                             <h4>1. La "Jornada Laboral Eficiente": 10 Horas al Día</h4>
                             <ul>
@@ -786,6 +790,7 @@
             <a href="privacidad.html"><i class="fas fa-user-shield"></i> Privacidad</a>
             <a href="terminos.html"><i class="fas fa-balance-scale"></i> Términos</a>
             <a href="contacto.html"><i class="fas fa-envelope"></i> Contacto</a>
+            <a href="nosotros.html"><i class="fas fa-users"></i> Sobre el Autor</a>
         </div>
     </footer>
 
@@ -799,17 +804,20 @@
                     var sbuInput = document.getElementById('bs_sbu').value.replace(',', '.');
                     var aniosInput = document.getElementById('bs_anios').value;
                     var hijosInput = document.getElementById('bs_hijos').value;
+                    var diasLaboradosInput = document.getElementById('bs_dias_laborados').value;
 
                     // 2. Convertir a números
                     var rmu = parseFloat(rmuInput) || 0;
                     var sbu = parseFloat(sbuInput) || 482;
                     var anios = parseInt(aniosInput) || 0;
                     var hijos = parseInt(hijosInput) || 0;
+                    var diasLaborados = parseInt(diasLaboradosInput) || 0;
 
                     // 3. Cálculos de ley
                     var subFamiliar = sbu * 0.01 * hijos; 
                     var subAntiguedad = rmu * 0.0025 * anios; 
-                    var total = subFamiliar + subAntiguedad;
+                    var alimentacion = diasLaborados * 4.50;
+                    var total = subFamiliar + subAntiguedad + alimentacion;
 
                     // 4. Inyectar resultado forzando visibilidad absoluta
                     var resDiv = document.getElementById('contenedorResultadoBS');
@@ -819,6 +827,7 @@
                         <div style="padding: 15px; background: rgba(217, 70, 239, 0.1); border-radius: 8px; border-left: 4px solid #d946ef; margin-top: 15px;">
                             <p style="margin:0 0 5px 0; color: #f8fafc; font-weight:bold; font-size:0.95rem;">Subsidio Familiar: <span style="color:#d946ef; float:right;">$${subFamiliar.toFixed(2)}</span></p>
                             <p style="margin:0 0 5px 0; color: #f8fafc; font-weight:bold; font-size:0.95rem;">Subsidio Antigüedad: <span style="color:#d946ef; float:right;">$${subAntiguedad.toFixed(2)}</span></p>
+                            <p style="margin:0 0 5px 0; color: #f8fafc; font-weight:bold; font-size:0.95rem;">Alimentación: <span style="color:#d946ef; float:right;">$${alimentacion.toFixed(2)}</span></p>
                             <hr style="border-color: #334155; margin: 10px 0;">
                             <p style="margin:0; color: #10b981; font-weight:900; font-size:1.2rem;">Total Mensual: <span style="float:right;">$${total.toFixed(2)}</span></p>
                         </div>

@@ -74,7 +74,7 @@
         .cv-section-title { font-size: 1.1rem; font-weight: 700; color: var(--text-heading); margin-top: 25px; margin-bottom: 15px; border-bottom: 2px solid var(--card-border); padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
         .cv-input-group { margin-bottom: 15px; position: relative; }
         .cv-input-group label { display: block; font-size: 0.85rem; color: var(--cv-gray); margin-bottom: 5px; font-weight: 600; }
-        .cv-input-group input, .cv-input-group textarea, .cv-input-group select { width: 100%; padding: 12px; font-family: 'Inter', sans-serif; font-size: 0.95rem; transition: border 0.2s; }
+        .cv-input-group input, .cv-input-group textarea, .cv-input-group select { width: 100%; padding: 12px; font-family: 'Inter', sans-serif; font-size: 0.95rem; transition: border 0.2s; box-sizing: border-box;}
         
         .cv-btn-add { background: var(--btn-action); color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: 700; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; }
         .cv-btn-add:hover { background: #059669; }
@@ -132,7 +132,7 @@
         .footer-links a:hover { color: var(--cv-accent); }
         .footer-links a.highlight { color: var(--cv-accent); font-weight: 600; }
         
-        /* ESTILOS PARA LOS BOTONES DE NAVEGACIÓN (Para forzar el color correctamente) */
+        /* ESTILOS PARA LOS BOTONES DE NAVEGACIÓN */
         .tab-btn { background: var(--card-bg); color: var(--text-main); padding: 10px 20px; border: 1px solid var(--card-border); border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.2s ease; }
         .tab-btn.active { background: var(--cv-accent); color: white; border-color: var(--cv-accent); }
     </style>
@@ -177,6 +177,71 @@
                     <p style="color:var(--cv-gray);">Fundamentos, defensa de derechos colectivos y estrategias legales para el fortalecimiento de las bases trabajadoras.</p>
                 </div>
 
+                <div class="card" style="margin-bottom: 30px; border-left: 4px solid var(--cv-accent);">
+                    <div class="card-body" style="padding: 30px;">
+                        <h2 style="color: var(--text-heading); margin-top: 0; font-size: 1.8rem; letter-spacing: -0.5px;">El Poder es Efímero, la Documentación es Eterna</h2>
+                        <p style="color: var(--cv-gray); font-size: 0.95rem; margin-bottom: 25px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-pen-nib" style="color: var(--cv-accent);"></i> 
+                            <strong>Por Laboralec | Estrategia Laboral</strong>
+                        </p>
+                        
+                        <blockquote style="border-left: 3px solid var(--btn-action); padding-left: 15px; font-style: italic; font-size: 1.1rem; color: var(--text-heading); margin: 0 0 25px 0; background: rgba(16, 185, 129, 0.1); padding: 15px; border-radius: 0 8px 8px 0;">
+                            "Los cargos se van, los papeles se quedan."
+                        </blockquote>
+                        
+                        <p>Hay una verdad que la mayoría de trabajadores aprende demasiado tarde: el jefe que hoy te presiona, mañana no está. El director que firmó esa circular restrictiva, el coordinador que te negó verbalmente un beneficio, la analista que te llamó para "aclararte" un criterio que no tiene sustento legal, todos ellos son figuras temporales en una institución que los sobrevivirá.</p>
+                        <p>El poder institucional es, por naturaleza, efímero. Pero los documentos que ese poder genera son eternos.</p>
+
+                        <h3 style="color: var(--cv-accent); margin-top: 25px;">La Trampa de Sentirse Insignificante</h3>
+                        <p>Existe una creencia silenciosa y muy peligrosa entre los trabajadores de rangos operativos: "yo soy solo un auxiliar, un chofer, un conserje, ¿para qué voy a guardar papeles?"</p>
+                        <p>Es exactamente lo que el sistema espera que pienses.</p>
+                        <p>Porque mientras tú descartas ese memorando interno como irrelevante, mientras borras ese correo institucional pensando que no vale nada, mientras ignoras esa circular porque "no te afecta directamente", alguien en una oficina con mejor título está construyendo el expediente que algún día usará en tu contra.</p>
+                        <p>La asimetría de información es una de las herramientas de poder más efectivas que existen en el ámbito laboral. Y funciona únicamente cuando tú colaboras con tu propio silencio documental.</p>
+
+                        <h3 style="color: var(--cv-accent); margin-top: 25px;">Qué Debes Guardar y Por Qué</h3>
+                        <p>No importa tu cargo. No importa si llevas seis meses o veinte años. No importa si hoy todo está tranquilo. La regla es simple: <strong>Si llegó a tus manos, guárdalo.</strong></p>
+
+                        <h4 style="color: var(--text-heading); margin-top: 20px;">Documentos que parecen irrelevantes pero no lo son:</h4>
+                        <ul style="padding-left: 20px; line-height: 1.8;">
+                            <li><strong>Circulares internas:</strong> Aunque no te afecten hoy, establecen precedentes de cómo la institución interpreta sus propias normas. Cuando esa interpretación cambie a tu perjuicio, tendrás la prueba de que antes era diferente.</li>
+                            <li><strong>Memorandos de "socialización":</strong> Esas reuniones donde te "informan" de nuevos criterios sin darte oportunidad de objetar. Si existe un memorando de convocatoria o un acta de asistencia, ese documento prueba que la institución te impuso algo unilateralmente.</li>
+                            <li><strong>Correos y comunicaciones digitales:</strong> En Ecuador, los sistemas como Quipux generan un recorrido documental completo con fechas, destinatarios y comentarios internos. Ese historial es oro jurídico. Aprende a tomar capturas de pantalla de cada movimiento de tus documentos.</li>
+                            <li><strong>Roles de pago:</strong> Cada mes, sin excepción. Son la evidencia directa de qué te pagaron, qué te descontaron y bajo qué concepto. Una anomalía en un rol de pago de hace tres años puede ser exactamente la prueba que necesitas hoy.</li>
+                            <li><strong>Registros de asistencia y timbraciones:</strong> Si tu institución usa sistema biométrico, tienes derecho a solicitar copia certificada de tus registros. Ese documento puede probar que trabajaste un día que alguien pretende negar.</li>
+                            <li><strong>Documentos que te piden firmar:</strong> Antes de firmar cualquier cosa, fotografíalo. Después de firmarlo, solicita una copia. Lo que firmaste sin copia es lo que más fácil pueden usar en tu contra.</li>
+                        </ul>
+
+                        <h3 style="color: var(--cv-accent); margin-top: 25px;">El Principio que los Abogados Conocen y los Trabajadores Ignoran</h3>
+                        <p>En derecho laboral ecuatoriano existe un principio fundamental establecido en el Art. 326 numeral 3 de la Constitución: ante la duda, se aplica lo más favorable al trabajador.</p>
+                        <p>Pero ese principio solo opera cuando tienes pruebas.</p>
+                        <p>Sin documentación, la duda se resuelve a favor de quien tiene más poder institucional. Con documentación, la duda se resuelve a tu favor.</p>
+                        <p>La diferencia entre un trabajador que pierde un reclamo y uno que lo gana raramente es la razón jurídica. Casi siempre es la evidencia.</p>
+
+                        <h3 style="color: var(--cv-accent); margin-top: 25px;">El Poder se Va, Pero Deja Rastro</h3>
+                        <p>Cada vez que una autoridad toma una decisión que te afecta, genera documentos. Memorandos, resoluciones, correos, actas. Esos documentos son la huella de su poder en ejercicio.</p>
+                        <p>Cuando ese poder desaparezca, porque los cargos rotan, porque los gobiernos cambian, porque las personas se van, lo que quedará son exactamente esos documentos. Y si los tienes tú, el poder que representaban estará en tus manos. No en las de ellos.</p>
+
+                        <div class="tech-note" style="border-color: var(--btn-action); background: rgba(16, 185, 129, 0.05); margin-top: 30px;">
+                            <h3 style="color: var(--btn-action); margin-top: 0;"><i class="fas fa-folder-open"></i> Cómo Construir Tu Expediente Personal</h3>
+                            <p>No necesitas ser abogado ni tener conocimientos jurídicos avanzados. Solo necesitas disciplina y un sistema simple:</p>
+                            <ol style="padding-left: 20px; line-height: 1.8; margin-bottom: 0;">
+                                <li><strong>Una carpeta física:</strong> Para documentos originales con sello y firma. Organizada cronológicamente. Guardada fuera de tu lugar de trabajo.</li>
+                                <li><strong>Una carpeta digital:</strong> Escaneados o fotografías de cada documento. Respaldada en la nube. Con nombres de archivo que incluyan la fecha y el tema.</li>
+                                <li><strong>Un registro de comunicaciones verbales:</strong> Cuando alguien te comunique algo importante de forma verbal, envía ese mismo día un correo o memorando a esa persona "confirmando lo conversado". Eso convierte una comunicación verbal en un documento escrito.</li>
+                                <li><strong>Solicitudes formales de información:</strong> Tienes derecho constitucional a solicitar documentos que te conciernen. El Art. 66 numeral 23 de la Constitución garantiza el derecho de acceso a la información. Úsalo.</li>
+                            </ol>
+                        </div>
+
+                        <h3 style="color: var(--cv-accent); margin-top: 30px;">Una Reflexión Final</h3>
+                        <p>El trabajador más poderoso no es el que tiene el cargo más alto. Es el que tiene el expediente más completo.</p>
+                        <p>Los cargos se asignan, se rotan y se revocan. Los documentos que construiste con paciencia y método no se los puede quitar nadie.</p>
+                        <p><strong>El poder es efímero. La documentación es eterna. Empieza hoy.</strong></p>
+                        
+                        <p style="margin-top: 25px; padding-top: 15px; border-top: 1px solid var(--card-border); font-size: 0.9rem; color: var(--cv-gray);">
+                            ¿Tienes dudas sobre qué documentos solicitar o cómo construir tu expediente? Visita nuestras herramientas y guías en <a href="http://laboralec.com" style="color: var(--cv-accent); text-decoration: none; font-weight: bold;">laboralec.com</a>
+                        </p>
+                    </div>
+                </div>
                 <div class="grid-calculadoras">
                     
                     <div class="card">

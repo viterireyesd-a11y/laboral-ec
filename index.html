@@ -114,7 +114,7 @@
         .ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .ref-card { background: #f8fafc !important; padding: 10px; border-radius: 6px; border: 1px solid #e2e8f0 !important; color:#334155 !important;}
 
-        /* --- ESTILOS DE IMPRESIÓN --- */
+        /* --- ESTILOS DE IMPRESIÓN MEJORADOS --- */
         @media print {
             body * { visibility: hidden; }
             .cv-preview-container, .a4-page, .a4-page * { visibility: visible; }
@@ -135,6 +135,19 @@
         /* ESTILOS PARA LOS BOTONES DE NAVEGACIÓN */
         .tab-btn { background: var(--card-bg); color: var(--text-main); padding: 10px 20px; border: 1px solid var(--card-border); border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.2s ease; }
         .tab-btn.active { background: var(--cv-accent); color: white; border-color: var(--cv-accent); }
+
+        /* INYECCIÓN ALASK: Estilos para Paneles de Resultados */
+        .result-panel {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid var(--cv-accent);
+            display: none;
+            color: var(--text-heading);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body>
@@ -864,6 +877,75 @@
     </footer>
 
     <script>
+        const calculators = {
+            iess: function() {
+                const sueldo = parseFloat(document.getElementById('iess_sueldo').value) || 0;
+                const tipo = document.getElementById('iess_tipo').value;
+                const tasa = (tipo === 'privado') ? 0.0945 : 0.1145;
+                const aporte = sueldo * tasa;
+                this.showResult('res_iess', `<i class="fas fa-check-circle" style="color:var(--btn-action);"></i> Aporte Personal (${(tasa*100).toFixed(2)}%): <strong>$${aporte.toFixed(2)}</strong>`);
+            },
+            liquidacion: function() {
+                const sueldo = parseFloat(document.getElementById('liq_sueldo').value) || 0;
+                const anios = parseInt(document.getElementById('liq_anios').value) || 0;
+                const causa = document.getElementById('liq_causa').value;
+                let desahucio = sueldo * 0.25 * anios;
+                let intempestivo = (causa === 'intempestivo') ? (anios <= 3 ? sueldo * 3 : sueldo * anios) : 0;
+                this.showResult('res_liq', `
+                    Desahucio (25%): $${desahucio.toFixed(2)}<br>
+                    Indemnización Art.188: $${intempestivo.toFixed(2)}<br>
+                    <hr style="border-color:var(--card-border); margin:10px 0;">
+                    <strong style="color:var(--btn-action);">Total Estimado: $${(desahucio + intempestivo).toFixed(2)}</strong>
+                `);
+            },
+            extras: function() {
+                const sueldo = parseFloat(document.getElementById('he_sueldo').value) || 0;
+                const h50 = parseFloat(document.getElementById('he_50').value) || 0;
+                const h100 = parseFloat(document.getElementById('he_100').value) || 0;
+                const valorHora = sueldo / 240;
+                const pago50 = valorHora * 1.5 * h50;
+                const pago100 = valorHora * 2 * h100;
+                this.showResult('res_he', `
+                    Pago por ${h50} horas al 50%: $${pago50.toFixed(2)}<br>
+                    Pago por ${h100} horas al 100%: $${pago100.toFixed(2)}<br>
+                    <hr style="border-color:var(--card-border); margin:10px 0;">
+                    <strong style="color:var(--btn-action);">Total a Recibir: $${(pago50 + pago100).toFixed(2)}</strong>
+                `);
+            },
+            decimos: function() {
+                const sueldo = parseFloat(document.getElementById('dec_sueldo').value) || 0;
+                const meses = parseInt(document.getElementById('dec_meses').value) || 0;
+                const sbu2026 = 482.00;
+                const d13 = (sueldo * meses) / 12;
+                const d14 = (sbu2026 / 12) * meses;
+                this.showResult('res_dec', `
+                    Proporcional 13ro: $${d13.toFixed(2)}<br>
+                    Proporcional 14to: $${d14.toFixed(2)}<br>
+                `);
+            },
+            jubilacion: function() {
+                this.showResult('res_jub', `<i class="fas fa-exclamation-triangle" style="color:#f59e0b;"></i> El cálculo exacto requiere la aplicación de coeficientes actuariales del Art. 218. Te recomendamos acudir a un perito contable para una liquidación oficial.`);
+            },
+            losep: function() {
+                const rmu = parseFloat(document.getElementById('losep_rmu').value) || 0;
+                const anios = parseInt(document.getElementById('losep_anios').value) || 0;
+                const compensacion = 5 * 482 * anios; // 5 SBU por año (ejemplo generalizado)
+                const limite = 150 * 482;
+                const final = compensacion > limite ? limite : compensacion;
+                this.showResult('res_losep', `
+                    Compensación estimada (Art. 129): <strong>$${final.toFixed(2)}</strong><br>
+                    <small style="color:var(--cv-gray);">*Sujeto a disponibilidad presupuestaria institucional.</small>
+                `);
+            },
+            showResult: function(id, html) {
+                const el = document.getElementById(id);
+                el.innerHTML = html;
+                el.style.display = 'block';
+            }
+        };
+    </script>
+
+    <script>
         document.addEventListener("DOMContentLoaded", function() {
             var btnCalcBS = document.getElementById('btnCalcBS');
             if(btnCalcBS) {
@@ -875,7 +957,7 @@
                     var hijosInput = document.getElementById('bs_hijos').value;
                     var diasLaboradosInput = document.getElementById('bs_dias_laborados').value;
 
-                    // 2. Convertir a números
+                    // 2. Convertir a números con validación || 0 para evitar fallos (Ingeniero Alask)
                     var rmu = parseFloat(rmuInput) || 0;
                     var sbu = parseFloat(sbuInput) || 482;
                     var anios = parseInt(aniosInput) || 0;

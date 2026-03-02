@@ -7,7 +7,7 @@
     
     <title>Calculadora Laboral Ecuador 2026 | Liquidación, Horas Extras y Más</title>
     <meta name="description" content="Calcula tu liquidación por despido intempestivo, horas extras, décimos y aportes IESS gratis. Basado en el Código del Trabajo ecuatoriano actualizado 2026.">
-    <meta name="keywords" content="calculadora laboral Ecuador, despido intempestivo Ecuador, liquidación laboral 2026, derechos laborales Ecuador, calculo utilidades, Ministerio del Trabajo">
+    <meta name="keywords" content="calculadora laboral Ecuador, despido intempestivo Ecuador, liquidación laboral 2026, derechos laborales Ecuador, calculo utilidades, Ministerio del Trabajo, buscar empleo Ecuador">
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4278440613074024" crossorigin="anonymous"></script>
 
@@ -27,7 +27,7 @@
             --cv-gray: #94a3b8; 
         }
         
-        body { background-color: var(--bg-main); color: var(--text-main); font-family: 'Inter', sans-serif; line-height: 1.6; }
+        body { background-color: var(--bg-main); color: var(--text-main); font-family: 'Inter', sans-serif; line-height: 1.6; margin: 0; padding: 0;}
         h1, h2, h3, h4, h5, h6 { color: var(--text-heading); }
 
         .legal-universe { max-width: 1100px; margin: 0 auto; padding: 20px; }
@@ -51,6 +51,8 @@
             border-radius: 6px !important;
             padding: 10px 12px !important;
             transition: all 0.3s ease;
+            box-sizing: border-box;
+            width: 100%;
         }
         input:focus, select:focus, textarea:focus { border-color: var(--cv-accent) !important; outline: none; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); }
 
@@ -80,6 +82,7 @@
         .tech-table th, .tech-table td { border: 1px solid var(--card-border); padding: 10px; text-align: left; }
         .tech-table th { background: rgba(0,0,0,0.4); color: var(--text-heading); font-weight: 700; }
         
+        /* Animaciones para Pestañas */
         .tab-pane { display: none; animation: fadeIn 0.3s ease; }
         .tab-pane.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -136,6 +139,40 @@
             @page { margin: 0; }
         }
 
+        /* --- ESTILOS: DIRECTORIO DE TALENTO --- */
+        .search-container { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--card-border); margin-bottom: 30px; display: flex; gap: 15px; flex-wrap: wrap; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .search-container input { flex: 1; min-width: 250px; }
+        .search-container select { min-width: 180px; width: auto;}
+        
+        .candidate-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 25px; transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .candidate-card:hover { border-color: var(--btn-action); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(16, 185, 129, 0.2); }
+        .candidate-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--btn-action); }
+        
+        .candidate-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+        .candidate-avatar { width: 60px; height: 60px; border-radius: 50%; background: rgba(59, 130, 246, 0.2); color: var(--cv-accent); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; border: 2px solid var(--card-border); }
+        .candidate-info h3 { margin: 0 0 5px 0; font-size: 1.2rem; }
+        .candidate-info p { margin: 0; color: var(--cv-gray); font-size: 0.9rem; font-weight: 500; }
+        
+        .candidate-desc { font-size: 0.95rem; color: var(--text-main); margin-bottom: 20px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        .btn-hire { background: rgba(16, 185, 129, 0.1); color: var(--btn-action); border: 1px solid var(--btn-action); padding: 10px 15px; width: 100%; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; justify-content: center; gap: 8px; align-items: center; }
+        .btn-hire:hover { background: var(--btn-action); color: white; }
+
+        .post-profile-btn { background: var(--cv-accent); color: white; padding: 15px 30px; border: none; border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
+        .post-profile-btn:hover { background: #1d4ed8; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6); }
+
+        /* --- MODAL (VENTANA EMERGENTE) --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); animation: fadeIn 0.3s ease; }
+        .modal-container { background: var(--card-bg); border: 1px solid var(--cv-accent); border-radius: 12px; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: 0 15px 40px rgba(0,0,0,0.5); position: relative; animation: slideUp 0.4s ease; }
+        .modal-header { padding: 20px 25px; border-bottom: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2); }
+        .modal-header h3 { margin: 0; color: var(--text-heading); font-size: 1.3rem; }
+        .close-btn { background: transparent; border: none; color: var(--cv-gray); font-size: 1.5rem; cursor: pointer; transition: color 0.2s; }
+        .close-btn:hover { color: #ef4444; }
+        .modal-body { padding: 25px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        @media(max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
         /* --- FOOTER Y NAVEGACIÓN --- */
         .legal-footer { text-align: center; padding: 20px; color: var(--cv-gray); font-size: 0.85rem; margin-top: 40px; border-top: 1px solid var(--card-border); background: var(--card-bg); }
         .footer-title { font-weight: 800; margin: 0; opacity: 0.8; font-size: 1rem; color: var(--text-heading); }
@@ -148,18 +185,7 @@
         .tab-btn:hover { border-color: var(--cv-gray); color: var(--text-heading); }
         .tab-btn.active { background: var(--cv-accent); color: white; border-color: var(--cv-accent); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4); }
 
-        .result-panel {
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 8px;
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid var(--cv-accent);
-            display: none;
-            color: var(--text-heading);
-            font-size: 0.95rem;
-            line-height: 1.5;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
-        }
+        .result-panel { margin-top: 15px; padding: 15px; border-radius: 8px; background: rgba(59, 130, 246, 0.1); border: 1px solid var(--cv-accent); display: none; color: var(--text-heading); font-size: 0.95rem; line-height: 1.5; box-shadow: inset 0 2px 5px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
@@ -189,6 +215,9 @@
             </button>
             <button class="tab-btn" onclick="app.navigate('tab-cv', this)">
                 <i class="fas fa-file-signature"></i> Hoja de Vida
+            </button>
+            <button class="tab-btn" onclick="app.navigate('tab-talento', this)" style="border-color: var(--cv-accent); color: var(--text-heading);">
+                <i class="fas fa-briefcase" style="color: var(--cv-accent);"></i> Directorio Talento
             </button>
         </div>
     </nav>
@@ -271,10 +300,6 @@
                         <p style="font-size: 1.1rem;">El trabajador más poderoso no es el que tiene el cargo más alto. Es el que tiene el expediente más completo.</p>
                         <p>Los cargos se asignan, se rotan y se revocan. Los documentos que construiste con paciencia y método no se los puede quitar nadie.</p>
                         <p style="color: var(--btn-action); font-weight: 700; font-size: 1.1rem;">El poder es efímero. La documentación es eterna. Empieza hoy.</p>
-                        
-                        <p style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--card-border); font-size: 0.95rem; color: var(--cv-gray); text-align: center;">
-                            ¿Tienes dudas sobre qué documentos solicitar o cómo construir tu expediente? Visita nuestras herramientas y guías en <a href="http://laboralec.com" style="color: var(--cv-accent); text-decoration: none; font-weight: bold; padding: 4px 8px; background: rgba(59, 130, 246, 0.1); border-radius: 4px;">laboralec.com</a>
-                        </p>
                     </div>
                 </div>
 
@@ -282,30 +307,33 @@
                     <div class="card">
                         <div class="card-header"><h3 style="color:#3b82f6;"><i class="fas fa-fist-raised"></i> 1. Derechos Fundamentales</h3></div>
                         <div class="card-body">
-                            <p>La organización sindical no es un favor del empleador, es un <strong>derecho humano y constitucional</strong> garantizado en el Ecuador (Art. 326, numeral 13). Su propósito es equilibrar la balanza de poder.</p>
-                            <ul style="padding-left: 20px; margin-bottom: 15px;">
-                                <li><strong>Libertad Sindical:</strong> Constituir sindicatos sin autorización previa.</li>
-                                <li><strong>Fuero Sindical:</strong> Protección absoluta contra el despido para directivos.</li>
-                                <li><strong>Huelga y Negociación:</strong> Derechos legales para exigir mejoras laborales.</li>
-                            </ul>
-                            <div class="law-box" style="border-left-color: #3b82f6;"><strong>Autonomía:</strong> Derecho a redactar propios estatutos sin injerencia del Ministerio ni de la empresa.</div>
+                            <div class="framed-text" style="margin-bottom: 0; padding: 12px;">
+                                <p style="margin-top: 0;">La organización sindical no es un favor del empleador, es un <strong>derecho humano y constitucional</strong> (Art. 326, num. 13).</p>
+                                <ul style="padding-left: 20px; margin-bottom: 10px;">
+                                    <li><strong>Libertad Sindical:</strong> Constituir sin autorización.</li>
+                                    <li><strong>Fuero Sindical:</strong> Protección absoluta.</li>
+                                    <li><strong>Autonomía:</strong> Estatutos propios.</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 
                     <div class="card">
-                        <div class="card-header"><h3 style="color:#ef4444;"><i class="fas fa-balance-scale-left"></i> 2. Supremacía del Contrato Colectivo</h3></div>
+                        <div class="card-header"><h3 style="color:#ef4444;"><i class="fas fa-balance-scale-left"></i> 2. Contrato Colectivo</h3></div>
                         <div class="card-body">
-                            <p>En derecho existe la <strong>Jerarquía de la Norma</strong> (Art. 425 de la Constitución). Un Acuerdo Ministerial no puede borrar los derechos que un sindicato firmó en un Contrato Colectivo.</p>
-                            <ul style="padding-left: 20px; margin-bottom: 15px;">
-                                <li><strong>Derechos Adquiridos:</strong> El contrato es "Ley para las partes", intangible e irrenunciable.</li>
-                                <li><strong>Acuerdos Ministeriales:</strong> Son solo directrices de rango inferior, no pueden violar la ley general.</li>
-                            </ul>
-                            <div class="tech-note" style="border-color:#ef4444; color:#fca5a5; background: rgba(239, 68, 68, 0.1);"><strong>In Dubio Pro Operario:</strong> Si hay conflicto entre una norma nueva y tu contrato, el juez aplica lo que más te favorezca.</div>
+                            <div class="framed-text" style="margin-bottom: 0; padding: 12px;">
+                                <p style="margin-top: 0;">Supremacía de la norma (Art. 425 de la Constitución).</p>
+                                <ul style="padding-left: 20px; margin-bottom: 10px;">
+                                    <li><strong>Intangibilidad:</strong> El contrato es Ley para las partes.</li>
+                                    <li><strong>Acuerdos Ministeriales:</strong> No pueden violar el contrato.</li>
+                                </ul>
+                                <div style="color:#ef4444; font-weight: bold; margin-top: 10px; font-size: 0.85rem;"><i class="fas fa-gavel"></i> In Dubio Pro Operario</div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="card">
-                        <div class="card-header"><h3 style="color:#f59e0b;"><i class="fas fa-building"></i> 3. El Límite del Reglamento Interno</h3></div>
+                        <div class="card-header"><h3 style="color:#f59e0b;"><i class="fas fa-building"></i> 3. El Reglamento Interno</h3></div>
                         <div class="card-body">
                             <p>El Reglamento Interno de Trabajo (RIT) es un manual de instrucciones de la empresa, <strong>no es una Ley Suprema</strong> que pueda quitarte derechos.</p>
                             <ul style="padding-left: 20px; margin-bottom: 15px;">
@@ -320,17 +348,18 @@
                     <div class="card">
                         <div class="card-header"><h3 style="color:#10b981;"><i class="fas fa-hourglass-end"></i> 4. El Silencio Administrativo</h3></div>
                         <div class="card-body">
-                            <p>Según el Código Orgánico Administrativo (COA), cuando una institución pública no responde un oficio formal en el plazo legal (ej. 30 días), <strong>la ley asume que la respuesta es POSITIVA</strong>.</p>
-                            <ul style="padding-left: 20px; margin-bottom: 15px;">
-                                <li><strong>Petición:</strong> Se ingresa el requerimiento por ventanilla.</li>
-                                <li><strong>El Efecto:</strong> Vencido el plazo, el derecho se te concede automáticamente.</li>
-                            </ul>
-                            <div class="tech-note" style="border-color:#10b981; color:#6ee7b7; background: rgba(16, 185, 129, 0.1);"><i class="fas fa-check-circle"></i> Puedes hacerlo valer acudiendo a un notario público para levantar una declaración juramentada sobre la falta de respuesta.</div>
+                            <div class="framed-text" style="margin-bottom: 0; padding: 12px;">
+                                <p style="margin-top: 0;">Según el COA, si una institución pública no responde un oficio en el plazo legal, <strong>la respuesta es POSITIVA</strong>.</p>
+                                <ul style="padding-left: 20px; margin-bottom: 0;">
+                                    <li>Se ingresa la petición formal.</li>
+                                    <li>Vencido el plazo, el derecho se concede.</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 
                     <div class="card">
-                        <div class="card-header"><h3 style="color:#8b5cf6;"><i class="fas fa-users"></i> 5. Sindicato vs. Comité de Empresa</h3></div>
+                        <div class="card-header"><h3 style="color:#8b5cf6;"><i class="fas fa-users"></i> 5. Sindicato vs. Comité</h3></div>
                         <div class="card-body">
                             <p>Es vital conocer la diferencia para trazar metas de afiliación y representación real según el Código del Trabajo.</p>
                             <ul style="padding-left: 20px; margin-bottom: 15px;">
@@ -342,7 +371,7 @@
                     </div>
 
                     <div class="card">
-                        <div class="card-header"><h3 style="color:#ec4899;"><i class="fas fa-shield-alt"></i> 6. Blindaje y Despido Ineficaz</h3></div>
+                        <div class="card-header"><h3 style="color:#ec4899;"><i class="fas fa-shield-alt"></i> 6. Despido Ineficaz</h3></div>
                         <div class="card-body">
                             <p>El Estado protege a los dirigentes sindicales y a quienes están en proceso de formación de una organización laboral.</p>
                             <ul style="padding-left: 20px; margin-bottom: 15px;">
@@ -354,7 +383,7 @@
                     </div>
 
                     <div class="card">
-                        <div class="card-header"><h3 style="color:#f43f5e;"><i class="fas fa-bullhorn"></i> 7. La Ruta de la Huelga Legal</h3></div>
+                        <div class="card-header"><h3 style="color:#f43f5e;"><i class="fas fa-bullhorn"></i> 7. Huelga Legal</h3></div>
                         <div class="card-body">
                             <p>Hay que romper el mito: <strong>hacer huelga NO es causal de visto bueno ni de despido</strong>, siempre que se sigan los pasos del Código (Art. 467).</p>
                             <ul style="padding-left: 20px; margin-bottom: 15px;">
@@ -367,7 +396,7 @@
                     </div>
 
                     <div class="card">
-                        <div class="card-header"><h3 style="color:#06b6d4;"><i class="fas fa-hand-holding-usd"></i> 8. Permisos y Cuotas Sindicales</h3></div>
+                        <div class="card-header"><h3 style="color:#06b6d4;"><i class="fas fa-hand-holding-usd"></i> 8. Permisos y Cuotas</h3></div>
                         <div class="card-body">
                             <p>La logística y financiamiento del sindicato están amparados por la ley. La empresa no puede bloquearlos.</p>
                             <ul style="padding-left: 20px; margin-bottom: 15px;">
@@ -893,20 +922,141 @@
             </div>
         </div>
 
+        <div id="tab-talento" class="tab-pane">
+            <div class="legal-universe">
+                
+                <div class="hero-legal" style="background: linear-gradient(135deg, #0f172a 0%, #064e3b 100%); border-color: #047857;">
+                    <h1 style="font-size: 2.2rem; margin-bottom: 10px;">Directorio de Talento Ecuador</h1>
+                    <p style="color:#a7f3d0; font-size: 1.1rem; max-width: 800px; margin: 0 auto 25px auto;">Encuentra a los mejores profesionales o anuncia tu disponibilidad laboral. Conectamos talento con oportunidades reales.</p>
+                    <button class="post-profile-btn" onclick="openTalentModal()"><i class="fas fa-bullhorn"></i> Anunciar mi Perfil Gratis</button>
+                </div>
+
+                <div class="search-container">
+                    <input type="text" placeholder="Buscar por profesión, habilidad o nombre..." style="border-radius: 8px;">
+                    <select style="border-radius: 8px;">
+                        <option value="">Todas las Ciudades</option>
+                        <option value="quito">Quito</option>
+                        <option value="guayaquil">Guayaquil</option>
+                        <option value="cuenca">Cuenca</option>
+                    </select>
+                    <button class="tab-btn active" style="padding: 10px 25px;"><i class="fas fa-search"></i> Buscar</button>
+                </div>
+
+                <div class="grid-calculadoras">
+                    
+                    <div class="candidate-card">
+                        <div class="candidate-header">
+                            <div class="candidate-avatar"><i class="fas fa-user-tie"></i></div>
+                            <div class="candidate-info">
+                                <h3>Carlos Mendoza</h3>
+                                <p><i class="fas fa-map-marker-alt" style="color:var(--cv-gray);"></i> Quito, Pichincha</p>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <span class="cv-skill-tag" style="background: rgba(16, 185, 129, 0.2) !important; color: #10b981 !important; border-color: #10b981 !important;">Asistente Administrativo</span>
+                            <span class="cv-skill-tag">Excel Avanzado</span>
+                        </div>
+                        <p class="candidate-desc">Profesional con 4 años de experiencia en gestión documental, Quipux y atención al cliente. Busco oportunidad en el sector privado o público.</p>
+                        <button class="btn-hire"><i class="fas fa-envelope"></i> Contactar a Carlos</button>
+                    </div>
+
+                    <div class="candidate-card">
+                        <div class="candidate-header">
+                            <div class="candidate-avatar" style="color: #d946ef; background: rgba(217, 70, 239, 0.1); border-color: rgba(217, 70, 239, 0.3);"><i class="fas fa-laptop-code"></i></div>
+                            <div class="candidate-info">
+                                <h3>Ana Lucia Torres</h3>
+                                <p><i class="fas fa-map-marker-alt" style="color:var(--cv-gray);"></i> Guayaquil, Guayas</p>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <span class="cv-skill-tag" style="background: rgba(217, 70, 239, 0.1) !important; color: #d946ef !important; border-color: #d946ef !important;">Analista Contable</span>
+                            <span class="cv-skill-tag">SRI</span>
+                            <span class="cv-skill-tag">NIIF</span>
+                        </div>
+                        <p class="candidate-desc">Contadora CPA con experiencia en declaración de impuestos, nómina e IESS. Alta capacidad analítica y disponibilidad inmediata.</p>
+                        <button class="btn-hire"><i class="fas fa-envelope"></i> Contactar a Ana</button>
+                    </div>
+
+                    <div class="candidate-card">
+                        <div class="candidate-header">
+                            <div class="candidate-avatar" style="color: #f59e0b; background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3);"><i class="fas fa-hard-hat"></i></div>
+                            <div class="candidate-info">
+                                <h3>Roberto Vélez</h3>
+                                <p><i class="fas fa-map-marker-alt" style="color:var(--cv-gray);"></i> Cuenca, Azuay</p>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <span class="cv-skill-tag" style="background: rgba(245, 158, 11, 0.1) !important; color: #f59e0b !important; border-color: #f59e0b !important;">Técnico en Logística</span>
+                            <span class="cv-skill-tag">Inventarios</span>
+                            <span class="cv-skill-tag">Montacargas</span>
+                        </div>
+                        <p class="candidate-desc">Especialista en control de inventarios y bodega. Licencia tipo G. Acostumbrado al trabajo bajo presión y turnos rotativos.</p>
+                        <button class="btn-hire"><i class="fas fa-envelope"></i> Contactar a Roberto</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </main>
+
+    <div id="talentoModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3><i class="fas fa-bullhorn" style="color:var(--cv-accent);"></i> Publicar Perfil Profesional</h3>
+                <button class="close-btn" onclick="closeTalentModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-top:0; color:var(--cv-gray); margin-bottom: 20px;">Llena este formulario para que las empresas y reclutadores puedan encontrarte en nuestra base de datos.</p>
+                
+                <div class="form-grid">
+                    <div class="form-group"><label>Nombres Completos</label><input type="text" placeholder="Ej: Ana Lucía Torres"></div>
+                    <div class="form-group"><label>Profesión / Especialidad</label><input type="text" placeholder="Ej: Analista Financiero"></div>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group"><label>Provincia / Ciudad</label><input type="text" placeholder="Ej: Guayas, Guayaquil"></div>
+                    <div class="form-group"><label>Teléfono (WhatsApp)</label><input type="text" placeholder="099..."></div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Habilidades Clave (Separadas por comas)</label>
+                    <input type="text" placeholder="Excel, Contabilidad, NIIF, Liderazgo...">
+                </div>
+                
+                <div class="form-group">
+                    <label>Resumen Profesional</label>
+                    <textarea rows="4" placeholder="Describe brevemente tu experiencia y lo que buscas..."></textarea>
+                </div>
+                
+                <button class="post-profile-btn" style="width: 100%; margin-top: 10px;" onclick="submitTalentModal()"><i class="fas fa-paper-plane"></i> Enviar Solicitud de Publicación</button>
+            </div>
+        </div>
+    </div>
 
     <footer class="legal-footer">
         <p class="footer-title">LABORALEC PRO 2026 | Ingeniería Legal de Precisión.</p>
         <div class="footer-links">
-            <a href="despido-intempestivo.html" class="highlight"><i class="fas fa-file-alt"></i> Guías</a>
             <a href="privacidad.html"><i class="fas fa-user-shield"></i> Privacidad</a>
             <a href="terminos.html"><i class="fas fa-balance-scale"></i> Términos</a>
             <a href="contacto.html"><i class="fas fa-envelope"></i> Contacto</a>
-            <a href="nosotros.html"><i class="fas fa-users"></i> Sobre el Autor</a>
         </div>
     </footer>
 
     <script>
+        // --- 1. LÓGICA DE LA VENTANA MODAL ---
+        function openTalentModal() {
+            document.getElementById('talentoModal').style.display = 'flex';
+        }
+        function closeTalentModal() {
+            document.getElementById('talentoModal').style.display = 'none';
+        }
+        function submitTalentModal() {
+            alert("¡Solicitud enviada con éxito! (Modo Simulación).\n\nIngeniero Alask: La interfaz está lista. El siguiente paso técnico sería conectar este botón a tu base de datos para guardar la información.");
+            closeTalentModal();
+        }
+
+        // --- 2. LÓGICA DE LAS CALCULADORAS ---
         const calculators = {
             iess: function() {
                 const sueldo = parseFloat(document.getElementById('iess_sueldo').value) || 0;
@@ -974,6 +1124,7 @@
             }
         };
 
+        // --- 3. LÓGICA BENEFICIO SOCIAL ---
         document.addEventListener("DOMContentLoaded", function() {
             var btnCalcBS = document.getElementById('btnCalcBS');
             if(btnCalcBS) {
@@ -1002,6 +1153,7 @@
             }
         });
 
+        // --- 4. NAVEGACIÓN ---
         const app = {
             navigate: function(tabId, btnElement) {
                 document.querySelectorAll('.tab-pane').forEach(tab => tab.classList.remove('active'));
@@ -1011,6 +1163,7 @@
             }
         };
 
+        // --- 5. LÓGICA DEL GENERADOR DE CV ---
         function loadPhoto(event) {
             const output = document.getElementById('cv-photo-display');
             const headerGrid = document.getElementById('cv-header-grid');

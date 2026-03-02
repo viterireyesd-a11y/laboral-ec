@@ -1010,26 +1010,26 @@
                 <p style="margin-top:0; color:var(--cv-gray); margin-bottom: 20px;">Llena este formulario para que las empresas y reclutadores puedan encontrarte en nuestra base de datos.</p>
                 
                 <div class="form-grid">
-                    <div class="form-group"><label>Nombres Completos</label><input type="text" placeholder="Ej: Ana Lucía Torres"></div>
-                    <div class="form-group"><label>Profesión / Especialidad</label><input type="text" placeholder="Ej: Analista Financiero"></div>
+                    <div class="form-group"><label>Nombres Completos</label><input type="text" id="talento_nombre" placeholder="Ej: Ana Lucía Torres"></div>
+                    <div class="form-group"><label>Profesión / Especialidad</label><input type="text" id="talento_profesion" placeholder="Ej: Analista Financiero"></div>
                 </div>
                 
                 <div class="form-grid">
-                    <div class="form-group"><label>Provincia / Ciudad</label><input type="text" placeholder="Ej: Guayas, Guayaquil"></div>
-                    <div class="form-group"><label>Teléfono (WhatsApp)</label><input type="text" placeholder="099..."></div>
+                    <div class="form-group"><label>Provincia / Ciudad</label><input type="text" id="talento_ciudad" placeholder="Ej: Guayas, Guayaquil"></div>
+                    <div class="form-group"><label>Teléfono (WhatsApp)</label><input type="text" id="talento_telefono" placeholder="099..."></div>
                 </div>
                 
                 <div class="form-group">
                     <label>Habilidades Clave (Separadas por comas)</label>
-                    <input type="text" placeholder="Excel, Contabilidad, NIIF, Liderazgo...">
+                    <input type="text" id="talento_habilidades" placeholder="Excel, Contabilidad, NIIF, Liderazgo...">
                 </div>
                 
                 <div class="form-group">
                     <label>Resumen Profesional</label>
-                    <textarea rows="4" placeholder="Describe brevemente tu experiencia y lo que buscas..."></textarea>
+                    <textarea rows="4" id="talento_resumen" placeholder="Describe brevemente tu experiencia y lo que buscas..."></textarea>
                 </div>
                 
-                <button class="post-profile-btn" style="width: 100%; margin-top: 10px;" onclick="submitTalentModal()"><i class="fas fa-paper-plane"></i> Enviar Solicitud de Publicación</button>
+                <button class="post-profile-btn" id="btn_enviar_talento" style="width: 100%; margin-top: 10px;" onclick="submitTalentModal()"><i class="fas fa-paper-plane"></i> Enviar Solicitud de Publicación</button>
             </div>
         </div>
     </div>
@@ -1044,7 +1044,7 @@
     </footer>
 
     <script>
-        // --- 1. LÓGICA DE LA VENTANA MODAL ---
+        // --- 1. LÓGICA DE LA VENTANA MODAL Y ENVÍO DE DATOS ---
         function openTalentModal() {
             document.getElementById('talentoModal').style.display = 'flex';
         }
@@ -1052,8 +1052,54 @@
             document.getElementById('talentoModal').style.display = 'none';
         }
         function submitTalentModal() {
-            alert("¡Solicitud enviada con éxito! (Modo Simulación).\n\nIngeniero Alask: La interfaz está lista. El siguiente paso técnico sería conectar este botón a tu base de datos para guardar la información.");
-            closeTalentModal();
+            // Capturamos los valores que el usuario escribió
+            const nombre = document.getElementById('talento_nombre').value.trim();
+            const profesion = document.getElementById('talento_profesion').value.trim();
+            const ciudad = document.getElementById('talento_ciudad').value.trim();
+            const telefono = document.getElementById('talento_telefono').value.trim();
+            const habilidades = document.getElementById('talento_habilidades').value.trim();
+            const resumen = document.getElementById('talento_resumen').value.trim();
+
+            // Validación básica
+            if(!nombre || !profesion || !telefono) {
+                alert("Por favor, llena al menos tu Nombre, Profesión y Teléfono para poder contactarte.");
+                return;
+            }
+
+            // Cambiamos el texto del botón
+            const btnEnviar = document.getElementById('btn_enviar_talento');
+            const textoOriginal = btnEnviar.innerHTML;
+            btnEnviar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+            btnEnviar.disabled = true;
+
+            // Empaquetamos los datos
+            const datosCandidato = {
+                nombre: nombre,
+                profesion: profesion,
+                ciudad: ciudad,
+                telefono: telefono,
+                habilidades: habilidades,
+                resumen: resumen
+            };
+
+            // Simulación de envío
+            setTimeout(() => {
+                console.log("Datos listos para enviar a la Base de Datos:", datosCandidato);
+                alert("¡Hola " + nombre + "! Tu perfil como " + profesion + " ha sido capturado correctamente.\n\nIngeniero Alask: El Front-end ya está extrayendo los datos. ¡Estamos listos para el Backend!");
+                
+                // Limpiamos el formulario
+                document.getElementById('talento_nombre').value = '';
+                document.getElementById('talento_profesion').value = '';
+                document.getElementById('talento_ciudad').value = '';
+                document.getElementById('talento_telefono').value = '';
+                document.getElementById('talento_habilidades').value = '';
+                document.getElementById('talento_resumen').value = '';
+                
+                // Restauramos botón y cerramos
+                btnEnviar.innerHTML = textoOriginal;
+                btnEnviar.disabled = false;
+                closeTalentModal();
+            }, 1500); 
         }
 
         // --- 2. LÓGICA DE LAS CALCULADORAS ---

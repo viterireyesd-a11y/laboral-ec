@@ -14,6 +14,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+
     <style>
         /* --- VARIABLES DE INGENIERÍA (PALETA PREMIUM 2026) --- */
         :root { 
@@ -548,21 +551,37 @@
                                     <li>Distribución de las 40 horas semanales en 4 o 5 días, con max de 10 horas diarias.</li>
                                     <li><strong>Impacto:</strong> No se pagan horas suplementarias si no se superan las 40 horas semanales totales, aunque se laboren 10 horas en un día.</li>
                                 </ul>
-
-                                <h4 style="color:var(--primary); margin-top:15px;">2. Turnos Especiales Continuos (12 Horas)</h4>
-                                <ul style="padding-left: 20px; line-height: 1.8;">
-                                    <li>Para industrias que no pueden interrumpir operaciones. Jornadas de hasta 12 horas.</li>
-                                    <li><strong>Compensación:</strong> El recargo se compensa con días de descanso obligatorio (Ej: 5 laborados x 2 descanso).</li>
-                                </ul>
                             </div>
-                    
-                            <div class="tech-note">
-                                <h4 style="margin-top: 0; color:var(--text-title); text-transform: uppercase;"><i class="fas fa-exclamation-triangle"></i> El Requisito de Consentimiento</h4>
-                                <p>Se requiere consentimiento explícito del trabajador. Sin embargo, si la jornada ya consta en el **Reglamento Interno de Trabajo (RIT)** aprobado por el Ministerio, el empleador puede imponerla sin firma individual.</p>
-                            </div>
+                            
+                            <a href="normativa.html" class="btn-hire" style="margin-top: 20px; display: inline-flex; text-decoration: none; width: auto; padding: 12px 25px;"><i class="fas fa-external-link-alt"></i> Leer Análisis Completo del Acuerdo MDT</a>
                         </div>
                     </details>
                     
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Art. 188</span> Despido Intempestivo y Liquidación</summary>
+                        <div class="legal-content">
+                            <div class="framed-text">
+                                <h4 style="margin-top:0; text-transform: uppercase;">Regla General de Indemnización</h4>
+                                <ul style="padding-left: 20px; line-height: 1.8;">
+                                    <li><strong>Hasta 3 años de servicio:</strong> 3 meses de la última remuneración (piso mínimo).</li>
+                                    <li><strong>Más de 3 años de servicio:</strong> 1 mes de remuneración por cada año de servicio, con tope de 25 meses. La fracción de año se cuenta como año completo.</li>
+                                </ul>
+                            </div>
+                            <a href="despido-intempestivo.html" class="btn-hire" style="margin-top: 20px; display: inline-flex; text-decoration: none; width: auto; padding: 12px 25px;"><i class="fas fa-external-link-alt"></i> Leer Guía Completa de Despido Intempestivo</a>
+                        </div>
+                    </details>
+
+                    <details class="legal-item">
+                        <summary><span class="art-badge">Art. 185</span> Renuncia Voluntaria y Desahucio</summary>
+                        <div class="legal-content">
+                            <div class="framed-text">
+                                <h4 style="margin-top:0;">Bonificación del 25%</h4>
+                                <p>Pago del 25% de la última remuneración mensual por cada año de servicio completo al terminar la relación laboral por voluntad del trabajador.</p>
+                            </div>
+                            <a href="renuncia-voluntaria.html" class="btn-hire" style="margin-top: 20px; display: inline-flex; text-decoration: none; width: auto; padding: 12px 25px;"><i class="fas fa-external-link-alt"></i> Leer Guía sobre Renuncia Voluntaria</a>
+                        </div>
+                    </details>
+
                     <details class="legal-item">
                         <summary><span class="art-badge">Art. 55</span> Horas Suplementarias y Extraordinarias</summary>
                         <div class="legal-content">
@@ -622,49 +641,6 @@
                                     <li><strong>Región Costa / Insular:</strong> Se paga hasta el 15 de marzo (periodo de cálculo: 1 marzo - 28/29 feb).</li>
                                     <li><strong>Región Sierra / Amazonía:</strong> Se paga hasta el 15 de agosto (periodo de cálculo: 1 agosto - 31 julio).</li>
                                 </ul>
-                            </div>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 152</span> Licencia por Maternidad</summary>
-                        <div class="legal-content">
-                            <div class="framed-text">
-                                <h4 style="margin-top:0;">Protección a la Madre Trabajadora</h4>
-                                <p>Toda trabajadora tiene derecho a <strong>12 semanas</strong> (84 días) de licencia remunerada por el nacimiento de su hijo/a.</p>
-                                <div class="tech-note" style="border-color:var(--danger); background: rgba(239, 68, 68, 0.1); color:#fca5a5; margin-bottom:0;">
-                                    <strong>Despido Ineficaz (Art. 195.1):</strong> Está absolutamente prohibido despedir a una mujer en estado de gestación o descanso por maternidad. Multa a la empresa: Indemnización normal + <strong>12 sueldos extras</strong>.
-                                </div>
-                            </div>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 172</span> Causales de Visto Bueno</summary>
-                        <div class="legal-content">
-                            <div class="framed-text">
-                                <h4 style="margin-top:0;">Despido Justificado (Sin Indemnización)</h4>
-                                <p>El empleador puede solicitar la terminación del contrato ante el Inspector del Trabajo por:</p>
-                                <ul style="padding-left: 20px; line-height:1.8; margin-bottom:0;">
-                                    <li>1. Faltas repetidas e injustificadas de puntualidad o de asistencia al trabajo (más de 3 días consecutivos).</li>
-                                    <li>2. Indisciplina o desobediencia grave a los reglamentos legalmente aprobados.</li>
-                                    <li>3. Falta de probidad (conducta inmoral).</li>
-                                    <li>4. Ineptitud manifiesta para el trabajo.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 188</span> Despido Intempestivo</summary>
-                        <div class="legal-content">
-                            <div class="framed-text">
-                                <h4 style="margin-top:0; text-transform: uppercase;">Regla General de Indemnización</h4>
-                                <ul style="padding-left: 20px; line-height: 1.8;">
-                                    <li><strong>Hasta 3 años de servicio:</strong> 3 meses de la última remuneración (piso mínimo).</li>
-                                    <li><strong>Más de 3 años de servicio:</strong> 1 mes de remuneración por cada año de servicio, con tope de 25 meses. La fracción de año se cuenta como año completo.</li>
-                                </ul>
-                                <div class="law-box" style="margin-bottom:0;"><strong>Nota Técnica:</strong> Esta indemnización es *adicional* a la bonificación por desahucio (25% por año) del Art. 185.</div>
                             </div>
                         </div>
                     </details>
@@ -809,7 +785,6 @@
                 </div>
 
                 <div class="grid-calculadoras" id="directorio-grid">
-                    
                     <div class="seeker-callout">
                         <span><i class="fas fa-search-dollar"></i> ¿BUSCAS EMPLEO? ANÚNCIATE GRATIS EN ESTE DIRECTORIO</span>
                     </div>
@@ -865,7 +840,8 @@
         <p class="footer-title">LABORALEC PRO 2026</p>
         <p style="margin: 5px 0 15px 0;">Ingeniería Jurídica de Precisión para el Ecuador.</p>
         <div class="footer-links">
-            <a href="privacidad.html"><i class="fas fa-user-shield"></i> Privacidad</a>
+            <a href="nosotros.html"><i class="fas fa-user-tie"></i> Sobre el Autor</a>
+            <a href="privacidad.html"><i class="fas fa-user-shield"></i> Privacidad y Cookies</a>
             <a href="terminos.html"><i class="fas fa-balance-scale"></i> Términos de Uso</a>
             <a href="contacto.html"><i class="fas fa-envelope"></i> Soporte Técnico</a>
         </div>
@@ -1163,7 +1139,7 @@
             }
         };
 
-        // --- 5. LÓGICA GENERADOR CV (CON REFERENCIAS RESTAURADAS) ---
+        // --- 5. LÓGICA GENERADOR CV ---
         function loadPhoto(event) {
             const output = document.getElementById('cv-photo-display');
             const headerGrid = document.getElementById('cv-header-grid');
@@ -1259,7 +1235,6 @@
             preview.appendChild(prevDiv);
         }
 
-        // FUNCIONES DE REFERENCIAS RESTAURADAS
         let refJobCount = 0;
         function addRefJob() {
             refJobCount++;
@@ -1310,7 +1285,6 @@
             prevContainer.appendChild(prevDiv);
         }
 
-        // Init Editor con elementos vacíos
         addJob();
         addEdu();
     </script>

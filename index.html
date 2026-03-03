@@ -144,18 +144,18 @@
         .search-container input { flex: 1; min-width: 250px; }
         .search-container select { min-width: 180px; width: auto;}
         
-        .candidate-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 25px; transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .candidate-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 25px; transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column;}
         .candidate-card:hover { border-color: var(--btn-action); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(16, 185, 129, 0.2); }
         .candidate-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--btn-action); }
         
         .candidate-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
-        .candidate-avatar { width: 60px; height: 60px; border-radius: 50%; background: rgba(59, 130, 246, 0.2); color: var(--cv-accent); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; border: 2px solid var(--card-border); }
+        .candidate-avatar { width: 60px; height: 60px; border-radius: 50%; background: rgba(59, 130, 246, 0.2); color: var(--cv-accent); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; border: 2px solid var(--card-border); flex-shrink: 0;}
         .candidate-info h3 { margin: 0 0 5px 0; font-size: 1.2rem; }
         .candidate-info p { margin: 0; color: var(--cv-gray); font-size: 0.9rem; font-weight: 500; }
         
-        .candidate-desc { font-size: 0.95rem; color: var(--text-main); margin-bottom: 20px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .candidate-desc { font-size: 0.95rem; color: var(--text-main); margin-bottom: 20px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; flex-grow: 1;}
         
-        .btn-hire { background: rgba(16, 185, 129, 0.1); color: var(--btn-action); border: 1px solid var(--btn-action); padding: 10px 15px; width: 100%; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; justify-content: center; gap: 8px; align-items: center; }
+        .btn-hire { background: rgba(16, 185, 129, 0.1); color: var(--btn-action); border: 1px solid var(--btn-action); padding: 10px 15px; width: 100%; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; justify-content: center; gap: 8px; align-items: center; text-decoration: none;}
         .btn-hire:hover { background: var(--btn-action); color: white; }
 
         .post-profile-btn { background: var(--cv-accent); color: white; padding: 15px 30px; border: none; border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
@@ -942,59 +942,10 @@
                     <button class="tab-btn active" style="padding: 10px 25px;"><i class="fas fa-search"></i> Buscar</button>
                 </div>
 
-                <div class="grid-calculadoras">
-                    
-                    <div class="candidate-card">
-                        <div class="candidate-header">
-                            <div class="candidate-avatar"><i class="fas fa-user-tie"></i></div>
-                            <div class="candidate-info">
-                                <h3>Carlos Mendoza</h3>
-                                <p><i class="fas fa-map-marker-alt" style="color:var(--cv-gray);"></i> Quito, Pichincha</p>
-                            </div>
-                        </div>
-                        <div style="margin-bottom: 15px;">
-                            <span class="cv-skill-tag" style="background: rgba(16, 185, 129, 0.2) !important; color: #10b981 !important; border-color: #10b981 !important;">Asistente Administrativo</span>
-                            <span class="cv-skill-tag">Excel Avanzado</span>
-                        </div>
-                        <p class="candidate-desc">Profesional con 4 años de experiencia en gestión documental, Quipux y atención al cliente. Busco oportunidad en el sector privado o público.</p>
-                        <button class="btn-hire"><i class="fas fa-envelope"></i> Contactar a Carlos</button>
-                    </div>
-
-                    <div class="candidate-card">
-                        <div class="candidate-header">
-                            <div class="candidate-avatar" style="color: #d946ef; background: rgba(217, 70, 239, 0.1); border-color: rgba(217, 70, 239, 0.3);"><i class="fas fa-laptop-code"></i></div>
-                            <div class="candidate-info">
-                                <h3>Ana Lucia Torres</h3>
-                                <p><i class="fas fa-map-marker-alt" style="color:var(--cv-gray);"></i> Guayaquil, Guayas</p>
-                            </div>
-                        </div>
-                        <div style="margin-bottom: 15px;">
-                            <span class="cv-skill-tag" style="background: rgba(217, 70, 239, 0.1) !important; color: #d946ef !important; border-color: #d946ef !important;">Analista Contable</span>
-                            <span class="cv-skill-tag">SRI</span>
-                            <span class="cv-skill-tag">NIIF</span>
-                        </div>
-                        <p class="candidate-desc">Contadora CPA con experiencia en declaración de impuestos, nómina e IESS. Alta capacidad analítica y disponibilidad inmediata.</p>
-                        <button class="btn-hire"><i class="fas fa-envelope"></i> Contactar a Ana</button>
-                    </div>
-
-                    <div class="candidate-card">
-                        <div class="candidate-header">
-                            <div class="candidate-avatar" style="color: #f59e0b; background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3);"><i class="fas fa-hard-hat"></i></div>
-                            <div class="candidate-info">
-                                <h3>Roberto Vélez</h3>
-                                <p><i class="fas fa-map-marker-alt" style="color:var(--cv-gray);"></i> Cuenca, Azuay</p>
-                            </div>
-                        </div>
-                        <div style="margin-bottom: 15px;">
-                            <span class="cv-skill-tag" style="background: rgba(245, 158, 11, 0.1) !important; color: #f59e0b !important; border-color: #f59e0b !important;">Técnico en Logística</span>
-                            <span class="cv-skill-tag">Inventarios</span>
-                            <span class="cv-skill-tag">Montacargas</span>
-                        </div>
-                        <p class="candidate-desc">Especialista en control de inventarios y bodega. Licencia tipo G. Acostumbrado al trabajo bajo presión y turnos rotativos.</p>
-                        <button class="btn-hire"><i class="fas fa-envelope"></i> Contactar a Roberto</button>
-                    </div>
-
+                <div class="grid-calculadoras" id="directorio-grid">
+                    <p style="text-align:center; grid-column: 1/-1; color: var(--cv-gray);"><i class="fas fa-spinner fa-spin"></i> Cargando talentos desde la base de datos...</p>
                 </div>
+
             </div>
         </div>
 
@@ -1044,6 +995,11 @@
     </footer>
 
     <script>
+        // =========================================================================
+        // INGENIERO ALASK: URL DE GOOGLE APPS SCRIPT CONECTADA CORRECTAMENTE
+        // =========================================================================
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzKH0zKzbe601gvyFUJvxgitUvb6iltkTl8APvvKzgY7-aNNpayHesdra9pijRNlo0g/exec';
+
         // --- 1. LÓGICA DE LA VENTANA MODAL Y ENVÍO DE DATOS ---
         function openTalentModal() {
             document.getElementById('talentoModal').style.display = 'flex';
@@ -1053,7 +1009,6 @@
         }
         
         function submitTalentModal() {
-            // Capturamos los valores
             const nombre = document.getElementById('talento_nombre').value.trim();
             const profesion = document.getElementById('talento_profesion').value.trim();
             const ciudad = document.getElementById('talento_ciudad').value.trim();
@@ -1061,19 +1016,16 @@
             const habilidades = document.getElementById('talento_habilidades').value.trim();
             const resumen = document.getElementById('talento_resumen').value.trim();
 
-            // Validación
             if(!nombre || !profesion || !telefono) {
                 alert("Por favor, llena al menos tu Nombre, Profesión y Teléfono para poder contactarte.");
                 return;
             }
 
-            // Cambiamos el botón
             const btnEnviar = document.getElementById('btn_enviar_talento');
             const textoOriginal = btnEnviar.innerHTML;
             btnEnviar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando perfil...';
             btnEnviar.disabled = true;
 
-            // Empaquetamos los datos
             const formData = new FormData();
             formData.append('nombre', nombre);
             formData.append('profesion', profesion);
@@ -1082,21 +1034,10 @@
             formData.append('habilidades', habilidades);
             formData.append('resumen', resumen);
 
-            // =========================================================================
-            // INGENIERO ALASK: TU URL DE GOOGLE ESTÁ INYECTADA AQUÍ.
-            // =========================================================================
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbwOTB9EIU8a3hfYnLVpXJ0DywKth1gbW-ofn_smbjSdf8P1xQJjcdA2INVmF-ELmJV1/exec';
-
-            // ENVIAMOS A GOOGLE SHEETS CON ESCUDO NO-CORS
-            fetch(scriptURL, { 
-                method: 'POST', 
-                body: formData,
-                mode: 'no-cors' 
-            })
+            fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
             .then(response => {
-                alert("¡Misión Cumplida! El perfil de " + nombre + " ha sido guardado exitosamente en tu Google Sheets.");
+                alert("¡Misión Cumplida! El perfil de " + nombre + " ha sido guardado exitosamente en tu base de datos.");
                 
-                // Limpiamos el formulario
                 document.getElementById('talento_nombre').value = '';
                 document.getElementById('talento_profesion').value = '';
                 document.getElementById('talento_ciudad').value = '';
@@ -1104,10 +1045,10 @@
                 document.getElementById('talento_habilidades').value = '';
                 document.getElementById('talento_resumen').value = '';
                 
-                // Restauramos botón y cerramos
                 btnEnviar.innerHTML = textoOriginal;
                 btnEnviar.disabled = false;
                 closeTalentModal();
+                cargarDirectorio(); // Recarga la lista para que aparezca el nuevo!
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -1116,6 +1057,65 @@
                 btnEnviar.disabled = false;
             });
         }
+
+        // --- LÓGICA PARA LEER DEL EXCEL Y MOSTRAR EN PANTALLA ---
+        function cargarDirectorio() {
+            const grid = document.getElementById('directorio-grid');
+
+            fetch(scriptURL)
+            .then(res => res.json())
+            .then(data => {
+                grid.innerHTML = ''; // Limpiamos el texto de "Cargando..."
+                if(data.length === 0) {
+                    grid.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color:var(--cv-gray);">Aún no hay perfiles registrados. ¡Sé el primero!</p>';
+                    return;
+                }
+                
+                data.forEach(candidato => {
+                    if(!candidato.nombre) return; // Salta filas vacías
+                    
+                    // Convertir habilidades separadas por coma en etiquetas (tags)
+                    let skillsHtml = '';
+                    if(candidato.habilidades) {
+                        let skills = candidato.habilidades.split(',');
+                        skills.forEach(skill => {
+                            if(skill.trim()) skillsHtml += `<span class="cv-skill-tag">${skill.trim()}</span>`;
+                        });
+                    }
+
+                    // Limpiar el teléfono para WhatsApp (quitar espacios o letras)
+                    let telLimpio = String(candidato.telefono).replace(/\D/g,'');
+
+                    // Crear la tarjeta
+                    let card = `
+                    <div class="candidate-card">
+                        <div class="candidate-header">
+                            <div class="candidate-avatar"><i class="fas fa-user-tie"></i></div>
+                            <div class="candidate-info">
+                                <h3>${candidato.nombre}</h3>
+                                <p><i class="fas fa-map-marker-alt" style="color:var(--cv-gray);"></i> ${candidato.ciudad}</p>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <span class="cv-skill-tag" style="background: rgba(16, 185, 129, 0.2) !important; color: #10b981 !important; border-color: #10b981 !important;">${candidato.profesion}</span>
+                            ${skillsHtml}
+                        </div>
+                        <p class="candidate-desc">${candidato.resumen}</p>
+                        <a href="https://wa.me/593${telLimpio}" target="_blank" style="text-decoration:none; margin-top:auto;">
+                            <button class="btn-hire"><i class="fab fa-whatsapp"></i> Contactar por WhatsApp</button>
+                        </a>
+                    </div>
+                    `;
+                    grid.innerHTML += card;
+                });
+            })
+            .catch(err => {
+                grid.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: #ef4444;">No se pudo conectar a la base de datos.</p>';
+            });
+        }
+
+        // Cargamos los talentos al abrir la página
+        document.addEventListener("DOMContentLoaded", cargarDirectorio);
 
         // --- 2. LÓGICA DE LAS CALCULADORAS ---
         const calculators = {

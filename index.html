@@ -12,7 +12,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4278440613074024" crossorigin="anonymous"></script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
@@ -73,7 +73,7 @@
         input:focus, select:focus, textarea:focus { border-color: var(--primary) !important; outline: none; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); }
 
         /* --- CUADROS (CARDS) --- */
-        .grid-calculadoras { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; padding: 25px 0; }
+        .grid-calculadoras { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; padding: 25px 0; }
         .card { background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 16px; overflow: hidden; transition: all 0.3s ease; box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
         .card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
         .card-header { background: rgba(0,0,0,0.25); padding: 20px 25px; border-bottom: 1px solid var(--border-muted); }
@@ -179,7 +179,7 @@
             align-items: flex-start; 
             box-shadow: 0 8px 25px rgba(239, 68, 68, 0.15); 
             overflow: hidden;
-            transform-origin: top;
+            transition: opacity 0.8s ease, transform 0.8s ease, max-height 0.8s ease, margin 0.8s ease, padding 0.8s ease;
         }
         .security-warning i { color: var(--danger); font-size: 2.5rem; flex-shrink: 0; margin-top: 5px;}
         .security-warning h4 { margin: 0 0 10px 0; color: var(--danger); text-transform: uppercase; font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; letter-spacing: 1px; }
@@ -291,7 +291,7 @@
                 flex-wrap: nowrap; 
                 overflow-x: auto; 
                 justify-content: flex-start; 
-                -webkit-overflow-scrolling: touch; /* Suavidad en iOS */
+                -webkit-overflow-scrolling: touch; 
                 border: none;
                 background: transparent;
                 padding-bottom: 5px;
@@ -535,6 +535,18 @@
                         </div>
                     </div>
 
+                    <div class="card">
+                        <div class="card-header"><h3><i class="fas fa-landmark" style="color:#06b6d4;"></i> LOSEP</h3></div>
+                        <div class="card-body">
+                            <div class="framed-text" style="padding: 18px; margin-bottom: 20px;">
+                                <div class="form-group"><label>RMU Actual ($)</label><input type="number" id="losep_rmu"></div>
+                                <div class="form-group" style="margin-bottom:0;"><label>Años Servicio</label><input type="number" id="losep_anios"></div>
+                            </div>
+                            <button class="btn-calc" style="background:#06b6d4;" onclick="calculators.losep()">SIMULAR</button>
+                            <div id="res_losep" class="result-panel" style="border-color:#06b6d4; background:rgba(6, 182, 212, 0.08);"></div>
+                        </div>
+                    </div>
+
                     <div class="card" style="grid-column: 1 / -1;">
                         <div class="card-header">
                             <h3 style="color:#d946ef;"><i class="fas fa-hand-holding-heart"></i> Beneficio Social (Sindicatos)</h3>
@@ -693,7 +705,7 @@
 
                         <div class="cv-section-title">6. Habilidades Técnicas y Competencias</div>
                         <div class="cv-input-group">
-                            <label>Habilidades (Separar por comas)</label>
+                            <label>Habilidades (Separar por comas para formateo automático)</label>
                             <input type="text" oninput="updateSkills(this.value)" placeholder="Ej: Derecho Laboral, Excel Avanzado (NIIF), SAP, Inglés C1...">
                         </div>
 
@@ -780,7 +792,6 @@
                 </div>
 
                 <div class="grid-calculadoras" id="directorio-grid">
-                    
                     <div class="seeker-callout">
                         <span><i class="fas fa-search-dollar"></i> ¿BUSCAS EMPLEO? ANÚNCIATE GRATIS EN ESTE DIRECTORIO</span>
                     </div>
@@ -849,24 +860,23 @@
         // =========================================================================
         const scriptURL = 'https://script.google.com/macros/s/AKfycbyY3WTDAX2FUkPjtntdswkhDyh2D8WLF4cNONYHF_JVPwrpIz6hYfwQvd_1y8Mz-XEA/exec';
 
-        // --- OCULTAR BANNER MOLESTO A LOS 3 SEGUNDOS ---
-        setTimeout(function() {
-            const securityBanner = document.getElementById('aviso-seguridad');
-            if(securityBanner) {
-                securityBanner.style.transition = 'all 0.8s ease-out';
-                securityBanner.style.opacity = '0';
-                securityBanner.style.transform = 'translateY(-20px)';
-                setTimeout(() => { securityBanner.style.display = 'none'; }, 800);
-            }
-        }, 3000);
-
-        // --- 1. LÓGICA DE LA VENTANA MODAL Y FOTOS ---
-        let talentoFotoBase64 = "";
-        let talentoFotoNombre = "";
-
         document.addEventListener("DOMContentLoaded", function() {
             cargarDirectorio();
 
+            // --- MOTOR DE AUTO-DESTRUCCIÓN DEL BANNER (3 SEGUNDOS) ---
+            setTimeout(function() {
+                const banner = document.getElementById('aviso-seguridad');
+                if(banner) {
+                    banner.style.opacity = '0';
+                    banner.style.transform = 'translateY(-20px)';
+                    banner.style.maxHeight = '0';
+                    banner.style.margin = '0';
+                    banner.style.padding = '0';
+                    setTimeout(() => banner.style.display = 'none', 800);
+                }
+            }, 3000);
+
+            // Lógica conversor de fotos
             const inputFoto = document.getElementById('talento_foto');
             if(inputFoto) {
                 inputFoto.addEventListener('change', function(e) {
@@ -889,6 +899,9 @@
                 });
             }
         });
+
+        let talentoFotoBase64 = "";
+        let talentoFotoNombre = "";
 
         function openTalentModal() {
             document.getElementById('talentoModal').style.display = 'flex';

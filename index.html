@@ -1051,8 +1051,9 @@
         function closeTalentModal() {
             document.getElementById('talentoModal').style.display = 'none';
         }
+        
         function submitTalentModal() {
-            // Capturamos los valores que el usuario escribió
+            // Capturamos los valores
             const nombre = document.getElementById('talento_nombre').value.trim();
             const profesion = document.getElementById('talento_profesion').value.trim();
             const ciudad = document.getElementById('talento_ciudad').value.trim();
@@ -1060,32 +1061,40 @@
             const habilidades = document.getElementById('talento_habilidades').value.trim();
             const resumen = document.getElementById('talento_resumen').value.trim();
 
-            // Validación básica
+            // Validación
             if(!nombre || !profesion || !telefono) {
                 alert("Por favor, llena al menos tu Nombre, Profesión y Teléfono para poder contactarte.");
                 return;
             }
 
-            // Cambiamos el texto del botón
+            // Cambiamos el botón
             const btnEnviar = document.getElementById('btn_enviar_talento');
             const textoOriginal = btnEnviar.innerHTML;
-            btnEnviar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+            btnEnviar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando perfil...';
             btnEnviar.disabled = true;
 
             // Empaquetamos los datos
-            const datosCandidato = {
-                nombre: nombre,
-                profesion: profesion,
-                ciudad: ciudad,
-                telefono: telefono,
-                habilidades: habilidades,
-                resumen: resumen
-            };
+            const formData = new FormData();
+            formData.append('nombre', nombre);
+            formData.append('profesion', profesion);
+            formData.append('ciudad', ciudad);
+            formData.append('telefono', telefono);
+            formData.append('habilidades', habilidades);
+            formData.append('resumen', resumen);
 
-            // Simulación de envío
-            setTimeout(() => {
-                console.log("Datos listos para enviar a la Base de Datos:", datosCandidato);
-                alert("¡Hola " + nombre + "! Tu perfil como " + profesion + " ha sido capturado correctamente.\n\nIngeniero Alask: El Front-end ya está extrayendo los datos. ¡Estamos listos para el Backend!");
+            // =========================================================================
+            // INGENIERO ALASK: TU URL DE GOOGLE ESTÁ INYECTADA AQUÍ.
+            // =========================================================================
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbwOTB9EIU8a3hfYnLVpXJ0DywKth1gbW-ofn_smbjSdf8P1xQJjcdA2INVmF-ELmJV1/exec';
+
+            // ENVIAMOS A GOOGLE SHEETS CON ESCUDO NO-CORS
+            fetch(scriptURL, { 
+                method: 'POST', 
+                body: formData,
+                mode: 'no-cors' 
+            })
+            .then(response => {
+                alert("¡Misión Cumplida! El perfil de " + nombre + " ha sido guardado exitosamente en tu Google Sheets.");
                 
                 // Limpiamos el formulario
                 document.getElementById('talento_nombre').value = '';
@@ -1099,7 +1108,13 @@
                 btnEnviar.innerHTML = textoOriginal;
                 btnEnviar.disabled = false;
                 closeTalentModal();
-            }, 1500); 
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Hubo un error de conexión al servidor.");
+                btnEnviar.innerHTML = textoOriginal;
+                btnEnviar.disabled = false;
+            });
         }
 
         // --- 2. LÓGICA DE LAS CALCULADORAS ---

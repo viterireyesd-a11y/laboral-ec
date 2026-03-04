@@ -1495,8 +1495,8 @@
         });
 
         // ─── MODAL ───
-        function openTalentModal()  { document.getElementById('talentoModal').style.display = 'flex'; }
-        function closeTalentModal() { document.getElementById('talentoModal').style.display = 'none'; }
+        function openTalentModal() { var m=document.getElementById('talentoModal'); m.style.display='flex'; m.style.position='fixed'; m.style.inset='0'; m.style.zIndex='9999'; m.style.justifyContent='center'; m.style.alignItems='center'; m.style.background='rgba(0,0,0,0.92)'; document.body.style.overflow='hidden'; }
+        function closeTalentModal() { document.getElementById('talentoModal').style.display='none'; document.body.style.overflow=''; }
 
         function submitTalentModal() {
             const nombre    = document.getElementById('talento_nombre').value.trim();

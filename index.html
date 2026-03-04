@@ -869,7 +869,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-group" style="text-align: center; border: 2px dashed var(--prestige); padding: 15px; border-radius: 12px; margin-bottom: 15px;">
-                    <label style="color:var(--prestige); cursor:pointer;"><i class="fas fa-camera" style="font-size: 1.5rem; display:block; margin-bottom: 5px;"></i> Subir Foto (Max 2MB)</label>
+                    <label style="color:var(--prestige); cursor:pointer;"><i class="fas fa-camera" style="font-size: 1.5rem; display:block; margin-bottom: 5px;"></i> Subir Foto (Opcional)</label>
                     <input type="file" id="talento_foto" accept="image/*" style="display:none;">
                 </div>
 
@@ -906,37 +906,62 @@
     <script>
         const scriptURL = 'https://script.google.com/macros/s/AKfycbyY3WTDAX2FUkPjtntdswkhDyh2D8WLF4cNONYHF_JVPwrpIz6hYfwQvd_1y8Mz-XEA/exec';
 
+        // Variables globales para la foto
+        let talentoFotoBase64 = "";
+        let talentoFotoNombre = "";
+
         // Evento que se ejecuta al cargar la página
         document.addEventListener("DOMContentLoaded", function() {
             // Cargar el directorio desde Google Sheets
             cargarDirectorio();
 
-            // Lógica para convertir la foto a formato Base64
+            // Lógica para convertir y COMPRIMIR la foto a formato Base64 (LA CORRECCIÓN ESTÁ AQUÍ)
             const inputFoto = document.getElementById('talento_foto');
             if(inputFoto) {
                 inputFoto.addEventListener('change', function(e) {
                     const file = e.target.files[0];
                     if(file) {
-                        // Límite de 2MB para la foto
-                        if(file.size > 2 * 1024 * 1024) { 
-                            alert("La imagen excede el límite de 2MB. Por favor optimízala.");
-                            inputFoto.value = '';
-                            talentoFotoBase64 = "";
-                            talentoFotoNombre = "";
-                            return;
-                        }
                         talentoFotoNombre = file.name;
+                        
                         const reader = new FileReader();
                         reader.onload = function(event) {
-                            talentoFotoBase64 = event.target.result;
+                            // Crear una imagen en memoria para comprimirla
+                            const img = new Image();
+                            img.onload = function() {
+                                const canvas = document.createElement('canvas');
+                                const MAX_WIDTH = 400; // Reducimos tamaño para no saturar Google Sheets
+                                const MAX_HEIGHT = 400;
+                                let width = img.width;
+                                let height = img.height;
+
+                                if (width > height) {
+                                    if (width > MAX_WIDTH) {
+                                        height *= MAX_WIDTH / width;
+                                        width = MAX_WIDTH;
+                                    }
+                                } else {
+                                    if (height > MAX_HEIGHT) {
+                                        width *= MAX_HEIGHT / height;
+                                        height = MAX_HEIGHT;
+                                    }
+                                }
+                                canvas.width = width;
+                                canvas.height = height;
+                                const ctx = canvas.getContext('2d');
+                                ctx.drawImage(img, 0, 0, width, height);
+                                
+                                // Exportar en calidad 0.6 para que pese muy poco
+                                talentoFotoBase64 = canvas.toDataURL('image/jpeg', 0.6);
+                                alert("Foto comprimida y cargada correctamente.");
+                            };
+                            img.src = event.target.result;
                         };
                         reader.readAsDataURL(file);
-                        alert("Foto cargada correctamente.");
                     }
                 });
             }
 
-            // Lógica de la Calculadora de Beneficio Social (Con detalles restaurados)
+            // Lógica de la Calculadora de Beneficio Social
             var btnCalcBS = document.getElementById('btnCalcBS');
             if(btnCalcBS) {
                 btnCalcBS.addEventListener('click', function() {
@@ -967,10 +992,6 @@
             }
         });
 
-        // Variables globales para la foto
-        let talentoFotoBase64 = "";
-        let talentoFotoNombre = "";
-
         // Funciones para abrir y cerrar el Modal (Ventana Emergente)
         function openTalentModal() { 
             document.getElementById('talentoModal').style.display = 'flex'; 
@@ -979,7 +1000,7 @@
             document.getElementById('talentoModal').style.display = 'none'; 
         }
         
-        // Enviar datos del candidato a Google Sheets
+        // --- CORRECCIÓN DEL ENVÍO DE DATOS ---
         function submitTalentModal() {
             const nombre = document.getElementById('talento_nombre').value.trim();
             const profesion = document.getElementById('talento_profesion').value.trim();
@@ -998,17 +1019,27 @@
             btnEnviar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
             btnEnviar.disabled = true;
 
-            const formData = new FormData();
-            formData.append('nombre', nombre);
-            formData.append('profesion', profesion);
-            formData.append('ciudad', ciudad);
-            formData.append('telefono', telefono);
-            formData.append('habilidades', habilidades);
-            formData.append('resumen', resumen);
-            formData.append('fotoBase64', talentoFotoBase64);
-            formData.append('fotoName', talentoFotoNombre);
+            // En lugar de FormData que falla con no-cors, armamos un objeto simple JSON
+            const datos = {
+                nombre: nombre,
+                profesion: profesion,
+                ciudad: ciudad,
+                telefono: telefono,
+                habilidades: habilidades,
+                resumen: resumen,
+                fotoBase64: talentoFotoBase64,
+                fotoName: talentoFotoNombre
+            };
 
-            fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
+            // Enviamos con fetch en formato text/plain para evadir el bloqueo de CORS
+            fetch(scriptURL, { 
+                method: 'POST', 
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8'
+                },
+                body: JSON.stringify(datos)
+            })
             .then(response => {
                 alert("¡Perfil publicado exitosamente!");
                 closeTalentModal();
@@ -1024,7 +1055,7 @@
                 talentoFotoBase64 = "";
                 talentoFotoNombre = "";
 
-                // Recargar el directorio después de un breve momento
+                // Recargar el directorio
                 const grid = document.getElementById('directorio-grid');
                 grid.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: var(--text-base); padding: 40px;"><i class="fas fa-spinner fa-spin"></i> Actualizando Directorio...</p>';
                 setTimeout(cargarDirectorio, 3500); 
@@ -1187,8 +1218,6 @@
         
         function addJob() {
             jobCount++;
-            
-            // Inyectar al editor HTML
             const editorHTML = `
                 <div class="cv-input-group framed-text" style="border-left:4px solid var(--action)">
                     <input type="text" placeholder="Cargo" oninput="document.getElementById('job-title-${jobCount}').innerText=this.value" style="margin-bottom:10px;">
@@ -1197,8 +1226,6 @@
                     <textarea placeholder="Funciones" oninput="document.getElementById('job-desc-${jobCount}').innerText=this.value"></textarea>
                 </div>`;
             document.getElementById('editor-jobs').insertAdjacentHTML('beforeend', editorHTML);
-            
-            // Inyectar a la previsualización HTML
             const prevHTML = `
                 <div class="cv-item">
                     <div class="cv-item-title" id="job-title-${jobCount}">Cargo</div>
@@ -1211,7 +1238,6 @@
 
         function addEdu() {
             eduCount++;
-            
             const editorHTML = `
                 <div class="cv-input-group framed-text" style="border-left:4px solid var(--primary)">
                     <input type="text" placeholder="Título" oninput="document.getElementById('edu-title-${eduCount}').innerText=this.value" style="margin-bottom:10px;">
@@ -1219,7 +1245,6 @@
                     <input type="text" placeholder="Año" oninput="document.getElementById('edu-date-${eduCount}').innerText=this.value">
                 </div>`;
             document.getElementById('editor-edu').insertAdjacentHTML('beforeend', editorHTML);
-            
             const prevHTML = `
                 <div class="cv-item">
                     <div class="cv-item-title" id="edu-title-${eduCount}" style="font-size:1rem">Título</div>
@@ -1231,7 +1256,6 @@
 
         function addRefJob() {
             refJobCount++;
-            
             const editorHTML = `
                 <div class="cv-input-group framed-text" style="border-left:4px solid #6366f1">
                     <input type="text" placeholder="Nombre" oninput="document.getElementById('rj-name-${refJobCount}').innerText=this.value" style="margin-bottom:8px;">
@@ -1239,7 +1263,6 @@
                     <input type="text" placeholder="Teléfono" oninput="document.getElementById('rj-tel-${refJobCount}').innerText=this.value">
                 </div>`;
             document.getElementById('editor-ref-job').insertAdjacentHTML('beforeend', editorHTML);
-            
             const prevHTML = `
                 <div class="ref-card">
                     <div style="font-weight:800; font-size:0.9rem;" id="rj-name-${refJobCount}">Nombre</div>
@@ -1251,14 +1274,12 @@
 
         function addRefPers() {
             refPersCount++;
-            
             const editorHTML = `
                 <div class="cv-input-group framed-text" style="border-left:4px solid #f43f5e">
                     <input type="text" placeholder="Nombre" oninput="document.getElementById('rp-name-${refPersCount}').innerText=this.value" style="margin-bottom:8px;">
                     <input type="text" placeholder="Teléfono" oninput="document.getElementById('rp-tel-${refPersCount}').innerText=this.value">
                 </div>`;
             document.getElementById('editor-ref-pers').insertAdjacentHTML('beforeend', editorHTML);
-            
             const prevHTML = `
                 <div class="ref-card">
                     <div style="font-weight:800; font-size:0.9rem;" id="rp-name-${refPersCount}">Nombre</div>

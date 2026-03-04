@@ -366,7 +366,7 @@
             .hero-legal h1 { font-size: 1.8rem; }
             .hero-legal p { font-size: 0.95rem; }
             
-            /* Ajuste de Pestañas (Scroll horizontal en móviles) */
+            /* Ajuste de Pestañas */
             .nav-wrapper { padding: 10px; }
             .nav-tabs { 
                 display: flex; 
@@ -416,7 +416,7 @@
 <body>
 
     <header>
-        <div class="header-container" style="padding: 10px; ">
+        <div class="header-container">
             <div class="brand-wrapper" style="display:flex; align-items:center; justify-content:center; gap: 10px;">
                <img src="escudo.svg.png" class="escudo-img" alt="Escudo Ecuador">
                 <div class="brand-text">
@@ -642,13 +642,13 @@
                                     <div class="form-group"><label>Años Servicio</label><input type="number" id="bs_anios" placeholder="Ej: 5"></div>
                                     <div class="form-group"><label>N° de Hijos</label><input type="number" id="bs_hijos" placeholder="Ej: 2"></div>
                                 </div>
-                                <div class="form-group" style="margin-bottom:0;">
+                                <div class="form-group" style="margin-bottom:0; margin-top: 15px;">
                                     <label>Días Laborados (Para Alimentación)</label>
                                     <input type="number" id="bs_dias_laborados" placeholder="Ej: 20">
                                 </div>
                             </div>
                             <p style="font-size:0.75rem; color:var(--text-base); margin-top:-10px; margin-bottom:15px; font-style: italic;">
-                                *Cálculo: Hijos < 18 años. Aplica Art. 23 (1% SBU) y Art. 24 (0.25% RMU). Alimentación a $4.50/día.
+                                *Cálculo: Hijos menores a 18 años. Aplica Art. 23 (1% SBU) y Art. 24 (0.25% RMU). Alimentación a $4.50/día.
                             </p>
                             <button type="button" id="btnCalcBS" class="btn-calc" style="background:#d946ef; width:100%; max-width: 400px; display:block; margin:0 auto;">CALCULAR BENEFICIOS</button>
                             <div id="contenedorResultadoBS" class="result-panel" style="border-color:#d946ef; background:rgba(217, 70, 239, 0.08); max-width: 500px; margin: 20px auto 0 auto;"></div>
@@ -906,14 +906,18 @@
     <script>
         const scriptURL = 'https://script.google.com/macros/s/AKfycbyY3WTDAX2FUkPjtntdswkhDyh2D8WLF4cNONYHF_JVPwrpIz6hYfwQvd_1y8Mz-XEA/exec';
 
+        // Evento que se ejecuta al cargar la página
         document.addEventListener("DOMContentLoaded", function() {
+            // Cargar el directorio desde Google Sheets
             cargarDirectorio();
 
+            // Lógica para convertir la foto a formato Base64
             const inputFoto = document.getElementById('talento_foto');
             if(inputFoto) {
                 inputFoto.addEventListener('change', function(e) {
                     const file = e.target.files[0];
                     if(file) {
+                        // Límite de 2MB para la foto
                         if(file.size > 2 * 1024 * 1024) { 
                             alert("La imagen excede el límite de 2MB. Por favor optimízala.");
                             inputFoto.value = '';
@@ -931,14 +935,51 @@
                     }
                 });
             }
+
+            // Lógica de la Calculadora de Beneficio Social (Con detalles restaurados)
+            var btnCalcBS = document.getElementById('btnCalcBS');
+            if(btnCalcBS) {
+                btnCalcBS.addEventListener('click', function() {
+                    // Obtener los valores ingresados por el usuario
+                    var rmu = parseFloat(document.getElementById('bs_rmu').value.replace(',', '.')) || 0;
+                    var sbu = parseFloat(document.getElementById('bs_sbu').value.replace(',', '.')) || 482;
+                    var anios = parseInt(document.getElementById('bs_anios').value) || 0;
+                    var hijos = parseInt(document.getElementById('bs_hijos').value) || 0;
+                    var diasLaborados = parseInt(document.getElementById('bs_dias_laborados').value) || 0;
+
+                    // Fórmulas matemáticas del contrato colectivo
+                    var subFamiliar = sbu * 0.01 * hijos; 
+                    var subAntiguedad = rmu * 0.0025 * anios; 
+                    var alimentacion = diasLaborados * 4.50;
+                    var total = subFamiliar + subAntiguedad + alimentacion;
+
+                    // Inyectar HTML con el detalle de cálculo de vuelta a la pantalla
+                    var resDiv = document.getElementById('contenedorResultadoBS');
+                    resDiv.style.display = 'block';
+                    resDiv.innerHTML = `
+                        <p style="margin:0 0 5px 0;">Subsidio Familiar: <span style="color:#d946ef; float:right; font-weight:bold;">$${subFamiliar.toFixed(2)}</span></p>
+                        <p style="margin:0 0 5px 0;">Subsidio Antigüedad: <span style="color:#d946ef; float:right; font-weight:bold;">$${subAntiguedad.toFixed(2)}</span></p>
+                        <p style="margin:0 0 5px 0;">Alimentación: <span style="color:#d946ef; float:right; font-weight:bold;">$${alimentacion.toFixed(2)}</span></p>
+                        <hr style="border-color: rgba(217, 70, 239, 0.3); margin: 10px 0;">
+                        <p style="margin:0; font-weight:900; font-size:1.2rem;">Total Mensual: <span style="color:#d946ef; float:right;">$${total.toFixed(2)}</span></p>
+                    `;
+                });
+            }
         });
 
+        // Variables globales para la foto
         let talentoFotoBase64 = "";
         let talentoFotoNombre = "";
 
-        function openTalentModal() { document.getElementById('talentoModal').style.display = 'flex'; }
-        function closeTalentModal() { document.getElementById('talentoModal').style.display = 'none'; }
+        // Funciones para abrir y cerrar el Modal (Ventana Emergente)
+        function openTalentModal() { 
+            document.getElementById('talentoModal').style.display = 'flex'; 
+        }
+        function closeTalentModal() { 
+            document.getElementById('talentoModal').style.display = 'none'; 
+        }
         
+        // Enviar datos del candidato a Google Sheets
         function submitTalentModal() {
             const nombre = document.getElementById('talento_nombre').value.trim();
             const profesion = document.getElementById('talento_profesion').value.trim();
@@ -971,6 +1012,19 @@
             .then(response => {
                 alert("¡Perfil publicado exitosamente!");
                 closeTalentModal();
+                
+                // Limpiar campos del formulario
+                document.getElementById('talento_nombre').value = '';
+                document.getElementById('talento_profesion').value = '';
+                document.getElementById('talento_ciudad').value = '';
+                document.getElementById('talento_telefono').value = '';
+                document.getElementById('talento_habilidades').value = '';
+                document.getElementById('talento_resumen').value = '';
+                document.getElementById('talento_foto').value = '';
+                talentoFotoBase64 = "";
+                talentoFotoNombre = "";
+
+                // Recargar el directorio después de un breve momento
                 const grid = document.getElementById('directorio-grid');
                 grid.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: var(--text-base); padding: 40px;"><i class="fas fa-spinner fa-spin"></i> Actualizando Directorio...</p>';
                 setTimeout(cargarDirectorio, 3500); 
@@ -982,6 +1036,7 @@
             });
         }
 
+        // Descargar datos del Excel y construir las tarjetas visuales
         function cargarDirectorio() {
             const grid = document.getElementById('directorio-grid');
             const calloutHtml = `<div class="seeker-callout"><span><i class="fas fa-search-dollar"></i> ¿BUSCAS EMPLEO? ANÚNCIATE GRATIS</span></div>`;
@@ -997,6 +1052,8 @@
                 
                 data.forEach(candidato => {
                     if(!candidato.nombre) return; 
+                    
+                    // Procesar las etiquetas de habilidades
                     let skillsHtml = '';
                     if(candidato.habilidades) {
                         candidato.habilidades.split(',').forEach(skill => {
@@ -1004,15 +1061,18 @@
                         });
                     }
 
+                    // Limpiar el número de teléfono para que WhatsApp lo reconozca
                     let telLimpio = String(candidato.telefono).replace(/\D/g,'');
                     if(telLimpio.startsWith('0')) telLimpio = '593' + telLimpio.substring(1);
                     if(!telLimpio.startsWith('593')) telLimpio = '593' + telLimpio;
 
+                    // Mostrar foto si existe, si no, un icono genérico
                     let avatarHtml = `<div class="candidate-avatar"><i class="fas fa-user-tie"></i></div>`;
                     if (candidato.foto && candidato.foto.trim() !== "") {
                         avatarHtml = `<img src="${candidato.foto}" alt="${candidato.nombre}" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); flex-shrink: 0;">`;
                     }
 
+                    // Insertar la tarjeta terminada en la pantalla
                     grid.innerHTML += `
                     <div class="candidate-card">
                         <div class="candidate-header">
@@ -1038,6 +1098,7 @@
             });
         }
 
+        // Lógica de las calculadoras principales
         const calculators = {
             iess: function() {
                 const sueldo = parseFloat(document.getElementById('iess_sueldo').value) || 0;
@@ -1067,80 +1128,148 @@
                 const meses = parseInt(document.getElementById('dec_meses').value) || 0;
                 this.showResult('res_dec', `Prop. 13ro: $${((sueldo * meses) / 12).toFixed(2)}<br>Prop. 14to: $${((482 / 12) * meses).toFixed(2)}`);
             },
-            jubilacion: function() { this.showResult('res_jub', `Requiere perito contable (Art. 218).`); },
+            jubilacion: function() { 
+                this.showResult('res_jub', `Requiere perito contable (Art. 218).`); 
+            },
             losep: function() {
                 const anios = parseInt(document.getElementById('losep_anios').value) || 0;
                 this.showResult('res_losep', `Compensación (Art. 129): <strong style="color:var(--text-title);">$${Math.min(5 * 482 * anios, 150 * 482).toFixed(2)}</strong>`);
             },
             showResult: function(id, html) {
                 const el = document.getElementById(id);
-                el.innerHTML = html; el.style.display = 'block'; el.style.animation = 'fadeIn 0.5s';
+                el.innerHTML = html; 
+                el.style.display = 'block'; 
+                el.style.animation = 'fadeIn 0.5s';
             }
         };
 
-        document.addEventListener("DOMContentLoaded", function() {
-            var btnCalcBS = document.getElementById('btnCalcBS');
-            if(btnCalcBS) {
-                btnCalcBS.addEventListener('click', function() {
-                    var rmu = parseFloat(document.getElementById('bs_rmu').value) || 0;
-                    var sbu = parseFloat(document.getElementById('bs_sbu').value) || 482;
-                    var anios = parseInt(document.getElementById('bs_anios').value) || 0;
-                    var hijos = parseInt(document.getElementById('bs_hijos').value) || 0;
-                    var dias = parseInt(document.getElementById('bs_dias_laborados').value) || 0;
-                    var total = (sbu * 0.01 * hijos) + (rmu * 0.0025 * anios) + (dias * 4.50);
-                    document.getElementById('contenedorResultadoBS').innerHTML = `Total Mensual: <strong style="color:var(--text-title);">$${total.toFixed(2)}</strong>`;
-                    document.getElementById('contenedorResultadoBS').style.display = 'block';
-                });
-            }
-        });
-
+        // Navegación entre pestañas de la página
         const app = {
             navigate: function(tabId, btnElement) {
                 document.querySelectorAll('.tab-pane').forEach(t => t.classList.remove('active'));
                 document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
                 document.getElementById(tabId).classList.add('active');
                 if(btnElement) btnElement.classList.add('active');
-                window.scrollTo(0,0);
+                window.scrollTo(0,0); // Regresar arriba al cambiar de pestaña
             }
         };
 
+        // Mostrar foto en la vista previa del CV
         function loadPhoto(event) {
             if(!event.target.files[0]) return;
             const output = document.getElementById('cv-photo-display');
             output.src = URL.createObjectURL(event.target.files[0]);
-            output.onload = function() { URL.revokeObjectURL(output.src); output.style.display = 'block'; document.getElementById('cv-header-grid').classList.add('with-photo'); }
+            output.onload = function() { 
+                URL.revokeObjectURL(output.src); 
+                output.style.display = 'block'; 
+                document.getElementById('cv-header-grid').classList.add('with-photo'); 
+            }
         }
 
-        function updateCV(field, value) { document.getElementById('prev-'+field).innerText = value || "..."; }
+        // Actualizar campos de texto del CV en tiempo real
+        function updateCV(field, value) { 
+            document.getElementById('prev-'+field).innerText = value || "..."; 
+        }
 
+        // Formatear las habilidades del CV como etiquetas
         function updateSkills(value) {
-            const container = document.getElementById('prev-skills-container'); container.innerHTML = '';
-            value.split(',').forEach(skill => { if(skill.trim()) container.innerHTML += `<span class="cv-skill-tag">${skill.trim()}</span>`; });
+            const container = document.getElementById('prev-skills-container'); 
+            container.innerHTML = '';
+            value.split(',').forEach(skill => { 
+                if(skill.trim()) {
+                    container.innerHTML += `<span class="cv-skill-tag">${skill.trim()}</span>`; 
+                }
+            });
         }
 
+        // Lógica para agregar nuevas filas de información en el CV
         let jobCount = 0, eduCount = 0, refJobCount = 0, refPersCount = 0;
         
         function addJob() {
             jobCount++;
-            document.getElementById('editor-jobs').innerHTML += `<div class="cv-input-group framed-text" style="border-left:4px solid var(--action)"><input type="text" placeholder="Cargo" oninput="document.getElementById('job-title-${jobCount}').innerText=this.value" style="margin-bottom:10px;"><input type="text" placeholder="Empresa" oninput="document.getElementById('job-company-${jobCount}').innerText=this.value" style="margin-bottom:10px;"><input type="text" placeholder="Periodo" oninput="document.getElementById('job-date-${jobCount}').innerText=this.value" style="margin-bottom:10px;"><textarea placeholder="Funciones" oninput="document.getElementById('job-desc-${jobCount}').innerText=this.value"></textarea></div>`;
-            document.getElementById('prev-jobs-container').innerHTML += `<div class="cv-item"><div class="cv-item-title" id="job-title-${jobCount}">Cargo</div><div class="cv-item-subtitle" id="job-company-${jobCount}">Empresa</div><span class="cv-item-date" id="job-date-${jobCount}">Periodo</span><div class="cv-item-desc" id="job-desc-${jobCount}">...</div></div>`;
+            
+            // Inyectar al editor HTML
+            const editorHTML = `
+                <div class="cv-input-group framed-text" style="border-left:4px solid var(--action)">
+                    <input type="text" placeholder="Cargo" oninput="document.getElementById('job-title-${jobCount}').innerText=this.value" style="margin-bottom:10px;">
+                    <input type="text" placeholder="Empresa" oninput="document.getElementById('job-company-${jobCount}').innerText=this.value" style="margin-bottom:10px;">
+                    <input type="text" placeholder="Periodo" oninput="document.getElementById('job-date-${jobCount}').innerText=this.value" style="margin-bottom:10px;">
+                    <textarea placeholder="Funciones" oninput="document.getElementById('job-desc-${jobCount}').innerText=this.value"></textarea>
+                </div>`;
+            document.getElementById('editor-jobs').insertAdjacentHTML('beforeend', editorHTML);
+            
+            // Inyectar a la previsualización HTML
+            const prevHTML = `
+                <div class="cv-item">
+                    <div class="cv-item-title" id="job-title-${jobCount}">Cargo</div>
+                    <div class="cv-item-subtitle" id="job-company-${jobCount}">Empresa</div>
+                    <span class="cv-item-date" id="job-date-${jobCount}">Periodo</span>
+                    <div class="cv-item-desc" id="job-desc-${jobCount}">...</div>
+                </div>`;
+            document.getElementById('prev-jobs-container').insertAdjacentHTML('beforeend', prevHTML);
         }
+
         function addEdu() {
             eduCount++;
-            document.getElementById('editor-edu').innerHTML += `<div class="cv-input-group framed-text" style="border-left:4px solid var(--primary)"><input type="text" placeholder="Título" oninput="document.getElementById('edu-title-${eduCount}').innerText=this.value" style="margin-bottom:10px;"><input type="text" placeholder="Institución" oninput="document.getElementById('edu-school-${eduCount}').innerText=this.value" style="margin-bottom:10px;"><input type="text" placeholder="Año" oninput="document.getElementById('edu-date-${eduCount}').innerText=this.value"></div>`;
-            document.getElementById('prev-edu-container').innerHTML += `<div class="cv-item"><div class="cv-item-title" id="edu-title-${eduCount}" style="font-size:1rem">Título</div><div class="cv-item-subtitle" id="edu-school-${eduCount}" style="font-size:0.9rem">Institución</div><span class="cv-item-date" id="edu-date-${eduCount}">Año</span></div>`;
+            
+            const editorHTML = `
+                <div class="cv-input-group framed-text" style="border-left:4px solid var(--primary)">
+                    <input type="text" placeholder="Título" oninput="document.getElementById('edu-title-${eduCount}').innerText=this.value" style="margin-bottom:10px;">
+                    <input type="text" placeholder="Institución" oninput="document.getElementById('edu-school-${eduCount}').innerText=this.value" style="margin-bottom:10px;">
+                    <input type="text" placeholder="Año" oninput="document.getElementById('edu-date-${eduCount}').innerText=this.value">
+                </div>`;
+            document.getElementById('editor-edu').insertAdjacentHTML('beforeend', editorHTML);
+            
+            const prevHTML = `
+                <div class="cv-item">
+                    <div class="cv-item-title" id="edu-title-${eduCount}" style="font-size:1rem">Título</div>
+                    <div class="cv-item-subtitle" id="edu-school-${eduCount}" style="font-size:0.9rem">Institución</div>
+                    <span class="cv-item-date" id="edu-date-${eduCount}">Año</span>
+                </div>`;
+            document.getElementById('prev-edu-container').insertAdjacentHTML('beforeend', prevHTML);
         }
+
         function addRefJob() {
             refJobCount++;
-            document.getElementById('editor-ref-job').innerHTML += `<div class="cv-input-group framed-text" style="border-left:4px solid #6366f1"><input type="text" placeholder="Nombre" oninput="document.getElementById('rj-name-${refJobCount}').innerText=this.value" style="margin-bottom:8px;"><input type="text" placeholder="Cargo" oninput="document.getElementById('rj-role-${refJobCount}').innerText=this.value" style="margin-bottom:8px;"><input type="text" placeholder="Teléfono" oninput="document.getElementById('rj-tel-${refJobCount}').innerText=this.value"></div>`;
-            document.getElementById('prev-ref-job-container').innerHTML += `<div class="ref-card"><div style="font-weight:800; font-size:0.9rem;" id="rj-name-${refJobCount}">Nombre</div><div style="font-size:0.85rem;" id="rj-role-${refJobCount}">Cargo</div><div style="font-size:0.85rem; color:#1d4ed8 !important;" id="rj-tel-${refJobCount}">Teléfono</div></div>`;
+            
+            const editorHTML = `
+                <div class="cv-input-group framed-text" style="border-left:4px solid #6366f1">
+                    <input type="text" placeholder="Nombre" oninput="document.getElementById('rj-name-${refJobCount}').innerText=this.value" style="margin-bottom:8px;">
+                    <input type="text" placeholder="Cargo" oninput="document.getElementById('rj-role-${refJobCount}').innerText=this.value" style="margin-bottom:8px;">
+                    <input type="text" placeholder="Teléfono" oninput="document.getElementById('rj-tel-${refJobCount}').innerText=this.value">
+                </div>`;
+            document.getElementById('editor-ref-job').insertAdjacentHTML('beforeend', editorHTML);
+            
+            const prevHTML = `
+                <div class="ref-card">
+                    <div style="font-weight:800; font-size:0.9rem;" id="rj-name-${refJobCount}">Nombre</div>
+                    <div style="font-size:0.85rem;" id="rj-role-${refJobCount}">Cargo</div>
+                    <div style="font-size:0.85rem; color:#1d4ed8 !important;" id="rj-tel-${refJobCount}">Teléfono</div>
+                </div>`;
+            document.getElementById('prev-ref-job-container').insertAdjacentHTML('beforeend', prevHTML);
         }
+
         function addRefPers() {
             refPersCount++;
-            document.getElementById('editor-ref-pers').innerHTML += `<div class="cv-input-group framed-text" style="border-left:4px solid #f43f5e"><input type="text" placeholder="Nombre" oninput="document.getElementById('rp-name-${refPersCount}').innerText=this.value" style="margin-bottom:8px;"><input type="text" placeholder="Teléfono" oninput="document.getElementById('rp-tel-${refPersCount}').innerText=this.value"></div>`;
-            document.getElementById('prev-ref-pers-container').innerHTML += `<div class="ref-card"><div style="font-weight:800; font-size:0.9rem;" id="rp-name-${refPersCount}">Nombre</div><div style="font-size:0.85rem; color:#1d4ed8 !important;" id="rp-tel-${refPersCount}">Teléfono</div></div>`;
+            
+            const editorHTML = `
+                <div class="cv-input-group framed-text" style="border-left:4px solid #f43f5e">
+                    <input type="text" placeholder="Nombre" oninput="document.getElementById('rp-name-${refPersCount}').innerText=this.value" style="margin-bottom:8px;">
+                    <input type="text" placeholder="Teléfono" oninput="document.getElementById('rp-tel-${refPersCount}').innerText=this.value">
+                </div>`;
+            document.getElementById('editor-ref-pers').insertAdjacentHTML('beforeend', editorHTML);
+            
+            const prevHTML = `
+                <div class="ref-card">
+                    <div style="font-weight:800; font-size:0.9rem;" id="rp-name-${refPersCount}">Nombre</div>
+                    <div style="font-size:0.85rem; color:#1d4ed8 !important;" id="rp-tel-${refPersCount}">Teléfono</div>
+                </div>`;
+            document.getElementById('prev-ref-pers-container').insertAdjacentHTML('beforeend', prevHTML);
         }
-        addJob(); addEdu();
+
+        // Inicializar el formulario con al menos un bloque vacío
+        addJob(); 
+        addEdu();
     </script>
 </body>
 </html>

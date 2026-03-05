@@ -3,1244 +3,974 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISTEMA DE GESTIÓN JURÍDICA | LABORALEC PRO 2026</title>
     
-    <title>Calculadora Laboral Ecuador 2026 | Liquidación, Horas Extras y Más</title>
-    <meta name="description" content="Calcula tu liquidación por despido intempestivo, horas extras, décimos y aportes IESS gratis. Basado en el Código del Trabajo ecuatoriano actualizado 2026.">
-    <meta name="keywords" content="calculadora laboral Ecuador, despido intempestivo Ecuador, liquidación laboral 2026, derechos laborales Ecuador, calculo utilidades, Ministerio del Trabajo, buscar empleo Ecuador">
-    
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4278440613074024" crossorigin="anonymous"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="icono.png">
 
     <style>
-        /* ═══════════════════════════════════════════════════════
-           LABORALEC PRO 2026
-           Aesthetic: Obsidian Tribunal — Ultra-Dark Legal Prestige
-        ═══════════════════════════════════════════════════════ */
+        /* ==========================================================================
+           1. ARQUITECTURA DE DISEÑO & VARIABLES (CSS PRO)
+           ========================================================================== */
         :root {
-            /* ── Backgrounds (extremely dark) ── */
-            --void:       #020408;   
-            --abyss:      #05080f;   
-            --obsidian:   #080d17;   
-            --slate:      #0d1525;   
-            --surface:    #111d30;   
-            --rim:        #1a2840;   
-            --rim-lt:     #243450;   
+            /* Colores Institucionales */
+            --color-primary: #0f172a;       /* Azul Noche Profundo */
+            --color-primary-light: #1e293b; /* Azul Acero */
+            --color-accent: #3b82f6;        /* Azul Vibrante */
+            --color-accent-hover: #2563eb;
+            
+            /* Colores de Estado */
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-danger: #ef4444;
+            
+            /* Colores Bandera Ecuador (Para el Logo LABORALEC) */
+            --flag-yellow: #FFD100;
+            --flag-blue: #005EB8;
+            --flag-red: #EF3340; /* Rojo Intenso */
 
-            /* ── Text ── */
-            --dust:       #3d5070;   
-            --ash:        #5a7299;   
-            --fog:        #8ba4c0;   
-            --silver:     #c0d4e8;   
-            --frost:      #e4eef8;   
-            --white:      #f5faff;   
-
-            /* ── Accent: Amber Gold (premium legal) ── */
-            --amber:      #d4a843;
-            --amber-lt:   #f0c96a;
-            --amber-dim:  rgba(212,168,67,0.10);
-            --amber-glow: rgba(212,168,67,0.20);
-            --amber-edge: rgba(212,168,67,0.35);
-
-            /* ── Status colors (kept dark-toned) ── */
-            --jade:       #1aad72;
-            --jade-dim:   rgba(26,173,114,0.10);
-            --jade-edge:  rgba(26,173,114,0.28);
-            --cobalt:     #2f6fd4;
-            --cobalt-dim: rgba(47,111,212,0.10);
-            --cobalt-edge:rgba(47,111,212,0.28);
-            --crimson:    #c24040;
-            --crimson-dim:rgba(194,64,64,0.10);
-            --violet:     #7c5bbf;
-
-            /* ── Geometry ── */
-            --r-xs: 4px;
-            --r-sm: 7px;
-            --r:    11px;
-            --r-lg: 16px;
-            --r-xl: 22px;
+            /* Superficies y Fondos */
+            --bg-body: #f1f5f9;
+            --bg-card: #ffffff;
+            --border-color: #e2e8f0;
+            
+            /* Tipografía */
+            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-mono: 'Roboto Mono', monospace;
+            --text-main: #334155;
+            --text-light: #64748b;
+            
+            /* Sombras y Efectos */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-
+        /* Reset Básico */
+        * { box-sizing: border-box; outline: none; margin: 0; padding: 0; }
+        
         body {
-            background-color: var(--abyss);
-            background-image:
-                linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
-            background-size: 40px 40px;
-            background-attachment: fixed;
-            color: var(--fog);
-            font-family: 'DM Sans', sans-serif;
-            font-size: 15px;
-            line-height: 1.68;
+            font-family: var(--font-main);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 120px; /* Espacio para el footer fijo */
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        h1,h2,h3,h4,h5 { font-family: 'Playfair Display', serif; color: var(--frost); line-height: 1.2; }
-        a { color: inherit; text-decoration: none; }
-
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: var(--void); }
-        ::-webkit-scrollbar-thumb { background: var(--rim-lt); border-radius: 3px; }
-
-        /* ════════════════ HEADER (SLIM) ════════════════ */
+        /* ==========================================================================
+           2. HEADER Y NAVEGACIÓN
+           ========================================================================== */
         header {
-            background: rgba(2,4,8,1);
-            border-bottom: 1px solid var(--rim);
+            background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            z-index: 50;
         }
 
-        .header-inner {
-            max-width: 1260px; margin: 0 auto;
-            padding: 10px 28px;
-            display: flex; align-items: center; justify-content: center; gap: 15px;
+        .header-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .brand { display: flex; align-items: center; gap: 15px; }
-        .brand img { height: 35px; filter: drop-shadow(0 0 10px rgba(212,168,67,0.55)) brightness(1.1); }
-
-        .brand-name {
-            font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 900;
-            color: var(--white); letter-spacing: 2px; text-shadow: 0 0 30px rgba(212,168,67,0.25); margin:0;
+        /* LOGO CON COLORES DE LA BANDERA DEL ECUADOR (AMARILLO, AZUL Y ROJO) */
+        .brand-logo h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin: 0;
+            text-transform: uppercase;
+            /* Técnica de degradado sobre texto: Bandera Ecuador */
+            background: linear-gradient(180deg, 
+                var(--flag-yellow) 0%, 
+                var(--flag-yellow) 50%, 
+                var(--flag-blue) 50%, 
+                var(--flag-blue) 75%, 
+                var(--flag-red) 75%, 
+                var(--flag-red) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.3); /* Sombra para legibilidad */
+            display: inline-block;
         }
-        .brand-tagline {
-            font-family: 'DM Mono', monospace; font-size: 0.55rem; color: var(--amber);
-            letter-spacing: 1px; text-transform: uppercase; opacity: 0.8;
+        
+        .brand-logo span {
+            display: block;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-top: -5px;
+            -webkit-text-fill-color: #94a3b8; /* Restaurar color normal */
         }
 
-        /* ════════════════ NAV ════════════════ */
-        nav { background: rgba(5,8,15,0.98); border-bottom: 1px solid var(--rim); }
-        .nav-inner { max-width: 1260px; margin: 0 auto; padding: 0 28px; display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; }
-        .nav-inner::-webkit-scrollbar { display: none; }
+        .system-status {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            font-size: 0.9rem;
+            background: rgba(255,255,255,0.05);
+            padding: 8px 16px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .status-dot { height: 8px; width: 8px; background-color: var(--color-success); border-radius: 50%; display: inline-block; margin-right: 6px; box-shadow: 0 0 8px var(--color-success); }
+
+        /* Navegación por Pestañas (Sticky) */
+        .nav-wrapper {
+            background: var(--bg-card);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-tabs {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 0 10px;
+        }
 
         .tab-btn {
-            flex-shrink: 0; background: transparent; border: none; color: var(--ash);
-            padding: 15px 20px; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600;
-            letter-spacing: 0.6px; cursor: pointer; border-bottom: 2px solid transparent;
-            transition: all 0.22s ease; display: flex; align-items: center; gap: 8px; white-space: nowrap; position: relative;
+            padding: 16px 24px;
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .tab-btn::after {
-            content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--amber), transparent); opacity: 0; transition: opacity 0.22s;
-        }
-        .tab-btn:hover { color: var(--silver); background: rgba(212,168,67,0.03); }
-        .tab-btn.active { color: var(--amber-lt); }
-        .tab-btn.active::after { opacity: 1; }
-        .tab-btn i { font-size: 0.82rem; opacity: 0.85; }
 
-        /* ════════════════ LAYOUT ════════════════ */
-        main { min-height: calc(100vh - 130px); }
-        .page-wrap { max-width: 1260px; margin: 0 auto; padding: 44px 28px; }
-        .tab-pane { display: none; animation: ascend 0.38s cubic-bezier(0.22,1,0.36,1) both; }
+        .tab-btn i { font-size: 1.1rem; }
+        .tab-btn:hover { background-color: #f8fafc; color: var(--color-primary); }
+        .tab-btn.active { color: var(--color-accent); border-bottom-color: var(--color-accent); background: linear-gradient(to top, #eff6ff 0%, transparent 100%); }
+
+        /* ==========================================================================
+           3. ESTRUCTURA DEL CONTENIDO PRINCIPAL
+           ========================================================================== */
+        .main-content {
+            max-width: 1280px;
+            margin: 40px auto;
+            padding: 0 24px;
+            width: 100%;
+            flex: 1;
+        }
+
+        .tab-pane { display: none; animation: fadeIn 0.5s ease-out; }
         .tab-pane.active { display: block; }
-        @keyframes ascend { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* ════════════════ HERO ════════════════ */
-        .hero {
-            position: relative; background: linear-gradient(160deg, var(--obsidian) 0%, var(--void) 100%);
-            border: 1px solid var(--rim); border-radius: var(--r-xl); padding: 40px 50px; margin-bottom: 30px; text-align: center; overflow: hidden;
+        /* ==========================================================================
+           4. COMPONENTES UI (TARJETAS, FORMULARIOS, BOTONES)
+           ========================================================================== */
+        /* Tarjetas */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
-        .hero-eyebrow {
-            font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 4px; color: var(--amber); text-transform: uppercase;
-            margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 12px;
+        .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: #cbd5e1; }
+
+        .card-header {
+            background: linear-gradient(to right, #f8fafc, #ffffff);
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .hero-eyebrow::before, .hero-eyebrow::after { content: ''; width: 28px; height: 1px; background: linear-gradient(to right, transparent, var(--amber)); }
-        .hero-eyebrow::after { transform: scaleX(-1); }
-        .hero h1 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin-bottom: 12px; background: linear-gradient(to bottom, var(--white), var(--silver)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .hero p { color: var(--ash); max-width: 600px; margin: 0 auto; font-size: 0.95rem; }
+        .card-header h3 { margin: 0; font-size: 1.1rem; color: var(--color-primary); font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .card-body { padding: 24px; flex-grow: 1; }
 
-        /* ════════════════ CARDS ════════════════ */
-        .grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 18px; }
-        .card { background: var(--obsidian); border: 1px solid var(--rim); border-radius: var(--r-lg); overflow: hidden; transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s; }
-        .card:hover { border-color: var(--rim-lt); transform: translateY(-4px); box-shadow: 0 16px 50px rgba(0,0,0,0.7), 0 0 0 1px var(--rim-lt); }
-        .card-header { padding: 16px 22px; border-bottom: 1px solid var(--rim); background: rgba(0,0,0,0.35); }
-        .card-header h3 { font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 700; margin: 0; }
-        .card-body { padding: 22px; }
-
-        .card-gold    { border-top: 2px solid var(--amber); }
-        .card-emerald { border-top: 2px solid var(--jade); }
-        .card-sapphire{ border-top: 2px solid var(--cobalt); }
-        .card-rose    { border-top: 2px solid var(--crimson); }
-
-        /* ════════════════ FORMS ════════════════ */
-        .form-group { margin-bottom: 16px; }
-        .form-group:last-child { margin-bottom: 0; }
-        .form-group label { display: block; font-size: 0.68rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--ash); margin-bottom: 8px; }
-        input, select, textarea {
-            background: var(--surface) !important; color: var(--silver) !important; border: 1px solid var(--rim) !important; border-radius: var(--r-xs) !important;
-            padding: 11px 14px !important; width: 100%; font-family: 'DM Sans', sans-serif; font-size: 16px !important; transition: border-color 0.2s, box-shadow 0.2s; box-sizing: border-box;
+        /* Formularios */
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; color: var(--text-main); text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        input[type="number"], input[type="text"], select, textarea {
+            width: 100%; padding: 12px 16px; 
+            border: 1px solid var(--border-color); 
+            border-radius: var(--radius-md);
+            font-size: 0.95rem; 
+            color: var(--color-primary);
+            background-color: #f8fafc;
+            transition: var(--transition);
+            font-family: var(--font-main);
         }
-        input:focus, select:focus, textarea:focus { border-color: var(--amber) !important; outline: none; box-shadow: 0 0 0 3px var(--amber-dim), 0 0 16px var(--amber-dim); }
 
-        /* Buttons */
+        input:focus, select:focus, textarea:focus { 
+            border-color: var(--color-accent); 
+            background-color: #fff;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); 
+        }
+
+        /* Botones */
         .btn {
-            display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 22px; border: none; border-radius: var(--r-xs);
-            font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.6px; cursor: pointer; transition: all 0.22s; width: 100%;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 12px 24px; border-radius: var(--radius-md); border: none; 
+            font-weight: 600; cursor: pointer; transition: var(--transition);
+            width: 100%; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;
         }
-        .btn-gold { background: linear-gradient(135deg, var(--amber) 0%, #a87c28 100%); color: #0a0800; box-shadow: 0 2px 12px rgba(212,168,67,0.25); }
-        .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(212,168,67,0.40); }
-        .btn-emerald { background: var(--jade-dim); color: var(--jade); border: 1px solid var(--jade-edge) !important; }
-        .btn-emerald:hover { background: var(--jade); color: var(--void); }
-        .btn-sapphire { background: var(--cobalt-dim); color: var(--cobalt); border: 1px solid var(--cobalt-edge) !important; }
-        .btn-sapphire:hover { background: var(--cobalt); color: var(--white); }
+        .btn-primary { background: var(--color-primary); color: white; box-shadow: 0 4px 6px rgba(15, 23, 42, 0.2); }
+        .btn-primary:hover { background: var(--color-primary-light); transform: translateY(-1px); }
+        .btn-action { background: var(--color-accent); color: white; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.25); }
+        .btn-action:hover { background: var(--color-accent-hover); transform: translateY(-1px); }
+        .btn-outline { background: transparent; border: 2px solid var(--color-primary); color: var(--color-primary); }
+        .btn-outline:hover { background: var(--color-primary); color: white; }
 
-        .result-panel { display: none; margin-top: 14px; padding: 16px 18px; border-radius: var(--r-xs); background: rgba(212,168,67,0.04); border: 1px solid var(--amber-edge); font-size: 0.88rem; line-height: 1.75; color: var(--silver); }
+        /* Grillas */
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 30px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
 
-        /* ════════════════ TEXT BLOCKS & ALERTS ════════════════ */
-        .framed-text { background: rgba(0,0,0,0.4); border: 1px solid var(--rim); border-radius: var(--r-xs); padding: 18px 22px; margin-bottom: 18px; }
-        .framed-text p:last-child, .framed-text ul:last-child { margin-bottom: 0; }
-        .framed-text ul { padding-left: 22px; }
-        .framed-text li { margin-bottom: 8px; }
-        .framed-text strong { color: var(--frost); }
-        .law-box { background: rgba(0,0,0,0.45); border-left: 3px solid var(--amber); border-radius: 0 var(--r-xs) var(--r-xs) 0; padding: 14px 20px; font-style: italic; font-size: 0.9rem; margin: 18px 0; color: var(--silver); }
-        .info-box { padding: 14px 18px; border-radius: var(--r-xs); border: 1px solid; margin: 16px 0; font-size: 0.86rem; }
-        .info-box.blue    { background: var(--cobalt-dim); border-color: var(--cobalt-edge); color: #82aff5; }
-        .info-box.amber   { background: rgba(212,168,67,0.07); border-color: var(--amber-edge); color: var(--amber-lt); }
-        .info-box.red     { background: var(--crimson-dim); border-color: rgba(194,64,64,0.3); color: #f08080; }
-        .info-box.green   { background: var(--jade-dim); border-color: var(--jade-edge); color: #62d4a4; }
-        .info-box.purple { background: rgba(124,91,191,0.08); border-color: rgba(124,91,191,0.28); color: #b39eef; }
-
-        /* BANNER DE SEGURIDAD MINIMALISTA */
-        .security-warning {
-            background: var(--crimson-dim); border: 1px solid rgba(194,64,64,0.3); border-radius: var(--r-xs);
-            padding: 12px 18px; margin-bottom: 24px; display: flex; gap: 12px; align-items: center;
+        /* Paneles de Resultado */
+        .result-panel {
+            margin-top: 20px; background: #eff6ff; border-radius: var(--radius-md); padding: 20px;
+            border-left: 5px solid var(--color-accent); display: none;
+            animation: slideDown 0.3s ease-out;
         }
-        .security-warning i { color: #f08080; font-size: 1.3rem; }
-        .security-warning div { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-        .security-warning h4 { margin: 0; color: #fca5a5; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
-        .security-warning ul { margin: 0; padding: 0; display: inline-flex; gap: 12px; list-style: none; font-size: 0.8rem; color: var(--silver); }
-        .security-warning ul li::before { content: "•"; color: #f08080; margin-right: 5px; }
+        @keyframes slideDown { from {opacity:0; transform:translateY(-10px);} to {opacity:1; transform:translateY(0);} }
 
-        .tech-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; margin: 16px 0; border-radius: var(--r-xs); overflow: hidden; }
-        .tech-table th { background: rgba(0,0,0,0.55); color: var(--frost); font-weight: 700; padding: 11px 14px; text-align: left; border: 1px solid var(--rim); font-size: 0.72rem; letter-spacing: 0.8px; text-transform: uppercase; }
-        .tech-table td { padding: 10px 14px; border: 1px solid var(--rim); color: var(--fog); }
-        .tech-table tr:nth-child(even) td { background: rgba(0,0,0,0.2); }
-
-        /* ════════════════ LEGAL ITEMS ════════════════ */
-        .legal-grid { display: grid; gap: 10px; }
-        .legal-item { background: var(--obsidian); border: 1px solid var(--rim); border-radius: var(--r); overflow: hidden; transition: border-color 0.22s; }
-        .legal-item:hover { border-color: var(--amber-edge); }
-        .legal-item[open] { border-color: var(--amber-edge); box-shadow: 0 0 0 1px var(--amber-dim) inset; }
-        summary { padding: 18px 22px; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 14px; font-weight: 600; font-size: 0.9rem; color: var(--silver); transition: all 0.2s; }
-        summary:hover { background: rgba(255,255,255,0.015); color: var(--frost); }
-        summary::-webkit-details-marker { display: none; }
-        .art-badge { font-family: 'DM Mono', monospace; font-size: 0.68rem; padding: 4px 10px; border-radius: 3px; background: var(--amber-dim); color: var(--amber-lt); border: 1px solid var(--amber-edge); white-space: nowrap; flex-shrink: 0; box-shadow: 0 0 8px var(--amber-dim); }
-        .legal-content { padding: 24px; border-top: 1px solid var(--rim); background: rgba(0,0,0,0.25); color: var(--fog); }
-
-        /* ════════════════ GUIDE CALLOUTS ════════════════ */
-        .guide-card { display: flex; align-items: center; gap: 20px; padding: 22px; border-radius: var(--r); border: 1px solid; margin-bottom: 14px; transition: transform 0.22s, box-shadow 0.22s; }
-        .guide-card:hover { transform: translateX(5px); }
-        .guide-card .icon { font-size: 1.9rem; flex-shrink: 0; width: 50px; text-align: center; }
-        .guide-card h3 { font-family: 'DM Sans', sans-serif; font-size: 0.98rem; font-weight: 700; margin-bottom: 6px; }
-        .guide-card p  { font-size: 0.83rem; margin-bottom: 10px; color: var(--ash); }
-        .guide-card a  { display: inline-block; padding: 6px 14px; border-radius: 3px; font-size: 0.76rem; font-weight: 700; letter-spacing: 0.5px; }
-        .guide-blue  { background: rgba(5,8,15,0.7); border-color: var(--cobalt-edge); }
-        .guide-green { background: rgba(5,8,15,0.7); border-color: var(--jade-edge); }
-        .guide-red   { background: rgba(5,8,15,0.7); border-color: rgba(194,64,64,0.28); }
-
-        /* ════════════════ CV BUILDER ════════════════ */
-        .cv-builder-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
-        @media (max-width: 1024px) { .cv-builder-wrapper { grid-template-columns: 1fr; } }
-        .cv-editor { background: var(--obsidian); border: 1px solid var(--rim); border-radius: var(--r-lg); padding: 30px; }
-        .cv-section-title { font-family: 'DM Mono', monospace; font-size: 0.68rem; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: var(--amber); margin: 30px 0 14px; padding-bottom: 10px; border-bottom: 1px solid var(--rim); display: flex; justify-content: space-between; align-items: center; }
-        
-        .cv-btn-add { background: var(--jade-dim); color: var(--jade); border: 1px solid var(--jade-edge); padding: 11px; width: 100%; border-radius: var(--r-xs); cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.6px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 14px; }
-        .cv-btn-add:hover { background: var(--jade); color: var(--void); }
-        .cv-btn-print { background: linear-gradient(135deg, var(--amber), #a07820); color: #060400; padding: 17px; width: 100%; border: none; border-radius: var(--r-xs); font-size: 1rem; font-family: 'DM Sans', sans-serif; font-weight: 800; cursor: pointer; margin-top: 30px; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.22s; box-shadow: 0 4px 24px rgba(212,168,67,0.30); }
-        .cv-btn-print:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(212,168,67,0.50); }
-        .cv-preview-container { background: var(--void); border: 1px solid var(--rim); border-radius: var(--r-lg); padding: 36px; display: flex; justify-content: center; overflow-x: auto; }
-        
-        .a4-page { width: 210mm; min-height: 297mm; background: white !important; padding: 40px; box-shadow: 0 24px 70px rgba(0,0,0,0.9); box-sizing: border-box; color: #334155 !important; }
-        .cv-header-grid { display: grid; grid-template-columns: 1fr; gap: 20px; align-items: center; border-bottom: 3px solid #0f2554; padding-bottom: 24px; margin-bottom: 24px; }
-        .cv-header-grid.with-photo { grid-template-columns: auto 1fr; }
-        .cv-photo-display { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #f1f5f9; display: none; }
-        .cv-name { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; color: #0f172a !important; text-transform: uppercase; letter-spacing: -1px; line-height: 1; margin-bottom: 5px; }
-        .cv-role { font-size: 1rem; color: #0f2554 !important; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
-        .cv-contact-info { font-size: 0.85rem; margin-top: 12px; display: flex; flex-wrap: wrap; gap: 14px; color: #475569 !important; }
-        .cv-contact-item i { color: #0f2554 !important; margin-right: 5px; }
-        .cv-body { display: grid; grid-template-columns: 2fr 1.1fr; gap: 36px; }
-        .cv-section-head { font-size: 0.76rem; font-weight: 800; color: #0f172a !important; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 14px; border-bottom: 2px solid #e2e8f0; padding-bottom: 5px; display: flex; align-items: center; gap: 10px; }
-        .cv-section-head i { color: #0f2554 !important; }
-        .cv-item { margin-bottom: 18px; position: relative; padding-left: 14px; }
-        .cv-item::before { content: ''; position: absolute; left: 0; top: 7px; width: 5px; height: 5px; background: #cbd5e1; border-radius: 50%; }
-        .cv-item-title { font-weight: 800; color: #1e293b !important; font-size: 1rem; }
-        .cv-item-subtitle { color: #0f2554 !important; font-weight: 600; font-size: 0.88rem; }
-        .cv-item-date { font-size: 0.8rem; color: #64748b !important; font-style: italic; margin-bottom: 4px; display: block; }
-        .cv-item-desc { font-size: 0.9rem; text-align: justify; line-height: 1.5; color: #334155 !important; }
-        .cv-skill-tag { display: inline-block; background: #f0f7ff !important; padding: 4px 10px; border-radius: 3px; font-size: 0.8rem; color: #0f2554 !important; margin: 0 4px 4px 0; font-weight: 600; border: 1px solid #d1e3fa !important; }
-        .ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .ref-card { background: #f8fafc !important; padding: 10px; border-radius: 4px; border: 1px solid #e2e8f0 !important; color: #334155 !important; }
-
-        /* ════════════════ TALENT ════════════════ */
-        .hero-talent { background: linear-gradient(160deg, var(--obsidian), var(--void)); border: 1px solid var(--rim); border-radius: var(--r-xl); padding: 40px; text-align: center; margin-bottom: 32px; position: relative; overflow: hidden; }
-        .hero-talent::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(26,173,114,0.06), transparent); }
-        .search-bar { background: var(--obsidian); border: 1px solid var(--rim); border-radius: var(--r); padding: 18px 22px; display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; align-items: center; }
-        .search-bar input { flex: 1; min-width: 220px; }
-        .search-bar select { min-width: 160px; width: auto; }
-        .candidate-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 18px; }
-        .candidate-card { background: var(--obsidian); border: 1px solid var(--rim); border-radius: var(--r-lg); padding: 24px; transition: all 0.25s; position: relative; overflow: hidden; display: flex; flex-direction: column; }
-        .candidate-card::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%; background: linear-gradient(to bottom, var(--jade), transparent); }
-        .candidate-card:hover { border-color: var(--jade-edge); transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 0 1px var(--jade-edge); }
-        .candidate-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
-        .candidate-avatar { width: 52px; height: 52px; border-radius: 50%; background: var(--cobalt-dim); color: var(--cobalt); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; border: 1px solid var(--rim); flex-shrink: 0; overflow: hidden; }
-        .candidate-info h3 { font-family: 'DM Sans', sans-serif; font-size: 1rem; margin-bottom: 3px; color: var(--silver); }
-        .candidate-info p { margin: 0; color: var(--ash); font-size: 0.8rem; }
-        .candidate-desc { font-size: 0.86rem; color: var(--fog); margin-bottom: 18px; line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; flex-grow: 1; }
-        .btn-hire { background: var(--jade-dim); color: var(--jade); border: 1px solid var(--jade-edge); padding: 10px 16px; width: 100%; border-radius: var(--r-xs); font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; display: flex; justify-content: center; gap: 8px; align-items: center; text-decoration: none; margin-top: auto; }
-        .btn-hire:hover { background: var(--jade); color: var(--void); }
-        
-        .post-btn { background: linear-gradient(135deg, var(--jade), #0e8a58); color: var(--void); padding: 14px 32px; border: none; border-radius: var(--r-xs); font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.22s; box-shadow: 0 4px 22px rgba(26,173,114,0.25); }
-        .post-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(26,173,114,0.40); }
-
-        /* ════════════════ MODAL ════════════════ */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px) saturate(50%); }
-        .modal-container { background: var(--obsidian); border: 1px solid var(--rim-lt); border-radius: var(--r-xl); width: 90%; max-width: 580px; max-height: 90vh; overflow-y: auto; box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 0 1px var(--amber-dim); animation: modalIn 0.32s cubic-bezier(0.22,1,0.36,1) both; }
-        @keyframes modalIn { from { transform: scale(0.94) translateY(24px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
-        .modal-header { padding: 22px 28px; border-bottom: 1px solid var(--rim); display: flex; justify-content: space-between; align-items: center; }
-        .modal-header h3 { font-family: 'DM Sans', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--frost); margin:0;}
-        .close-btn { background: none; border: none; color: var(--ash); font-size: 1.2rem; cursor: pointer; transition: color 0.2s; }
-        .close-btn:hover { color: var(--crimson); }
-        .modal-body { padding: 28px; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-
-        /* ════════════════ FOOTER (SLIM) ════════════════ */
-        footer { background: var(--void); border-top: 1px solid var(--rim); padding: 15px 28px; margin-top: 40px; }
-        .footer-inner { max-width: 1260px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px; }
-        .footer-copy { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--dust); letter-spacing: 0.8px; }
-        .footer-links { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;}
-        .footer-links a { color: var(--dust); font-size: 0.75rem; font-weight: 500; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
-        .footer-links a:hover { color: var(--amber); }
-
-        /* ════════════════ RESPONSIVE ════════════════ */
-        @media (max-width: 700px) {
-            .page-wrap { padding: 24px 16px; }
-            .hero { padding: 30px 20px; }
-            .form-row { grid-template-columns: 1fr; }
-            .security-warning { flex-direction: column; align-items: flex-start; }
-            .security-warning div { flex-direction: column; align-items: flex-start; gap: 4px; }
-            .security-warning ul { flex-direction: column; gap: 4px; }
-            .security-warning i { display: none; }
+        .res-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; border-bottom: 1px dashed #cbd5e1; padding-bottom: 5px; }
+        .res-total { 
+            margin-top: 15px; padding-top: 15px; border-top: 2px solid var(--color-accent); 
+            font-weight: 800; font-size: 1.2rem; color: var(--color-primary); 
+            display: flex; justify-content: space-between;
         }
+
+        /* ==========================================================================
+           5. ESTILOS ESPECÍFICOS: ACUERDOS MINISTERIALES
+           ========================================================================== */
+        .legal-layout { display: grid; grid-template-columns: 350px 1fr; gap: 24px; height: 650px; }
+        
+        .legal-sidebar { 
+            background: var(--bg-card); border-radius: var(--radius-lg); 
+            border: 1px solid var(--border-color); display: flex; flex-direction: column; 
+            overflow: hidden;
+        }
+        .search-box { padding: 16px; border-bottom: 1px solid var(--border-color); background: #f8fafc; }
+        .legal-list { overflow-y: auto; flex: 1; }
+        
+        .doc-item { 
+            padding: 16px; border-bottom: 1px solid var(--border-color); 
+            cursor: pointer; transition: background 0.15s; position: relative;
+        }
+        .doc-item:hover { background: #f1f5f9; }
+        .doc-item.active { background: #eff6ff; border-left: 4px solid var(--color-accent); }
+        .doc-code { font-weight: 700; color: var(--color-primary); font-size: 0.9rem; }
+        .doc-title { font-size: 0.85rem; color: var(--text-main); margin-top: 4px; line-height: 1.4; }
+        .doc-tag { font-size: 0.7rem; background: #e2e8f0; padding: 2px 6px; border-radius: 4px; color: var(--text-light); margin-top: 6px; display: inline-block; }
+
+        .legal-viewer { 
+            background: var(--bg-card); border-radius: var(--radius-lg); 
+            border: 1px solid var(--border-color); padding: 40px; 
+            overflow-y: auto; position: relative;
+        }
+        .pdf-placeholder {
+            text-align: center; color: var(--text-light); margin-top: 20%;
+        }
+        .pdf-content-sim {
+            background: white; border: 1px solid #ddd; padding: 40px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); min-height: 500px;
+        }
+
+        /* ==========================================================================
+           6. ESTILOS ESPECÍFICOS: HOJA DE VIDA (CV)
+           ========================================================================== */
+        .cv-editor { background: var(--bg-card); padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); height: 800px; overflow-y: auto; }
+        .cv-preview-container { 
+            background: #525659; padding: 20px; border-radius: var(--radius-lg); 
+            display: flex; justify-content: center; height: 800px; overflow-y: auto; 
+        }
+        
+        .cv-paper {
+            background: white; width: 210mm; min-height: 297mm; padding: 25mm;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            font-family: 'Georgia', serif; color: #111;
+            transform: scale(0.85); transform-origin: top center; /* Ajuste visual */
+        }
+
+        .cv-paper h1 { font-size: 24pt; border-bottom: 2px solid #333; margin-bottom: 5mm; text-transform: uppercase; }
+        .cv-paper h2 { font-size: 14pt; color: #444; margin-bottom: 15mm; font-weight: normal; }
+        .cv-section-title { 
+            font-size: 12pt; font-weight: bold; text-transform: uppercase; 
+            background: #eee; padding: 5px; margin-top: 15px; margin-bottom: 10px; font-family: sans-serif; 
+        }
+        .cv-text { font-size: 11pt; line-height: 1.5; white-space: pre-line; margin-bottom: 10px; }
+
+        /* ==========================================================================
+           7. CHATBOT INTELIGENTE Y MODALES
+           ========================================================================== */
+        /* Botón Flotante */
+        .chat-fab {
+            position: fixed; bottom: 80px; right: 30px; width: 64px; height: 64px;
+            background: var(--color-accent); color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem; cursor: pointer; box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+            z-index: 100; transition: transform 0.3s;
+        }
+        .chat-fab:hover { transform: scale(1.1) rotate(10deg); background: var(--color-accent-hover); }
+
+        /* Ventana Chat */
+        .chat-window {
+            position: fixed; bottom: 160px; right: 30px; width: 380px; height: 550px;
+            background: white; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            display: none; flex-direction: column; overflow: hidden; z-index: 99;
+            border: 1px solid var(--border-color); animation: slideUpChat 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes slideUpChat { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .chat-header { 
+            background: var(--color-primary); padding: 16px; color: white; 
+            font-weight: 600; display: flex; justify-content: space-between; align-items: center; 
+        }
+        .chat-body { 
+            flex: 1; padding: 20px; overflow-y: auto; background: #f8fafc; 
+            display: flex; flex-direction: column; gap: 12px; 
+        }
+        
+        .msg { max-width: 85%; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; line-height: 1.5; position: relative; }
+        .msg.bot { background: white; border: 1px solid var(--border-color); align-self: flex-start; border-bottom-left-radius: 2px; color: var(--text-main); }
+        .msg.user { background: var(--color-primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+        
+        .chat-footer { padding: 15px; border-top: 1px solid var(--border-color); display: flex; gap: 8px; background: white; }
+
+        /* Modal de Descarga */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+            z-index: 2000; display: none; align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background: white; padding: 30px; border-radius: var(--radius-lg); width: 400px;
+            text-align: center; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .progress-bar { width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px; margin: 20px 0; overflow: hidden; }
+        .progress-fill { height: 100%; width: 0%; background: var(--color-accent); transition: width 0.1s; }
+
+        /* Footer Legal */
+        .legal-footer {
+            background: #fff; border-top: 1px solid #e2e8f0; padding: 20px;
+            text-align: center; font-size: 0.75rem; color: #64748b;
+            position: fixed; bottom: 0; width: 100%; z-index: 30;
+            transition: opacity 0.5s ease, transform 0.5s ease; /* Transición añadida */
+        }
+
+        /* ==========================================================================
+           8. ESTILOS DE IMPRESIÓN (SOLO PARA CV Y REPORTES)
+           ========================================================================== */
+        @media print {
+            /* Ocultar todo lo que no queremos imprimir */
+            header, .nav-wrapper, .legal-footer, .chat-fab, .chat-window, .cv-editor, .btn, .card-header button {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+
+            /* Ajustar el contenedor principal */
+            .main-content {
+                margin: 0;
+                padding: 0;
+                max-width: 100%;
+            }
+
+            /* Si estamos en la pestaña CV, hacemos que el papel ocupe toda la hoja */
+            .cv-preview-container {
+                display: block;
+                height: auto;
+                overflow: visible;
+                background: white;
+                padding: 0;
+                border: none;
+            }
+
+            .cv-paper {
+                transform: scale(1); /* Quitamos el zoom para que salga tamaño real */
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+                min-height: auto;
+                padding: 0; /* Ajusta según márgenes de impresora */
+            }
+            
+            /* Ocultar otras pestañas por si acaso */
+            #tab-calculadoras, #tab-acuerdos {
+                display: none !important;
+            }
+        }
+
     </style>
 </head>
 <body>
 
     <header>
-        <div class="header-inner">
-            <div class="brand">
-                <img src="escudo.svg.png" alt="Escudo Ecuador">
-                <div>
-                    <div class="brand-name">LABORALEC</div>
-                    <div class="brand-tagline">Sistema Jurídico Integrado</div>
-                </div>
+        <div class="header-container">
+            <div class="brand-logo">
+                <h1>LABORALEC</h1>
+                <span>SISTEMA JURÍDICO INTEGRADO 2026</span>
             </div>
-            <div class="gold-rule"></div>
-            <div class="header-badge">⚖ Ecuador 2026</div>
+            <div class="system-status">
+                <span class="status-dot"></span>
+                <span>SBU Vigente: <strong>$482.00</strong></span>
+            </div>
         </div>
     </header>
 
-    <nav>
-        <div class="nav-inner" id="main-nav">
-            <button class="tab-btn active" onclick="app.navigate('tab-sindical', this)">
-                <i class="fas fa-users-cog"></i> Organización Sindical
-            </button>
-            <button class="tab-btn" onclick="app.navigate('tab-calculadoras', this)">
+    <nav class="nav-wrapper">
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="app.navigate('tab-calculadoras')">
                 <i class="fas fa-calculator"></i> Calculadoras
             </button>
-            <button class="tab-btn" onclick="app.navigate('tab-base-legal', this)">
-                <i class="fas fa-book"></i> Enciclopedia Legal
+            <button class="tab-btn" onclick="app.navigate('tab-acuerdos')">
+                <i class="fas fa-gavel"></i> Biblioteca Legal
             </button>
-            <button class="tab-btn" onclick="app.navigate('tab-cv', this)">
+            <button class="tab-btn" onclick="app.navigate('tab-cv')">
                 <i class="fas fa-file-signature"></i> Hoja de Vida
-            </button>
-            <button class="tab-btn" onclick="app.navigate('tab-talento', this)">
-                <i class="fas fa-briefcase"></i> Directorio Talento
             </button>
         </div>
     </nav>
 
-    <main>
+    <main class="main-content">
 
-        <div id="tab-sindical" class="tab-pane active">
-            <div class="page-wrap">
-                <div class="hero">
-                    <div class="hero-eyebrow">Laboralec · Estrategia Sindical</div>
-                    <h1>Lo que una Organización Sindical<br>Debería Saber</h1>
-                    <p>Fundamentos, defensa de derechos colectivos y estrategias legales para el fortalecimiento de las bases trabajadoras.</p>
-                </div>
-
-                <div class="grid-2">
-                    <div class="card card-sapphire">
-                        <div class="card-header"><h3 style="color:#93b8ff;"><i class="fas fa-fist-raised" style="color:var(--sapphire);"></i> 1. Derechos Fundamentales</h3></div>
-                        <div class="card-body">
-                            <div class="framed-text" style="margin-bottom:0;">
-                                <p>La organización sindical es un <strong>derecho humano y constitucional</strong> (Art. 326, num. 13).</p>
-                                <ul style="margin-bottom:0;">
-                                    <li><strong>Libertad Sindical:</strong> Constituir sin autorización previa.</li>
-                                    <li><strong>Fuero Sindical:</strong> Protección absoluta ante despido.</li>
-                                    <li><strong>Autonomía:</strong> Estatutos y reglamentos propios.</li>
-                                </ul>
-                            </div>
-                        </div>
+        <div id="tab-calculadoras" class="tab-pane active">
+            <div class="grid-3">
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-hand-holding-medical" style="color:var(--color-accent)"></i> Aportes IESS</h3>
                     </div>
-
-                    <div class="card card-rose">
-                        <div class="card-header"><h3 style="color:#fca5a5;"><i class="fas fa-balance-scale-left" style="color:var(--rose);"></i> 2. Contrato Colectivo</h3></div>
-                        <div class="card-body">
-                            <div class="framed-text">
-                                <p>Supremacía de la norma (Art. 425 de la Constitución).</p>
-                                <ul>
-                                    <li><strong>Intangibilidad:</strong> El contrato es Ley para las partes.</li>
-                                    <li><strong>Acuerdos Ministeriales:</strong> No pueden violar el contrato.</li>
-                                </ul>
-                            </div>
-                            <div class="info-box red" style="margin:0;"><i class="fas fa-gavel"></i> <strong>In Dubio Pro Operario</strong></div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Sueldo Nominal ($)</label>
+                            <input type="number" id="iess_sueldo" value="482.00">
                         </div>
-                    </div>
-
-                    <div class="card card-gold">
-                        <div class="card-header"><h3 style="color:var(--amber-lt);"><i class="fas fa-building" style="color:var(--amber);"></i> 3. El Reglamento Interno</h3></div>
-                        <div class="card-body">
-                            <p style="margin-bottom:14px;">El Reglamento Interno de Trabajo (RIT) es un manual de instrucciones de la empresa, <strong style="color:var(--frost);">no una Ley Suprema</strong> que pueda quitarte derechos.</p>
-                            <ul style="padding-left:20px; margin-bottom:16px;">
-                                <li><strong>No quita derechos:</strong> No puede darte menos vacaciones que las dictadas por ley.</li>
-                                <li><strong>No inventa despidos:</strong> Causales fijas en el Art. 172.</li>
-                                <li><strong>No impone multas ilegales:</strong> Máximo 10% del sueldo diario.</li>
-                            </ul>
-                            <div class="law-box">El sindicato debe exigir revisar el borrador del Reglamento antes de su aprobación ministerial.</div>
+                        <div class="form-group">
+                            <label>Régimen</label>
+                            <select id="iess_tipo">
+                                <option value="privado">Sector Privado (9.45% / 12.15%)</option>
+                                <option value="publico">Sector Público (11.45% / 9.15%)</option>
+                                <option value="voluntario">Voluntario (17.6%)</option>
+                            </select>
                         </div>
-                    </div>
-
-                    <div class="card card-emerald">
-                        <div class="card-header"><h3 style="color:var(--jade);"><i class="fas fa-hourglass-end" style="color:var(--jade);"></i> 4. El Silencio Administrativo</h3></div>
-                        <div class="card-body">
-                            <div class="framed-text" style="margin-bottom:0;">
-                                <p>Según el COA, si una institución pública no responde un oficio en el plazo legal, <strong>la respuesta es POSITIVA</strong>.</p>
-                                <ul style="margin-bottom:0;">
-                                    <li>Se ingresa la petición formal.</li>
-                                    <li>Vencido el plazo, el derecho se concede.</li>
-                                </ul>
-                            </div>
+                        <div class="form-group">
+                             <label style="text-transform:none; font-weight:400; cursor:pointer;">
+                                <input type="checkbox" id="iess_fr" style="width:auto; margin-right:8px;"> Acumula Fondo de Reserva (8.33%)
+                             </label>
                         </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header"><h3 style="color:#c4b5fd;"><i class="fas fa-users" style="color:#8b5cf6;"></i> 5. Sindicato vs. Comité</h3></div>
-                        <div class="card-body">
-                            <ul style="padding-left:20px; margin-bottom:16px;">
-                                <li><strong>Sindicato (Art. 443):</strong> Mínimo de <strong>30 trabajadores</strong>.</li>
-                                <li><strong>Comité de Empresa (Art. 459):</strong> Requiere <strong>más del 50%</strong> de los trabajadores.</li>
-                            </ul>
-                            <div class="info-box purple" style="margin:0;"><strong>Solo el Comité</strong> puede firmar un Contrato Colectivo que ampare a toda la institución.</div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header"><h3 style="color:#f9a8d4;"><i class="fas fa-shield-alt" style="color:#ec4899;"></i> 6. Despido Ineficaz</h3></div>
-                        <div class="card-body">
-                            <ul style="padding-left:20px; margin-bottom:16px;">
-                                <li><strong>Proceso de Formación:</strong> Notificado el Inspector del Trabajo, nadie puede ser despedido.</li>
-                                <li><strong>Art. 195.1:</strong> El juez califica el <em>Despido Ineficaz</em>.</li>
-                            </ul>
-                            <div class="info-box red" style="margin:0;"><i class="fas fa-gavel"></i> Indemnización extra de <strong>12 meses de sueldo</strong>, o reintegro inmediato.</div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header"><h3 style="color:#fca5a5;"><i class="fas fa-bullhorn" style="color:#f43f5e;"></i> 7. Huelga Legal</h3></div>
-                        <div class="card-body">
-                            <p style="margin-bottom:14px;"><strong style="color:var(--frost);">Hacer huelga NO es causal de despido</strong>, siempre que se sigan los pasos del Código (Art. 467).</p>
-                            <ol style="padding-left:20px; margin-bottom:16px;">
-                                <li><strong>Paso 1:</strong> Presentar Pliego de Peticiones ante el Inspector.</li>
-                                <li><strong>Paso 2:</strong> Agotar la etapa de mediación obligatoria.</li>
-                                <li><strong>Paso 3:</strong> Tribunal de Conciliación y Arbitraje.</li>
-                            </ol>
-                            <div class="law-box">Si la huelga se declara bajo este proceso legal, ningún huelguista puede ser separado de su cargo.</div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header"><h3 style="color:#67e8f9;"><i class="fas fa-hand-holding-usd" style="color:#06b6d4;"></i> 8. Permisos y Cuotas</h3></div>
-                        <div class="card-body">
-                            <ul style="padding-left:20px; margin-bottom:0;">
-                                <li><strong>Retención Obligatoria (Art. 44):</strong> El empleador debe descontar del rol de pagos las cuotas sindicales si se solicita.</li>
-                                <li><strong>Licencias:</strong> Los dirigentes tienen derecho a permisos con sueldo para audiencias y diligencias del Ministerio.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="card card-gold">
-                        <div class="card-header"><h3 style="color:var(--amber-lt);"><i class="fas fa-folder-open" style="color:var(--amber);"></i> 9. Plantillas Jurídicas</h3></div>
-                        <div class="card-body">
-                            <p style="margin-bottom:16px; font-size:0.88rem;">Formatos listos para presentar ante el Ministerio o la Empresa.</p>
-                            <a href="silencio_administrativo.docx" download class="dl-btn">
-                                <span><i class="fas fa-file-word"></i> Oficio: Silencio Administrativo</span>
-                                <i class="fas fa-download"></i>
-                            </a>
-                            <a href="notificacion_directiva.docx" download class="dl-btn">
-                                <span><i class="fas fa-file-word"></i> Notificación de Nueva Directiva</span>
-                                <i class="fas fa-download"></i>
-                            </a>
-                            <a href="queja_contrato_colectivo.docx" download class="dl-btn" style="margin-bottom:0;">
-                                <span><i class="fas fa-file-word"></i> Queja: Violación a C. Colectivo</span>
-                                <i class="fas fa-download"></i>
-                            </a>
-                        </div>
+                        <button class="btn btn-primary" onclick="calculators.iess()">Calcular Aportaciones</button>
+                        <div id="res_iess" class="result-panel"></div>
                     </div>
                 </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-door-open" style="color:var(--color-danger)"></i> Liquidación Final</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Última Remuneración ($)</label>
+                            <input type="number" id="liq_sueldo" placeholder="Ej: 600">
+                        </div>
+                        <div class="form-group">
+                            <label>Años de Servicio</label>
+                            <input type="number" id="liq_anios" placeholder="Ej: 3">
+                        </div>
+                        <div class="form-group">
+                            <label>Causal</label>
+                            <select id="liq_causa">
+                                <option value="intempestivo">Despido Intempestivo (Art. 188)</option>
+                                <option value="renuncia">Renuncia Voluntaria (Desahucio)</option>
+                                <option value="acuerdo">Mutuo Acuerdo</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-action" onclick="calculators.liquidacion()">Simular Liquidación</button>
+                        <div id="res_liq" class="result-panel"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-clock" style="color:var(--color-warning)"></i> Horas Extras</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group"><label>Sueldo ($)</label><input type="number" id="he_sueldo"></div>
+                        <div class="grid-2">
+                            <div class="form-group"><label>Horas 50%</label><input type="number" id="he_50" placeholder="0"></div>
+                            <div class="form-group"><label>Horas 100%</label><input type="number" id="he_100" placeholder="0"></div>
+                        </div>
+                        <button class="btn btn-primary" onclick="calculators.extras()">Calcular Recargos</button>
+                        <div id="res_he" class="result-panel"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h3><i class="fas fa-coins"></i> Décimos</h3></div>
+                    <div class="card-body">
+                        <div class="form-group"><label>Ingreso Anual ($)</label><input type="number" id="dec_ingresos"></div>
+                        <div class="form-group"><label>Meses Trabajados</label><input type="number" id="dec_meses" max="12"></div>
+                        <button class="btn btn-action" onclick="calculators.decimos()">Calcular Provisión</button>
+                        <div id="res_dec" class="result-panel"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h3><i class="fas fa-blind"></i> Jubilación Patronal</h3></div>
+                    <div class="card-body">
+                        <div class="form-group"><label>Promedio Anual (5 años)</label><input type="number" id="jub_prom"></div>
+                        <div class="form-group"><label>Años (Mínimo 20)</label><input type="number" id="jub_anios"></div>
+                        <button class="btn btn-primary" onclick="calculators.jubilacion()">Estimar Fondo</button>
+                        <div id="res_jub" class="result-panel"></div>
+                    </div>
+                </div>
+
+                 <div class="card">
+                    <div class="card-header"><h3><i class="fas fa-landmark"></i> LOSEP</h3></div>
+                    <div class="card-body">
+                        <div class="form-group"><label>RMU Actual ($)</label><input type="number" id="losep_rmu"></div>
+                        <div class="form-group"><label>Años Servicio</label><input type="number" id="losep_anios"></div>
+                        <button class="btn btn-action" onclick="calculators.losep()">Calcular Indemnización</button>
+                        <div id="res_losep" class="result-panel"></div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
-        <div id="tab-calculadoras" class="tab-pane">
-            <div class="page-wrap">
-                <div class="hero">
-                    <div class="hero-eyebrow">Herramientas de Cálculo</div>
-                    <h1>Calculadoras Laborales 2026</h1>
-                    <p>Resultados basados en el Código del Trabajo ecuatoriano y el SBU vigente de $482.00.</p>
-                </div>
-                <div class="grid-2">
-
-                    <div class="card card-sapphire">
-                        <div class="card-header"><h3 style="color:#93b8ff;"><i class="fas fa-hand-holding-medical" style="color:var(--sapphire);"></i> Aportes IESS</h3></div>
-                        <div class="card-body">
-                            <div class="form-group"><label>Sueldo Nominal ($)</label><input type="number" id="iess_sueldo" value="482.00"></div>
-                            <div class="form-group" style="margin-bottom:20px;">
-                                <label>Régimen</label>
-                                <select id="iess_tipo">
-                                    <option value="privado">Sector Privado (9.45%)</option>
-                                    <option value="publico">Sector Público (11.45%)</option>
-                                </select>
-                            </div>
-                            <button class="btn btn-sapphire" onclick="calculators.iess()">CALCULAR</button>
-                            <div id="res_iess" class="result-panel"></div>
-                        </div>
+        <div id="tab-acuerdos" class="tab-pane">
+            <div class="legal-layout">
+                <div class="legal-sidebar">
+                    <div class="search-box">
+                        <input type="text" id="legalSearch" placeholder="🔍 Buscar acuerdo, tema o año..." onkeyup="agreements.search()">
                     </div>
-
-                    <div class="card card-emerald">
-                        <div class="card-header"><h3 style="color:var(--emerald);"><i class="fas fa-door-open" style="color:var(--emerald);"></i> Liquidación Final</h3></div>
-                        <div class="card-body">
-                            <div class="form-group"><label>Remuneración ($)</label><input type="number" id="liq_sueldo"></div>
-                            <div class="form-group"><label>Años de Servicio</label><input type="number" id="liq_anios"></div>
-                            <div class="form-group" style="margin-bottom:20px;">
-                                <label>Causal</label>
-                                <select id="liq_causa">
-                                    <option value="intempestivo">Despido Intempestivo</option>
-                                    <option value="renuncia">Renuncia / Desahucio</option>
-                                </select>
-                            </div>
-                            <button class="btn btn-emerald" onclick="calculators.liquidacion()">SIMULAR</button>
-                            <div id="res_liq" class="result-panel"></div>
+                    <div class="legal-list" id="agreementList">
                         </div>
-                    </div>
-
-                    <div class="card card-gold">
-                        <div class="card-header"><h3 style="color:var(--amber-lt);"><i class="fas fa-clock" style="color:var(--amber);"></i> Horas Extras</h3></div>
-                        <div class="card-body">
-                            <div class="form-group"><label>Sueldo ($)</label><input type="number" id="he_sueldo"></div>
-                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px;">
-                                <div class="form-group" style="margin-bottom:0;"><label>Horas 50%</label><input type="number" id="he_50"></div>
-                                <div class="form-group" style="margin-bottom:0;"><label>Horas 100%</label><input type="number" id="he_100"></div>
-                            </div>
-                            <button class="btn btn-gold" onclick="calculators.extras()">CALCULAR</button>
-                            <div id="res_he" class="result-panel"></div>
-                        </div>
-                    </div>
-
-                    <div class="card card-emerald">
-                        <div class="card-header"><h3 style="color:var(--emerald);"><i class="fas fa-coins" style="color:var(--emerald);"></i> Décimos</h3></div>
-                        <div class="card-body">
-                            <div class="form-group"><label>Sueldo ($)</label><input type="number" id="dec_sueldo"></div>
-                            <div class="form-group" style="margin-bottom:20px;"><label>Meses Trabajados</label><input type="number" id="dec_meses" value="12"></div>
-                            <button class="btn btn-emerald" onclick="calculators.decimos()">CALCULAR</button>
-                            <div id="res_dec" class="result-panel"></div>
-                        </div>
-                    </div>
-
-                    <div class="card card-sapphire">
-                        <div class="card-header"><h3 style="color:#93b8ff;"><i class="fas fa-blind" style="color:var(--sapphire);"></i> Jubilación Patronal</h3></div>
-                        <div class="card-body">
-                            <div class="form-group"><label>Promedio Últimos 5 Años ($)</label><input type="number" id="jub_prom"></div>
-                            <div class="form-group"><label>Años de Servicio</label><input type="number" id="jub_anios"></div>
-                            <div class="form-group" style="margin-bottom:20px;"><label>Edad Actual</label><input type="number" id="jub_edad"></div>
-                            <button class="btn btn-sapphire" onclick="calculators.jubilacion()">CALCULAR</button>
-                            <div id="res_jub" class="result-panel"></div>
-                        </div>
-                    </div>
-
-                    <div class="card card-gold">
-                        <div class="card-header"><h3 style="color:var(--amber-lt);"><i class="fas fa-landmark" style="color:var(--amber);"></i> LOSEP</h3></div>
-                        <div class="card-body">
-                            <div class="form-group"><label>RMU Actual ($)</label><input type="number" id="losep_rmu"></div>
-                            <div class="form-group" style="margin-bottom:20px;"><label>Años de Servicio</label><input type="number" id="losep_anios"></div>
-                            <button class="btn btn-gold" onclick="calculators.losep()">SIMULAR</button>
-                            <div id="res_losep" class="result-panel"></div>
-                        </div>
-                    </div>
-
-                    <div class="card" style="border-top:2px solid #d946ef; grid-column: 1 / -1;">
-                        <div class="card-header"><h3 style="color:#f0abfc;"><i class="fas fa-hand-holding-heart" style="color:#d946ef;"></i> Beneficio Social (Sindicatos)</h3></div>
-                        <div class="card-body">
-                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:15px; margin-bottom: 15px;">
-                                <div class="form-group"><label>Sueldo/RMU ($)</label><input type="text" id="bs_rmu" placeholder="Ej: 800"></div>
-                                <div class="form-group"><label>SBU Actual ($)</label><input type="text" id="bs_sbu" value="482.00"></div>
-                                <div class="form-group"><label>Años Servicio</label><input type="number" id="bs_anios" placeholder="Ej: 5"></div>
-                                <div class="form-group"><label>N° de Hijos</label><input type="number" id="bs_hijos" placeholder="Ej: 2"></div>
-                            </div>
-                            <div class="form-group" style="margin-bottom:6px;"><label>Días Laborados (Alimentación)</label><input type="number" id="bs_dias_laborados" placeholder="Ej: 20"></div>
-                            <p style="font-size:0.72rem; color:var(--ash); margin-bottom:18px; font-style:italic;">*Hijos hasta 18 años. Art. 23 (1% SBU) y Art. 24 (0.25% RMU). Alimentación a $4.50/día.</p>
-                            
-                            <button type="button" id="btnCalcBS" style="background:rgba(217,70,239,0.12); color:#d946ef; border:1px solid rgba(217,70,239,0.3); padding:12px; width:100%; border-radius:var(--r-xs); font-family:'DM Sans',sans-serif; font-weight:700; font-size:0.85rem; cursor:pointer; letter-spacing:0.5px; transition:all 0.2s;">CALCULAR BENEFICIO</button>
-                            <div id="contenedorResultadoBS" class="result-panel" style="border-color:rgba(217,70,239,0.3); max-width: 500px; margin: 15px auto 0;"></div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div id="tab-base-legal" class="tab-pane">
-            <div class="page-wrap">
-                <div class="hero">
-                    <div class="hero-eyebrow">Enciclopedia Jurídica</div>
-                    <h1>Compendio Legal Laboral 2026</h1>
-                    <p>Los Pilares Fundamentales del Código del Trabajo Ecuatoriano estructurados para consulta rápida.</p>
                 </div>
 
-                <div class="guide-card guide-blue">
-                    <div class="icon"><i class="fas fa-book-reader" style="color:#38bdf8;"></i></div>
-                    <div>
-                        <h3 style="color:#f8fafc;">Guía Completa: Despido Intempestivo 2026</h3>
-                        <p style="color:#a0b4cc;">¿Te despidieron? Conoce tus derechos y cómo calcular tu liquidación paso a paso según la ley.</p>
-                        <a href="despido-intempestivo.html" style="background:#0284c7; color:white;">Leer Guía Completa &rarr;</a>
+                <div class="legal-viewer" id="agreementViewer">
+                    <div class="pdf-placeholder">
+                        <i class="far fa-file-pdf fa-4x" style="color:#cbd5e1; margin-bottom:20px;"></i>
+                        <h2>Seleccione un documento</h2>
+                        <p>Navegue por la lista izquierda para ver el detalle de los Acuerdos Ministeriales vigentes.</p>
                     </div>
-                </div>
-
-                <div class="guide-card guide-green">
-                    <div class="icon"><i class="fas fa-coins" style="color:#4ade80;"></i></div>
-                    <div>
-                        <h3 style="color:#f8fafc;">Guía Completa: Pago de Utilidades 2026</h3>
-                        <p style="color:#a0b4cc;">Cómo se calcula el 15%, fechas máximas de pago y cómo registrar tus cargas familiares.</p>
-                        <a href="utilidades.html" style="background:#16a34a; color:white;">Leer Guía Completa &rarr;</a>
-                    </div>
-                </div>
-
-                <div class="guide-card guide-red" style="margin-bottom:32px;">
-                    <div class="icon"><i class="fas fa-door-open" style="color:#f87171;"></i></div>
-                    <div>
-                        <h3 style="color:#f8fafc;">Renuncia Voluntaria y Desahucio</h3>
-                        <p style="color:#a0b4cc;">¿Vas a dejar tu empleo? Conoce el proceso del SUT, los 15 días de aviso y calcula tu liquidación.</p>
-                        <a href="renuncia-voluntaria.html" style="background:#dc2626; color:white;">Leer Guía Completa &rarr;</a>
-                    </div>
-                </div>
-
-                <div class="legal-grid">
-                    <details class="legal-item" open>
-                        <summary><span class="art-badge" style="background:rgba(239,68,68,0.15); color:#fca5a5; border-color:rgba(239,68,68,0.3);">NUEVO</span> Acuerdo MDT-2026-046: El Fin de las 8 Horas</summary>
-                        <div class="legal-content">
-                            <h3 style="font-family:'DM Sans',sans-serif; font-size:1rem; font-weight:700; margin-bottom:16px;">Análisis: Jornadas de 10 y 12 horas sin horas extras</h3>
-                            <div class="framed-text">
-                                <p style="margin-top:0;">El 18 de febrero de 2026, el Ministerio del Trabajo expidió el <strong>Acuerdo MDT-2026-046</strong>, redefiniendo la estructura del tiempo de trabajo en Ecuador.</p>
-                                <h4 style="color:var(--frost); margin:16px 0 8px;">1. Jornada Laboral Eficiente: 10 Horas Diarias</h4>
-                                <ul><li><strong>La Norma:</strong> Distribuye 40 horas semanales en jornadas de hasta 10 horas diarias (5 días).</li>
-                                <li><strong>Consecuencia:</strong> Elimina el recargo suplementario si no se superan las 40 horas semanales.</li></ul>
-                            </div>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 55</span> Horas Suplementarias y Extraordinarias</summary>
-                        <div class="legal-content">
-                            <table class="tech-table">
-                                <tr><th>Tipo</th><th>Recargo</th><th>Condición</th></tr>
-                                <tr><td>Suplementaria</td><td>50%</td><td>Hasta las 24H00 (Máx 4h diarias)</td></tr>
-                                <tr><td>Extraordinaria</td><td>100%</td><td>Sábados, Domingos y Feriados</td></tr>
-                            </table>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 69</span> Derecho a Vacaciones</summary>
-                        <div class="legal-content">
-                            <p>Derecho irrenunciable a <strong>15 días de descanso</strong> tras un año de trabajo.</p>
-                            <div class="info-box blue"><strong>Regla de Antigüedad:</strong> A partir del 5to año, se suma 1 día extra de vacaciones por cada año adicional (hasta 15 días extra).</div>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 97</span> Participación de Utilidades</summary>
-                        <div class="legal-content">
-                            <p>El empleador debe repartir el <strong>15% de las utilidades líquidas</strong>.</p>
-                            <ul style="padding-left:20px; margin-top:12px;">
-                                <li><strong>10% Individual:</strong> Para todos los trabajadores por igual.</li>
-                                <li><strong>5% Cargas:</strong> Proporcional a cargas familiares.</li>
-                            </ul>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 111</span> Décimo Tercero — Bono Navideño</summary>
-                        <div class="legal-content">
-                            <p>Doceava parte de todo lo ganado en el año calendario.</p>
-                            <div class="law-box">Fecha máxima de pago: 24 de diciembre.</div>
-                        </div>
-                    </details>
-
-                    <details class="legal-item">
-                        <summary><span class="art-badge">Art. 113</span> Décimo Cuarto — Bono Escolar</summary>
-                        <div class="legal-content">
-                            <p>Un Salario Básico Unificado completo (<strong>$482.00 en 2026</strong>).</p>
-                            <p><strong>Costa:</strong> Marzo. &nbsp; <strong>Sierra / Oriente:</strong> Agosto.</p>
-                        </div>
-                    </details>
                 </div>
             </div>
         </div>
 
         <div id="tab-cv" class="tab-pane">
-            <div class="page-wrap">
-                <div style="text-align:center; margin-bottom:40px;">
-                    <div class="hero-eyebrow" style="justify-content:center; margin-bottom:12px;">Generador de Documentos</div>
-                    <h1 style="font-size:2rem; margin-bottom:10px;">Hoja de Vida Profesional</h1>
-                    <p style="color:var(--ash); font-size:1rem;">Edición en tiempo real · Formato Harvard · Optimizado para impresión A4</p>
-                </div>
+            <div class="grid-2" style="grid-template-columns: 1fr 1.2fr;">
+                
+                <div class="card cv-editor">
+                    <div class="card-header">
+                        <h3>Datos del Candidato</h3>
+                        <button class="btn btn-action" style="width:auto; padding:5px 15px; font-size:0.8rem;" onclick="cv.save()"><i class="fas fa-save"></i> Guardar</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Nombre Completo</label>
+                            <input type="text" id="cv_nombre" onkeyup="cv.update()">
+                        </div>
+                        <div class="form-group">
+                            <label>Título Profesional</label>
+                            <input type="text" id="cv_titulo" onkeyup="cv.update()">
+                        </div>
+                        <div class="form-group">
+                            <label>Contacto (Email | Teléfono)</label>
+                            <input type="text" id="cv_contacto" onkeyup="cv.update()">
+                        </div>
 
-                <div class="cv-builder-wrapper">
-                    <div class="cv-editor">
-                        <div class="cv-section-title">01 · Fotografía</div>
+                        <hr style="margin: 20px 0; border:0; border-top:1px solid #eee;">
                         
-                        <div class="form-group" style="text-align: center; border: 1px dashed var(--rim); padding: 16px; border-radius: var(--r-sm); margin-bottom: 16px; background: rgba(47,111,212,0.05);">
-                            <label style="display:block; margin-bottom:10px; font-size:0.78rem; text-transform:uppercase; letter-spacing:1px; color: var(--ash);">
-                                <i class="fas fa-camera" style="color:var(--cobalt); font-size:1.5rem; display:block; margin-bottom:6px;"></i>
-                                Foto para Hoja de Vida
-                            </label>
-                            <input type="file" id="photo-input" accept="image/*" style="background:transparent !important; border:none !important; color:var(--silver) !important; padding: 0 !important; cursor: pointer;" onchange="loadPhoto(event)">
+                        <div class="form-group">
+                            <label>Perfil Profesional</label>
+                            <textarea id="cv_perfil" rows="5" placeholder="Resumen de habilidades..." onkeyup="cv.update()"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Experiencia Laboral</label>
+                            <textarea id="cv_exp" rows="8" placeholder="Empresa - Cargo - Fechas..." onkeyup="cv.update()"></textarea>
                         </div>
 
-                        <div class="cv-section-title">02 · Datos Personales</div>
-                        <div class="form-group"><label>Nombre Completo</label><input type="text" oninput="updateCV('name', this.value)" placeholder="Ej: Juan Pérez"></div>
-                        <div class="form-group"><label>Cargo / Título</label><input type="text" oninput="updateCV('role', this.value)" placeholder="Ej: Abogado Laboral | Contador CPA"></div>
-                        <div class="form-group"><label>Email</label><input type="email" oninput="updateCV('email', this.value)" placeholder="email@ejemplo.com"></div>
-                        <div class="form-group"><label>Teléfono</label><input type="text" oninput="updateCV('phone', this.value)" placeholder="099 999 9999"></div>
-                        <div class="form-group"><label>Ciudad</label><input type="text" oninput="updateCV('location', this.value)" placeholder="Quito, Ecuador"></div>
-
-                        <div class="cv-section-title">03 · Perfil Profesional</div>
-                        <div class="form-group"><textarea rows="4" oninput="updateCV('profile', this.value)" placeholder="Resumen breve de tu experiencia y objetivos..."></textarea></div>
-
-                        <div class="cv-section-title">04 · Experiencia Laboral</div>
-                        <button class="cv-btn-add" onclick="addJob()"><i class="fas fa-plus-circle"></i> AGREGAR EXPERIENCIA</button>
-                        <div id="editor-jobs"></div>
-
-                        <div class="cv-section-title">05 · Formación Académica</div>
-                        <button class="cv-btn-add" onclick="addEdu()"><i class="fas fa-plus-circle"></i> AGREGAR ESTUDIO</button>
-                        <div id="editor-edu"></div>
-
-                        <div class="cv-section-title">06 · Referencias Laborales</div>
-                        <button class="cv-btn-add" onclick="addRefJob()"><i class="fas fa-user-tie"></i> AGREGAR REF. LABORAL</button>
-                        <div id="editor-ref-job"></div>
-
-                        <div class="cv-section-title">07 · Referencias Personales</div>
-                        <button class="cv-btn-add" onclick="addRefPers()"><i class="fas fa-user-friends"></i> AGREGAR REF. PERSONAL</button>
-                        <div id="editor-ref-pers"></div>
-
-                        <div class="cv-section-title">08 · Habilidades</div>
-                        <div class="form-group"><input type="text" oninput="updateSkills(this.value)" placeholder="Ej: Derecho Laboral, Excel, Inglés B2 (separar por comas)"></div>
-
-                        <button class="cv-btn-print" onclick="window.print()"><i class="fas fa-file-pdf"></i> GUARDAR COMO PDF</button>
-                    </div>
-
-                    <div class="cv-preview-container">
-                        <div class="a4-page" id="cv-document">
-                            <div class="cv-header-grid" id="cv-header-grid">
-                                <img src="" id="cv-photo-display" class="cv-photo-display">
-                                <div>
-                                    <div class="cv-name" id="prev-name">TU NOMBRE</div>
-                                    <div class="cv-role" id="prev-role">TU TÍTULO PROFESIONAL</div>
-                                    <div class="cv-contact-info">
-                                        <div class="cv-contact-item"><i class="fas fa-envelope"></i> <span id="prev-email">email@ejemplo.com</span></div>
-                                        <div class="cv-contact-item"><i class="fas fa-phone"></i> <span id="prev-phone">099 999 9999</span></div>
-                                        <div class="cv-contact-item"><i class="fas fa-map-marker-alt"></i> <span id="prev-location">Ciudad, País</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="cv-body">
-                                <div class="cv-main-col">
-                                    <div class="cv-section-head"><i class="fas fa-user-tie"></i> Perfil</div>
-                                    <p id="prev-profile" style="margin-bottom:24px; font-size:0.92rem; color:#475569 !important; line-height:1.6;">Tu descripción profesional aparecerá aquí.</p>
-                                    
-                                    <div class="cv-section-head"><i class="fas fa-briefcase"></i> Experiencia Laboral</div>
-                                    <div id="prev-jobs-container"></div>
-                                    
-                                    <div class="cv-section-head" style="margin-top:20px;"><i class="fas fa-address-book"></i> Referencias Laborales</div>
-                                    <div class="ref-grid" id="prev-ref-job-container"></div>
-                                </div>
-                                <div class="cv-side-col">
-                                    <div class="cv-section-head"><i class="fas fa-graduation-cap"></i> Educación</div>
-                                    <div id="prev-edu-container"></div>
-                                    
-                                    <div class="cv-section-head" style="margin-top:24px;"><i class="fas fa-star"></i> Habilidades</div>
-                                    <div id="prev-skills-container"></div>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label>Formación Académica</label>
+                            <textarea id="cv_edu" rows="5" placeholder="Institución - Título..." onkeyup="cv.update()"></textarea>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div id="tab-talento" class="tab-pane">
-            <div class="page-wrap">
-                <div class="hero-talent">
-                    <div class="hero-eyebrow" style="justify-content:center; margin-bottom:16px;">Directorio Nacional</div>
-                    <h1 style="margin-bottom:14px;">Directorio de Talento Ecuador</h1>
-                    <p style="color:rgba(167,243,208,0.8); max-width:600px; margin:0 auto 28px;">Encuentra a los mejores profesionales o anuncia tu disponibilidad laboral. Conectamos talento con oportunidades reales.</p>
-                    
-                    <button class="post-btn" onclick="openTalentModal()"><i class="fas fa-bullhorn"></i> Anunciar mi Perfil Gratis</button>
-                </div>
-
-                <div class="security-warning">
-                    <i class="fas fa-shield-alt"></i>
-                    <div>
-                        <h4>Aviso de Seguridad:</h4>
-                        <ul>
-                            <li>No verificamos perfiles.</li>
-                            <li>Asiste a entrevistas en lugares públicos.</li>
-                            <li><strong>Nunca pagues</strong> por trámites o exámenes.</li>
-                        </ul>
+                        <button class="btn btn-primary" onclick="window.print()"><i class="fas fa-print"></i> Imprimir / Guardar PDF</button>
                     </div>
                 </div>
 
-                <div class="search-bar">
-                    <input type="text" placeholder="Buscar por profesión, habilidad o nombre..." style="flex:1; min-width:220px;">
-                    <select style="min-width:160px; width:auto;">
-                        <option value="">Todas las Ciudades</option>
-                        <option value="quito">Quito</option>
-                        <option value="guayaquil">Guayaquil</option>
-                        <option value="cuenca">Cuenca</option>
-                    </select>
-                    <button class="btn btn-emerald" style="width:auto; padding:11px 22px;"><i class="fas fa-search"></i> Buscar</button>
-                </div>
+                <div class="cv-preview-container">
+                    <div class="cv-paper">
+                        <h1 id="p_nombre">JUAN PÉREZ</h1>
+                        <h2 id="p_titulo">PROFESIONAL</h2>
+                        <div style="font-size:10pt; color:#555; margin-bottom:10mm;" id="p_contacto">juan@email.com | 0991234567</div>
+                        
+                        <div class="cv-section-title">Perfil</div>
+                        <div class="cv-text" id="p_perfil">Describa su perfil aquí...</div>
 
-                <div class="candidate-grid" id="directorio-grid">
-                    <p style="text-align:center; grid-column:1/-1; color:var(--ash); padding:40px 0;"><i class="fas fa-spinner fa-spin"></i> Cargando talentos desde la base de datos...</p>
+                        <div class="cv-section-title">Experiencia</div>
+                        <div class="cv-text" id="p_exp">...</div>
+
+                        <div class="cv-section-title">Educación</div>
+                        <div class="cv-text" id="p_edu">...</div>
+                    </div>
                 </div>
             </div>
         </div>
 
     </main>
 
-    <div id="talentoModal" class="modal-overlay">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h3><i class="fas fa-bullhorn" style="color:var(--amber);"></i> Publicar Perfil Profesional</h3>
-                <button class="close-btn" onclick="closeTalentModal()"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="modal-body">
-                <p style="margin-top:0; color:var(--ash); margin-bottom: 20px;">Llena este formulario para que las empresas puedan encontrarte en nuestra base de datos.</p>
-                
-                <div class="form-group" style="text-align: center; border: 2px dashed var(--rim); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                    <label><i class="fas fa-camera" style="font-size: 1.5rem; color: var(--amber); display:block; margin-bottom: 5px;"></i> Foto de Perfil (Opcional - Máx 2MB)</label>
-                    <input type="file" id="talento_foto" accept="image/*" style="background: transparent !important; border: none !important; color: var(--silver) !important;">
-                </div>
+    <footer class="legal-footer" id="mobile-legal-footer">
+        <p><strong>AVISO LEGAL:</strong> Esta herramienta es un simulador referencial basado en la normativa ecuatoriana vigente (SBU $482). 
+        Los cálculos generados no constituyen una liquidación oficial vinculante ni asesoría legal definitiva. 
+        Para casos legales específicos, se recomienda consultar con un abogado laboralista o acudir al Ministerio del Trabajo. 
+        LaboralEC no se responsabiliza por el uso indebido de esta información.</p>
+        <p style="margin-top:5px;">&copy; 2026 LaboralEC - Versión Pro 3.1.2</p>
+    </footer>
 
-                <div class="form-row">
-                    <div class="form-group"><label>Nombres Completos</label><input type="text" id="talento_nombre" placeholder="Ej: Ana Lucía Torres"></div>
-                    <div class="form-group"><label>Profesión / Especialidad</label><input type="text" id="talento_profesion" placeholder="Ej: Analista Financiero"></div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group"><label>Provincia / Ciudad</label><input type="text" id="talento_ciudad" placeholder="Ej: Guayas, Guayaquil"></div>
-                    <div class="form-group"><label>Teléfono (WhatsApp)</label><input type="text" id="talento_telefono" placeholder="099..."></div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Habilidades Clave (Separadas por comas)</label>
-                    <input type="text" id="talento_habilidades" placeholder="Excel, Contabilidad, NIIF, Liderazgo...">
-                </div>
-                
-                <div class="form-group">
-                    <label>Resumen Profesional</label>
-                    <textarea rows="4" id="talento_resumen" placeholder="Describe brevemente tu experiencia y lo que buscas..."></textarea>
-                </div>
-                
-                <button class="post-btn" id="btn_enviar_talento" style="width: 100%; margin-top: 10px;" onclick="submitTalentModal()"><i class="fas fa-paper-plane"></i> Enviar Solicitud de Publicación</button>
+    <div class="chat-fab" onclick="chatbot.toggle()">
+        <i class="fas fa-robot"></i>
+    </div>
+
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <span>Asistente Legal IA</span>
+            <span style="cursor:pointer;" onclick="chatbot.toggle()"><i class="fas fa-times"></i></span>
+        </div>
+        <div class="chat-body" id="chatLog">
+            <div class="msg bot">
+                Hola, soy tu asistente de LaboralEC. <br>
+                Puedo responder dudas sobre el <strong>Acuerdo Ministerial MDT-2026</strong>, cálculo de horas extras o despidos.
             </div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="chatInput" placeholder="Escribe tu consulta..." onkeypress="chatbot.checkEnter(event)">
+            <button class="btn btn-action" style="width:auto; padding:0 15px;" onclick="chatbot.send()"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
 
-    <footer>
-        <div class="footer-inner">
-            <div class="footer-copy">LABORALEC PRO 2026 · Ingeniería Legal de Precisión</div>
-            <div class="footer-links">
-                <a href="privacidad.html"><i class="fas fa-user-shield"></i> Privacidad</a>
-                <a href="terminos.html"><i class="fas fa-balance-scale"></i> Términos</a>
-                <a href="contacto.html"><i class="fas fa-envelope"></i> Contacto</a>
+    <div class="modal-overlay" id="downloadModal">
+        <div class="modal-content">
+            <h3 style="color:var(--color-primary); margin-bottom:10px;">Conectando con Servidor MDT...</h3>
+            <p id="dlText" style="color:#666; font-size:0.9rem;">Solicitando archivo PDF original...</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="dlProgress"></div>
             </div>
+            <p id="dlStatus" style="font-weight:bold; font-size:0.8rem; color:var(--color-accent);">Iniciando...</p>
         </div>
-    </footer>
+    </div>
 
     <script>
-        // ─── BACKEND DE GOOGLE ───
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbyY3WTDAX2FUkPjtntdswkhDyh2D8WLF4cNONYHF_JVPwrpIz6hYfwQvd_1y8Mz-XEA/exec';
+        // --- CONFIGURACIÓN GLOBAL ---
+        const CONFIG = {
+            SBU: 482.00,
+            ANIOS_JUBILACION: 20
+        };
 
-        // LÓGICA DE FOTOS Y MODAL EXTRAÍDA DE TU CÓDIGO FUNCIONAL
-        let talentoFotoBase64 = "";
-        let talentoFotoNombre = "";
-
-        document.addEventListener("DOMContentLoaded", function() {
-            // Cargar perfiles al abrir la página
-            cargarDirectorio();
-
-            // Listener para convertir la foto a código
-            const inputFoto = document.getElementById('talento_foto');
-            if(inputFoto) {
-                inputFoto.addEventListener('change', function(e) {
-                    const file = e.target.files[0];
-                    if(file) {
-                        // Limitar a 2MB para no saturar el servidor
-                        if(file.size > 2 * 1024 * 1024) { 
-                            alert("La imagen es muy pesada. Por favor elige una de menos de 2 Megabytes.");
-                            inputFoto.value = '';
-                            talentoFotoBase64 = "";
-                            talentoFotoNombre = "";
-                            return;
-                        }
-                        talentoFotoNombre = file.name;
-                        const reader = new FileReader();
-                        reader.onload = function(event) {
-                            talentoFotoBase64 = event.target.result;
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                });
-            }
-
-            // BENEFICIO SOCIAL
-            const btnCalcBS = document.getElementById('btnCalcBS');
-            if(btnCalcBS) {
-                btnCalcBS.addEventListener('click', function() {
-                    var rmu = parseFloat(document.getElementById('bs_rmu').value.replace(',', '.')) || 0;
-                    var sbu = parseFloat(document.getElementById('bs_sbu').value.replace(',', '.')) || 482;
-                    var anios = parseInt(document.getElementById('bs_anios').value) || 0;
-                    var hijos = parseInt(document.getElementById('bs_hijos').value) || 0;
-                    var dias = parseInt(document.getElementById('bs_dias_laborados').value) || 0;
-
-                    var subFamiliar = sbu * 0.01 * hijos;
-                    var subAntiguedad = rmu * 0.0025 * anios;
-                    var alimentacion = dias * 4.50;
-                    var total = subFamiliar + subAntiguedad + alimentacion;
-
-                    var resDiv = document.getElementById('contenedorResultadoBS');
-                    resDiv.style.display = 'block';
-                    resDiv.innerHTML = `
-                        <p style="margin:0 0 6px;">Subsidio Familiar <span style="float:right; font-weight:700; color:#d946ef;">$${subFamiliar.toFixed(2)}</span></p>
-                        <p style="margin:0 0 6px;">Subsidio Antigüedad <span style="float:right; font-weight:700; color:#d946ef;">$${subAntiguedad.toFixed(2)}</span></p>
-                        <p style="margin:0 0 10px;">Alimentación <span style="float:right; font-weight:700; color:#d946ef;">$${alimentacion.toFixed(2)}</span></p>
-                        <hr style="border:none; border-top:1px solid rgba(217,70,239,0.25); margin:0 0 10px;">
-                        <p style="margin:0; font-weight:800; font-size:1.1rem; color:var(--silver);">Total Mensual <span style="float:right; color:#d946ef;">$${total.toFixed(2)}</span></p>
-                    `;
-                });
-            }
-        });
-
-        function openTalentModal() {
-            document.getElementById('talentoModal').style.display = 'flex';
-        }
-        function closeTalentModal() {
-            document.getElementById('talentoModal').style.display = 'none';
-        }
-        
-        function submitTalentModal() {
-            const nombre = document.getElementById('talento_nombre').value.trim();
-            const profesion = document.getElementById('talento_profesion').value.trim();
-            const ciudad = document.getElementById('talento_ciudad').value.trim();
-            const telefono = document.getElementById('talento_telefono').value.trim();
-            const habilidades = document.getElementById('talento_habilidades').value.trim();
-            const resumen = document.getElementById('talento_resumen').value.trim();
-
-            if(!nombre || !profesion || !telefono) {
-                alert("Por favor, llena al menos tu Nombre, Profesión y Teléfono para poder contactarte.");
-                return;
-            }
-
-            const btnEnviar = document.getElementById('btn_enviar_talento');
-            const textoOriginal = btnEnviar.innerHTML;
-            btnEnviar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subiendo perfil (esto puede tardar unos segundos)...';
-            btnEnviar.disabled = true;
-
-            const formData = new FormData();
-            formData.append('nombre', nombre);
-            formData.append('profesion', profesion);
-            formData.append('ciudad', ciudad);
-            formData.append('telefono', telefono);
-            formData.append('habilidades', habilidades);
-            formData.append('resumen', resumen);
-            formData.append('fotoBase64', talentoFotoBase64);
-            formData.append('fotoName', talentoFotoNombre);
-
-            fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
-            .then(response => {
-                alert("¡Misión Cumplida! El perfil de " + nombre + " ha sido publicado exitosamente.");
-                
-                // Limpiar formulario
-                document.getElementById('talento_nombre').value = '';
-                document.getElementById('talento_profesion').value = '';
-                document.getElementById('talento_ciudad').value = '';
-                document.getElementById('talento_telefono').value = '';
-                document.getElementById('talento_habilidades').value = '';
-                document.getElementById('talento_resumen').value = '';
-                document.getElementById('talento_foto').value = '';
-                talentoFotoBase64 = "";
-                talentoFotoNombre = "";
-                
-                btnEnviar.innerHTML = textoOriginal;
-                btnEnviar.disabled = false;
-                closeTalentModal();
-                
-                // Mostrar "Cargando..." y recargar lista tras unos segundos
-                const grid = document.getElementById('directorio-grid');
-                grid.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: var(--cv-gray);"><i class="fas fa-spinner fa-spin"></i> Actualizando base de datos...</p>';
-                setTimeout(cargarDirectorio, 3000); 
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert("Hubo un error de conexión al servidor.");
-                btnEnviar.innerHTML = textoOriginal;
-                btnEnviar.disabled = false;
-            });
-        }
-
-        // ─── LEER LA BASE DE DATOS Y MOSTRAR PERFILES ───
-        function cargarDirectorio() {
-            const grid = document.getElementById('directorio-grid');
-            fetch(scriptURL)
-            .then(res => res.json())
-            .then(data => {
-                grid.innerHTML = '';
-                if(data.length === 0) {
-                    grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; color:var(--ash); padding:40px 0;">Aún no hay perfiles registrados. ¡Sé el primero!</p>';
-                    return;
-                }
-                data.forEach(c => {
-                    if(!c.nombre) return;
-                    let skillsHtml = '';
-                    if(c.habilidades) c.habilidades.split(',').forEach(s => {
-                        if(s.trim()) skillsHtml += `<span class="cv-skill-tag" style="background:rgba(29,184,122,0.12)!important; color:var(--emerald)!important; border-color:rgba(29,184,122,0.25)!important;">${s.trim()}</span>`;
-                    });
-                    let tel = String(c.telefono).replace(/\D/g,'');
-                    let avatar = c.foto && c.foto.trim()
-                        ? `<img src="${c.foto}" alt="${c.nombre}" style="width:54px;height:54px;border-radius:50%;object-fit:cover;border:2px solid var(--emerald);">`
-                        : `<div class="candidate-avatar"><i class="fas fa-user-tie"></i></div>`;
-                    grid.innerHTML += `
-                    <div class="candidate-card">
-                        <div class="candidate-header">
-                            ${avatar}
-                            <div class="candidate-info">
-                                <h3>${c.nombre}</h3>
-                                <p><i class="fas fa-map-marker-alt"></i> ${c.ciudad}</p>
-                            </div>
-                        </div>
-                        <div style="margin-bottom:14px;">
-                            <span class="cv-skill-tag" style="background:rgba(201,168,76,0.12)!important; color:var(--gold-lt)!important; border-color:rgba(201,168,76,0.25)!important;">${c.profesion}</span>
-                            ${skillsHtml}
-                        </div>
-                        <p class="candidate-desc">${c.resumen}</p>
-                        <a href="https://wa.me/593${tel}" target="_blank" style="text-decoration:none; margin-top:auto;">
-                            <button class="btn-hire"><i class="fab fa-whatsapp"></i> Contactar por WhatsApp</button>
-                        </a>
-                    </div>`;
-                });
-            })
-            .catch(() => {
-                grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; color:var(--crimson); padding:40px 0;">No se pudo conectar a la base de datos.</p>';
-            });
-        }
-
-        // ─── CALCULADORAS INTERNAS ───
-        const calculators = {
-            iess: function() {
-                const s = parseFloat(document.getElementById('iess_sueldo').value) || 0;
-                const t = document.getElementById('iess_tipo').value;
-                const tasa = t === 'privado' ? 0.0945 : 0.1145;
-                this.show('res_iess', `<i class="fas fa-check-circle" style="color:var(--emerald);"></i> Aporte Personal (${(tasa*100).toFixed(2)}%): <strong>$${(s*tasa).toFixed(2)}</strong>`);
-            },
-            liquidacion: function() {
-                const s = parseFloat(document.getElementById('liq_sueldo').value) || 0;
-                const a = parseInt(document.getElementById('liq_anios').value) || 0;
-                const c = document.getElementById('liq_causa').value;
-                const d = s * 0.25 * a;
-                const i = c === 'intempestivo' ? (a <= 3 ? s*3 : s*a) : 0;
-                this.show('res_liq', `
-                    Desahucio (25%): $${d.toFixed(2)}<br>
-                    Indemnización Art.188: $${i.toFixed(2)}<br>
-                    <hr style="border:none; border-top:1px solid rgba(201,168,76,0.2); margin:10px 0;">
-                    <strong style="color:var(--emerald); font-size:1.1rem;">Total Estimado: $${(d+i).toFixed(2)}</strong>`);
-            },
-            extras: function() {
-                const s = parseFloat(document.getElementById('he_sueldo').value) || 0;
-                const h50 = parseFloat(document.getElementById('he_50').value) || 0;
-                const h100 = parseFloat(document.getElementById('he_100').value) || 0;
-                const vh = s / 240;
-                this.show('res_he', `
-                    ${h50} horas al 50%: $${(vh*1.5*h50).toFixed(2)}<br>
-                    ${h100} horas al 100%: $${(vh*2*h100).toFixed(2)}<br>
-                    <hr style="border:none; border-top:1px solid rgba(201,168,76,0.2); margin:10px 0;">
-                    <strong style="color:var(--emerald); font-size:1.1rem;">Total: $${(vh*1.5*h50 + vh*2*h100).toFixed(2)}</strong>`);
-            },
-            decimos: function() {
-                const s = parseFloat(document.getElementById('dec_sueldo').value) || 0;
-                const m = parseInt(document.getElementById('dec_meses').value) || 0;
-                this.show('res_dec', `13ro proporcional: $${((s*m)/12).toFixed(2)}<br>14to proporcional: $${((482/12)*m).toFixed(2)}`);
-            },
-            jubilacion: function() {
-                this.show('res_jub', '<i class="fas fa-exclamation-triangle" style="color:var(--amber);"></i> El cálculo exacto requiere coeficientes actuariales del Art. 218. Consulta a un perito contable.');
-            },
-            losep: function() {
-                const a = parseInt(document.getElementById('losep_anios').value) || 0;
-                const comp = Math.min(5 * 482 * a, 150 * 482);
-                this.show('res_losep', `Compensación estimada (Art. 129): <strong>$${comp.toFixed(2)}</strong><br><small style="color:var(--ash);">*Sujeto a disponibilidad presupuestaria.</small>`);
-            },
-            show: function(id, html) {
-                const el = document.getElementById(id);
-                el.innerHTML = html;
-                el.style.display = 'block';
+        const utils = {
+            formatUSD: (num) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num),
+            getVal: (id) => parseFloat(document.getElementById(id).value) || 0,
+            setHTML: (id, html) => { 
+                const el = document.getElementById(id); 
+                el.innerHTML = html; 
+                el.style.display = 'block'; 
             }
         };
 
-        // ─── NAVEGACIÓN ───
+        // --- NAVEGACIÓN ---
         const app = {
-            navigate: function(tabId, btn) {
-                document.querySelectorAll('.tab-pane').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            navigate: (tabId) => {
+                document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+                document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
                 document.getElementById(tabId).classList.add('active');
-                if(btn) btn.classList.add('active');
-                window.scrollTo(0,0);
+                event.currentTarget.classList.add('active');
             }
         };
 
-        // ─── FUNCIONES DE LA HOJA DE VIDA ───
-        function loadPhoto(event) {
-            const out = document.getElementById('cv-photo-display');
-            const hg  = document.getElementById('cv-header-grid');
-            out.src = URL.createObjectURL(event.target.files[0]);
-            out.onload = () => URL.revokeObjectURL(out.src);
-            out.style.display = 'block';
-            hg.classList.add('with-photo');
-        }
+        // --- CALCULADORAS ---
+        const calculators = {
+            iess: () => {
+                const sueldo = utils.getVal('iess_sueldo');
+                const tipo = document.getElementById('iess_tipo').value;
+                const fr = document.getElementById('iess_fr').checked;
+                
+                let per = 0, pat = 0;
+                if(tipo === 'privado') { per = 0.0945; pat = 0.1215; }
+                else if(tipo === 'publico') { per = 0.1145; pat = 0.0915; }
+                else { per = 0.1760; pat = 0; }
 
-        function updateCV(field, value) {
-            const el = document.getElementById('prev-' + field);
-            if(!el) return;
-            if(value.trim() === "") {
-                if(field === 'name') el.innerText = "TU NOMBRE";
-                else if(field === 'role') el.innerText = "TU TÍTULO";
-                else el.innerText = "";
-            } else el.innerText = value;
-        }
+                const vPer = sueldo * per;
+                const vPat = sueldo * pat;
+                const vFr = fr ? sueldo * 0.0833 : 0;
 
-        function updateSkills(value) {
-            const c = document.getElementById('prev-skills-container');
-            c.innerHTML = '';
-            value.split(',').forEach(s => {
-                if(s.trim()) {
-                    const t = document.createElement('span');
-                    t.className = 'cv-skill-tag';
-                    t.innerText = s.trim();
-                    c.appendChild(t);
+                utils.setHTML('res_iess', `
+                    <div class="res-row"><span>Aporte Personal (${(per*100).toFixed(2)}%):</span> <strong>${utils.formatUSD(vPer)}</strong></div>
+                    <div class="res-row"><span>Aporte Patronal (${(pat*100).toFixed(2)}%):</span> <strong>${utils.formatUSD(vPat)}</strong></div>
+                    ${fr ? `<div class="res-row"><span>Fondo Reserva (8.33%):</span> <strong>${utils.formatUSD(vFr)}</strong></div>` : ''}
+                    <div class="res-total"><span>Total IESS:</span> <span>${utils.formatUSD(vPer + vPat + vFr)}</span></div>
+                `);
+            },
+            liquidacion: () => {
+                const s = utils.getVal('liq_sueldo');
+                const a = utils.getVal('liq_anios');
+                const c = document.getElementById('liq_causa').value;
+                
+                let desahucio = 0, despido = 0;
+                // Desahucio (Art 184): 25% por año
+                if(c !== 'acuerdo') desahucio = (s * 0.25) * a;
+
+                // Despido (Art 188)
+                if(c === 'intempestivo') {
+                    despido = (a < 3) ? (s * 3) : (s * (a > 25 ? 25 : a));
                 }
-            });
-        }
 
-        let jobCount = 0;
-        function addJob() {
-            jobCount++;
-            const ed = document.getElementById('editor-jobs');
-            const pr = document.getElementById('prev-jobs-container');
-            const d = document.createElement('div');
-            d.className = 'framed-text'; d.style.borderLeft = '3px solid var(--emerald)';
-            d.innerHTML = `
-                <input type="text" placeholder="Cargo" oninput="document.getElementById('job-title-${jobCount}').innerText = this.value" style="margin-bottom:8px; font-weight:bold;">
-                <input type="text" placeholder="Empresa" oninput="document.getElementById('job-company-${jobCount}').innerText = this.value" style="margin-bottom:8px;">
-                <input type="text" placeholder="Período" oninput="document.getElementById('job-date-${jobCount}').innerText = this.value" style="margin-bottom:8px;">
-                <textarea placeholder="Funciones..." oninput="document.getElementById('job-desc-${jobCount}').innerText = this.value" rows="2"></textarea>`;
-            ed.appendChild(d);
-            const p = document.createElement('div');
-            p.className = 'cv-item';
-            p.innerHTML = `
-                <div class="cv-item-title" id="job-title-${jobCount}">Cargo</div>
-                <div class="cv-item-subtitle" id="job-company-${jobCount}">Empresa</div>
-                <span class="cv-item-date" id="job-date-${jobCount}">Período</span>
-                <div class="cv-item-desc" id="job-desc-${jobCount}">Descripción...</div>`;
-            pr.appendChild(p);
-        }
+                utils.setHTML('res_liq', `
+                    <div class="res-row"><span>Bonif. Desahucio:</span> <span>${utils.formatUSD(desahucio)}</span></div>
+                    <div class="res-row"><span>Indem. Despido:</span> <span>${utils.formatUSD(despido)}</span></div>
+                    <div class="res-total"><span>Total Liquidación:</span> <span>${utils.formatUSD(desahucio + despido)}</span></div>
+                    <small style="display:block; margin-top:10px; color:#64748b;">* Cálculo base. No incluye vacaciones no gozadas ni décimos proporcionales.</small>
+                `);
+            },
+            extras: () => {
+                const s = utils.getVal('he_sueldo');
+                const h50 = utils.getVal('he_50');
+                const h100 = utils.getVal('he_100');
+                const vHora = s / 240;
+                
+                utils.setHTML('res_he', `
+                    <div class="res-row"><span>Valor Hora Normal:</span> <span>${utils.formatUSD(vHora)}</span></div>
+                    <div class="res-row"><span>Pago Horas 50%:</span> <span>${utils.formatUSD(h50 * vHora * 1.5)}</span></div>
+                    <div class="res-row"><span>Pago Horas 100%:</span> <span>${utils.formatUSD(h100 * vHora * 2)}</span></div>
+                    <div class="res-total"><span>Total Extras:</span> <span>${utils.formatUSD((h50*vHora*1.5)+(h100*vHora*2))}</span></div>
+                `);
+            },
+            decimos: () => {
+                const i = utils.getVal('dec_ingresos');
+                const m = utils.getVal('dec_meses');
+                utils.setHTML('res_dec', `
+                    <div class="res-row"><span>13er Sueldo:</span> <span>${utils.formatUSD(i/12)}</span></div>
+                    <div class="res-row"><span>14to Sueldo:</span> <span>${utils.formatUSD((CONFIG.SBU/12)*m)}</span></div>
+                    <div class="res-total"><span>Total Provisión:</span> <span>${utils.formatUSD((i/12)+((CONFIG.SBU/12)*m))}</span></div>
+                `);
+            },
+            jubilacion: () => {
+                const p = utils.getVal('jub_prom');
+                const a = utils.getVal('jub_anios');
+                
+                if(a < 20) return utils.setHTML('res_jub', '<span style="color:var(--color-danger); font-weight:bold;">Error: Se requiere un mínimo de 20 años de servicio continuo o discontinuo (según causal).</span>');
+                
+                const fondo = (p * a) * 0.05; // Coeficiente simplificado
+                utils.setHTML('res_jub', `
+                    <div class="res-row"><span>Fondo Global Est.:</span> <span>${utils.formatUSD(fondo)}</span></div>
+                    <div class="res-row"><span>Pensión Mensual Ref.:</span> <span>${utils.formatUSD(fondo/120)}</span></div>
+                    <div class="res-total"><span>Total Fondo:</span> <span>${utils.formatUSD(fondo)}</span></div>
+                `);
+            },
+            losep: () => {
+                const rmu = utils.getVal('losep_rmu');
+                const a = utils.getVal('losep_anios');
+                let total = (CONFIG.SBU * 5) * a;
+                const tope = CONFIG.SBU * 150;
+                if(total > tope) total = tope;
+                utils.setHTML('res_losep', `<div class="res-total"><span>Indemnización LOSEP:</span> <span>${utils.formatUSD(total)}</span></div>`);
+            }
+        };
 
-        let eduCount = 0;
-        function addEdu() {
-            eduCount++;
-            const ed = document.getElementById('editor-edu');
-            const pr = document.getElementById('prev-edu-container');
-            const d = document.createElement('div');
-            d.className = 'framed-text'; d.style.borderLeft = '3px solid var(--sapphire)';
-            d.innerHTML = `
-                <input type="text" placeholder="Título" oninput="document.getElementById('edu-title-${eduCount}').innerText = this.value" style="margin-bottom:8px; font-weight:bold;">
-                <input type="text" placeholder="Institución" oninput="document.getElementById('edu-school-${eduCount}').innerText = this.value" style="margin-bottom:8px;">
-                <input type="text" placeholder="Año" oninput="document.getElementById('edu-date-${eduCount}').innerText = this.value">`;
-            ed.appendChild(d);
-            const p = document.createElement('div');
-            p.className = 'cv-item';
-            p.innerHTML = `
-                <div class="cv-item-title" id="edu-title-${eduCount}" style="font-size:0.9rem">Título</div>
-                <div class="cv-item-subtitle" id="edu-school-${eduCount}" style="font-size:0.82rem">Institución</div>
-                <span class="cv-item-date" id="edu-date-${eduCount}">Año</span>`;
-            pr.appendChild(p);
-        }
+        // --- ACUERDOS MINISTERIALES (DB y Lógica) ---
+        const agreements = {
+            data: [
+                { id: 1, code: 'MDT-2026-001', title: 'Fijación del SBU 2026', tags: 'Salarios', content: 'Fíjese el Salario Básico Unificado del trabajador en general, incluidos los trabajadores de la pequeña industria, trabajadores agrícolas y de maquila; trabajadores del servicio doméstico, operarios de artesanías y colaboradores de la microempresa, en la cantidad de CUATROCIENTOS OCHENTA Y DOS DÓLARES DE LOS ESTADOS UNIDOS DE AMÉRICA ($482,00) mensuales.' },
+                { id: 2, code: 'MDT-2026-044', title: 'Directrices Jornada Híbrida', tags: 'Teletrabajo', content: 'EXPEDIR LAS DIRECTRICES PARA LA APLICACIÓN DE LA JORNADA HÍBRIDA. Art 1.- Objeto: Regular el registro, control y pago de horas suplementarias en modalidad de teletrabajo. Art 2.- Derecho a desconexión: El empleador debe garantizar 12 horas continuas de desconexión.' },
+                { id: 3, code: 'MDT-2026-012', title: 'Reglamento Seguridad Salud', tags: 'Seguridad', content: 'Reformas al Reglamento de Seguridad y Salud de los Trabajadores. Obligatoriedad de registro de Comité Paritario en plataforma SUT en un plazo no mayor a 30 días.' },
+                { id: 4, code: 'MDT-2025-220', title: 'Contrato Joven y Empleo', tags: 'Contratos', content: 'Incentivos fiscales para la contratación de jóvenes entre 18 y 29 años. Deducción adicional del 100% en el Impuesto a la Renta sobre remuneraciones y aportes al IESS.' }
+            ],
+            init: () => {
+                const list = document.getElementById('agreementList');
+                list.innerHTML = agreements.data.map(item => `
+                    <div class="doc-item" onclick="agreements.view(${item.id})">
+                        <div class="doc-code">${item.code}</div>
+                        <div class="doc-title">${item.title}</div>
+                        <span class="doc-tag">${item.tags}</span>
+                    </div>
+                `).join('');
+            },
+            search: () => {
+                const q = document.getElementById('legalSearch').value.toLowerCase();
+                const filtered = agreements.data.filter(item => 
+                    item.title.toLowerCase().includes(q) || item.code.toLowerCase().includes(q) || item.tags.toLowerCase().includes(q)
+                );
+                const list = document.getElementById('agreementList');
+                list.innerHTML = filtered.map(item => `
+                    <div class="doc-item" onclick="agreements.view(${item.id})">
+                        <div class="doc-code">${item.code}</div>
+                        <div class="doc-title">${item.title}</div>
+                        <span class="doc-tag">${item.tags}</span>
+                    </div>
+                `).join('');
+            },
+            view: (id) => {
+                const item = agreements.data.find(d => d.id === id);
+                document.getElementById('agreementViewer').innerHTML = `
+                    <div class="pdf-content-sim">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:2px solid var(--color-primary); padding-bottom:10px;">
+                            <h2 style="color:var(--color-primary); margin:0;">${item.code}</h2>
+                            <span style="background:var(--color-accent); color:white; padding:4px 10px; border-radius:4px; font-size:0.8rem;">VIGENTE</span>
+                        </div>
+                        <h3 style="color:#444; margin-bottom:20px;">${item.title}</h3>
+                        <div style="background:#f8f9fa; padding:20px; border-left:4px solid var(--color-primary); font-family:'Georgia', serif; line-height:1.6; color:#333;">
+                            ${item.content}
+                        </div>
+                        <div style="margin-top:30px; text-align:right;">
+                            <button class="btn btn-primary" style="width:auto;" onclick="downloader.simulate('${item.code}')">
+                                <i class="fas fa-file-pdf"></i> Descargar Original Firmado
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        };
 
-        let refJobCount = 0;
-        function addRefJob() {
-            refJobCount++;
-            const ed = document.getElementById('editor-ref-job');
-            const pr = document.getElementById('prev-ref-job-container');
-            const d = document.createElement('div');
-            d.className = 'framed-text'; d.style.borderLeft = '3px solid #6366f1';
-            d.innerHTML = `
-                <input type="text" placeholder="Nombre Contacto" oninput="document.getElementById('rj-name-${refJobCount}').innerText = this.value" style="margin-bottom:8px;">
-                <input type="text" placeholder="Cargo/Empresa" oninput="document.getElementById('rj-role-${refJobCount}').innerText = this.value" style="margin-bottom:8px;">
-                <input type="text" placeholder="Teléfono" oninput="document.getElementById('rj-tel-${refJobCount}').innerText = this.value">`;
-            ed.appendChild(d);
-            const p = document.createElement('div');
-            p.className = 'ref-card';
-            p.innerHTML = `
-                <div style="font-weight:700; font-size:0.82rem;" id="rj-name-${refJobCount}">Nombre</div>
-                <div style="font-size:0.78rem; color:#64748b !important;" id="rj-role-${refJobCount}">Cargo</div>
-                <div style="font-size:0.78rem; color:#1a3a6e !important;" id="rj-tel-${refJobCount}">Teléfono</div>`;
-            pr.appendChild(p);
-        }
+        // --- SIMULADOR DE DESCARGA PRO ---
+        const downloader = {
+            simulate: (filename) => {
+                const modal = document.getElementById('downloadModal');
+                const bar = document.getElementById('dlProgress');
+                const text = document.getElementById('dlText');
+                const status = document.getElementById('dlStatus');
+                
+                modal.style.display = 'flex';
+                bar.style.width = '0%';
+                text.innerText = `Solicitando archivo: ${filename}.pdf...`;
+                status.innerText = 'Iniciando conexión segura...';
+                status.style.color = '#333';
 
-        let refPersCount = 0;
-        function addRefPers() {
-            refPersCount++;
-            const ed = document.getElementById('editor-ref-pers');
-            const pr = document.getElementById('prev-ref-pers-container');
-            const d = document.createElement('div');
-            d.className = 'framed-text'; d.style.borderLeft = '3px solid var(--rose)';
-            d.innerHTML = `
-                <input type="text" placeholder="Nombre" oninput="document.getElementById('rp-name-${refPersCount}').innerText = this.value" style="margin-bottom:8px;">
-                <input type="text" placeholder="Teléfono" oninput="document.getElementById('rp-tel-${refPersCount}').innerText = this.value">`;
-            ed.appendChild(d);
-            const p = document.createElement('div');
-            p.className = 'ref-card';
-            p.innerHTML = `
-                <div style="font-weight:700; font-size:0.82rem;" id="rp-name-${refPersCount}">Nombre</div>
-                <div style="font-size:0.78rem; color:#1a3a6e !important;" id="rp-tel-${refPersCount}">Teléfono</div>`;
-            pr.appendChild(p);
-        }
+                // Secuencia de simulación
+                setTimeout(() => { bar.style.width = '30%'; status.innerText = 'Conectando con repositorio MDT...'; }, 500);
+                setTimeout(() => { bar.style.width = '70%'; status.innerText = 'Descargando paquetes de datos...'; }, 1500);
+                setTimeout(() => { 
+                    bar.style.width = '100%'; 
+                    status.innerText = '¡Descarga Completa!'; 
+                    status.style.color = 'var(--color-success)';
+                    text.innerText = 'El archivo se ha guardado en su carpeta de descargas.';
+                }, 2500);
+                
+                setTimeout(() => { modal.style.display = 'none'; }, 4000);
+            }
+        };
 
-        // Init
-        addJob();
-        addEdu();
+        // --- HOJA DE VIDA ---
+        const cv = {
+            update: () => {
+                const fields = ['nombre', 'titulo', 'contacto', 'perfil', 'exp', 'edu'];
+                fields.forEach(f => {
+                    const val = document.getElementById(`cv_${f}`).value;
+                    if(val) document.getElementById(`p_${f}`).innerText = val;
+                });
+            },
+            save: () => {
+                alert("Datos guardados en caché del navegador.");
+            }
+        };
+
+        // --- CHATBOT INTELIGENTE (VERSIÓN SEGURA ANTI-XSS) ---
+        const chatbot = {
+            toggle: () => {
+                const win = document.getElementById('chatWindow');
+                win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
+            },
+            checkEnter: (e) => { if(e.key === 'Enter') chatbot.send(); },
+            send: () => {
+                const input = document.getElementById('chatInput');
+                const text = input.value.trim();
+                if(!text) return;
+
+                const log = document.getElementById('chatLog');
+                
+                // --- SEGURIDAD XSS: Crear elementos DOM en lugar de innerHTML ---
+                const userMsgDiv = document.createElement('div');
+                userMsgDiv.className = 'msg user';
+                userMsgDiv.innerText = text; // Sanitización automática
+                log.appendChild(userMsgDiv);
+                
+                const textLower = text.toLowerCase();
+                input.value = '';
+                log.scrollTop = log.scrollHeight;
+
+                // Lógica de Respuesta Específica
+                setTimeout(() => {
+                    let response = "No estoy seguro de esa consulta. Intenta con: 'vacaciones', 'despido', 'horas extras' o 'iess'.";
+                    
+                    if(textLower.includes('vacaciones')) {
+                        response = "Para esa consulta específica te sugiero revisar el <strong>Art. 69 del Código del Trabajo</strong>: Todo trabajador tiene derecho a 15 días ininterrumpidos de descanso anual. A partir del 5to año se suma 1 día por antigüedad.";
+                    } else if(textLower.includes('despido')) {
+                        response = "El <strong>Despido Intempestivo (Art. 188)</strong> se indemniza así:<br>• Hasta 3 años: 3 meses de sueldo.<br>• Más de 3 años: 1 mes de sueldo por cada año de servicio (tope 25 años).";
+                    } else if(textLower.includes('renuncia')) {
+                        response = "En caso de renuncia, aplica el <strong>Desahucio (Art. 184)</strong>: 25% de la última remuneración por cada año de servicio completo.";
+                    } else if(textLower.includes('iess')) {
+                        response = "Las tasas vigentes son:<br>• Privado: 9.45% (Personal) + 12.15% (Patronal).<br>• Público: 11.45% (Personal) + 9.15% (Patronal).";
+                    }
+
+                    // Para la respuesta del bot sí usamos innerHTML porque es texto controlado por nosotros (confiable)
+                    const botMsgDiv = document.createElement('div');
+                    botMsgDiv.className = 'msg bot';
+                    botMsgDiv.innerHTML = response;
+                    log.appendChild(botMsgDiv);
+                    
+                    log.scrollTop = log.scrollHeight;
+                }, 600);
+            }
+        };
+
+        // --- SCRIPT PARA OCULTAR FOOTER EN MOVIL (3 Segundos) ---
+        window.onload = () => {
+            agreements.init();
+            
+            // Detectar móvil (ancho <= 768px)
+            if (window.innerWidth <= 768) {
+                setTimeout(() => {
+                    const footer = document.getElementById('mobile-legal-footer');
+                    if(footer) {
+                        footer.style.opacity = '0'; // Desvanecer
+                        footer.style.transform = 'translateY(100%)'; // Deslizar abajo
+                        // Quitar del DOM después de la animación para liberar espacio
+                        setTimeout(() => { footer.style.display = 'none'; }, 500);
+                    }
+                }, 3000); // 3000ms = 3 Segundos exactos
+            }
+        };
+
     </script>
 </body>
 </html>

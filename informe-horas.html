@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horas Suplementarias – MDT</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg:#020509;--card:#070d18;--border:#152035;
+            --gold:#d4a843;--gold-dim:rgba(212,168,67,0.10);--gold-edge:rgba(212,168,67,0.30);
+            --text:#8ba4c0;--heading:#e4eef8;--green:#1aad72;--red:#e05c5c;--gray:#4a6585;
+            --blue:#3b7de8;--purple:#8b5cf6;
+        }
+        *{box-sizing:border-box;margin:0;padding:0;}
+        body{background:var(--bg);color:var(--text);font-family:'Segoe UI',sans-serif;font-size:14px;padding:24px 16px;min-height:100vh;}
+        h1{font-size:1.2rem;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;}
+        .sub{font-size:0.72rem;color:var(--gray);letter-spacing:1px;margin-bottom:22px;}
+
+        /* CONFIG */
+        .config{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:18px;}
+        .config-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;}
+        .fld label{font-size:0.68rem;text-transform:uppercase;letter-spacing:1px;color:var(--gray);display:block;margin-bottom:5px;}
+        .fld input,.fld select{background:rgba(2,5,9,0.8);color:var(--heading);border:1px solid var(--border);border-radius:5px;padding:9px 11px;font-size:0.86rem;width:100%;font-family:'Segoe UI',sans-serif;}
+        .fld input:focus,.fld select:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 2px var(--gold-dim);}
+
+        /* JORNADA */
+        .jornada-bar{background:var(--card);border:1px solid var(--gold-edge);border-radius:8px;padding:14px 18px;margin-bottom:18px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+        .jornada-bar label{font-size:0.68rem;text-transform:uppercase;letter-spacing:1px;color:var(--gold);display:block;margin-bottom:4px;}
+        .jornada-bar input[type="time"]{background:rgba(2,5,9,0.8);color:var(--heading);border:1px solid var(--gold-edge);border-radius:5px;padding:7px 10px;font-size:0.9rem;width:110px;}
+        .jornada-bar input:focus{border-color:var(--gold);outline:none;}
+        .jornada-bar .nota-j{font-size:0.72rem;color:var(--gray);border-left:2px solid var(--gold);padding-left:10px;}
+
+        /* DÍAS */
+        .dias-wrap{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:18px;}
+        .dias-wrap h2{font-size:0.75rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:14px;}
+
+        .dia-card{border:1px solid var(--border);border-radius:8px;margin-bottom:12px;overflow:hidden;transition:border-color 0.2s;}
+        .dia-card.tipo-normal    {border-left:3px solid var(--blue);}
+        .dia-card.tipo-sabado    {border-left:3px solid var(--green);}
+        .dia-card.tipo-domingo   {border-left:3px solid var(--green);}
+        .dia-card.tipo-feriado   {border-left:3px solid var(--purple);}
+
+        .dia-header{background:rgba(0,0,0,0.4);padding:10px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+
+        /* Badge tipo día */
+        .badge-tipo{font-size:0.68rem;font-weight:700;padding:4px 10px;border-radius:12px;white-space:nowrap;}
+        .badge-normal {background:rgba(59,125,232,0.15);color:var(--blue);border:1px solid rgba(59,125,232,0.3);}
+        .badge-sabado {background:rgba(26,173,114,0.15);color:var(--green);border:1px solid rgba(26,173,114,0.3);}
+        .badge-domingo{background:rgba(26,173,114,0.15);color:var(--green);border:1px solid rgba(26,173,114,0.3);}
+        .badge-feriado{background:rgba(139,92,246,0.15);color:var(--purple);border:1px solid rgba(139,92,246,0.3);}
+
+        /* Toggle feriado */
+        .toggle-feriado{display:flex;align-items:center;gap:7px;cursor:pointer;padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--gray);font-size:0.72rem;font-weight:600;transition:all 0.2s;}
+        .toggle-feriado:hover{border-color:var(--purple);color:var(--purple);}
+        .toggle-feriado.activo{background:rgba(139,92,246,0.15);color:var(--purple);border-color:rgba(139,92,246,0.4);}
+
+        /* Resultado horas */
+        .resultado-tiempo{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;font-size:0.8rem;font-weight:700;font-family:monospace;white-space:nowrap;}
+        .resultado-tiempo.sup    {background:var(--gold-dim);color:var(--gold);border:1px solid var(--gold-edge);}
+        .resultado-tiempo.ext    {background:rgba(26,173,114,0.12);color:var(--green);border:1px solid rgba(26,173,114,0.3);}
+        .resultado-tiempo.cero   {background:rgba(255,255,255,0.03);color:var(--gray);border:1px solid var(--border);}
+        .resultado-tiempo.negativo{background:rgba(224,92,92,0.1);color:var(--red);border:1px solid rgba(224,92,92,0.3);}
+
+        .tiempo-group{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;}
+        .tiempo-group label{font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--gray);display:block;margin-bottom:4px;}
+        .tiempo-group input[type="time"]{background:rgba(2,5,9,0.8);color:var(--heading);border:1px solid var(--border);border-radius:4px;padding:7px 9px;font-size:0.9rem;width:112px;}
+        .tiempo-group input[type="time"]:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 2px var(--gold-dim);}
+
+        .btn-del{background:rgba(224,92,92,0.12);color:var(--red);border:1px solid rgba(224,92,92,0.25);border-radius:4px;padding:6px 10px;cursor:pointer;font-size:0.75rem;transition:all 0.2s;margin-left:auto;}
+        .btn-del:hover{background:var(--red);color:white;}
+
+        .dia-body{padding:12px 14px;}
+        .dia-body label{font-size:0.68rem;text-transform:uppercase;letter-spacing:1px;color:var(--gray);display:block;margin-bottom:5px;}
+        .dia-body textarea{background:rgba(2,5,9,0.7);color:var(--heading);border:1px solid var(--border);border-radius:5px;padding:9px 11px;font-size:0.83rem;width:100%;resize:vertical;min-height:75px;font-family:'Segoe UI',sans-serif;line-height:1.55;}
+        .dia-body textarea:focus{border-color:var(--gold);outline:none;}
+
+        /* LEYENDA */
+        .leyenda{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;font-size:0.72rem;}
+        .ley-item{display:flex;align-items:center;gap:5px;color:var(--gray);}
+        .ley-dot{width:10px;height:10px;border-radius:50%;}
+
+        /* TOTALES */
+        .totales{background:var(--card);border:1px solid var(--gold-edge);border-radius:10px;padding:18px 22px;margin-bottom:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;box-shadow:0 0 28px var(--gold-dim);}
+        .tot-item{text-align:center;}
+        .tot-label{font-size:0.62rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--gray);margin-bottom:5px;}
+        .tot-val{font-size:1.5rem;font-weight:900;font-family:monospace;color:var(--gold);}
+        .tot-val.green{color:var(--green);}
+        .tot-sub{font-size:0.67rem;color:var(--gray);margin-top:2px;}
+
+        .btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
+        .btn{padding:10px 20px;border:none;border-radius:6px;font-weight:700;font-size:0.8rem;cursor:pointer;letter-spacing:0.5px;transition:all 0.2s;display:flex;align-items:center;gap:7px; text-decoration:none; justify-content:center;}
+        .btn-gold{background:linear-gradient(135deg,var(--gold),#8a6018);color:#050300;box-shadow:0 3px 14px var(--gold-dim);}
+        .btn-gold:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(212,168,67,0.35);}
+        .btn-green{background:rgba(26,173,114,0.12);color:var(--green);border:1px solid rgba(26,173,114,0.3)!important;}
+        .btn-green:hover{background:var(--green);color:#020509;}
+        .btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)!important;}
+        .btn-outline:hover{border-color:var(--gold)!important;color:var(--gold);}
+
+        .preview-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 22px;margin-bottom:20px;}
+        .preview-box h2{font-size:0.75rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:14px;}
+        .preview-text{background:rgba(0,0,0,0.45);border:1px solid var(--border);border-radius:6px;padding:16px;font-size:0.79rem;line-height:1.85;color:var(--heading);white-space:pre-wrap;font-family:'Courier New',monospace;max-height:520px;overflow-y:auto;}
+
+        .nota{font-size:0.72rem;color:var(--gray);padding:10px 14px;border-left:2px solid var(--gold);background:var(--gold-dim);border-radius:0 6px 6px 0;margin-bottom:16px;line-height:1.6;}
+        .nota strong{color:var(--gold);}
+
+        @media(max-width:620px){
+            .tiempo-group{width:100%;}
+            .dia-header{flex-direction:column;align-items:flex-start;}
+        }
+    </style>
+</head>
+<body>
+
+<h1>⚖ Horas Suplementarias y Extraordinarias</h1>
+<div class="sub">Ministerio del Trabajo del Ecuador · Art. 55 Código del Trabajo</div>
+
+<div class="config">
+    <div class="config-grid">
+        <div class="fld" style="grid-column:1/-1"><label>Para (Director)</label><input id="para_nombre" value="DR. JAIME RENE LOPEZ MUÑOZ"></div>
+        <div class="fld" style="grid-column:1/-1"><label>Cargo del Director</label><input id="para_cargo" value="DIRECTOR ADMINISTRATIVO"></div>
+        <div class="fld" style="grid-column:1/-1"><label>Tu nombre completo</label><input id="de_nombre" value="DIEGO VINICIO VITERI REYES"></div>
+        <div class="fld" style="grid-column:1/-1"><label>Tu cargo</label><input id="de_cargo" value="AUXILIAR DE MANTENIMIENTO"></div>
+        <div class="fld"><label>Dirección / Unidad</label><input id="direccion" value="DIRECCIÓN ADMINISTRATIVA"></div>
+        <div class="fld">
+            <label>Mes</label>
+            <select id="mes">
+                <option>Enero</option><option>Febrero</option><option>Marzo</option><option>Abril</option>
+                <option>Mayo</option><option>Junio</option><option>Julio</option><option>Agosto</option>
+                <option>Septiembre</option><option>Octubre</option><option>Noviembre</option><option>Diciembre</option>
+            </select>
+        </div>
+        <div class="fld"><label>Año</label><input id="anio" type="number" value="2025" min="2020" max="2035"></div>
+        <div class="fld"><label>Fecha del informe</label><input id="fecha_informe"></div>
+        <div class="fld"><label>Revisado por</label><input id="revisor_nombre" value="Fredy Pillalaza"></div>
+        <div class="fld"><label>Cargo del revisor</label><input id="revisor_cargo" value="ARQUITECTO"></div>
+    </div>
+</div>
+
+<div class="jornada-bar">
+    <div>
+        <label>Inicio jornada normal</label>
+        <input type="time" id="jornada_inicio" value="08:00" onchange="recalcularTodos()">
+    </div>
+    <div>
+        <label>Fin jornada normal</label>
+        <input type="time" id="jornada_fin" value="17:00" onchange="recalcularTodos()">
+    </div>
+    <div class="nota-j">
+        En días normales (lun–vie) las extras empiezan después del fin de jornada.<br>
+        En sábado, domingo y feriado <strong>todas las horas son extraordinarias (100%)</strong>.
+    </div>
+</div>
+
+<div class="leyenda">
+    <div class="ley-item"><div class="ley-dot" style="background:var(--blue)"></div> Día normal → Suplementarias (50%)</div>
+    <div class="ley-item"><div class="ley-dot" style="background:var(--green)"></div> Sábado / Domingo → Extraordinarias (100%)</div>
+    <div class="ley-item"><div class="ley-dot" style="background:var(--purple)"></div> Feriado → Extraordinarias (100%)</div>
+</div>
+
+<div class="dias-wrap">
+    <h2>📅 Días trabajados con horas extras</h2>
+    <div id="lista-dias"></div>
+    <button class="btn btn-outline" style="width:100%;justify-content:center;margin-top:6px;" onclick="agregarDia()">
+        + Agregar día
+    </button>
+</div>
+
+<div class="totales">
+    <div class="tot-item">
+        <div class="tot-label">Suplementarias (50%)</div>
+        <div class="tot-val" id="tot-sup">0h 00m</div>
+        <div class="tot-sub">lunes a viernes</div>
+    </div>
+    <div class="tot-item">
+        <div class="tot-label">Extraordinarias (100%)</div>
+        <div class="tot-val green" id="tot-ext">0h 00m</div>
+        <div class="tot-sub">sáb / dom / feriado</div>
+    </div>
+    <div class="tot-item">
+        <div class="tot-label">Gran Total</div>
+        <div class="tot-val" id="tot-total">0h 00m</div>
+        <div class="tot-sub">para el informe</div>
+    </div>
+</div>
+
+<div class="nota">
+    <strong>Recuerda:</strong> Si te llaman verbalmente a decirte que el informe está mal, ese mismo día envía un correo 
+    "confirmando lo conversado" — conviertes lo verbal en documento escrito que queda registrado.
+</div>
+
+<div class="btns">
+    <button class="btn btn-gold" onclick="generarInforme()">📄 Generar Informe</button>
+    <button class="btn btn-green" onclick="copiarTexto()">📋 Copiar texto</button>
+    <button class="btn btn-outline" onclick="window.print()">🖨 Imprimir</button>
+    <a href="index.html" class="btn btn-outline" style="margin-left:auto;"><i class="fas fa-arrow-left"></i> Volver</a>
+</div>
+
+<div class="preview-box">
+    <h2>📑 Vista previa del informe</h2>
+    <div class="preview-text" id="preview-text">Completa los días y pulsa "Generar Informe".</div>
+</div>
+
+<script>
+let diaCount = 0;
+let feriados = {}; 
+
+const MESES_ES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const DIAS_ES  = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+
+// Feriados fijos Ecuador 2025-2026
+const FERIADOS_EC = [
+    '2025-01-01','2025-02-24','2025-02-25','2025-04-18','2025-04-19',
+    '2025-05-01','2025-05-24','2025-08-10','2025-10-09','2025-11-02',
+    '2025-11-03','2025-12-06','2025-12-25',
+    '2026-01-01','2026-03-02','2026-03-03','2026-04-03','2026-04-04',
+    '2026-05-01','2026-05-25','2026-08-10','2026-10-09','2026-11-02',
+    '2026-11-03','2026-12-06','2026-12-25'
+];
+
+window.onload = function() {
+    const hoy = new Date();
+    const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio',
+                   'Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    document.getElementById('mes').value = meses[hoy.getMonth()];
+    document.getElementById('anio').value = hoy.getFullYear();
+    const d = String(hoy.getDate()).padStart(2,'0');
+    const m = MESES_ES[hoy.getMonth()];
+    document.getElementById('fecha_informe').value =
+        `Quito, ${d} de ${m.charAt(0).toUpperCase()+m.slice(1)} del ${hoy.getFullYear()}`;
+    agregarDia(); agregarDia();
+};
+
+function toMin(t){ if(!t) return 0; const[h,m]=t.split(':').map(Number); return h*60+m; }
+function minToHM(min){ if(min<=0) return '0h 00m'; return `${Math.floor(min/60)}h ${String(min%60).padStart(2,'0')}m`; }
+function formatoTotal(min){ return `${Math.floor(min/60)}h${String(min%60).padStart(2,'0')}`; }
+function formatoDoc(min){ if(min<=0) return ''; return `${String(Math.floor(min/60)).padStart(2,'0')}:${String(min%60).padStart(2,'0')}`; }
+
+function getTipoDia(fechaStr, esFeriadoManual) {
+    if (!fechaStr) return { tipo: 'normal', label: 'Día Normal', badge: 'normal' };
+    const fecha = new Date(fechaStr + 'T12:00:00');
+    const dow = fecha.getDay();
+    const esFeriadoAuto = FERIADOS_EC.includes(fechaStr);
+
+    if (esFeriadoManual || esFeriadoAuto) return { tipo: 'feriado',  label: '🗓 Feriado Nacional', badge: 'feriado' };
+    if (dow === 6)                         return { tipo: 'sabado',   label: '📅 Sábado',          badge: 'sabado'  };
+    if (dow === 0)                         return { tipo: 'domingo',  label: '📅 Domingo',         badge: 'domingo' };
+    return                                        { tipo: 'normal',   label: `${DIAS_ES[dow]}`,    badge: 'normal'  };
+}
+
+function esExtraordinario(tipoDia) {
+    return tipoDia === 'sabado' || tipoDia === 'domingo' || tipoDia === 'feriado';
+}
+
+function calcularExtras(id) {
+    const fechaStr  = document.getElementById(`fecha-${id}`)?.value || '';
+    const entrada   = document.getElementById(`entrada-${id}`)?.value || '';
+    const salida    = document.getElementById(`salida-${id}`)?.value || '';
+    const jornadaFin   = toMin(document.getElementById('jornada_fin').value);
+    const jornadaIni   = toMin(document.getElementById('jornada_inicio').value);
+
+    const esFeriadoManual = !!feriados[id];
+    const tipoDia = getTipoDia(fechaStr, esFeriadoManual);
+
+    // Actualizar badge y color de card
+    const badgeEl = document.getElementById(`badge-${id}`);
+    const card    = document.getElementById(`dia-${id}`);
+    if (badgeEl) {
+        badgeEl.className = `badge-tipo badge-${tipoDia.badge}`;
+        badgeEl.textContent = tipoDia.label;
+    }
+    if (card) {
+        card.className = `dia-card tipo-${tipoDia.badge}`;
+    }
+
+    // Actualizar botón feriado
+    const btnFeriado = document.getElementById(`btn-feriado-${id}`);
+    if (btnFeriado) {
+        if (FERIADOS_EC.includes(fechaStr)) {
+            btnFeriado.textContent = '⚑ Feriado (automático)';
+            btnFeriado.className = 'toggle-feriado activo';
+            btnFeriado.disabled = true;
+        } else {
+            btnFeriado.disabled = false;
+            btnFeriado.textContent = feriados[id] ? '⚑ Feriado ✓' : '⚐ Marcar Feriado';
+            btnFeriado.className = feriados[id] ? 'toggle-feriado activo' : 'toggle-feriado';
+        }
+    }
+
+    const resEl = document.getElementById(`res-${id}`);
+    if (!salida) {
+        resEl.className = 'resultado-tiempo cero';
+        resEl.textContent = '— ingresa salida';
+        recalcularTotales();
+        return;
+    }
+
+    const salidaMin  = toMin(salida);
+    const entradaMin = toMin(entrada);
+
+    let extraMin = 0;
+
+    if (esExtraordinario(tipoDia.tipo)) {
+        // Sábado / Domingo / Feriado: todas las horas trabajadas son extraordinarias
+        extraMin = entradaMin > 0 ? salidaMin - entradaMin : salidaMin - jornadaIni;
+        if (extraMin <= 0) extraMin = 0;
+        resEl.className = 'resultado-tiempo ext';
+        resEl.textContent = extraMin > 0
+            ? `Extraordinarias (100%): ${minToHM(extraMin)}`
+            : '— sin horas registradas';
+    } else {
+        // Día normal: extras a partir del fin de jornada
+        extraMin = salidaMin - jornadaFin;
+        if (extraMin <= 0) {
+            resEl.className = 'resultado-tiempo negativo';
+            resEl.textContent = `Sin extras (salida ${salida})`;
+        } else {
+            resEl.className = 'resultado-tiempo sup';
+            resEl.textContent = `Suplementarias (50%): ${minToHM(extraMin)}`;
+        }
+    }
+
+    recalcularTotales();
+}
+
+function toggleFeriado(id) {
+    feriados[id] = !feriados[id];
+    calcularExtras(id);
+}
+
+function recalcularTodos() {
+    document.querySelectorAll('.dia-card').forEach(card => {
+        const id = card.id.replace('dia-','');
+        calcularExtras(id);
+    });
+}
+
+function recalcularTotales() {
+    const jornadaFin = toMin(document.getElementById('jornada_fin').value);
+    const jornadaIni = toMin(document.getElementById('jornada_inicio').value);
+    let totalSup = 0, totalExt = 0;
+
+    document.querySelectorAll('.dia-card').forEach(card => {
+        const id      = card.id.replace('dia-','');
+        const salida  = document.getElementById(`salida-${id}`)?.value || '';
+        const entrada = document.getElementById(`entrada-${id}`)?.value || '';
+        const fechaStr= document.getElementById(`fecha-${id}`)?.value || '';
+        if (!salida) return;
+
+        const tipoDia = getTipoDia(fechaStr, !!feriados[id]);
+        const salidaMin  = toMin(salida);
+        const entradaMin = toMin(entrada);
+
+        if (esExtraordinario(tipoDia.tipo)) {
+            const hrs = entradaMin > 0 ? salidaMin - entradaMin : salidaMin - jornadaIni;
+            if (hrs > 0) totalExt += hrs;
+        } else {
+            const hrs = salidaMin - jornadaFin;
+            if (hrs > 0) totalSup += hrs;
+        }
+    });
+
+    document.getElementById('tot-sup').textContent   = minToHM(totalSup);
+    document.getElementById('tot-ext').textContent   = minToHM(totalExt);
+    document.getElementById('tot-total').textContent = minToHM(totalSup + totalExt);
+}
+
+function agregarDia() {
+    diaCount++;
+    const id = diaCount;
+    feriados[id] = false;
+    const div = document.createElement('div');
+    div.className = 'dia-card tipo-normal';
+    div.id = `dia-${id}`;
+    div.innerHTML = `
+        <div class="dia-header">
+            <div>
+                <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--gray);margin-bottom:4px;">Fecha</div>
+                <input type="date" id="fecha-${id}" onchange="calcularExtras(${id})">
+            </div>
+
+            <span class="badge-tipo badge-normal" id="badge-${id}">Día Normal</span>
+
+            <button class="toggle-feriado" id="btn-feriado-${id}" onclick="toggleFeriado(${id})">
+                ⚐ Marcar Feriado
+            </button>
+
+            <div class="tiempo-group">
+                <div>
+                    <label>Hora entrada</label>
+                    <input type="time" id="entrada-${id}" value="08:00" onchange="calcularExtras(${id})">
+                </div>
+                <div>
+                    <label>Hora salida</label>
+                    <input type="time" id="salida-${id}" onchange="calcularExtras(${id})">
+                </div>
+                <div id="res-${id}" class="resultado-tiempo cero">— ingresa salida</div>
+            </div>
+
+            <button class="btn-del" onclick="eliminarDia(${id})">✕</button>
+        </div>
+        <div class="dia-body">
+            <label>Actividades realizadas</label>
+            <textarea id="act-${id}" placeholder="Ej: Trabajos en edificio Torrezul&#10;* Adecuación de puestos de trabajo piso 3&#10;* Instalación de puntos eléctricos"></textarea>
+        </div>
+    `;
+    document.getElementById('lista-dias').appendChild(div);
+}
+
+function eliminarDia(id) {
+    document.getElementById(`dia-${id}`)?.remove();
+    delete feriados[id];
+    recalcularTotales();
+}
+
+function getDias() {
+    const jornadaFin = toMin(document.getElementById('jornada_fin').value);
+    const jornadaIni = toMin(document.getElementById('jornada_inicio').value);
+    const dias = [];
+    document.querySelectorAll('.dia-card').forEach(card => {
+        const id      = card.id.replace('dia-','');
+        const fecha   = document.getElementById(`fecha-${id}`)?.value || '';
+        const entrada = document.getElementById(`entrada-${id}`)?.value || '';
+        const salida  = document.getElementById(`salida-${id}`)?.value || '';
+        const act     = document.getElementById(`act-${id}`)?.value.trim() || '';
+        if (!fecha && !act) return;
+
+        const tipoDia    = getTipoDia(fecha, !!feriados[id]);
+        const salidaMin  = toMin(salida);
+        const entradaMin = toMin(entrada);
+        let supMin = 0, extMin = 0;
+
+        if (salida) {
+            if (esExtraordinario(tipoDia.tipo)) {
+                extMin = Math.max(0, entradaMin > 0 ? salidaMin - entradaMin : salidaMin - jornadaIni);
+            } else {
+                supMin = Math.max(0, salidaMin - jornadaFin);
+            }
+        }
+        dias.push({ fecha, entrada, salida, act, tipoDia, supMin, extMin });
+    });
+    return dias;
+}
+
+function formatFechaDoc(iso) {
+    if (!iso) return '—';
+    const [y,m,d] = iso.split('-');
+    return `${d}/${m}/${y}`;
+}
+
+function generarInforme() {
+    const para      = document.getElementById('para_nombre').value.trim();
+    const paraCargo = document.getElementById('para_cargo').value.trim();
+    const de        = document.getElementById('de_nombre').value.trim();
+    const deCargo   = document.getElementById('de_cargo').value.trim();
+    const dir       = document.getElementById('direccion').value.trim();
+    const mes       = document.getElementById('mes').value;
+    const anio      = document.getElementById('anio').value;
+    const fecha     = document.getElementById('fecha_informe').value.trim();
+    const revisor   = document.getElementById('revisor_nombre').value.trim();
+    const revCargo  = document.getElementById('revisor_cargo').value.trim();
+    const dias      = getDias();
+
+    let totalSupMin = 0, totalExtMin = 0;
+    let filasDetalle = '';
+
+    dias.forEach(d => {
+        const fStr   = formatFechaDoc(d.fecha);
+        const supStr = formatoDoc(d.supMin);
+        const extStr = formatoDoc(d.extMin);
+        totalSupMin += d.supMin;
+        totalExtMin += d.extMin;
+
+        const tipoLabel = d.tipoDia.label;
+        const actLines  = d.act ? d.act.split('\n').filter(l=>l.trim()) : ['(Sin descripción)'];
+
+        filasDetalle += `  ┌──────────────────────────────────────────────────────────────────┐\n`;
+        filasDetalle += `  │  Fecha: ${fStr.padEnd(10)}  [${tipoLabel.padEnd(18)}]                    │\n`;
+        filasDetalle += `  │  Entrada: ${(d.entrada||'--:--').padEnd(7)}  Salida: ${(d.salida||'--:--').padEnd(7)}`;
+        if (supStr) filasDetalle += `  Suplementarias: ${supStr}    │\n`;
+        else if (extStr) filasDetalle += `  Extraordinarias: ${extStr}   │\n`;
+        else filasDetalle += `                                │\n`;
+        filasDetalle += `  ├──────────────────────────────────────────────────────────────────┤\n`;
+        actLines.forEach(l => {
+            const linea = l.substring(0,64).padEnd(64);
+            filasDetalle += `  │  ${linea}  │\n`;
+        });
+        filasDetalle += `  └──────────────────────────────────────────────────────────────────┘\n\n`;
+    });
+
+    const totalMin = totalSupMin + totalExtMin;
+    const resumen  = [];
+    if (totalSupMin > 0) resumen.push(`Suplementarias: ${formatoTotal(totalSupMin)}`);
+    if (totalExtMin > 0) resumen.push(`Extraordinarias: ${formatoTotal(totalExtMin)}`);
+
+    const texto =
+`INFORME DE HORAS SUPLEMENTARIAS Y EXTRAORDINARIAS (CÓDIGO DE TRABAJO)
+
+PARA:       ${para}
+            ${paraCargo}
+
+DE:         ${de}
+            ${deCargo}
+
+DIRECCIÓN:  ${dir}
+ASUNTO:     Informe para autorización de pago de horas extras Suplementarias y Extraordinarias.
+
+LUGAR Y FECHA: ${fecha}
+
+
+En atención a lo determinado en el Art. 55 del Código de Trabajo "Remuneración por horas
+suplementarias y extraordinarias.- Por convenio escrito entre las partes, la jornada de
+trabajo podrá exceder del límite fijado en los artículos 47 y 49 de este Código, siempre
+que se proceda con autorización del Inspector de Trabajo y se observen las siguientes
+prescripciones".
+
+Es por ello que a continuación se detallan las actividades realizadas en el tiempo
+suplementario y extraordinario durante el mes de ${mes} del ${anio} para su respectiva
+aprobación:
+
+
+${filasDetalle}
+                                      TOTAL    ${formatoTotal(totalMin)}
+                                      ${resumen.join('   |   ')}
+
+
+Realizado por;                                      Revisado por;
+
+_____________________________                       _____________________________
+FIRMA DEL SERVIDOR                                  ${revisor}
+${de}                              ${revCargo}
+
+
+Autorizado por;
+
+
+_____________________________
+FIRMA JEFE INMEDIATO
+${para}
+${paraCargo}`;
+
+    document.getElementById('preview-text').textContent = texto;
+}
+
+function copiarTexto() {
+    const t = document.getElementById('preview-text').textContent;
+    if (t.startsWith('Completa')) { alert('Primero genera el informe.'); return; }
+    navigator.clipboard.writeText(t).then(() => {
+        const b = event.target.closest('.btn');
+        const o = b.innerHTML;
+        b.innerHTML = '✓ Copiado!';
+        setTimeout(() => b.innerHTML = o, 2000);
+    });
+}
+</script>
+</body>
+</html>

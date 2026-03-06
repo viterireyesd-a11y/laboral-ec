@@ -128,11 +128,11 @@
 
 <div class="config">
     <div class="config-grid">
-        <div class="fld" style="grid-column:1/-1"><label>Para (Autoridad)</label><input id="para_nombre" value="DR. JAIME RENE LOPEZ MUÑOZ"></div>
-        <div class="fld" style="grid-column:1/-1"><label>Cargo de la Autoridad</label><input id="para_cargo" value="DIRECTOR ADMINISTRATIVO"></div>
-        <div class="fld" style="grid-column:1/-1"><label>Tu nombre completo</label><input id="de_nombre" value="DIEGO VINICIO VITERI REYES"></div>
-        <div class="fld" style="grid-column:1/-1"><label>Tu cargo</label><input id="de_cargo" value="AUXILIAR DE MANTENIMIENTO"></div>
-        <div class="fld"><label>Dirección / Unidad</label><input id="direccion" value="DIRECCIÓN ADMINISTRATIVA"></div>
+        <div class="fld" style="grid-column:1/-1"><label>Para (Autoridad)</label><input id="para_nombre" value="Ing. María López" placeholder="Ej: Ing. María López"></div>
+        <div class="fld" style="grid-column:1/-1"><label>Cargo de la Autoridad</label><input id="para_cargo" value="Directora Administrativa" placeholder="Ej: Directora Administrativa"></div>
+        <div class="fld" style="grid-column:1/-1"><label>Tu nombre completo</label><input id="de_nombre" value="Juan Pérez" placeholder="Ej: Juan Pérez"></div>
+        <div class="fld" style="grid-column:1/-1"><label>Tu cargo</label><input id="de_cargo" value="Asistente de Operaciones" placeholder="Ej: Asistente de Operaciones"></div>
+        <div class="fld"><label>Dirección / Unidad</label><input id="direccion" value="Dirección General" placeholder="Ej: Dirección Operativa"></div>
         <div class="fld">
             <label>Mes Laborado</label>
             <select id="mes">
@@ -141,10 +141,10 @@
                 <option>Septiembre</option><option>Octubre</option><option>Noviembre</option><option>Diciembre</option>
             </select>
         </div>
-        <div class="fld"><label>Año</label><input id="anio" type="number" value="2025" min="2020" max="2035"></div>
-        <div class="fld"><label>Lugar y Fecha del informe</label><input id="fecha_informe" value="Quito 06 de Noviembre del 2025"></div>
-        <div class="fld"><label>Revisado por (Nombre)</label><input id="revisor_nombre" value="Fredy Pillalaza"></div>
-        <div class="fld"><label>Cargo del revisor</label><input id="revisor_cargo" value="ARQUITECTO"></div>
+        <div class="fld"><label>Año</label><input id="anio" type="number" value="2026" min="2020" max="2035"></div>
+        <div class="fld"><label>Lugar y Fecha del informe</label><input id="fecha_informe" placeholder="Ej: Quito, 01 de Enero del 2026"></div>
+        <div class="fld"><label>Revisado por (Nombre)</label><input id="revisor_nombre" value="Ana Torres" placeholder="Ej: Ana Torres"></div>
+        <div class="fld"><label>Cargo del revisor</label><input id="revisor_cargo" value="Supervisora" placeholder="Ej: Supervisora"></div>
     </div>
 </div>
 
@@ -196,7 +196,7 @@
 </div>
 
 <div class="btns">
-    <button class="btn btn-gold" onclick="generarInforme()"><i class="fas fa-eye"></i> Generar Vista Previa</button>
+    <button class="btn btn-gold" onclick="generarInforme()"><i class="fas fa-table"></i> Generar Vista Previa</button>
     <button class="btn btn-blue" onclick="descargarWord()"><i class="fas fa-file-word"></i> Descargar en Word</button>
     <a href="index.html" class="btn btn-outline" style="margin-left:auto;"><i class="fas fa-arrow-left"></i> Volver a Calculadoras</a>
 </div>
@@ -233,6 +233,10 @@ window.onload = function() {
                    'Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
     document.getElementById('mes').value = meses[hoy.getMonth()];
     document.getElementById('anio').value = hoy.getFullYear();
+    const d = String(hoy.getDate()).padStart(2,'0');
+    const m = MESES_ES[hoy.getMonth()];
+    document.getElementById('fecha_informe').value =
+        `Quito, ${d} de ${m.charAt(0).toUpperCase()+m.slice(1)} del ${hoy.getFullYear()}`;
     agregarDia(); agregarDia();
 };
 

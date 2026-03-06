@@ -110,8 +110,6 @@
     .btn{padding:12px 20px;border:none;border-radius:6px;font-weight:700;font-size:0.85rem;cursor:pointer;letter-spacing:0.5px;transition:all 0.2s;display:flex;align-items:center;gap:7px; text-decoration:none; justify-content:center;}
     .btn-gold{background:linear-gradient(135deg,var(--gold),#8a6018);color:#050300;box-shadow:0 3px 14px var(--gold-dim);}
     .btn-gold:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(212,168,67,0.35);}
-    .btn-green{background:rgba(26,173,114,0.12);color:var(--green);border:1px solid rgba(26,173,114,0.3)!important;}
-    .btn-green:hover{background:var(--green);color:#020509;}
     .btn-blue{background:rgba(59,125,232,0.15);color:var(--blue);border:1px solid rgba(59,125,232,0.3)!important;}
     .btn-blue:hover{background:var(--blue);color:#020509;}
     .btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)!important;}
@@ -132,6 +130,9 @@
         box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
     }
     
+    .nota{font-size:0.72rem;color:var(--gray);padding:10px 14px;border-left:2px solid var(--gold);background:var(--gold-dim);border-radius:0 6px 6px 0;margin-bottom:16px;line-height:1.6;}
+    .nota strong{color:var(--gold);}
+
     @media(max-width:620px){
         .tiempo-group{width:100%;}
         .dia-header{flex-direction:column;align-items:flex-start;}
@@ -204,7 +205,7 @@
     <label class="upload-box">
         <i class="fas fa-file-pdf"></i>
         <h3>2. Carga tu reporte biométrico (PDF)</h3>
-        <p>El sistema extraerá automáticamente los días. Ignorará los días sin horas extras.</p>
+        <p>El sistema extraerá automáticamente las fechas y horas (auto-llenará tu cédula y mes).</p>
         <input type="file" id="pdf-upload" accept="application/pdf" style="display:none;" onchange="procesarPDF(event)">
         <div id="pdf-status" style="margin-top: 10px; font-weight: bold; display: none;">Procesando...</div>
     </label>
@@ -280,6 +281,7 @@ window.onload = function() {
     document.getElementById('fecha_informe').value =
         `Quito, ${d} de ${m.charAt(0).toUpperCase()+m.slice(1)} del ${hoy.getFullYear()}`;
     
+    // Inicia con un día vacío por defecto
     agregarDia();
 };
 
@@ -297,7 +299,7 @@ function cargarMembrete(event) {
     reader.readAsDataURL(file);
 }
 
-// ─── MOTOR DE EXTRACCIÓN DE PDF CON FILTRO ───
+// ─── MOTOR DE EXTRACCIÓN DE PDF CON AUTO-LLENADO ───
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
 async function procesarPDF(event) {
@@ -343,6 +345,21 @@ function extraerDatosBiometrico(texto) {
         return;
     }
 
+    // INGENIERO ALASK: AUTO-LLENADO INTELIGENTE
+    // 1. Extraer Cédula (Busca un número de exactamente 10 dígitos)
+    const cedulaMatch = texto.match(/\b\d{10}\b/);
+    if (cedulaMatch) {
+        document.getElementById('de_cedula').value = cedulaMatch[0];
+    }
+
+    // 2. Extraer Mes y Año automáticamente de la primera fecha encontrada
+    const primerMes = parseInt(matchesFechas[0][2], 10);
+    const primerAnio = matchesFechas[0][3];
+    if (primerMes >= 1 && primerMes <= 12) {
+        document.getElementById('mes').selectedIndex = primerMes - 1;
+    }
+    document.getElementById('anio').value = primerAnio;
+
     document.getElementById('lista-dias').innerHTML = '';
     feriados = {};
     diaCount = 0;
@@ -369,7 +386,6 @@ function extraerDatosBiometrico(texto) {
             const m = parseInt(matchHora[2], 10);
             const minutos = h * 60 + m;
             
-            // Filtro heurístico: descartar duraciones cortas (atrasos, etc) asumiendo inicio > 5 AM
             if (minutos >= 300) {
                 horasValidasMinutos.push(minutos);
             }
@@ -394,7 +410,7 @@ function extraerDatosBiometrico(texto) {
     }
 
     if (diasEncontrados === 0) {
-        alert("El PDF se leyó, pero no se agregaron días porque todos fueron filtrados (no superan el horario normal de salida).");
+        alert("El PDF se leyó y los datos se autollenaron, pero no se agregaron días en la lista porque todos fueron filtrados (no superan el horario normal de salida).");
         agregarDia(); 
     } else {
         recalcularTodos();
@@ -629,7 +645,7 @@ function generarInforme() {
     const para      = document.getElementById('para_nombre').value.trim() || "_________";
     const paraCargo = document.getElementById('para_cargo').value.trim() || "_________";
     const de        = document.getElementById('de_nombre').value.trim() || "_________";
-    const deCedula  = document.getElementById('de_cedula').value.trim() || "........................."; // NUEVO
+    const deCedula  = document.getElementById('de_cedula').value.trim() || ".........................";
     const deCargo   = document.getElementById('de_cargo').value.trim() || "_________";
     const dir       = document.getElementById('direccion').value.trim() || "_________";
     const mes       = document.getElementById('mes').value;
@@ -646,7 +662,6 @@ function generarInforme() {
 
     let totalSupMin = 0, totalExtMin = 0;
     
-    // Inyectar el membrete si existe
     let membreteHtml = "";
     if (membreteBase64) {
         membreteHtml = `<div style="text-align: center; margin-bottom: 20px;"><img src="${membreteBase64}" style="max-width: 100%; max-height: 150px;"></div>`;
@@ -689,7 +704,6 @@ function generarInforme() {
         totalSupMin += d.supMin;
         totalExtMin += d.extMin;
         
-        // Convertir saltos de línea en <br> para el HTML y alinear a la izquierda
         const actHtml = d.act ? d.act.replace(/\n/g, '<br>') : '';
 
         html += `
@@ -727,7 +741,6 @@ function generarInforme() {
     document.getElementById('preview-text').innerHTML = html;
 }
 
-// MOTOR PARA DESCARGAR EN WORD REAL CON TABLAS NATIVAS Y MEMBRETE
 function descargarWord() {
     const content = document.getElementById('preview-text').innerHTML;
     
@@ -736,7 +749,6 @@ function descargarWord() {
         return;
     }
     
-    // Empaquetado especial para que Word reconozca el HTML como un documento válido con estilos e imágenes
     const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' " +
             "xmlns:w='urn:schemas-microsoft-com:office:word' " +
             "xmlns='http://www.w3.org/TR/REC-html40'>" +
@@ -744,7 +756,6 @@ function descargarWord() {
     const footer = "</body></html>";
     const sourceHTML = header + content + footer;
     
-    // Crear el archivo Word
     const blob = new Blob(['\ufeff', sourceHTML], { type: 'application/msword' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');

@@ -25,6 +25,9 @@
             --cv-accent: #3b82f6;        
             --btn-action: #10b981;       
             --cv-gray: #94a3b8; 
+            --gold: #d4a843;
+            --gold-edge: rgba(212,168,67,0.30);
+            --gold-lt: #f0c96a;
         }
         
         body { background-color: var(--bg-main); color: var(--text-main); font-family: 'Inter', sans-serif; line-height: 1.6; margin: 0; padding: 0;}
@@ -193,7 +196,7 @@
     <header>
         <div class="header-container" style="background: var(--card-bg); border-bottom: 1px solid var(--card-border); padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
             <div class="brand-wrapper" style="display:flex; align-items:center; justify-content:center; gap: 15px;">
-               <img src="escudo.svg.png" class="escudo-img" alt="Escudo Ecuador" style="height: 50px;">
+               <img src="escudo.svg.png" class="escudo-img" alt="Escudo Ecuador" style="height: 45px;">
                 <div class="brand-text">
                     <h1 style="margin:0; font-size:1.5rem; letter-spacing: 1px;">LABORALEC</h1>
                     <span style="font-size:0.8rem; color:var(--cv-accent); font-weight: 700; letter-spacing: 0.5px;">SISTEMA JURÍDICO INTEGRADO 2026</span>
@@ -285,7 +288,7 @@
                             <p>Cuando ese poder desaparezca, porque los cargos rotan, porque los gobiernos cambian, porque las personas se van, lo que quedará son exactamente esos documentos. Y si los tienes tú, el poder que representaban estará en tus manos. No en las de ellos.</p>
                         </div>
 
-                        <div class="tech-note" style="border-color: var(--btn-action); background: rgba(26, 173, 114, 0.05); margin-top: 35px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                        <div class="tech-note" style="border-color: var(--btn-action); background: rgba(16, 185, 129, 0.05); margin-top: 35px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
                             <h3 style="color: var(--btn-action); margin-top: 0; font-size: 1.3rem;"><i class="fas fa-folder-open"></i> Cómo Construir Tu Expediente Personal</h3>
                             <p>No necesitas ser abogado ni tener conocimientos jurídicos avanzados. Solo necesitas disciplina y un sistema simple:</p>
                             <ol style="padding-left: 20px; line-height: 1.8; margin-bottom: 0;">
@@ -484,8 +487,12 @@
                                     <div class="form-group" style="margin-bottom:0;"><label>Horas 100%</label><input type="number" id="he_100"></div>
                                 </div>
                             </div>
-                            <button class="btn-calc" onclick="calculators.extras()" style="background:#3b82f6; color:white; padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);">CALCULAR</button>
+                            <button class="btn-calc" onclick="calculators.extras()" style="background:#3b82f6; color:white; padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);">CALCULAR VALORES</button>
                             <div id="res_he" class="result-panel"></div>
+                            
+                            <a href="informe-horas.html" target="_blank" style="display:block; text-align:center; background: rgba(212,168,67,0.1); border: 1px solid var(--gold-edge); color: var(--gold); margin-top: 15px; padding: 12px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: all 0.2s;">
+                                <i class="fas fa-file-alt" style="color:var(--gold);"></i> Redactar Informe MDT
+                            </a>
                         </div>
                     </div>
 
@@ -509,7 +516,7 @@
                                 <div class="form-group"><label>Años Servicio</label><input type="number" id="jub_anios"></div>
                                 <div class="form-group" style="margin-bottom:0;"><label>Edad Actual</label><input type="number" id="jub_edad"></div>
                             </div>
-                            <button class="btn-calc" onclick="calculators.jubilacion()" style="background:#3b82f6; color:white; padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);">CALCULAR</button>
+                            <button class="btn-calc" onclick="calculators.jubilacion()" style="background:#3b82f6; color:white; padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);">CALCULAR PENSIÓN</button>
                             <div id="res_jub" class="result-panel"></div>
                         </div>
                     </div>
@@ -526,7 +533,7 @@
                         </div>
                     </div>
 
-                    <div class="card" style="grid-column: 1 / -1;">
+                    <div class="card" style="border-top:2px solid #d946ef; grid-column: 1 / -1;">
                         <div class="card-header">
                             <h3 style="color:#d946ef;"><i class="fas fa-hand-holding-heart"></i> Beneficio Social</h3>
                         </div>
@@ -594,7 +601,7 @@
                 <div class="legal-grid">
                     
                     <details class="legal-item" open>
-                        <summary><span class="art-badge" style="background:#ef4444; font-weight:bold; letter-spacing:1px; color:white; border:none;">NUEVO</span> Acuerdo MDT-2026-046: El Fin de las 8 Horas</summary>
+                        <summary><span class="art-badge" style="background:rgba(239,68,68,0.15); color:#fca5a5; border-color:rgba(239,68,68,0.3);">NUEVO</span> Acuerdo MDT-2026-046: El Fin de las 8 Horas</summary>
                         <div class="legal-content">
                             <h3 style="margin-top: 0; color: var(--text-heading); border-bottom: 1px solid var(--card-border); padding-bottom: 10px;">Análisis de la Normativa: Jornadas de 10 y 12 horas sin horas extras</h3>
                             
@@ -1175,7 +1182,7 @@
             });
         }
 
-        // --- 2. LÓGICA DE LAS CALCULADORAS (REDISEÑADAS) ---
+        // --- 2. LÓGICA DE LAS CALCULADORAS (CON DESGLOSE POTENCIADO) ---
         const calculators = {
             iess: function() {
                 const sueldo = parseFloat(document.getElementById('iess_sueldo').value) || 0;
@@ -1197,10 +1204,13 @@
                     <strong style="color:var(--btn-action); font-size:1.1rem;">Total Estimado: $${(desahucio + intempestivo).toFixed(2)}</strong>
                 `);
             },
+            
+            // INGENIERO ALASK: CALCULADORA DE HORAS EXTRAS ACTUALIZADA
             extras: function() {
                 const sueldo = parseFloat(document.getElementById('he_sueldo').value) || 0;
                 const h50 = parseFloat(document.getElementById('he_50').value) || 0;
                 const h100 = parseFloat(document.getElementById('he_100').value) || 0;
+                
                 if(sueldo <= 0) return;
                 
                 const vh = sueldo / 240;
@@ -1214,19 +1224,28 @@
                     <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:0.9rem;"><span>Valor Hora Normal:</span> <strong>$${vh.toFixed(2)}</strong></div>
                     <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:0.9rem;"><span>Total Horas 50%:</span> <strong>$${total50.toFixed(2)}</strong></div>
                     <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.9rem;"><span>Total Horas 100%:</span> <strong>$${total100.toFixed(2)}</strong></div>
+                    
                     <hr style="border:none; border-top:1px solid var(--card-border); margin:10px 0;">
-                    <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.95rem;"><span>Total Bruto:</span> <strong style="color:var(--gold);">$${bruto.toFixed(2)}</strong></div>
-                    <div style="display:flex; justify-content:space-between; margin-bottom:10px; background: rgba(59,125,232,0.1); padding: 8px 10px; border-radius: 4px; border: 1px solid rgba(59,125,232,0.3); font-size:0.9rem;">
+                    
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.95rem;">
+                        <span>Total Bruto:</span> 
+                        <strong style="color:var(--gold);">$${bruto.toFixed(2)}</strong>
+                    </div>
+                    
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px; background: rgba(59,130,246,0.1); padding: 8px 10px; border-radius: 4px; border: 1px solid rgba(59,130,246,0.3); font-size:0.9rem;">
                         <span style="display:flex; align-items:center; gap:8px;"><i class="fas fa-shield-alt" style="color:var(--cv-accent);"></i> Aporte IESS (9.45%):</span> 
                         <strong style="color:#93b8ff;">-$${iess.toFixed(2)}</strong>
                     </div>
+                    
                     <hr style="border:none; border-top:1px solid var(--card-border); margin:10px 0;">
+                    
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-weight:600; color:var(--text-heading);">Total a Recibir:</span> 
+                        <span style="font-weight:600; color:var(--text-heading);">Total Neto a Recibir:</span> 
                         <strong style="color:var(--btn-action); font-size:1.15rem;">$${neto.toFixed(2)}</strong>
                     </div>
                 `);
             },
+            
             decimos: function() {
                 const sueldo = parseFloat(document.getElementById('dec_sueldo').value) || 0;
                 const meses = parseInt(document.getElementById('dec_meses').value) || 0;
@@ -1238,6 +1257,8 @@
                     Proporcional 14to: $${d14.toFixed(2)}<br>
                 `);
             },
+            
+            // INGENIERO ALASK: CALCULADORA DE JUBILACIÓN ACTUALIZADA
             jubilacion: function() {
                 const prom = parseFloat(document.getElementById('jub_prom').value) || 0;
                 const anios = parseInt(document.getElementById('jub_anios').value) || 0;
@@ -1247,12 +1268,12 @@
                     this.showResult('res_jub', '<span style="color:var(--cv-gray);">Ingresa todos los datos para calcular.</span>');
                     return;
                 }
+                
                 if (anios < 20) {
-                    this.showResult('res_jub', '<span style="color:#fca5a5;"><i class="fas fa-exclamation-triangle"></i> Ley exige mínimo 20 años de servicio en la misma empresa (o proporcional por despido intempestivo).</span>');
+                    this.showResult('res_jub', '<span style="color:#fca5a5;"><i class="fas fa-exclamation-triangle"></i> La ley exige mínimo 20 años de servicio en la misma empresa.</span>');
                     return;
                 }
 
-                // Tabla de coeficientes actuariales del MDT 
                 const coeficientes = {
                     45: 15.9321, 46: 15.6599, 47: 15.3804, 48: 15.0934, 49: 14.7985, 50: 14.4956,
                     51: 14.1843, 52: 13.8643, 53: 13.5355, 54: 13.1975, 55: 12.8503, 56: 12.4939,
@@ -1262,11 +1283,9 @@
                     75: 4.5807, 76: 4.1865, 77: 3.8040, 78: 3.4357, 79: 3.0838, 80: 2.7505
                 };
                 
-                let edadCalc = edad;
-                if (edadCalc < 45) edadCalc = 45;
-                if (edadCalc > 80) edadCalc = 80;
-                
+                let edadCalc = Math.max(45, Math.min(80, edad));
                 const coef = coeficientes[edadCalc] || 10.8202;
+                
                 const fondoGlobal = prom * anios * 0.05;
                 const pensionAnual = fondoGlobal / coef;
                 let pensionMensual = pensionAnual / 12;
@@ -1274,20 +1293,23 @@
                 let tope = "";
                 if (pensionMensual > 482) {
                     pensionMensual = 482;
-                    tope = '<p style="font-size:0.75rem; color:var(--gold); margin-top:10px; font-style:italic; line-height:1.4;">*Pensión limitada al tope legal de 1 SBU ($482.00).</p>';
+                    tope = '<p style="font-size:0.75rem; color:#f59e0b; margin-top:10px; font-style:italic; line-height:1.4;">*Pensión limitada al tope legal de 1 SBU ($482.00).</p>';
                 }
                 
+                if (pensionMensual < 30) pensionMensual = 30;
+                
                 this.showResult('res_jub', `
-                    <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:0.9rem;"><span>Fondo Global (Art. 216):</span> <strong>$${fondoGlobal.toFixed(2)}</strong></div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:0.9rem;"><span>Fondo Global Base:</span> <strong>$${fondoGlobal.toFixed(2)}</strong></div>
                     <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.9rem;"><span>Coeficiente (Edad ${edad}):</span> <strong>${coef}</strong></div>
                     <hr style="border:none; border-top:1px solid var(--card-border); margin:10px 0;">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-weight:600; color:var(--text-heading);">Pensión Mensual:</span> 
-                        <strong style="color:#93b8ff; font-size:1.15rem;">$${pensionMensual.toFixed(2)}</strong>
+                        <strong style="color:#8b5cf6; font-size:1.15rem;">$${pensionMensual.toFixed(2)}</strong>
                     </div>
                     ${tope}
                 `);
             },
+            
             losep: function() {
                 const rmu = parseFloat(document.getElementById('losep_rmu').value) || 0;
                 const anios = parseInt(document.getElementById('losep_anios').value) || 0;

@@ -103,9 +103,11 @@
     .tot-sub{font-size:0.67rem;color:var(--gray);margin-top:2px;}
 
     .btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
-    .btn{padding:12px 20px;border:none;border-radius:6px;font-weight:700;font-size:0.85rem;cursor:pointer;letter-spacing:0.5px;transition:all 0.2s;display:flex;align-items:center;gap:7px; text-decoration:none; justify-content:center;}
+    .btn{padding:10px 20px;border:none;border-radius:6px;font-weight:700;font-size:0.8rem;cursor:pointer;letter-spacing:0.5px;transition:all 0.2s;display:flex;align-items:center;gap:7px; text-decoration:none; justify-content:center;}
     .btn-gold{background:linear-gradient(135deg,var(--gold),#8a6018);color:#050300;box-shadow:0 3px 14px var(--gold-dim);}
     .btn-gold:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(212,168,67,0.35);}
+    .btn-green{background:rgba(26,173,114,0.12);color:var(--green);border:1px solid rgba(26,173,114,0.3)!important;}
+    .btn-green:hover{background:var(--green);color:#020509;}
     .btn-blue{background:rgba(59,125,232,0.15);color:var(--blue);border:1px solid rgba(59,125,232,0.3)!important;}
     .btn-blue:hover{background:var(--blue);color:#020509;}
     .btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)!important;}
@@ -113,17 +115,7 @@
 
     .preview-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 22px;margin-bottom:20px; overflow-x: auto;}
     .preview-box h2{font-size:0.75rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:14px;}
-    
-    .preview-content {
-        background: #ffffff; 
-        color: #000000; 
-        padding: 40px; 
-        border-radius: 4px; 
-        font-family: 'Arial', sans-serif; 
-        font-size: 11pt; 
-        min-width: 800px;
-        box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
-    }
+    .preview-content {background: #ffffff; color: #000000; padding: 40px; border-radius: 4px; font-family: 'Arial', sans-serif; font-size: 11pt; min-width: 800px; box-shadow: inset 0 0 10px rgba(0,0,0,0.1);}
     
     .nota{font-size:0.72rem;color:var(--gray);padding:10px 14px;border-left:2px solid var(--gold);background:var(--gold-dim);border-radius:0 6px 6px 0;margin-bottom:16px;line-height:1.6;}
     .nota strong{color:var(--gold);}
@@ -187,7 +179,7 @@
     <label class="pdf-upload-box">
         <i class="fas fa-file-pdf"></i>
         <h3>Carga tu reporte biométrico (PDF)</h3>
-        <p>El sistema extraerá automáticamente los días, horas de entrada y salida.</p>
+        <p>El sistema extraerá automáticamente los días. Ignorará los días sin horas extras.</p>
         <input type="file" id="pdf-upload" accept="application/pdf" style="display:none;" onchange="procesarPDF(event)">
         <div id="pdf-status" style="margin-top: 10px; font-weight: bold; display: none;">Procesando...</div>
     </label>
@@ -264,7 +256,7 @@ window.onload = function() {
     agregarDia();
 };
 
-// ─── MOTOR DE EXTRACCIÓN DE PDF (NUEVO) ───
+// ─── MOTOR DE EXTRACCIÓN DE PDF CON FILTRO ───
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
 async function procesarPDF(event) {
@@ -289,10 +281,10 @@ async function procesarPDF(event) {
             fullText += pageText + ' ';
         }
 
-        // Pasar texto al analizador heurístico
+        // Pasar texto al analizador
         extraerDatosBiometrico(fullText);
 
-        status.textContent = '¡Lectura completada con éxito!';
+        status.textContent = '¡Lectura y filtrado completados con éxito!';
         status.style.color = 'var(--green)';
         setTimeout(() => status.style.display = 'none', 4000);
         
@@ -301,7 +293,7 @@ async function procesarPDF(event) {
         status.textContent = 'Error al leer el PDF. Asegúrate de que sea un reporte de texto y no una imagen escaneada.';
         status.style.color = 'var(--red)';
     }
-    // Resetear input para permitir subir el mismo archivo si hubo error
+    // Resetear input 
     event.target.value = '';
 }
 
@@ -321,9 +313,8 @@ function extraerDatosBiometrico(texto) {
 
     let diasEncontrados = 0;
 
-    // Analizar el fragmento de texto que le pertenece a cada fecha
     for (let i = 0; i < matchesFechas.length; i++) {
-        const fechaStrRaw = matchesFechas[i][0]; // "DD/MM/YYYY"
+        const fechaStrRaw = matchesFechas[i][0]; 
         const diaPart = matchesFechas[i][1];
         const mesPart = matchesFechas[i][2];
         const anioPart = matchesFechas[i][3];
@@ -332,17 +323,26 @@ function extraerDatosBiometrico(texto) {
         const fechaFormatHTML = `${anioPart}-${mesPart}-${diaPart}`;
 
         const startIndex = matchesFechas[i].index;
-        // El fragmento de texto de esta fecha termina donde empieza la siguiente fecha (o al final del doc)
         const endIndex = (i + 1 < matchesFechas.length) ? matchesFechas[i+1].index : texto.length;
         const chunk = texto.substring(startIndex, endIndex);
         
-        // Extraer todas las horas HH:MM en el fragmento de esa fecha
+        // Extraer todas las horas HH:MM 
         const horasMatch = [...chunk.matchAll(/\b(\d{2}):(\d{2})(?::\d{2})?\b/g)];
         
         if (horasMatch.length >= 2) {
-            // El primer timbrazo es Entrada, el último timbrazo es Salida
             const entradaStr = `${horasMatch[0][1]}:${horasMatch[0][2]}`;
             const salidaStr = `${horasMatch[horasMatch.length - 1][1]}:${horasMatch[horasMatch.length - 1][2]}`;
+            
+            // INGENIERO ALASK: FILTRO INTELIGENTE DE HORARIOS NO RELEVANTES
+            const tipoD = getTipoDia(fechaFormatHTML, false).tipo;
+            const entradaM = toMin(entradaStr);
+            const salidaM = toMin(salidaStr);
+            
+            // Ignorar días laborables (L-V) si la hora de salida es a las 17:30 (1050 min) o antes
+            // y la hora de entrada es a las 07:00 (420 min) o después.
+            if (tipoD === 'normal' && entradaM >= 420 && salidaM <= 1050) {
+                continue; // Salta este día y NO lo agrega al informe
+            }
             
             agregarDiaExtracted(fechaFormatHTML, entradaStr, salidaStr);
             diasEncontrados++;
@@ -350,17 +350,16 @@ function extraerDatosBiometrico(texto) {
     }
 
     if (diasEncontrados === 0) {
-        alert("Se encontraron fechas, pero no pares de Entrada/Salida legibles.");
-        agregarDia(); // Poner uno en blanco
+        alert("El PDF se leyó correctamente, pero se ignoraron todos los días porque la IA determinó que no tenían horas extras válidas (las salidas fueron antes de las 17:30).");
+        agregarDia(); // Poner uno en blanco para que no quede vacía la pantalla
     } else {
         recalcularTodos();
     }
 }
 
 function agregarDiaExtracted(fecha, entrada, salida) {
-    agregarDia(); // Usa la función nativa para crear la tarjeta vacía
+    agregarDia(); 
     const id = diaCount;
-    // Rellenamos con los datos de la IA
     document.getElementById(`fecha-${id}`).value = fecha;
     document.getElementById(`entrada-${id}`).value = entrada;
     document.getElementById(`salida-${id}`).value = salida;
@@ -369,22 +368,14 @@ function agregarDiaExtracted(fecha, entrada, salida) {
 
 function toMin(t){ if(!t) return 0; const[h,m]=t.split(':').map(Number); return h*60+m; }
 function minToHM(min){ if(min<=0) return '0h 00m'; return `${Math.floor(min/60)}h ${String(min%60).padStart(2,'0')}m`; }
-
-// Formato Especial de Hora para la Tabla de Word (Ej: 09:00 o 06:30)
-function formatoDoc(min){ 
-    if(min<=0) return ''; 
-    return `${String(Math.floor(min/60)).padStart(2,'0')}:${String(min%60).padStart(2,'0')}`; 
-}
-// Formato para el TOTAL abajo de la tabla (Ej: 58h50)
-function formatoTotalWord(min){ 
-    if(min<=0) return ''; 
-    return `${Math.floor(min/60)}h${String(min%60).padStart(2,'0')}`; 
-}
+function formatoTotal(min){ return `${Math.floor(min/60)}h${String(min%60).padStart(2,'0')}`; }
+function formatoDoc(min){ if(min<=0) return ''; return `${String(Math.floor(min/60)).padStart(2,'0')}:${String(min%60).padStart(2,'0')}`; }
+function formatoTotalWord(min){ if(min<=0) return ''; return `${Math.floor(min/60)}h${String(min%60).padStart(2,'0')}`; }
 
 function getTipoDia(fechaStr, esFeriadoManual) {
     if (!fechaStr) return { tipo: 'normal', label: 'Día Normal', badge: 'normal' };
     
-    // Solución para zona horaria (evitar que reste un día)
+    // Solución para zona horaria 
     const partes = fechaStr.split('-');
     const dow = new Date(partes[0], partes[1] - 1, partes[2]).getDay();
     const esFeriadoAuto = FERIADOS_EC.includes(fechaStr);
@@ -590,18 +581,18 @@ function formatFechaDoc(iso) {
     return `${d}/${m}/${y}`;
 }
 
-// INGENIERO ALASK: GENERACIÓN DE TABLA HTML REAL PARA DOCUMENTO WORD
+// GENERACIÓN DE TABLA HTML REAL PARA DOCUMENTO WORD
 function generarInforme() {
-    const para      = document.getElementById('para_nombre').value.trim();
-    const paraCargo = document.getElementById('para_cargo').value.trim();
-    const de        = document.getElementById('de_nombre').value.trim();
-    const deCargo   = document.getElementById('de_cargo').value.trim();
-    const dir       = document.getElementById('direccion').value.trim();
+    const para      = document.getElementById('para_nombre').value.trim() || "_________";
+    const paraCargo = document.getElementById('para_cargo').value.trim() || "_________";
+    const de        = document.getElementById('de_nombre').value.trim() || "_________";
+    const deCargo   = document.getElementById('de_cargo').value.trim() || "_________";
+    const dir       = document.getElementById('direccion').value.trim() || "_________";
     const mes       = document.getElementById('mes').value;
     const anio      = document.getElementById('anio').value;
-    const fecha     = document.getElementById('fecha_informe').value.trim();
-    const revisor   = document.getElementById('revisor_nombre').value.trim();
-    const revCargo  = document.getElementById('revisor_cargo').value.trim();
+    const fecha     = document.getElementById('fecha_informe').value.trim() || "_________";
+    const revisor   = document.getElementById('revisor_nombre').value.trim() || "_________";
+    const revCargo  = document.getElementById('revisor_cargo').value.trim() || "_________";
     const dias      = getDias();
 
     if(dias.length === 0) {
@@ -685,6 +676,7 @@ function generarInforme() {
     document.getElementById('preview-text').innerHTML = html;
 }
 
+// MOTOR PARA DESCARGAR EN WORD REAL CON TABLAS NATIVAS
 function descargarWord() {
     const content = document.getElementById('preview-text').innerHTML;
     
@@ -693,6 +685,7 @@ function descargarWord() {
         return;
     }
     
+    // Empaquetado especial para que Word reconozca el HTML como un documento válido con estilos
     const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' " +
             "xmlns:w='urn:schemas-microsoft-com:office:word' " +
             "xmlns='http://www.w3.org/TR/REC-html40'>" +
@@ -700,6 +693,7 @@ function descargarWord() {
     const footer = "</body></html>";
     const sourceHTML = header + content + footer;
     
+    // Crear el archivo Word
     const blob = new Blob(['\ufeff', sourceHTML], { type: 'application/msword' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');

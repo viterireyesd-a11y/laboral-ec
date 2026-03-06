@@ -1,129 +1,140 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horas Suplementarias – MDT</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --bg:#020509;--card:#070d18;--border:#152035;
-            --gold:#d4a843;--gold-dim:rgba(212,168,67,0.10);--gold-edge:rgba(212,168,67,0.30);
-            --text:#8ba4c0;--heading:#e4eef8;--green:#1aad72;--red:#e05c5c;--gray:#4a6585;
-            --blue:#3b7de8;--purple:#8b5cf6;
-        }
-        *{box-sizing:border-box;margin:0;padding:0;}
-        body{background:var(--bg);color:var(--text);font-family:'Segoe UI',sans-serif;font-size:14px;padding:24px 16px;min-height:100vh;}
-        h1{font-size:1.2rem;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;}
-        .sub{font-size:0.72rem;color:var(--gray);letter-spacing:1px;margin-bottom:22px;}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generador Informe de Horas – MDT</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+    :root {
+        --bg:#020509;--card:#070d18;--border:#152035;
+        --gold:#d4a843;--gold-dim:rgba(212,168,67,0.10);--gold-edge:rgba(212,168,67,0.30);
+        --text:#8ba4c0;--heading:#e4eef8;--green:#1aad72;--red:#e05c5c;--gray:#4a6585;
+        --blue:#3b7de8;--purple:#8b5cf6;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--text);font-family:'Segoe UI',sans-serif;font-size:14px;padding:24px 16px;min-height:100vh;}
+    h1{font-size:1.2rem;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;}
+    .sub{font-size:0.72rem;color:var(--gray);letter-spacing:1px;margin-bottom:22px;}
 
-        /* CONFIG */
-        .config{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:18px;}
-        .config-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;}
-        .fld label{font-size:0.68rem;text-transform:uppercase;letter-spacing:1px;color:var(--gray);display:block;margin-bottom:5px;}
-        .fld input,.fld select{background:rgba(2,5,9,0.8);color:var(--heading);border:1px solid var(--border);border-radius:5px;padding:9px 11px;font-size:0.86rem;width:100%;font-family:'Segoe UI',sans-serif;}
-        .fld input:focus,.fld select:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 2px var(--gold-dim);}
+    /* CONFIG */
+    .config{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:18px;}
+    .config-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;}
+    .fld label{font-size:0.68rem;text-transform:uppercase;letter-spacing:1px;color:var(--gray);display:block;margin-bottom:5px;}
+    .fld input,.fld select{background:rgba(2,5,9,0.8);color:var(--heading);border:1px solid var(--border);border-radius:5px;padding:9px 11px;font-size:0.86rem;width:100%;font-family:'Segoe UI',sans-serif;}
+    .fld input:focus,.fld select:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 2px var(--gold-dim);}
 
-        /* JORNADA */
-        .jornada-bar{background:var(--card);border:1px solid var(--gold-edge);border-radius:8px;padding:14px 18px;margin-bottom:18px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
-        .jornada-bar label{font-size:0.68rem;text-transform:uppercase;letter-spacing:1px;color:var(--gold);display:block;margin-bottom:4px;}
-        .jornada-bar input[type="time"]{background:rgba(2,5,9,0.8);color:var(--heading);border:1px solid var(--gold-edge);border-radius:5px;padding:7px 10px;font-size:0.9rem;width:110px;}
-        .jornada-bar input:focus{border-color:var(--gold);outline:none;}
-        .jornada-bar .nota-j{font-size:0.72rem;color:var(--gray);border-left:2px solid var(--gold);padding-left:10px;}
+    /* JORNADA */
+    .jornada-bar{background:var(--card);border:1px solid var(--gold-edge);border-radius:8px;padding:14px 18px;margin-bottom:18px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+    .jornada-bar label{font-size:0.68rem;text-transform:uppercase;letter-spacing:1px;color:var(--gold);display:block;margin-bottom:4px;}
+    .jornada-bar input[type="time"]{background:rgba(2,5,9,0.8);color:var(--heading);border:1px solid var(--gold-edge);border-radius:5px;padding:7px 10px;font-size:0.9rem;width:110px;}
+    .jornada-bar input:focus{border-color:var(--gold);outline:none;}
+    .jornada-bar .nota-j{font-size:0.72rem;color:var(--gray);border-left:2px solid var(--gold);padding-left:10px;}
 
-        /* DÍAS */
-        .dias-wrap{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:18px;}
-        .dias-wrap h2{font-size:0.75rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:14px;}
+    /* DÍAS */
+    .dias-wrap{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:18px;}
+    .dias-wrap h2{font-size:0.75rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:14px;}
 
-        .dia-card{border:1px solid var(--border);border-radius:8px;margin-bottom:12px;overflow:hidden;transition:border-color 0.2s;}
-        .dia-card.tipo-normal    {border-left:3px solid var(--blue);}
-        .dia-card.tipo-sabado    {border-left:3px solid var(--green);}
-        .dia-card.tipo-domingo   {border-left:3px solid var(--green);}
-        .dia-card.tipo-feriado   {border-left:3px solid var(--purple);}
+    .dia-card{border:1px solid var(--border);border-radius:8px;margin-bottom:12px;overflow:hidden;transition:border-color 0.2s;}
+    .dia-card.tipo-normal    {border-left:3px solid var(--blue);}
+    .dia-card.tipo-sabado    {border-left:3px solid var(--green);}
+    .dia-card.tipo-domingo   {border-left:3px solid var(--green);}
+    .dia-card.tipo-feriado   {border-left:3px solid var(--purple);}
 
-        .dia-header{background:rgba(0,0,0,0.4);padding:10px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+    .dia-header{background:rgba(0,0,0,0.4);padding:10px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
 
-        /* Badge tipo día */
-        .badge-tipo{font-size:0.68rem;font-weight:700;padding:4px 10px;border-radius:12px;white-space:nowrap;}
-        .badge-normal {background:rgba(59,125,232,0.15);color:var(--blue);border:1px solid rgba(59,125,232,0.3);}
-        .badge-sabado {background:rgba(26,173,114,0.15);color:var(--green);border:1px solid rgba(26,173,114,0.3);}
-        .badge-domingo{background:rgba(26,173,114,0.15);color:var(--green);border:1px solid rgba(26,173,114,0.3);}
-        .badge-feriado{background:rgba(139,92,246,0.15);color:var(--purple);border:1px solid rgba(139,92,246,0.3);}
+    /* Badge tipo día */
+    .badge-tipo{font-size:0.68rem;font-weight:700;padding:4px 10px;border-radius:12px;white-space:nowrap;}
+    .badge-normal {background:rgba(59,125,232,0.15);color:var(--blue);border:1px solid rgba(59,125,232,0.3);}
+    .badge-sabado {background:rgba(26,173,114,0.15);color:var(--green);border:1px solid rgba(26,173,114,0.3);}
+    .badge-domingo{background:rgba(26,173,114,0.15);color:var(--green);border:1px solid rgba(26,173,114,0.3);}
+    .badge-feriado{background:rgba(139,92,246,0.15);color:var(--purple);border:1px solid rgba(139,92,246,0.3);}
 
-        /* Toggle feriado */
-        .toggle-feriado{display:flex;align-items:center;gap:7px;cursor:pointer;padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--gray);font-size:0.72rem;font-weight:600;transition:all 0.2s;}
-        .toggle-feriado:hover{border-color:var(--purple);color:var(--purple);}
-        .toggle-feriado.activo{background:rgba(139,92,246,0.15);color:var(--purple);border-color:rgba(139,92,246,0.4);}
+    /* Toggle feriado */
+    .toggle-feriado{display:flex;align-items:center;gap:7px;cursor:pointer;padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--gray);font-size:0.72rem;font-weight:600;transition:all 0.2s;}
+    .toggle-feriado:hover{border-color:var(--purple);color:var(--purple);}
+    .toggle-feriado.activo{background:rgba(139,92,246,0.15);color:var(--purple);border-color:rgba(139,92,246,0.4);}
 
-        /* Resultado horas */
-        .resultado-tiempo{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;font-size:0.8rem;font-weight:700;font-family:monospace;white-space:nowrap;}
-        .resultado-tiempo.sup    {background:var(--gold-dim);color:var(--gold);border:1px solid var(--gold-edge);}
-        .resultado-tiempo.ext    {background:rgba(26,173,114,0.12);color:var(--green);border:1px solid rgba(26,173,114,0.3);}
-        .resultado-tiempo.cero   {background:rgba(255,255,255,0.03);color:var(--gray);border:1px solid var(--border);}
-        .resultado-tiempo.negativo{background:rgba(224,92,92,0.1);color:var(--red);border:1px solid rgba(224,92,92,0.3);}
+    /* Resultado horas */
+    .resultado-tiempo{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;font-size:0.8rem;font-weight:700;font-family:monospace;white-space:nowrap;}
+    .resultado-tiempo.sup    {background:var(--gold-dim);color:var(--gold);border:1px solid var(--gold-edge);}
+    .resultado-tiempo.ext    {background:rgba(26,173,114,0.12);color:var(--green);border:1px solid rgba(26,173,114,0.3);}
+    .resultado-tiempo.cero   {background:rgba(255,255,255,0.03);color:var(--gray);border:1px solid var(--border);}
+    .resultado-tiempo.negativo{background:rgba(224,92,92,0.1);color:var(--red);border:1px solid rgba(224,92,92,0.3);}
 
-        .tiempo-group{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;}
-        .tiempo-group label{font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--gray);display:block;margin-bottom:4px;}
-        .tiempo-group input[type="time"]{background:rgba(2,5,9,0.8);color:var(--heading);border:1px solid var(--border);border-radius:4px;padding:7px 9px;font-size:0.9rem;width:112px;}
-        .tiempo-group input[type="time"]:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 2px var(--gold-dim);}
+    .tiempo-group{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;}
+    .tiempo-group label{font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--gray);display:block;margin-bottom:4px;}
+    .tiempo-group input[type="time"]{background:rgba(2,5,9,0.8);color:var(--heading);border:1px solid var(--border);border-radius:4px;padding:7px 9px;font-size:0.9rem;width:112px;}
+    .tiempo-group input[type="time"]:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 2px var(--gold-dim);}
 
-        .btn-del{background:rgba(224,92,92,0.12);color:var(--red);border:1px solid rgba(224,92,92,0.25);border-radius:4px;padding:6px 10px;cursor:pointer;font-size:0.75rem;transition:all 0.2s;margin-left:auto;}
-        .btn-del:hover{background:var(--red);color:white;}
+    .btn-del{background:rgba(224,92,92,0.12);color:var(--red);border:1px solid rgba(224,92,92,0.25);border-radius:4px;padding:6px 10px;cursor:pointer;font-size:0.75rem;transition:all 0.2s;margin-left:auto;}
+    .btn-del:hover{background:var(--red);color:white;}
 
-        .dia-body{padding:12px 14px;}
-        .dia-body label{font-size:0.68rem;text-transform:uppercase;letter-spacing:1px;color:var(--gray);display:block;margin-bottom:5px;}
-        .dia-body textarea{background:rgba(2,5,9,0.7);color:var(--heading);border:1px solid var(--border);border-radius:5px;padding:9px 11px;font-size:0.83rem;width:100%;resize:vertical;min-height:75px;font-family:'Segoe UI',sans-serif;line-height:1.55;}
-        .dia-body textarea:focus{border-color:var(--gold);outline:none;}
+    .dia-body{padding:12px 14px;}
+    .dia-body label{font-size:0.68rem;text-transform:uppercase;letter-spacing:1px;color:var(--gray);display:block;margin-bottom:5px;}
+    .dia-body textarea{background:rgba(2,5,9,0.7);color:var(--heading);border:1px solid var(--border);border-radius:5px;padding:9px 11px;font-size:0.83rem;width:100%;resize:vertical;min-height:75px;font-family:'Segoe UI',sans-serif;line-height:1.55;}
+    .dia-body textarea:focus{border-color:var(--gold);outline:none;}
 
-        /* LEYENDA */
-        .leyenda{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;font-size:0.72rem;}
-        .ley-item{display:flex;align-items:center;gap:5px;color:var(--gray);}
-        .ley-dot{width:10px;height:10px;border-radius:50%;}
+    /* LEYENDA */
+    .leyenda{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;font-size:0.72rem;}
+    .ley-item{display:flex;align-items:center;gap:5px;color:var(--gray);}
+    .ley-dot{width:10px;height:10px;border-radius:50%;}
 
-        /* TOTALES */
-        .totales{background:var(--card);border:1px solid var(--gold-edge);border-radius:10px;padding:18px 22px;margin-bottom:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;box-shadow:0 0 28px var(--gold-dim);}
-        .tot-item{text-align:center;}
-        .tot-label{font-size:0.62rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--gray);margin-bottom:5px;}
-        .tot-val{font-size:1.5rem;font-weight:900;font-family:monospace;color:var(--gold);}
-        .tot-val.green{color:var(--green);}
-        .tot-sub{font-size:0.67rem;color:var(--gray);margin-top:2px;}
+    /* TOTALES */
+    .totales{background:var(--card);border:1px solid var(--gold-edge);border-radius:10px;padding:18px 22px;margin-bottom:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;box-shadow:0 0 28px var(--gold-dim);}
+    .tot-item{text-align:center;}
+    .tot-label{font-size:0.62rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--gray);margin-bottom:5px;}
+    .tot-val{font-size:1.5rem;font-weight:900;font-family:monospace;color:var(--gold);}
+    .tot-val.green{color:var(--green);}
+    .tot-sub{font-size:0.67rem;color:var(--gray);margin-top:2px;}
 
-        .btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
-        .btn{padding:10px 20px;border:none;border-radius:6px;font-weight:700;font-size:0.8rem;cursor:pointer;letter-spacing:0.5px;transition:all 0.2s;display:flex;align-items:center;gap:7px; text-decoration:none; justify-content:center;}
-        .btn-gold{background:linear-gradient(135deg,var(--gold),#8a6018);color:#050300;box-shadow:0 3px 14px var(--gold-dim);}
-        .btn-gold:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(212,168,67,0.35);}
-        .btn-green{background:rgba(26,173,114,0.12);color:var(--green);border:1px solid rgba(26,173,114,0.3)!important;}
-        .btn-green:hover{background:var(--green);color:#020509;}
-        .btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)!important;}
-        .btn-outline:hover{border-color:var(--gold)!important;color:var(--gold);}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
+    .btn{padding:12px 20px;border:none;border-radius:6px;font-weight:700;font-size:0.85rem;cursor:pointer;letter-spacing:0.5px;transition:all 0.2s;display:flex;align-items:center;gap:7px; text-decoration:none; justify-content:center;}
+    .btn-gold{background:linear-gradient(135deg,var(--gold),#8a6018);color:#050300;box-shadow:0 3px 14px var(--gold-dim);}
+    .btn-gold:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(212,168,67,0.35);}
+    .btn-blue{background:rgba(59,125,232,0.15);color:var(--blue);border:1px solid rgba(59,125,232,0.3)!important;}
+    .btn-blue:hover{background:var(--blue);color:#020509;}
+    .btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)!important;}
+    .btn-outline:hover{border-color:var(--gold)!important;color:var(--gold);}
 
-        .preview-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 22px;margin-bottom:20px;}
-        .preview-box h2{font-size:0.75rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:14px;}
-        .preview-text{background:rgba(0,0,0,0.45);border:1px solid var(--border);border-radius:6px;padding:16px;font-size:0.79rem;line-height:1.85;color:var(--heading);white-space:pre-wrap;font-family:'Courier New',monospace;max-height:520px;overflow-y:auto;}
+    .preview-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 22px;margin-bottom:20px; overflow-x: auto;}
+    .preview-box h2{font-size:0.75rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:14px;}
+    
+    /* FORMATO DE LA HOJA BLANCA PARA EL PREVIEW */
+    .preview-content {
+        background: #ffffff; 
+        color: #000000; 
+        padding: 40px; 
+        border-radius: 4px; 
+        font-family: 'Arial', sans-serif; 
+        font-size: 11pt; 
+        min-width: 800px;
+        box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+    }
+    
+    .nota{font-size:0.72rem;color:var(--gray);padding:10px 14px;border-left:2px solid var(--gold);background:var(--gold-dim);border-radius:0 6px 6px 0;margin-bottom:16px;line-height:1.6;}
+    .nota strong{color:var(--gold);}
 
-        .nota{font-size:0.72rem;color:var(--gray);padding:10px 14px;border-left:2px solid var(--gold);background:var(--gold-dim);border-radius:0 6px 6px 0;margin-bottom:16px;line-height:1.6;}
-        .nota strong{color:var(--gold);}
-
-        @media(max-width:620px){
-            .tiempo-group{width:100%;}
-            .dia-header{flex-direction:column;align-items:flex-start;}
-        }
-    </style>
+    @media(max-width:620px){
+        .tiempo-group{width:100%;}
+        .dia-header{flex-direction:column;align-items:flex-start;}
+    }
+</style>
 </head>
 <body>
 
-<h1>⚖ Horas Suplementarias y Extraordinarias</h1>
-<div class="sub">Ministerio del Trabajo del Ecuador · Art. 55 Código del Trabajo</div>
+<h1>⚖ Generador de Informe de Horas</h1>
+<div class="sub">Formato Oficial en Tabla · Art. 55 Código del Trabajo</div>
 
 <div class="config">
     <div class="config-grid">
-        <div class="fld" style="grid-column:1/-1"><label>Para (Director)</label><input id="para_nombre" value="DR. JAIME RENE LOPEZ MUÑOZ"></div>
-        <div class="fld" style="grid-column:1/-1"><label>Cargo del Director</label><input id="para_cargo" value="DIRECTOR ADMINISTRATIVO"></div>
+        <div class="fld" style="grid-column:1/-1"><label>Para (Autoridad)</label><input id="para_nombre" value="DR. JAIME RENE LOPEZ MUÑOZ"></div>
+        <div class="fld" style="grid-column:1/-1"><label>Cargo de la Autoridad</label><input id="para_cargo" value="DIRECTOR ADMINISTRATIVO"></div>
         <div class="fld" style="grid-column:1/-1"><label>Tu nombre completo</label><input id="de_nombre" value="DIEGO VINICIO VITERI REYES"></div>
         <div class="fld" style="grid-column:1/-1"><label>Tu cargo</label><input id="de_cargo" value="AUXILIAR DE MANTENIMIENTO"></div>
         <div class="fld"><label>Dirección / Unidad</label><input id="direccion" value="DIRECCIÓN ADMINISTRATIVA"></div>
         <div class="fld">
-            <label>Mes</label>
+            <label>Mes Laborado</label>
             <select id="mes">
                 <option>Enero</option><option>Febrero</option><option>Marzo</option><option>Abril</option>
                 <option>Mayo</option><option>Junio</option><option>Julio</option><option>Agosto</option>
@@ -131,8 +142,8 @@
             </select>
         </div>
         <div class="fld"><label>Año</label><input id="anio" type="number" value="2025" min="2020" max="2035"></div>
-        <div class="fld"><label>Fecha del informe</label><input id="fecha_informe"></div>
-        <div class="fld"><label>Revisado por</label><input id="revisor_nombre" value="Fredy Pillalaza"></div>
+        <div class="fld"><label>Lugar y Fecha del informe</label><input id="fecha_informe" value="Quito 06 de Noviembre del 2025"></div>
+        <div class="fld"><label>Revisado por (Nombre)</label><input id="revisor_nombre" value="Fredy Pillalaza"></div>
         <div class="fld"><label>Cargo del revisor</label><input id="revisor_cargo" value="ARQUITECTO"></div>
     </div>
 </div>
@@ -162,7 +173,7 @@
     <h2>📅 Días trabajados con horas extras</h2>
     <div id="lista-dias"></div>
     <button class="btn btn-outline" style="width:100%;justify-content:center;margin-top:6px;" onclick="agregarDia()">
-        + Agregar día
+        <i class="fas fa-plus"></i> Agregar día
     </button>
 </div>
 
@@ -184,21 +195,19 @@
     </div>
 </div>
 
-<div class="nota">
-    <strong>Recuerda:</strong> Si te llaman verbalmente a decirte que el informe está mal, ese mismo día envía un correo 
-    "confirmando lo conversado" — conviertes lo verbal en documento escrito que queda registrado.
-</div>
-
 <div class="btns">
-    <button class="btn btn-gold" onclick="generarInforme()">📄 Generar Informe</button>
-    <button class="btn btn-green" onclick="copiarTexto()">📋 Copiar texto</button>
-    <button class="btn btn-outline" onclick="window.print()">🖨 Imprimir</button>
-    <a href="index.html" class="btn btn-outline" style="margin-left:auto;"><i class="fas fa-arrow-left"></i> Volver</a>
+    <button class="btn btn-gold" onclick="generarInforme()"><i class="fas fa-eye"></i> Generar Vista Previa</button>
+    <button class="btn btn-blue" onclick="descargarWord()"><i class="fas fa-file-word"></i> Descargar en Word</button>
+    <a href="index.html" class="btn btn-outline" style="margin-left:auto;"><i class="fas fa-arrow-left"></i> Volver a Calculadoras</a>
 </div>
 
 <div class="preview-box">
-    <h2>📑 Vista previa del informe</h2>
-    <div class="preview-text" id="preview-text">Completa los días y pulsa "Generar Informe".</div>
+    <h2>📑 Vista previa del documento (Formato Tabla)</h2>
+    <div class="preview-content" id="preview-text">
+        <div style="text-align:center; color: #666; padding: 40px; font-family: sans-serif;">
+            Completa los días y presiona "Generar Vista Previa" para ver el documento.
+        </div>
+    </div>
 </div>
 
 <script>
@@ -224,22 +233,29 @@ window.onload = function() {
                    'Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
     document.getElementById('mes').value = meses[hoy.getMonth()];
     document.getElementById('anio').value = hoy.getFullYear();
-    const d = String(hoy.getDate()).padStart(2,'0');
-    const m = MESES_ES[hoy.getMonth()];
-    document.getElementById('fecha_informe').value =
-        `Quito, ${d} de ${m.charAt(0).toUpperCase()+m.slice(1)} del ${hoy.getFullYear()}`;
     agregarDia(); agregarDia();
 };
 
 function toMin(t){ if(!t) return 0; const[h,m]=t.split(':').map(Number); return h*60+m; }
 function minToHM(min){ if(min<=0) return '0h 00m'; return `${Math.floor(min/60)}h ${String(min%60).padStart(2,'0')}m`; }
-function formatoTotal(min){ return `${Math.floor(min/60)}h${String(min%60).padStart(2,'0')}`; }
-function formatoDoc(min){ if(min<=0) return ''; return `${String(Math.floor(min/60)).padStart(2,'0')}:${String(min%60).padStart(2,'0')}`; }
+
+// Formato Especial de Hora para la Tabla de Word (Ej: 09:00 o 06:30)
+function formatoDoc(min){ 
+    if(min<=0) return ''; 
+    return `${String(Math.floor(min/60)).padStart(2,'0')}:${String(min%60).padStart(2,'0')}`; 
+}
+// Formato para el TOTAL abajo de la tabla (Ej: 58h50)
+function formatoTotalWord(min){ 
+    if(min<=0) return ''; 
+    return `${Math.floor(min/60)}h${String(min%60).padStart(2,'0')}`; 
+}
 
 function getTipoDia(fechaStr, esFeriadoManual) {
     if (!fechaStr) return { tipo: 'normal', label: 'Día Normal', badge: 'normal' };
-    const fecha = new Date(fechaStr + 'T12:00:00');
-    const dow = fecha.getDay();
+    
+    // Solución para zona horaria (evitar que reste un día)
+    const partes = fechaStr.split('-');
+    const dow = new Date(partes[0], partes[1] - 1, partes[2]).getDay();
     const esFeriadoAuto = FERIADOS_EC.includes(fechaStr);
 
     if (esFeriadoManual || esFeriadoAuto) return { tipo: 'feriado',  label: '🗓 Feriado Nacional', badge: 'feriado' };
@@ -262,7 +278,6 @@ function calcularExtras(id) {
     const esFeriadoManual = !!feriados[id];
     const tipoDia = getTipoDia(fechaStr, esFeriadoManual);
 
-    // Actualizar badge y color de card
     const badgeEl = document.getElementById(`badge-${id}`);
     const card    = document.getElementById(`dia-${id}`);
     if (badgeEl) {
@@ -273,16 +288,15 @@ function calcularExtras(id) {
         card.className = `dia-card tipo-${tipoDia.badge}`;
     }
 
-    // Actualizar botón feriado
     const btnFeriado = document.getElementById(`btn-feriado-${id}`);
     if (btnFeriado) {
         if (FERIADOS_EC.includes(fechaStr)) {
-            btnFeriado.textContent = '⚑ Feriado (automático)';
+            btnFeriado.textContent = '⚑ Feriado Oficial';
             btnFeriado.className = 'toggle-feriado activo';
             btnFeriado.disabled = true;
         } else {
             btnFeriado.disabled = false;
-            btnFeriado.textContent = feriados[id] ? '⚑ Feriado ✓' : '⚐ Marcar Feriado';
+            btnFeriado.textContent = feriados[id] ? '⚑ Feriado ✓' : '⚐ Forzar Feriado';
             btnFeriado.className = feriados[id] ? 'toggle-feriado activo' : 'toggle-feriado';
         }
     }
@@ -297,11 +311,9 @@ function calcularExtras(id) {
 
     const salidaMin  = toMin(salida);
     const entradaMin = toMin(entrada);
-
     let extraMin = 0;
 
     if (esExtraordinario(tipoDia.tipo)) {
-        // Sábado / Domingo / Feriado: todas las horas trabajadas son extraordinarias
         extraMin = entradaMin > 0 ? salidaMin - entradaMin : salidaMin - jornadaIni;
         if (extraMin <= 0) extraMin = 0;
         resEl.className = 'resultado-tiempo ext';
@@ -309,7 +321,6 @@ function calcularExtras(id) {
             ? `Extraordinarias (100%): ${minToHM(extraMin)}`
             : '— sin horas registradas';
     } else {
-        // Día normal: extras a partir del fin de jornada
         extraMin = salidaMin - jornadaFin;
         if (extraMin <= 0) {
             resEl.className = 'resultado-tiempo negativo';
@@ -382,7 +393,7 @@ function agregarDia() {
             <span class="badge-tipo badge-normal" id="badge-${id}">Día Normal</span>
 
             <button class="toggle-feriado" id="btn-feriado-${id}" onclick="toggleFeriado(${id})">
-                ⚐ Marcar Feriado
+                ⚐ Forzar Feriado
             </button>
 
             <div class="tiempo-group">
@@ -401,7 +412,7 @@ function agregarDia() {
         </div>
         <div class="dia-body">
             <label>Actividades realizadas</label>
-            <textarea id="act-${id}" placeholder="Ej: Trabajos en edificio Torrezul&#10;* Adecuación de puestos de trabajo piso 3&#10;* Instalación de puntos eléctricos"></textarea>
+            <textarea id="act-${id}" placeholder="Ej: Trabajos en el edificio Torrezul..."></textarea>
         </div>
     `;
     document.getElementById('lista-dias').appendChild(div);
@@ -448,6 +459,7 @@ function formatFechaDoc(iso) {
     return `${d}/${m}/${y}`;
 }
 
+// INGENIERO ALASK: GENERACIÓN DE TABLA HTML REAL PARA DOCUMENTO WORD
 function generarInforme() {
     const para      = document.getElementById('para_nombre').value.trim();
     const paraCargo = document.getElementById('para_cargo').value.trim();
@@ -461,96 +473,114 @@ function generarInforme() {
     const revCargo  = document.getElementById('revisor_cargo').value.trim();
     const dias      = getDias();
 
+    if(dias.length === 0) {
+        alert("Agrega al menos un día de trabajo.");
+        return;
+    }
+
     let totalSupMin = 0, totalExtMin = 0;
-    let filasDetalle = '';
+
+    let html = `
+    <div style="font-family: 'Arial', sans-serif; font-size: 11pt; color: #000; line-height: 1.5; text-align: left;">
+        <p style="text-align: center; font-weight: bold; margin-bottom: 20px; font-size: 12pt;">INFORME DE HORAS SUPLEMENTARIAS Y EXTRAORDINARIAS (CÓDIGO DE TRABAJO)</p>
+        
+        <table style="width: 100%; border: none; margin-bottom: 15px; font-size: 11pt;">
+            <tr><td style="width: 15%; font-weight: bold; vertical-align: top;">PARA:</td><td style="vertical-align: top;">${para}<br>${paraCargo}</td></tr>
+            <tr><td style="width: 15%; font-weight: bold; vertical-align: top; padding-top: 10px;">DE:</td><td style="vertical-align: top; padding-top: 10px;">${de}<br>${deCargo}</td></tr>
+            <tr><td style="width: 15%; font-weight: bold; vertical-align: top; padding-top: 10px;">DIRECCIÓN:</td><td style="vertical-align: top; padding-top: 10px;">${dir}</td></tr>
+            <tr><td style="width: 15%; font-weight: bold; vertical-align: top; padding-top: 10px;">ASUNTO:</td><td style="vertical-align: top; padding-top: 10px;">Informe para autorización de pago de horas extras Suplementarias y Extraordinarias.</td></tr>
+            <tr><td style="width: 15%; font-weight: bold; vertical-align: top; padding-top: 10px;">LUGAR Y FECHA:</td><td style="vertical-align: top; padding-top: 10px;">${fecha}</td></tr>
+        </table>
+        
+        <p style="text-align: justify; margin-bottom: 10px; line-height: 1.5;">En atención a lo determinado en el Art. 55 del Código de Trabajo “Remuneración por horas suplementarias y extraordinarias. - Por convenio escrito entre las partes, la jornada de trabajo podrá exceder del límite fijado en los artículos 47 y 49 de este Código, siempre que se proceda con autorización del Inspector de Trabajo y se observen las siguientes prescripciones”.</p>
+        
+        <p style="text-align: justify; margin-bottom: 20px; line-height: 1.5;">Es por ello que a continuación se detallan las actividades realizadas en el tiempo suplementario y extraordinario durante el mes de ${mes} del ${anio} para su respectiva aprobación:</p>
+        
+        <table border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse; text-align: center; font-size: 10pt; margin-bottom: 5px; border: 1px solid black;">
+            <thead>
+                <tr>
+                    <th style="width: 15%; font-weight: bold; padding: 5px; border: 1px solid black;">FECHA</th>
+                    <th style="width: 45%; font-weight: bold; padding: 5px; border: 1px solid black;">ACTIVIDADES REALIZADAS</th>
+                    <th style="width: 20%; font-weight: bold; padding: 5px; border: 1px solid black;">TOTAL HORAS<br>SUPLEMENTARIAS</th>
+                    <th style="width: 20%; font-weight: bold; padding: 5px; border: 1px solid black;">TOTAL HORAS<br>EXTRAORDINARIAS</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
 
     dias.forEach(d => {
         const fStr   = formatFechaDoc(d.fecha);
         const supStr = formatoDoc(d.supMin);
         const extStr = formatoDoc(d.extMin);
+        
         totalSupMin += d.supMin;
         totalExtMin += d.extMin;
+        
+        // Convertir saltos de línea en <br> para el HTML y alinear a la izquierda
+        const actHtml = d.act ? d.act.replace(/\n/g, '<br>') : '';
 
-        const tipoLabel = d.tipoDia.label;
-        const actLines  = d.act ? d.act.split('\n').filter(l=>l.trim()) : ['(Sin descripción)'];
-
-        filasDetalle += `  ┌──────────────────────────────────────────────────────────────────┐\n`;
-        filasDetalle += `  │  Fecha: ${fStr.padEnd(10)}  [${tipoLabel.padEnd(18)}]                    │\n`;
-        filasDetalle += `  │  Entrada: ${(d.entrada||'--:--').padEnd(7)}  Salida: ${(d.salida||'--:--').padEnd(7)}`;
-        if (supStr) filasDetalle += `  Suplementarias: ${supStr}    │\n`;
-        else if (extStr) filasDetalle += `  Extraordinarias: ${extStr}   │\n`;
-        else filasDetalle += `                                │\n`;
-        filasDetalle += `  ├──────────────────────────────────────────────────────────────────┤\n`;
-        actLines.forEach(l => {
-            const linea = l.substring(0,64).padEnd(64);
-            filasDetalle += `  │  ${linea}  │\n`;
-        });
-        filasDetalle += `  └──────────────────────────────────────────────────────────────────┘\n\n`;
+        html += `
+                <tr>
+                    <td style="vertical-align: top; padding: 5px; border: 1px solid black; font-weight: bold;">${fStr}</td>
+                    <td style="text-align: justify; vertical-align: top; padding: 5px; border: 1px solid black;">${actHtml}</td>
+                    <td style="vertical-align: top; padding: 5px; border: 1px solid black;">${supStr}</td>
+                    <td style="vertical-align: top; padding: 5px; border: 1px solid black;">${extStr}</td>
+                </tr>
+        `;
     });
 
-    const totalMin = totalSupMin + totalExtMin;
-    const resumen  = [];
-    if (totalSupMin > 0) resumen.push(`Suplementarias: ${formatoTotal(totalSupMin)}`);
-    if (totalExtMin > 0) resumen.push(`Extraordinarias: ${formatoTotal(totalExtMin)}`);
+    const totalFinal = totalSupMin + totalExtMin;
 
-    const texto =
-`INFORME DE HORAS SUPLEMENTARIAS Y EXTRAORDINARIAS (CÓDIGO DE TRABAJO)
+    html += `
+            </tbody>
+        </table>
+        
+        <div style="text-align: right; width: 100%; margin-bottom: 40px; font-weight: bold; font-size: 11pt; padding-right: 50px;">
+            TOTAL &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${formatoTotalWord(totalFinal)}
+        </div>
+        
+        <table style="width: 100%; border: none; text-align: center; margin-top: 50px; font-size: 11pt;">
+            <tr>
+                <td style="width: 50%; padding-bottom: 20px; border: none; text-align: left; padding-left: 20px;">Realizado por;<br><br><br><br>_____________________________<br>FIRMA DEL SERVIDOR<br>${de}<br>C.I. .........................</td>
+                <td style="width: 50%; padding-bottom: 20px; border: none; text-align: left; padding-left: 20px;">Revisado por;<br><br><br><br>_____________________________<br>${revisor}<br>${revCargo}</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding-top: 40px; border: none; text-align: left; padding-left: 20px;">Autorizado por;<br><br><br><br>_____________________________<br>FIRMA JEFE INMEDIATO<br>${para}<br>${paraCargo}</td>
+            </tr>
+        </table>
+    </div>
+    `;
 
-PARA:       ${para}
-            ${paraCargo}
-
-DE:         ${de}
-            ${deCargo}
-
-DIRECCIÓN:  ${dir}
-ASUNTO:     Informe para autorización de pago de horas extras Suplementarias y Extraordinarias.
-
-LUGAR Y FECHA: ${fecha}
-
-
-En atención a lo determinado en el Art. 55 del Código de Trabajo "Remuneración por horas
-suplementarias y extraordinarias.- Por convenio escrito entre las partes, la jornada de
-trabajo podrá exceder del límite fijado en los artículos 47 y 49 de este Código, siempre
-que se proceda con autorización del Inspector de Trabajo y se observen las siguientes
-prescripciones".
-
-Es por ello que a continuación se detallan las actividades realizadas en el tiempo
-suplementario y extraordinario durante el mes de ${mes} del ${anio} para su respectiva
-aprobación:
-
-
-${filasDetalle}
-                                      TOTAL    ${formatoTotal(totalMin)}
-                                      ${resumen.join('   |   ')}
-
-
-Realizado por;                                      Revisado por;
-
-_____________________________                       _____________________________
-FIRMA DEL SERVIDOR                                  ${revisor}
-${de}                              ${revCargo}
-
-
-Autorizado por;
-
-
-_____________________________
-FIRMA JEFE INMEDIATO
-${para}
-${paraCargo}`;
-
-    document.getElementById('preview-text').textContent = texto;
+    document.getElementById('preview-text').innerHTML = html;
 }
 
-function copiarTexto() {
-    const t = document.getElementById('preview-text').textContent;
-    if (t.startsWith('Completa')) { alert('Primero genera el informe.'); return; }
-    navigator.clipboard.writeText(t).then(() => {
-        const b = event.target.closest('.btn');
-        const o = b.innerHTML;
-        b.innerHTML = '✓ Copiado!';
-        setTimeout(() => b.innerHTML = o, 2000);
-    });
+// INGENIERO ALASK: MOTOR PARA DESCARGAR EN WORD REAL CON TABLAS NATIVAS
+function descargarWord() {
+    const content = document.getElementById('preview-text').innerHTML;
+    
+    if (!content || content.includes('Completa los días')) {
+        alert('Primero debes generar la tabla de vista previa.');
+        return;
+    }
+    
+    // Empaquetado especial para que Word reconozca el HTML como un documento válido con estilos
+    const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' " +
+            "xmlns:w='urn:schemas-microsoft-com:office:word' " +
+            "xmlns='http://www.w3.org/TR/REC-html40'>" +
+            "<head><meta charset='utf-8'><title>Informe de Horas Extras</title></head><body>";
+    const footer = "</body></html>";
+    const sourceHTML = header + content + footer;
+    
+    // Crear el archivo Word
+    const blob = new Blob(['\ufeff', sourceHTML], { type: 'application/msword' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'Informe_Horas_Extras_MDT.doc';
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
 </script>
 </body>

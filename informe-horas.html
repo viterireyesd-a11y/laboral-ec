@@ -103,11 +103,9 @@
     .tot-sub{font-size:0.67rem;color:var(--gray);margin-top:2px;}
 
     .btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
-    .btn{padding:10px 20px;border:none;border-radius:6px;font-weight:700;font-size:0.8rem;cursor:pointer;letter-spacing:0.5px;transition:all 0.2s;display:flex;align-items:center;gap:7px; text-decoration:none; justify-content:center;}
+    .btn{padding:12px 20px;border:none;border-radius:6px;font-weight:700;font-size:0.85rem;cursor:pointer;letter-spacing:0.5px;transition:all 0.2s;display:flex;align-items:center;gap:7px; text-decoration:none; justify-content:center;}
     .btn-gold{background:linear-gradient(135deg,var(--gold),#8a6018);color:#050300;box-shadow:0 3px 14px var(--gold-dim);}
     .btn-gold:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(212,168,67,0.35);}
-    .btn-green{background:rgba(26,173,114,0.12);color:var(--green);border:1px solid rgba(26,173,114,0.3)!important;}
-    .btn-green:hover{background:var(--green);color:#020509;}
     .btn-blue{background:rgba(59,125,232,0.15);color:var(--blue);border:1px solid rgba(59,125,232,0.3)!important;}
     .btn-blue:hover{background:var(--blue);color:#020509;}
     .btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)!important;}
@@ -144,11 +142,11 @@
 
 <div class="config">
     <div class="config-grid">
-        <div class="fld" style="grid-column:1/-1"><label>Para (Autoridad)</label><input id="para_nombre" value="Ing. María López"></div>
-        <div class="fld" style="grid-column:1/-1"><label>Cargo de la Autoridad</label><input id="para_cargo" value="Directora Administrativa"></div>
-        <div class="fld" style="grid-column:1/-1"><label>Tu nombre completo</label><input id="de_nombre" value="Juan Pérez"></div>
-        <div class="fld" style="grid-column:1/-1"><label>Tu cargo</label><input id="de_cargo" value="Asistente de Operaciones"></div>
-        <div class="fld"><label>Dirección / Unidad</label><input id="direccion" value="Dirección Operativa"></div>
+        <div class="fld" style="grid-column:1/-1"><label>Para (Autoridad)</label><input id="para_nombre" placeholder="Ej: Ing. María López"></div>
+        <div class="fld" style="grid-column:1/-1"><label>Cargo de la Autoridad</label><input id="para_cargo" placeholder="Ej: Directora Administrativa"></div>
+        <div class="fld" style="grid-column:1/-1"><label>Tu nombre completo</label><input id="de_nombre" placeholder="Ej: Juan Pérez"></div>
+        <div class="fld" style="grid-column:1/-1"><label>Tu cargo</label><input id="de_cargo" placeholder="Ej: Asistente de Operaciones"></div>
+        <div class="fld"><label>Dirección / Unidad</label><input id="direccion" placeholder="Ej: Dirección Operativa"></div>
         <div class="fld">
             <label>Mes Laborado</label>
             <select id="mes">
@@ -158,9 +156,9 @@
             </select>
         </div>
         <div class="fld"><label>Año</label><input id="anio" type="number" min="2020" max="2035"></div>
-        <div class="fld"><label>Lugar y Fecha del informe</label><input id="fecha_informe"></div>
-        <div class="fld"><label>Revisado por (Nombre)</label><input id="revisor_nombre" value="Ana Torres"></div>
-        <div class="fld"><label>Cargo del revisor</label><input id="revisor_cargo" value="Supervisora"></div>
+        <div class="fld"><label>Lugar y Fecha del informe</label><input id="fecha_informe" placeholder="Ej: Quito, 01 de Enero del 2026"></div>
+        <div class="fld"><label>Revisado por (Nombre)</label><input id="revisor_nombre" placeholder="Ej: Ana Torres"></div>
+        <div class="fld"><label>Cargo del revisor</label><input id="revisor_cargo" placeholder="Ej: Supervisora"></div>
     </div>
 </div>
 
@@ -260,8 +258,6 @@ window.onload = function() {
     document.getElementById('anio').value = hoy.getFullYear();
     const d = String(hoy.getDate()).padStart(2,'0');
     const m = MESES_ES[hoy.getMonth()];
-    
-    // Auto-generar la fecha con la fecha del dispositivo
     document.getElementById('fecha_informe').value =
         `Quito, ${d} de ${m.charAt(0).toUpperCase()+m.slice(1)} del ${hoy.getFullYear()}`;
     
@@ -269,7 +265,7 @@ window.onload = function() {
     agregarDia();
 };
 
-// ─── MOTOR DE EXTRACCIÓN DE PDF CON FILTRO ───
+// ─── MOTOR DE EXTRACCIÓN DE PDF REESCRITO (FILTRO AVANZADO) ───
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
 async function procesarPDF(event) {
@@ -286,7 +282,6 @@ async function procesarPDF(event) {
         const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
         let fullText = '';
 
-        // Extraer texto de todas las páginas
         for (let i = 1; i <= pdf.numPages; i++) {
             const page = await pdf.getPage(i);
             const textContent = await page.getTextContent();
@@ -294,7 +289,6 @@ async function procesarPDF(event) {
             fullText += pageText + ' ';
         }
 
-        // Pasar texto al analizador
         extraerDatosBiometrico(fullText);
 
         status.textContent = '¡Lectura y filtrado completados con éxito!';
@@ -306,12 +300,11 @@ async function procesarPDF(event) {
         status.textContent = 'Error al leer el PDF. Asegúrate de que sea un reporte de texto y no una imagen escaneada.';
         status.style.color = 'var(--red)';
     }
-    // Resetear input 
     event.target.value = '';
 }
 
 function extraerDatosBiometrico(texto) {
-    // Buscar todas las fechas (ahora acepta números de 1 dígito)
+    // Buscar fechas de 1 o 2 dígitos
     const matchesFechas = [...texto.matchAll(/\b(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})\b/g)];
     
     if (matchesFechas.length === 0) {
@@ -319,7 +312,6 @@ function extraerDatosBiometrico(texto) {
         return;
     }
 
-    // Limpiar días actuales de la pantalla
     document.getElementById('lista-dias').innerHTML = '';
     feriados = {};
     diaCount = 0;
@@ -327,34 +319,46 @@ function extraerDatosBiometrico(texto) {
     let diasEncontrados = 0;
 
     for (let i = 0; i < matchesFechas.length; i++) {
-        const fechaStrRaw = matchesFechas[i][0]; 
         const diaPart = matchesFechas[i][1].padStart(2, '0');
         const mesPart = matchesFechas[i][2].padStart(2, '0');
         const anioPart = matchesFechas[i][3];
         
-        // Formato para el input type="date" de HTML (YYYY-MM-DD)
         const fechaFormatHTML = `${anioPart}-${mesPart}-${diaPart}`;
 
         const startIndex = matchesFechas[i].index;
         const endIndex = (i + 1 < matchesFechas.length) ? matchesFechas[i+1].index : texto.length;
         const chunk = texto.substring(startIndex, endIndex);
         
-        // Extraer todas las horas HH:MM (ahora acepta 1 dígito en la hora)
-        const horasMatch = [...chunk.matchAll(/\b(\d{1,2}):(\d{2})(?::\d{2})?\b/g)];
+        // Extraer horas respetando formato 24h
+        const horasArray = [];
+        const regexHoras = /\b([0-1]?[0-9]|2[0-3]):([0-5][0-9])(?::[0-5][0-9])?\b/g;
+        let matchHora;
+        while ((matchHora = regexHoras.exec(chunk)) !== null) {
+            horasArray.push({
+                hora: parseInt(matchHora[1], 10),
+                minuto: parseInt(matchHora[2], 10)
+            });
+        }
         
-        if (horasMatch.length >= 2) {
-            const entradaStr = `${horasMatch[0][1].padStart(2, '0')}:${horasMatch[0][2]}`;
-            const salidaStr = `${horasMatch[horasMatch.length - 1][1].padStart(2, '0')}:${horasMatch[horasMatch.length - 1][2]}`;
+        if (horasArray.length >= 2) {
+            // Ordenamos los registros de tiempo cronológicamente para evitar desordenes
+            horasArray.sort((a, b) => (a.hora * 60 + a.minuto) - (b.hora * 60 + b.minuto));
             
-            // INGENIERO ALASK: FILTRO INTELIGENTE DE HORARIOS NO RELEVANTES
+            const primerRegistro = horasArray[0];
+            const ultimoRegistro = horasArray[horasArray.length - 1];
+
+            const entradaStr = `${String(primerRegistro.hora).padStart(2, '0')}:${String(primerRegistro.minuto).padStart(2, '0')}`;
+            const salidaStr = `${String(ultimoRegistro.hora).padStart(2, '0')}:${String(ultimoRegistro.minuto).padStart(2, '0')}`;
+            
             const tipoD = getTipoDia(fechaFormatHTML, false).tipo;
             const entradaM = toMin(entradaStr);
             const salidaM = toMin(salidaStr);
             
-            // Ignorar días laborables (L-V) si la hora de salida es a las 17:30 (1050 min) o antes
-            // y la hora de entrada es a las 07:00 (420 min) o después.
+            // INGENIERO ALASK: EL FILTRO MAESTRO DE JORNADA
+            // Ignorar días normales (Lun-Vie) si la salida es a las 17:30 (1050 min) o antes
+            // y la entrada fue a las 07:00 (420 min) o después.
             if (tipoD === 'normal' && entradaM >= 420 && salidaM <= 1050) {
-                continue; // Salta este día y NO lo agrega al informe
+                continue; 
             }
             
             agregarDiaExtracted(fechaFormatHTML, entradaStr, salidaStr);
@@ -363,8 +367,8 @@ function extraerDatosBiometrico(texto) {
     }
 
     if (diasEncontrados === 0) {
-        alert("El PDF se leyó correctamente, pero se ignoraron todos los días porque la IA determinó que no tenían horas extras válidas (las salidas fueron antes de las 17:30).");
-        agregarDia(); // Poner uno en blanco para que no quede vacía la pantalla
+        alert("El PDF se leyó, pero no se agregaron días porque todos fueron filtrados (no superan el horario normal de salida).");
+        agregarDia(); 
     } else {
         recalcularTodos();
     }
@@ -381,14 +385,22 @@ function agregarDiaExtracted(fecha, entrada, salida) {
 
 function toMin(t){ if(!t) return 0; const[h,m]=t.split(':').map(Number); return h*60+m; }
 function minToHM(min){ if(min<=0) return '0h 00m'; return `${Math.floor(min/60)}h ${String(min%60).padStart(2,'0')}m`; }
-function formatoTotal(min){ return `${Math.floor(min/60)}h${String(min%60).padStart(2,'0')}`; }
-function formatoDoc(min){ if(min<=0) return ''; return `${String(Math.floor(min/60)).padStart(2,'0')}:${String(min%60).padStart(2,'0')}`; }
-function formatoTotalWord(min){ if(min<=0) return ''; return `${Math.floor(min/60)}h${String(min%60).padStart(2,'0')}`; }
+
+// Formato Especial de Hora para la Tabla de Word (Ej: 09:00 o 06:30)
+function formatoDoc(min){ 
+    if(min<=0) return ''; 
+    return `${String(Math.floor(min/60)).padStart(2,'0')}:${String(min%60).padStart(2,'0')}`; 
+}
+// Formato para el TOTAL abajo de la tabla (Ej: 58h50)
+function formatoTotalWord(min){ 
+    if(min<=0) return ''; 
+    return `${Math.floor(min/60)}h${String(min%60).padStart(2,'0')}`; 
+}
 
 function getTipoDia(fechaStr, esFeriadoManual) {
     if (!fechaStr) return { tipo: 'normal', label: 'Día Normal', badge: 'normal' };
     
-    // Solución para zona horaria 
+    // Solución para zona horaria (evitar que reste un día)
     const partes = fechaStr.split('-');
     const dow = new Date(partes[0], partes[1] - 1, partes[2]).getDay();
     const esFeriadoAuto = FERIADOS_EC.includes(fechaStr);

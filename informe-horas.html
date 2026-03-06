@@ -115,7 +115,18 @@
 
     .preview-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 22px;margin-bottom:20px; overflow-x: auto;}
     .preview-box h2{font-size:0.75rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:14px;}
-    .preview-content {background: #ffffff; color: #000000; padding: 40px; border-radius: 4px; font-family: 'Arial', sans-serif; font-size: 11pt; min-width: 800px; box-shadow: inset 0 0 10px rgba(0,0,0,0.1);}
+    
+    /* FORMATO DE LA HOJA BLANCA PARA EL PREVIEW */
+    .preview-content {
+        background: #ffffff; 
+        color: #000000; 
+        padding: 40px; 
+        border-radius: 4px; 
+        font-family: 'Arial', sans-serif; 
+        font-size: 11pt; 
+        min-width: 800px;
+        box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+    }
     
     .nota{font-size:0.72rem;color:var(--gray);padding:10px 14px;border-left:2px solid var(--gold);background:var(--gold-dim);border-radius:0 6px 6px 0;margin-bottom:16px;line-height:1.6;}
     .nota strong{color:var(--gold);}
@@ -133,11 +144,11 @@
 
 <div class="config">
     <div class="config-grid">
-        <div class="fld" style="grid-column:1/-1"><label>Para (Autoridad)</label><input id="para_nombre" placeholder="Ej: Ing. María López"></div>
-        <div class="fld" style="grid-column:1/-1"><label>Cargo de la Autoridad</label><input id="para_cargo" placeholder="Ej: Directora Administrativa"></div>
-        <div class="fld" style="grid-column:1/-1"><label>Tu nombre completo</label><input id="de_nombre" placeholder="Ej: Juan Pérez"></div>
-        <div class="fld" style="grid-column:1/-1"><label>Tu cargo</label><input id="de_cargo" placeholder="Ej: Asistente de Operaciones"></div>
-        <div class="fld"><label>Dirección / Unidad</label><input id="direccion" placeholder="Ej: Dirección Operativa"></div>
+        <div class="fld" style="grid-column:1/-1"><label>Para (Autoridad)</label><input id="para_nombre" value="Ing. María López"></div>
+        <div class="fld" style="grid-column:1/-1"><label>Cargo de la Autoridad</label><input id="para_cargo" value="Directora Administrativa"></div>
+        <div class="fld" style="grid-column:1/-1"><label>Tu nombre completo</label><input id="de_nombre" value="Juan Pérez"></div>
+        <div class="fld" style="grid-column:1/-1"><label>Tu cargo</label><input id="de_cargo" value="Asistente de Operaciones"></div>
+        <div class="fld"><label>Dirección / Unidad</label><input id="direccion" value="Dirección Operativa"></div>
         <div class="fld">
             <label>Mes Laborado</label>
             <select id="mes">
@@ -147,9 +158,9 @@
             </select>
         </div>
         <div class="fld"><label>Año</label><input id="anio" type="number" min="2020" max="2035"></div>
-        <div class="fld"><label>Lugar y Fecha del informe</label><input id="fecha_informe" placeholder="Ej: Quito, 01 de Enero del 2026"></div>
-        <div class="fld"><label>Revisado por (Nombre)</label><input id="revisor_nombre" placeholder="Ej: Ana Torres"></div>
-        <div class="fld"><label>Cargo del revisor</label><input id="revisor_cargo" placeholder="Ej: Supervisora"></div>
+        <div class="fld"><label>Lugar y Fecha del informe</label><input id="fecha_informe"></div>
+        <div class="fld"><label>Revisado por (Nombre)</label><input id="revisor_nombre" value="Ana Torres"></div>
+        <div class="fld"><label>Cargo del revisor</label><input id="revisor_cargo" value="Supervisora"></div>
     </div>
 </div>
 
@@ -249,6 +260,8 @@ window.onload = function() {
     document.getElementById('anio').value = hoy.getFullYear();
     const d = String(hoy.getDate()).padStart(2,'0');
     const m = MESES_ES[hoy.getMonth()];
+    
+    // Auto-generar la fecha con la fecha del dispositivo
     document.getElementById('fecha_informe').value =
         `Quito, ${d} de ${m.charAt(0).toUpperCase()+m.slice(1)} del ${hoy.getFullYear()}`;
     
@@ -298,8 +311,8 @@ async function procesarPDF(event) {
 }
 
 function extraerDatosBiometrico(texto) {
-    // Buscar todas las fechas en formato DD/MM/YYYY o DD-MM-YYYY
-    const matchesFechas = [...texto.matchAll(/\b(\d{2})[\/\-](\d{2})[\/\-](\d{4})\b/g)];
+    // Buscar todas las fechas (ahora acepta números de 1 dígito)
+    const matchesFechas = [...texto.matchAll(/\b(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})\b/g)];
     
     if (matchesFechas.length === 0) {
         alert("No se encontraron fechas válidas en el PDF. Revisa el formato.");
@@ -315,8 +328,8 @@ function extraerDatosBiometrico(texto) {
 
     for (let i = 0; i < matchesFechas.length; i++) {
         const fechaStrRaw = matchesFechas[i][0]; 
-        const diaPart = matchesFechas[i][1];
-        const mesPart = matchesFechas[i][2];
+        const diaPart = matchesFechas[i][1].padStart(2, '0');
+        const mesPart = matchesFechas[i][2].padStart(2, '0');
         const anioPart = matchesFechas[i][3];
         
         // Formato para el input type="date" de HTML (YYYY-MM-DD)
@@ -326,12 +339,12 @@ function extraerDatosBiometrico(texto) {
         const endIndex = (i + 1 < matchesFechas.length) ? matchesFechas[i+1].index : texto.length;
         const chunk = texto.substring(startIndex, endIndex);
         
-        // Extraer todas las horas HH:MM 
-        const horasMatch = [...chunk.matchAll(/\b(\d{2}):(\d{2})(?::\d{2})?\b/g)];
+        // Extraer todas las horas HH:MM (ahora acepta 1 dígito en la hora)
+        const horasMatch = [...chunk.matchAll(/\b(\d{1,2}):(\d{2})(?::\d{2})?\b/g)];
         
         if (horasMatch.length >= 2) {
-            const entradaStr = `${horasMatch[0][1]}:${horasMatch[0][2]}`;
-            const salidaStr = `${horasMatch[horasMatch.length - 1][1]}:${horasMatch[horasMatch.length - 1][2]}`;
+            const entradaStr = `${horasMatch[0][1].padStart(2, '0')}:${horasMatch[0][2]}`;
+            const salidaStr = `${horasMatch[horasMatch.length - 1][1].padStart(2, '0')}:${horasMatch[horasMatch.length - 1][2]}`;
             
             // INGENIERO ALASK: FILTRO INTELIGENTE DE HORARIOS NO RELEVANTES
             const tipoD = getTipoDia(fechaFormatHTML, false).tipo;

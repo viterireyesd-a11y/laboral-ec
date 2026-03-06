@@ -33,17 +33,21 @@
     .jornada-bar input:focus{border-color:var(--gold);outline:none;}
     .jornada-bar .nota-j{font-size:0.72rem;color:var(--gray);border-left:2px solid var(--gold);padding-left:10px;}
 
-    /* ZONA UPLOAD PDF */
-    .pdf-upload-box {
+    /* ZONA UPLOAD PDF / IMAGEN */
+    .upload-box {
         background: rgba(59, 125, 232, 0.05);
         border: 1px dashed var(--blue);
         border-radius: 8px; padding: 20px; text-align: center;
         margin-bottom: 20px; cursor: pointer; transition: all 0.3s ease;
     }
-    .pdf-upload-box:hover { background: rgba(59, 125, 232, 0.1); border-color: var(--gold); }
-    .pdf-upload-box i { font-size: 2rem; color: #ef4444; margin-bottom: 10px; }
-    .pdf-upload-box h3 { color: var(--heading); font-size: 1rem; margin-bottom: 5px; font-family: 'Segoe UI', sans-serif;}
-    .pdf-upload-box p { color: var(--gray); font-size: 0.8rem; margin: 0;}
+    .upload-box:hover { background: rgba(59, 125, 232, 0.1); border-color: var(--gold); }
+    .upload-box i { font-size: 2rem; color: #ef4444; margin-bottom: 10px; }
+    .upload-box h3 { color: var(--heading); font-size: 1rem; margin-bottom: 5px; font-family: 'Segoe UI', sans-serif;}
+    .upload-box p { color: var(--gray); font-size: 0.8rem; margin: 0;}
+    
+    .upload-box.gold { border-color: var(--gold); background: var(--gold-dim); }
+    .upload-box.gold:hover { border-color: #f0c96a; background: rgba(212,168,67,0.15); }
+    .upload-box.gold i { color: var(--gold); }
 
     /* DÍAS */
     .dias-wrap{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:18px;}
@@ -106,6 +110,8 @@
     .btn{padding:12px 20px;border:none;border-radius:6px;font-weight:700;font-size:0.85rem;cursor:pointer;letter-spacing:0.5px;transition:all 0.2s;display:flex;align-items:center;gap:7px; text-decoration:none; justify-content:center;}
     .btn-gold{background:linear-gradient(135deg,var(--gold),#8a6018);color:#050300;box-shadow:0 3px 14px var(--gold-dim);}
     .btn-gold:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(212,168,67,0.35);}
+    .btn-green{background:rgba(26,173,114,0.12);color:var(--green);border:1px solid rgba(26,173,114,0.3)!important;}
+    .btn-green:hover{background:var(--green);color:#020509;}
     .btn-blue{background:rgba(59,125,232,0.15);color:var(--blue);border:1px solid rgba(59,125,232,0.3)!important;}
     .btn-blue:hover{background:var(--blue);color:#020509;}
     .btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)!important;}
@@ -113,11 +119,19 @@
 
     .preview-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 22px;margin-bottom:20px; overflow-x: auto;}
     .preview-box h2{font-size:0.75rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:14px;}
-    .preview-content {background: #ffffff; color: #000000; padding: 40px; border-radius: 4px; font-family: 'Arial', sans-serif; font-size: 11pt; min-width: 800px; box-shadow: inset 0 0 10px rgba(0,0,0,0.1);}
     
-    .nota{font-size:0.72rem;color:var(--gray);padding:10px 14px;border-left:2px solid var(--gold);background:var(--gold-dim);border-radius:0 6px 6px 0;margin-bottom:16px;line-height:1.6;}
-    .nota strong{color:var(--gold);}
-
+    /* FORMATO DE LA HOJA BLANCA PARA EL PREVIEW */
+    .preview-content {
+        background: #ffffff; 
+        color: #000000; 
+        padding: 40px; 
+        border-radius: 4px; 
+        font-family: 'Arial', sans-serif; 
+        font-size: 11pt; 
+        min-width: 800px;
+        box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+    }
+    
     @media(max-width:620px){
         .tiempo-group{width:100%;}
         .dia-header{flex-direction:column;align-items:flex-start;}
@@ -130,11 +144,24 @@
 <div class="sub">Formato Oficial en Tabla · Art. 55 Código del Trabajo</div>
 
 <div class="config">
+    <label class="upload-box gold" style="margin-bottom: 0;">
+        <i class="fas fa-file-image"></i>
+        <h3 style="color: var(--gold);">1. Hoja Membretada de la Institución (Opcional)</h3>
+        <p>Sube la imagen de encabezado (JPG o PNG). Aparecerá automáticamente en el Word.</p>
+        <input type="file" id="membrete-upload" accept="image/*" style="display:none;" onchange="cargarMembrete(event)">
+        <img id="membrete-preview" style="max-width: 100%; max-height: 80px; margin-top: 15px; display: none; border-radius: 4px;">
+    </label>
+</div>
+
+<div class="config">
     <div class="config-grid">
         <div class="fld" style="grid-column:1/-1"><label>Para (Autoridad)</label><input id="para_nombre" placeholder="Ej: Ing. María López"></div>
         <div class="fld" style="grid-column:1/-1"><label>Cargo de la Autoridad</label><input id="para_cargo" placeholder="Ej: Directora Administrativa"></div>
+        
         <div class="fld" style="grid-column:1/-1"><label>Tu nombre completo</label><input id="de_nombre" placeholder="Ej: Juan Pérez"></div>
-        <div class="fld" style="grid-column:1/-1"><label>Tu cargo</label><input id="de_cargo" placeholder="Ej: Asistente de Operaciones"></div>
+        <div class="fld"><label>Tu Cédula de Identidad (C.I.)</label><input id="de_cedula" placeholder="Ej: 1721122347"></div>
+        <div class="fld"><label>Tu cargo</label><input id="de_cargo" placeholder="Ej: Asistente de Operaciones"></div>
+        
         <div class="fld"><label>Dirección / Unidad</label><input id="direccion" placeholder="Ej: Dirección Operativa"></div>
         <div class="fld">
             <label>Mes Laborado</label>
@@ -174,9 +201,9 @@
 
 <div class="dias-wrap">
     
-    <label class="pdf-upload-box">
+    <label class="upload-box">
         <i class="fas fa-file-pdf"></i>
-        <h3>Carga tu reporte biométrico (PDF)</h3>
+        <h3>2. Carga tu reporte biométrico (PDF)</h3>
         <p>El sistema extraerá automáticamente los días. Ignorará los días sin horas extras.</p>
         <input type="file" id="pdf-upload" accept="application/pdf" style="display:none;" onchange="procesarPDF(event)">
         <div id="pdf-status" style="margin-top: 10px; font-weight: bold; display: none;">Procesando...</div>
@@ -225,10 +252,12 @@
 <script>
 let diaCount = 0;
 let feriados = {}; 
+let membreteBase64 = ""; // Variable para guardar la imagen del membrete
 
 const MESES_ES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
 const DIAS_ES  = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 
+// Feriados fijos Ecuador 2025-2026
 const FERIADOS_EC = [
     '2025-01-01','2025-02-24','2025-02-25','2025-04-18','2025-04-19',
     '2025-05-01','2025-05-24','2025-08-10','2025-10-09','2025-11-02',
@@ -247,13 +276,28 @@ window.onload = function() {
     const d = String(hoy.getDate()).padStart(2,'0');
     const m = MESES_ES[hoy.getMonth()];
     
+    // Auto-generar la fecha con la fecha del dispositivo
     document.getElementById('fecha_informe').value =
         `Quito, ${d} de ${m.charAt(0).toUpperCase()+m.slice(1)} del ${hoy.getFullYear()}`;
     
     agregarDia();
 };
 
-// ─── MOTOR DE EXTRACCIÓN DE PDF CON FILTRO CORREGIDO ───
+// ─── CARGAR MEMBRETE ───
+function cargarMembrete(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        membreteBase64 = e.target.result;
+        const img = document.getElementById('membrete-preview');
+        img.src = membreteBase64;
+        img.style.display = 'inline-block';
+    };
+    reader.readAsDataURL(file);
+}
+
+// ─── MOTOR DE EXTRACCIÓN DE PDF CON FILTRO ───
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
 async function procesarPDF(event) {
@@ -316,7 +360,6 @@ function extraerDatosBiometrico(texto) {
         const endIndex = (i + 1 < matchesFechas.length) ? matchesFechas[i+1].index : texto.length;
         const chunk = texto.substring(startIndex, endIndex);
         
-        // Expresión regular para horas de 1 o 2 dígitos
         const regexHoras = /\b([0-1]?[0-9]|2[0-3]):([0-5][0-9])(?::[0-5][0-9])?\b/g;
         let matchHora;
         const horasValidasMinutos = [];
@@ -326,7 +369,7 @@ function extraerDatosBiometrico(texto) {
             const m = parseInt(matchHora[2], 10);
             const minutos = h * 60 + m;
             
-            // FILTRO DE BASURA: Ignora duraciones menores a 5 horas (e.g., 0:54, 1:25 de Atraso)
+            // Filtro heurístico: descartar duraciones cortas (atrasos, etc) asumiendo inicio > 5 AM
             if (minutos >= 300) {
                 horasValidasMinutos.push(minutos);
             }
@@ -341,7 +384,6 @@ function extraerDatosBiometrico(texto) {
             
             const tipoD = getTipoDia(fechaFormatHTML, false).tipo;
             
-            // Filtro de jornada normal (ignora si la salida es <= 17:30)
             if (tipoD === 'normal' && entradaMin >= 420 && salidaMin <= 1050) {
                 continue; 
             }
@@ -587,6 +629,7 @@ function generarInforme() {
     const para      = document.getElementById('para_nombre').value.trim() || "_________";
     const paraCargo = document.getElementById('para_cargo').value.trim() || "_________";
     const de        = document.getElementById('de_nombre').value.trim() || "_________";
+    const deCedula  = document.getElementById('de_cedula').value.trim() || "........................."; // NUEVO
     const deCargo   = document.getElementById('de_cargo').value.trim() || "_________";
     const dir       = document.getElementById('direccion').value.trim() || "_________";
     const mes       = document.getElementById('mes').value;
@@ -602,9 +645,16 @@ function generarInforme() {
     }
 
     let totalSupMin = 0, totalExtMin = 0;
+    
+    // Inyectar el membrete si existe
+    let membreteHtml = "";
+    if (membreteBase64) {
+        membreteHtml = `<div style="text-align: center; margin-bottom: 20px;"><img src="${membreteBase64}" style="max-width: 100%; max-height: 150px;"></div>`;
+    }
 
     let html = `
     <div style="font-family: 'Arial', sans-serif; font-size: 11pt; color: #000; line-height: 1.5; text-align: left;">
+        ${membreteHtml}
         <p style="text-align: center; font-weight: bold; margin-bottom: 20px; font-size: 12pt;">INFORME DE HORAS SUPLEMENTARIAS Y EXTRAORDINARIAS (CÓDIGO DE TRABAJO)</p>
         
         <table style="width: 100%; border: none; margin-bottom: 15px; font-size: 11pt;">
@@ -664,7 +714,7 @@ function generarInforme() {
         
         <table style="width: 100%; border: none; text-align: center; margin-top: 50px; font-size: 11pt;">
             <tr>
-                <td style="width: 50%; padding-bottom: 20px; border: none; text-align: left; padding-left: 20px;">Realizado por;<br><br><br><br>_____________________________<br>FIRMA DEL SERVIDOR<br>${de}<br>C.I. .........................</td>
+                <td style="width: 50%; padding-bottom: 20px; border: none; text-align: left; padding-left: 20px;">Realizado por;<br><br><br><br>_____________________________<br>FIRMA DEL SERVIDOR<br>${de}<br>C.I. ${deCedula}</td>
                 <td style="width: 50%; padding-bottom: 20px; border: none; text-align: left; padding-left: 20px;">Revisado por;<br><br><br><br>_____________________________<br>${revisor}<br>${revCargo}</td>
             </tr>
             <tr>
@@ -677,7 +727,7 @@ function generarInforme() {
     document.getElementById('preview-text').innerHTML = html;
 }
 
-// MOTOR PARA DESCARGAR EN WORD REAL CON TABLAS NATIVAS
+// MOTOR PARA DESCARGAR EN WORD REAL CON TABLAS NATIVAS Y MEMBRETE
 function descargarWord() {
     const content = document.getElementById('preview-text').innerHTML;
     
@@ -686,7 +736,7 @@ function descargarWord() {
         return;
     }
     
-    // Empaquetado especial para que Word reconozca el HTML como un documento válido con estilos
+    // Empaquetado especial para que Word reconozca el HTML como un documento válido con estilos e imágenes
     const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' " +
             "xmlns:w='urn:schemas-microsoft-com:office:word' " +
             "xmlns='http://www.w3.org/TR/REC-html40'>" +

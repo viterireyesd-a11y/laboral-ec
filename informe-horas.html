@@ -58,6 +58,7 @@
     .dia-card.tipo-sabado    {border-left:3px solid var(--green);}
     .dia-card.tipo-domingo   {border-left:3px solid var(--green);}
     .dia-card.tipo-feriado   {border-left:3px solid var(--purple);}
+    .dia-card.tipo-puente    {border-left:3px solid var(--gold); border-color: var(--gold-edge);}
 
     .dia-header{background:rgba(0,0,0,0.4);padding:10px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
 
@@ -72,6 +73,7 @@
     .toggle-feriado{display:flex;align-items:center;gap:7px;cursor:pointer;padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--gray);font-size:0.72rem;font-weight:600;transition:all 0.2s;}
     .toggle-feriado:hover{border-color:var(--purple);color:var(--purple);}
     .toggle-feriado.activo{background:rgba(139,92,246,0.15);color:var(--purple);border-color:rgba(139,92,246,0.4);}
+    .toggle-feriado.puente-detectado{border-color:var(--gold); color:var(--gold); background:var(--gold-dim);}
 
     /* Resultado horas */
     .resultado-tiempo{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;font-size:0.8rem;font-weight:700;font-family:monospace;white-space:nowrap;}
@@ -252,8 +254,9 @@
 
 <script>
 let diaCount = 0;
-let feriados = {}; 
+let feriadosManuales = {}; 
 let membreteBase64 = ""; 
+let puentesDetectados = {}; // Guarda IDs de días marcados como posibles puentes
 
 const MESES_ES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
 const DIAS_ES  = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
@@ -277,14 +280,12 @@ window.onload = function() {
     const d = String(hoy.getDate()).padStart(2,'0');
     const m = MESES_ES[hoy.getMonth()];
     
-    // Auto-generar la fecha con la fecha del dispositivo
     document.getElementById('fecha_informe').value =
         `Quito, ${d} de ${m.charAt(0).toUpperCase()+m.slice(1)} del ${hoy.getFullYear()}`;
     
     agregarDia();
 };
 
-// ─── CARGAR MEMBRETE ───
 function cargarMembrete(event) {
     const file = event.target.files[0];
     if (!file) return;
@@ -298,7 +299,6 @@ function cargarMembrete(event) {
     reader.readAsDataURL(file);
 }
 
-// ─── MOTOR DE EXTRACCIÓN DE PDF CON AUTO-LLENADO ───
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
 async function procesarPDF(event) {
@@ -323,447 +323,255 @@ async function procesarPDF(event) {
         }
 
         extraerDatosBiometrico(fullText);
-
-        status.textContent = '¡Lectura y filtrado completados con éxito!';
+        status.textContent = '¡Análisis completado con éxito!';
         status.style.color = 'var(--green)';
         setTimeout(() => status.style.display = 'none', 4000);
         
     } catch (err) {
         console.error(err);
-        status.textContent = 'Error al leer el PDF. Asegúrate de que sea un reporte de texto y no una imagen escaneada.';
+        status.textContent = 'Error al leer el PDF.';
         status.style.color = 'var(--red)';
     }
-    event.target.value = '';
 }
 
 function extraerDatosBiometrico(texto) {
     const matchesFechas = [...texto.matchAll(/\b(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})\b/g)];
-    
-    if (matchesFechas.length === 0) {
-        alert("No se encontraron fechas válidas en el PDF. Revisa el formato.");
-        return;
-    }
+    if (matchesFechas.length === 0) return;
 
     const cedulaMatch = texto.match(/\b\d{10}\b/);
-    if (cedulaMatch) {
-        document.getElementById('de_cedula').value = cedulaMatch[0];
-    }
+    if (cedulaMatch) document.getElementById('de_cedula').value = cedulaMatch[0];
 
     const primerMes = parseInt(matchesFechas[0][2], 10);
     const primerAnio = matchesFechas[0][3];
-    if (primerMes >= 1 && primerMes <= 12) {
-        document.getElementById('mes').selectedIndex = primerMes - 1;
-    }
+    if (primerMes >= 1 && primerMes <= 12) document.getElementById('mes').selectedIndex = primerMes - 1;
     document.getElementById('anio').value = primerAnio;
 
     document.getElementById('lista-dias').innerHTML = '';
-    feriados = {};
+    feriadosManuales = {};
+    puentesDetectados = {};
     diaCount = 0;
 
-    let diasEncontrados = 0;
+    let fechasProcesadas = new Set();
 
     for (let i = 0; i < matchesFechas.length; i++) {
-        const diaPart = matchesFechas[i][1].padStart(2, '0');
-        const mesPart = matchesFechas[i][2].padStart(2, '0');
-        const anioPart = matchesFechas[i][3];
+        const dP = matchesFechas[i][1].padStart(2, '0');
+        const mP = matchesFechas[i][2].padStart(2, '0');
+        const aP = matchesFechas[i][3];
+        const fechaStr = `${aP}-${mP}-${dP}`;
         
-        const fechaFormatHTML = `${anioPart}-${mesPart}-${diaPart}`;
+        if(fechasProcesadas.has(fechaStr)) continue;
+        fechasProcesadas.add(fechaStr);
 
-        const startIndex = matchesFechas[i].index;
-        const endIndex = (i + 1 < matchesFechas.length) ? matchesFechas[i+1].index : texto.length;
-        const chunk = texto.substring(startIndex, endIndex);
-        
+        const chunk = texto.substring(matchesFechas[i].index, (i+1 < matchesFechas.length ? matchesFechas[i+1].index : texto.length));
         const regexHoras = /\b([0-1]?[0-9]|2[0-3]):([0-5][0-9])(?::[0-5][0-9])?\b/g;
-        let matchHora;
-        const horasValidasMinutos = [];
-        
-        while ((matchHora = regexHoras.exec(chunk)) !== null) {
-            const h = parseInt(matchHora[1], 10);
-            const m = parseInt(matchHora[2], 10);
-            const minutos = h * 60 + m;
-            
-            if (minutos >= 300) {
-                horasValidasMinutos.push(minutos);
-            }
-        }
-        
-        if (horasValidasMinutos.length >= 2) {
-            const entradaMin = Math.min(...horasValidasMinutos);
-            const salidaMin = Math.max(...horasValidasMinutos);
+        let matchH, hVal = [];
+        while ((matchH = regexHoras.exec(chunk)) !== null) hVal.push(parseInt(matchH[1])*60 + parseInt(matchH[2]));
 
-            const entradaStr = `${String(Math.floor(entradaMin/60)).padStart(2, '0')}:${String(entradaMin%60).padStart(2, '0')}`;
-            const salidaStr = `${String(Math.floor(salidaMin/60)).padStart(2, '0')}:${String(salidaMin%60).padStart(2, '0')}`;
+        if (hVal.length >= 2) {
+            const entS = minToStr(Math.min(...hVal));
+            const salS = minToStr(Math.max(...hVal));
             
-            const tipoD = getTipoDia(fechaFormatHTML, false).tipo;
-            
-            if (tipoD === 'normal' && entradaMin >= 420 && salidaMin <= 1050) {
-                continue; 
+            // ANALISIS DE PUENTE (Ing. Alask)
+            const dObj = new Date(aP, mP - 1, dP);
+            const dow = dObj.getDay();
+            let sugPuente = false;
+
+            // Feriado Jueves -> Puente Viernes
+            if(dow === 5) {
+                const ayer = new Date(dObj); ayer.setDate(dObj.getDate()-1);
+                if(FERIADOS_EC.includes(ayer.toISOString().split('T')[0])) sugPuente = true;
             }
-            
-            agregarDiaExtracted(fechaFormatHTML, entradaStr, salidaStr);
-            diasEncontrados++;
+            // Feriado Martes -> Puente Lunes
+            if(dow === 1) {
+                const mañana = new Date(dObj); mañana.setDate(dObj.getDate()+1);
+                if(FERIADOS_EC.includes(mañana.toISOString().split('T')[0])) sugPuente = true;
+            }
+
+            agregarDiaExtracted(fechaStr, entS, salS, sugPuente);
         }
     }
-
-    if (diasEncontrados === 0) {
-        alert("El PDF se leyó y los datos se autollenaron, pero no se agregaron días en la lista porque todos fueron filtrados (no superan el horario normal de salida).");
-        agregarDia(); 
-    } else {
-        recalcularTodos();
-    }
+    recalcularTodos();
 }
 
-function agregarDiaExtracted(fecha, entrada, salida) {
-    agregarDia(); 
+function minToStr(m) { return `${String(Math.floor(m/60)).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`; }
+
+function agregarDiaExtracted(f, e, s, sug) {
+    agregarDia();
     const id = diaCount;
-    document.getElementById(`fecha-${id}`).value = fecha;
-    document.getElementById(`entrada-${id}`).value = entrada;
-    document.getElementById(`salida-${id}`).value = salida;
+    document.getElementById(`fecha-${id}`).value = f;
+    document.getElementById(`entrada-${id}`).value = e;
+    document.getElementById(`salida-${id}`).value = s;
+    if(sug) puentesDetectados[id] = true;
 }
-// ─── FIN MOTOR PDF ───
 
 function toMin(t){ if(!t) return 0; const[h,m]=t.split(':').map(Number); return h*60+m; }
 function minToHM(min){ if(min<=0) return '0h 00m'; return `${Math.floor(min/60)}h ${String(min%60).padStart(2,'0')}m`; }
-function formatoTotal(min){ return `${Math.floor(min/60)}h${String(min%60).padStart(2,'0')}`; }
-function formatoDoc(min){ if(min<=0) return ''; return `${String(Math.floor(min/60)).padStart(2,'0')}:${String(min%60).padStart(2,'0')}`; }
-function formatoTotalWord(min){ if(min<=0) return ''; return `${Math.floor(min/60)}h${String(min%60).padStart(2,'0')}`; }
 
-function getTipoDia(fechaStr, esFeriadoManual) {
+function getTipoDia(fechaStr, manual) {
     if (!fechaStr) return { tipo: 'normal', label: 'Día Normal', badge: 'normal' };
-    
-    const partes = fechaStr.split('-');
-    const dow = new Date(partes[0], partes[1] - 1, partes[2]).getDay();
-    const esFeriadoAuto = FERIADOS_EC.includes(fechaStr);
-
-    if (esFeriadoManual || esFeriadoAuto) return { tipo: 'feriado',  label: '🗓 Feriado Nacional', badge: 'feriado' };
-    if (dow === 6)                         return { tipo: 'sabado',   label: '📅 Sábado',          badge: 'sabado'  };
-    if (dow === 0)                         return { tipo: 'domingo',  label: '📅 Domingo',         badge: 'domingo' };
-    return                                        { tipo: 'normal',   label: `${DIAS_ES[dow]}`,    badge: 'normal'  };
-}
-
-function esExtraordinario(tipoDia) {
-    return tipoDia === 'sabado' || tipoDia === 'domingo' || tipoDia === 'feriado';
+    const p = fechaStr.split('-');
+    const dow = new Date(p[0], p[1]-1, p[2]).getDay();
+    const esF = FERIADOS_EC.includes(fechaStr);
+    if (manual || esF) return { tipo: 'feriado', label: '🗓 Feriado Nacional', badge: 'feriado' };
+    if (dow === 6) return { tipo: 'sabado', label: '📅 Sábado', badge: 'sabado' };
+    if (dow === 0) return { tipo: 'domingo', label: '📅 Domingo', badge: 'domingo' };
+    return { tipo: 'normal', label: DIAS_ES[dow], badge: 'normal' };
 }
 
 function calcularExtras(id) {
-    const fechaStr  = document.getElementById(`fecha-${id}`)?.value || '';
-    const entrada   = document.getElementById(`entrada-${id}`)?.value || '';
-    const salida    = document.getElementById(`salida-${id}`)?.value || '';
-    const jornadaFin   = toMin(document.getElementById('jornada_fin').value);
-    const jornadaIni   = toMin(document.getElementById('jornada_inicio').value);
+    const f = document.getElementById(`fecha-${id}`)?.value || '';
+    const ent = toMin(document.getElementById(`entrada-${id}`)?.value || '');
+    const sal = toMin(document.getElementById(`salida-${id}`)?.value || '');
+    const jFin = toMin(document.getElementById('jornada_fin').value);
+    const jIni = toMin(document.getElementById('jornada_inicio').value);
 
-    const esFeriadoManual = !!feriados[id];
-    const tipoDia = getTipoDia(fechaStr, esFeriadoManual);
+    const tipoD = getTipoDia(f, feriadosManuales[id]);
+    const badge = document.getElementById(`badge-${id}`);
+    const card = document.getElementById(`dia-${id}`);
+    const btnF = document.getElementById(`btn-feriado-${id}`);
 
-    const badgeEl = document.getElementById(`badge-${id}`);
-    const card    = document.getElementById(`dia-${id}`);
-    if (badgeEl) {
-        badgeEl.className = `badge-tipo badge-${tipoDia.badge}`;
-        badgeEl.textContent = tipoDia.label;
-    }
-    if (card) {
-        card.className = `dia-card tipo-${tipoDia.badge}`;
-    }
+    if (badge) { badge.className = `badge-tipo badge-${tipoD.badge}`; badge.textContent = tipoD.label; }
+    if (card) { card.className = `dia-card tipo-${tipoD.badge} ${puentesDetectados[id] && !feriadosManuales[id] ? 'tipo-puente' : ''}`; }
 
-    const btnFeriado = document.getElementById(`btn-feriado-${id}`);
-    if (btnFeriado) {
-        if (FERIADOS_EC.includes(fechaStr)) {
-            btnFeriado.textContent = '⚑ Feriado Oficial';
-            btnFeriado.className = 'toggle-feriado activo';
-            btnFeriado.disabled = true;
+    if (btnF) {
+        if (FERIADOS_EC.includes(f)) {
+            btnF.textContent = '⚑ Feriado Oficial'; btnF.className = 'toggle-feriado activo'; btnF.disabled = true;
         } else {
-            btnFeriado.disabled = false;
-            btnFeriado.textContent = feriados[id] ? '⚑ Feriado ✓' : '⚐ Forzar Feriado';
-            btnFeriado.className = feriados[id] ? 'toggle-feriado activo' : 'toggle-feriado';
+            btnF.disabled = false;
+            if(feriadosManuales[id]) { btnF.textContent = '⚑ Feriado ✓'; btnF.className = 'toggle-feriado activo'; }
+            else if(puentesDetectados[id]) { btnF.textContent = '⚠️ Posible Puente'; btnF.className = 'toggle-feriado puente-detectado'; }
+            else { btnF.textContent = '⚐ Forzar Feriado'; btnF.className = 'toggle-feriado'; }
         }
     }
 
-    const resEl = document.getElementById(`res-${id}`);
-    if (!salida) {
-        resEl.className = 'resultado-tiempo cero';
-        resEl.textContent = '— ingresa salida';
-        recalcularTotales();
-        return;
-    }
+    const res = document.getElementById(`res-${id}`);
+    if (!sal) { res.className = 'resultado-tiempo cero'; res.textContent = '— ingresa salida'; recalcularTotales(); return; }
 
-    const salidaMin  = toMin(salida);
-    const entradaMin = toMin(entrada);
-    let extraMin = 0;
-
-    if (esExtraordinario(tipoDia.tipo)) {
-        extraMin = entradaMin > 0 ? salidaMin - entradaMin : salidaMin - jornadaIni;
-        if (extraMin <= 0) extraMin = 0;
-        resEl.className = 'resultado-tiempo ext';
-        resEl.textContent = extraMin > 0
-            ? `Extraordinarias (100%): ${minToHM(extraMin)}`
-            : '— sin horas registradas';
+    let extra = 0;
+    if (tipoD.tipo !== 'normal') {
+        extra = ent > 0 ? sal - ent : sal - jIni;
+        res.className = 'resultado-tiempo ext';
+        res.textContent = extra > 0 ? `Extraordinarias (100%): ${minToHM(extra)}` : '— sin horas';
     } else {
-        extraMin = salidaMin - jornadaFin;
-        if (extraMin <= 0) {
-            resEl.className = 'resultado-tiempo negativo';
-            resEl.textContent = `Sin extras (salida ${salida})`;
-        } else {
-            resEl.className = 'resultado-tiempo sup';
-            resEl.textContent = `Suplementarias (50%): ${minToHM(extraMin)}`;
-        }
+        extra = sal - jFin;
+        if (extra <= 0) { res.className = 'resultado-tiempo negativo'; res.textContent = `Sin extras`; }
+        else { res.className = 'resultado-tiempo sup'; res.textContent = `Suplementarias (50%): ${minToHM(extra)}`; }
     }
-
     recalcularTotales();
 }
 
-function toggleFeriado(id) {
-    feriados[id] = !feriados[id];
-    calcularExtras(id);
-}
-
-function recalcularTodos() {
-    document.querySelectorAll('.dia-card').forEach(card => {
-        const id = card.id.replace('dia-','');
-        calcularExtras(id);
-    });
-}
+function toggleFeriado(id) { feriadosManuales[id] = !feriadosManuales[id]; calcularExtras(id); }
+function recalcularTodos() { document.querySelectorAll('.dia-card').forEach(c => calcularExtras(c.id.replace('dia-',''))); }
 
 function recalcularTotales() {
-    const jornadaFin = toMin(document.getElementById('jornada_fin').value);
-    const jornadaIni = toMin(document.getElementById('jornada_inicio').value);
-    let totalSup = 0, totalExt = 0;
+    let s=0, e=0;
+    const jFin = toMin(document.getElementById('jornada_fin').value);
+    const jIni = toMin(document.getElementById('jornada_inicio').value);
 
-    document.querySelectorAll('.dia-card').forEach(card => {
-        const id      = card.id.replace('dia-','');
-        const salida  = document.getElementById(`salida-${id}`)?.value || '';
-        const entrada = document.getElementById(`entrada-${id}`)?.value || '';
-        const fechaStr= document.getElementById(`fecha-${id}`)?.value || '';
-        if (!salida) return;
-
-        const tipoDia = getTipoDia(fechaStr, !!feriados[id]);
-        const salidaMin  = toMin(salida);
-        const entradaMin = toMin(entrada);
-
-        if (esExtraordinario(tipoDia.tipo)) {
-            const hrs = entradaMin > 0 ? salidaMin - entradaMin : salidaMin - jornadaIni;
-            if (hrs > 0) totalExt += hrs;
-        } else {
-            const hrs = salidaMin - jornadaFin;
-            if (hrs > 0) totalSup += hrs;
-        }
+    document.querySelectorAll('.dia-card').forEach(c => {
+        const id = c.id.replace('dia-','');
+        const f = document.getElementById(`fecha-${id}`).value;
+        const ent = toMin(document.getElementById(`entrada-${id}`).value);
+        const sal = toMin(document.getElementById(`salida-${id}`).value);
+        if(!sal) return;
+        const tipoD = getTipoDia(f, feriadosManuales[id]);
+        if(tipoD.tipo !== 'normal') e += Math.max(0, ent > 0 ? sal - ent : sal - jIni);
+        else s += Math.max(0, sal - jFin);
     });
-
-    document.getElementById('tot-sup').textContent   = minToHM(totalSup);
-    document.getElementById('tot-ext').textContent   = minToHM(totalExt);
-    document.getElementById('tot-total').textContent = minToHM(totalSup + totalExt);
+    document.getElementById('tot-sup').textContent = minToHM(s);
+    document.getElementById('tot-ext').textContent = minToHM(e);
+    document.getElementById('tot-total').textContent = minToHM(s+e);
 }
 
 function agregarDia() {
-    diaCount++;
-    const id = diaCount;
-    feriados[id] = false;
+    diaCount++; const id = diaCount;
     const div = document.createElement('div');
-    div.className = 'dia-card tipo-normal';
-    div.id = `dia-${id}`;
+    div.className = 'dia-card tipo-normal'; div.id = `dia-${id}`;
     div.innerHTML = `
         <div class="dia-header">
-            <div>
-                <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--gray);margin-bottom:4px;">Fecha</div>
-                <input type="date" id="fecha-${id}" onchange="calcularExtras(${id})">
-            </div>
-
+            <div><input type="date" id="fecha-${id}" onchange="calcularExtras(${id})"></div>
             <span class="badge-tipo badge-normal" id="badge-${id}">Día Normal</span>
-
-            <button class="toggle-feriado" id="btn-feriado-${id}" onclick="toggleFeriado(${id})">
-                ⚐ Forzar Feriado
-            </button>
-
+            <button class="toggle-feriado" id="btn-feriado-${id}" onclick="toggleFeriado(${id})">⚐ Forzar Feriado</button>
             <div class="tiempo-group">
-                <div>
-                    <label>Hora entrada</label>
-                    <input type="time" id="entrada-${id}" value="08:00" onchange="calcularExtras(${id})">
-                </div>
-                <div>
-                    <label>Hora salida</label>
-                    <input type="time" id="salida-${id}" onchange="calcularExtras(${id})">
-                </div>
-                <div id="res-${id}" class="resultado-tiempo cero">— ingresa salida</div>
+                <div><label>Entrada</label><input type="time" id="entrada-${id}" value="08:00" onchange="calcularExtras(${id})"></div>
+                <div><label>Salida</label><input type="time" id="salida-${id}" onchange="calcularExtras(${id})"></div>
+                <div id="res-${id}" class="resultado-tiempo cero">—</div>
             </div>
-
             <button class="btn-del" onclick="eliminarDia(${id})">✕</button>
         </div>
-        <div class="dia-body">
-            <label>Actividades realizadas</label>
-            <textarea id="act-${id}" placeholder="Ej: Trabajos en el edificio..."></textarea>
-        </div>
+        <div class="dia-body"><textarea id="act-${id}" placeholder="Actividades realizadas..."></textarea></div>
     `;
     document.getElementById('lista-dias').appendChild(div);
 }
 
-function eliminarDia(id) {
-    document.getElementById(`dia-${id}`)?.remove();
-    delete feriados[id];
-    recalcularTotales();
-}
-
-function getDias() {
-    const jornadaFin = toMin(document.getElementById('jornada_fin').value);
-    const jornadaIni = toMin(document.getElementById('jornada_inicio').value);
-    const dias = [];
-    document.querySelectorAll('.dia-card').forEach(card => {
-        const id      = card.id.replace('dia-','');
-        const fecha   = document.getElementById(`fecha-${id}`)?.value || '';
-        const entrada = document.getElementById(`entrada-${id}`)?.value || '';
-        const salida  = document.getElementById(`salida-${id}`)?.value || '';
-        const act     = document.getElementById(`act-${id}`)?.value.trim() || '';
-        if (!fecha && !act) return;
-
-        const tipoDia    = getTipoDia(fecha, !!feriados[id]);
-        const salidaMin  = toMin(salida);
-        const entradaMin = toMin(entrada);
-        let supMin = 0, extMin = 0;
-
-        if (salida) {
-            if (esExtraordinario(tipoDia.tipo)) {
-                extMin = Math.max(0, entradaMin > 0 ? salidaMin - entradaMin : salidaMin - jornadaIni);
-            } else {
-                supMin = Math.max(0, salidaMin - jornadaFin);
-            }
-        }
-        dias.push({ fecha, entrada, salida, act, tipoDia, supMin, extMin });
-    });
-    return dias;
-}
-
-function formatFechaDoc(iso) {
-    if (!iso) return '—';
-    const [y,m,d] = iso.split('-');
-    return `${d}/${m}/${y}`;
-}
+function eliminarDia(id) { document.getElementById(`dia-${id}`)?.remove(); delete feriadosManuales[id]; recalcularTotales(); }
 
 function generarInforme() {
-    const para      = document.getElementById('para_nombre').value.trim() || "_________";
-    const paraCargo = document.getElementById('para_cargo').value.trim() || "_________";
-    const de        = document.getElementById('de_nombre').value.trim() || "_________";
-    const deCedula  = document.getElementById('de_cedula').value.trim() || ".........................";
-    const deCargo   = document.getElementById('de_cargo').value.trim() || "_________";
-    const dir       = document.getElementById('direccion').value.trim() || "_________";
-    const mes       = document.getElementById('mes').value;
-    const anio      = document.getElementById('anio').value;
-    const fecha     = document.getElementById('fecha_informe').value.trim() || "_________";
-    const revisor   = document.getElementById('revisor_nombre').value.trim() || "_________";
-    const revCargo  = document.getElementById('revisor_cargo').value.trim() || "_________";
-    const dias      = getDias();
+    const para = document.getElementById('para_nombre').value.trim() || "_________";
+    const paraC = document.getElementById('para_cargo').value.trim() || "_________";
+    const de = document.getElementById('de_nombre').value.trim() || "_________";
+    const ci = document.getElementById('de_cedula').value.trim() || "_________";
+    const cargo = document.getElementById('de_cargo').value.trim() || "_________";
+    const dir = document.getElementById('direccion').value.trim() || "_________";
+    const mes = document.getElementById('mes').value;
+    const anio = document.getElementById('anio').value;
+    const fechaI = document.getElementById('fecha_informe').value.trim();
+    const rev = document.getElementById('revisor_nombre').value.trim() || "_________";
+    const revC = document.getElementById('revisor_cargo').value.trim() || "_________";
 
-    if(dias.length === 0) {
-        alert("Agrega al menos un día de trabajo.");
-        return;
-    }
-
-    let totalSupMin = 0, totalExtMin = 0;
+    const jFin = toMin(document.getElementById('jornada_fin').value);
+    const jIni = toMin(document.getElementById('jornada_inicio').value);
     
-    let membreteHtml = "";
-    if (membreteBase64) {
-        membreteHtml = `<div style="text-align: center; margin-bottom: 20px;"><img src="${membreteBase64}" style="max-width: 100%; max-height: 150px;"></div>`;
-    }
-
-    // INGENIERO ALASK: SE INYECTA FONT-FAMILY ARIAL A NIVEL GLOBAL EN CADA ETIQUETA PARA DOBLEGAR A WORD
-    let html = `
-    <div style="font-family: Arial, sans-serif; font-size: 11pt; color: #000; line-height: 1.5; text-align: left;">
-        ${membreteHtml}
-        <p style="text-align: center; font-weight: bold; margin-bottom: 20px; font-size: 12pt; font-family: Arial, sans-serif;">INFORME DE HORAS SUPLEMENTARIAS Y EXTRAORDINARIAS (CÓDIGO DE TRABAJO)</p>
-        
-        <table style="width: 100%; border: none; margin-bottom: 15px; font-size: 11pt; font-family: Arial, sans-serif;">
-            <tr><td style="width: 15%; font-weight: bold; vertical-align: top; font-family: Arial, sans-serif;">PARA:</td><td style="vertical-align: top; font-family: Arial, sans-serif;">${para}<br>${paraCargo}</td></tr>
-            <tr><td style="width: 15%; font-weight: bold; vertical-align: top; padding-top: 10px; font-family: Arial, sans-serif;">DE:</td><td style="vertical-align: top; padding-top: 10px; font-family: Arial, sans-serif;">${de}<br>${deCargo}</td></tr>
-            <tr><td style="width: 15%; font-weight: bold; vertical-align: top; padding-top: 10px; font-family: Arial, sans-serif;">DIRECCIÓN:</td><td style="vertical-align: top; padding-top: 10px; font-family: Arial, sans-serif;">${dir}</td></tr>
-            <tr><td style="width: 15%; font-weight: bold; vertical-align: top; padding-top: 10px; font-family: Arial, sans-serif;">ASUNTO:</td><td style="vertical-align: top; padding-top: 10px; font-family: Arial, sans-serif;">Informe para autorización de pago de horas extras Suplementarias y Extraordinarias.</td></tr>
-            <tr><td style="width: 15%; font-weight: bold; vertical-align: top; padding-top: 10px; font-family: Arial, sans-serif;">LUGAR Y FECHA:</td><td style="vertical-align: top; padding-top: 10px; font-family: Arial, sans-serif;">${fecha}</td></tr>
-        </table>
-        
-        <p style="text-align: justify; margin-bottom: 10px; line-height: 1.5; font-family: Arial, sans-serif;">En atención a lo determinado en el Art. 55 del Código de Trabajo “Remuneración por horas suplementarias y extraordinarias. - Por convenio escrito entre las partes, la jornada de trabajo podrá exceder del límite fijado en los artículos 47 y 49 de este Código, siempre que se proceda con autorización del Inspector de Trabajo y se observen las siguientes prescripciones”.</p>
-        
-        <p style="text-align: justify; margin-bottom: 20px; line-height: 1.5; font-family: Arial, sans-serif;">Es por ello que a continuación se detallan las actividades realizadas en el tiempo suplementario y extraordinario durante el mes de ${mes} del ${anio} para su respectiva aprobación:</p>
-        
-        <table border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse; text-align: center; font-size: 10pt; margin-bottom: 5px; border: 1px solid black; font-family: Arial, sans-serif;">
-            <thead>
-                <tr>
-                    <th style="width: 15%; font-weight: bold; padding: 5px; border: 1px solid black; font-family: Arial, sans-serif;">FECHA</th>
-                    <th style="width: 45%; font-weight: bold; padding: 5px; border: 1px solid black; font-family: Arial, sans-serif;">ACTIVIDADES REALIZADAS</th>
-                    <th style="width: 20%; font-weight: bold; padding: 5px; border: 1px solid black; font-family: Arial, sans-serif;">TOTAL HORAS<br>SUPLEMENTARIAS</th>
-                    <th style="width: 20%; font-weight: bold; padding: 5px; border: 1px solid black; font-family: Arial, sans-serif;">TOTAL HORAS<br>EXTRAORDINARIAS</th>
-                </tr>
-            </thead>
-            <tbody>
-    `;
-
-    dias.forEach(d => {
-        const fStr   = formatFechaDoc(d.fecha);
-        const supStr = formatoDoc(d.supMin);
-        const extStr = formatoDoc(d.extMin);
-        
-        totalSupMin += d.supMin;
-        totalExtMin += d.extMin;
-        
-        const actHtml = d.act ? d.act.replace(/\n/g, '<br>') : '';
-
-        html += `
-                <tr>
-                    <td style="vertical-align: top; padding: 5px; border: 1px solid black; font-weight: bold; font-family: Arial, sans-serif;">${fStr}</td>
-                    <td style="text-align: justify; vertical-align: top; padding: 5px; border: 1px solid black; font-family: Arial, sans-serif;">${actHtml}</td>
-                    <td style="vertical-align: top; padding: 5px; border: 1px solid black; font-family: Arial, sans-serif;">${supStr}</td>
-                    <td style="vertical-align: top; padding: 5px; border: 1px solid black; font-family: Arial, sans-serif;">${extStr}</td>
-                </tr>
-        `;
+    let rows = "", tS=0, tE=0;
+    document.querySelectorAll('.dia-card').forEach(c => {
+        const id = c.id.replace('dia-','');
+        const f = document.getElementById(`fecha-${id}`).value;
+        const ent = toMin(document.getElementById(`entrada-${id}`).value);
+        const sal = toMin(document.getElementById(`salida-${id}`).value);
+        const act = document.getElementById(`act-${id}`).value.replace(/\n/g, '<br>');
+        if(!f) return;
+        const tipoD = getTipoDia(f, feriadosManuales[id]);
+        let sM=0, eM=0;
+        if(tipoD.tipo !== 'normal') eM = Math.max(0, ent > 0 ? sal - ent : sal - jIni);
+        else sM = Math.max(0, sal - jFin);
+        tS += sM; tE += eM;
+        rows += `<tr>
+            <td style="border:1px solid black; padding:5px; font-weight:bold;">${f.split('-').reverse().join('/')}</td>
+            <td style="border:1px solid black; padding:5px; text-align:justify;">${act}</td>
+            <td style="border:1px solid black; padding:5px;">${sM > 0 ? minToStr(sM) : ''}</td>
+            <td style="border:1px solid black; padding:5px;">${eM > 0 ? minToStr(eM) : ''}</td>
+        </tr>`;
     });
 
-    const totalFinal = totalSupMin + totalExtMin;
-
-    html += `
-            </tbody>
+    let html = `
+    <div style="font-family: Arial; font-size: 11pt; color: #000; text-align: left;">
+        ${membreteBase64 ? `<center><img src="${membreteBase64}" style="max-height:100px; margin-bottom:10px;"></center>` : ''}
+        <p style="text-align: center; font-weight: bold; font-size: 12pt;">INFORME DE HORAS SUPLEMENTARIAS Y EXTRAORDINARIAS</p>
+        <p><strong>PARA:</strong> ${para}<br>${paraC}</p>
+        <p><strong>DE:</strong> ${de}<br>${cargo}</p>
+        <p><strong>DIRECCIÓN:</strong> ${dir}</p>
+        <p><strong>FECHA:</strong> ${fechaI}</p>
+        <p style="text-align: justify;">A continuación se detallan las actividades del mes de ${mes} del ${anio}:</p>
+        <table border="1" style="width: 100%; border-collapse: collapse; text-align: center; font-size: 10pt;">
+            <tr style="background:#eee;"><th>FECHA</th><th>ACTIVIDADES</th><th>SUPLE. (50%)</th><th>EXTRA. (100%)</th></tr>
+            ${rows}
         </table>
-        
-        <div style="text-align: right; width: 100%; margin-bottom: 40px; font-weight: bold; font-size: 11pt; padding-right: 50px; font-family: Arial, sans-serif;">
-            TOTAL &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${formatoTotalWord(totalFinal)}
-        </div>
-        
-        <table style="width: 100%; border: none; text-align: center; margin-top: 50px; font-size: 11pt; font-family: Arial, sans-serif;">
+        <p style="text-align: right; font-weight: bold;">TOTAL GENERAL: ${minToStr(tS+tE)}</p>
+        <table style="width: 100%; margin-top: 40px;">
             <tr>
-                <td style="width: 50%; padding-bottom: 20px; border: none; text-align: left; padding-left: 20px; font-family: Arial, sans-serif;">Realizado por;<br><br><br><br>_____________________________<br>FIRMA DEL SERVIDOR<br>${de}<br>C.I. ${deCedula}</td>
-                <td style="width: 50%; padding-bottom: 20px; border: none; text-align: left; padding-left: 20px; font-family: Arial, sans-serif;">Revisado por;<br><br><br><br>_____________________________<br>${revisor}<br>${revCargo}</td>
-            </tr>
-            <tr>
-                <td colspan="2" style="padding-top: 40px; border: none; text-align: left; padding-left: 20px; font-family: Arial, sans-serif;">Autorizado por;<br><br><br><br>_____________________________<br>FIRMA JEFE INMEDIATO<br>${para}<br>${paraCargo}</td>
+                <td style="width:50%;">Realizado por:<br><br><br>___________________<br>${de}<br>C.I. ${ci}</td>
+                <td style="width:50%;">Revisado por:<br><br><br>___________________<br>${rev}<br>${revC}</td>
             </tr>
         </table>
-    </div>
-    `;
-
+    </div>`;
     document.getElementById('preview-text').innerHTML = html;
 }
 
 function descargarWord() {
     const content = document.getElementById('preview-text').innerHTML;
-    
-    if (!content || content.includes('Completa los días')) {
-        alert('Primero debes generar la tabla de vista previa.');
-        return;
-    }
-    
-    // INGENIERO ALASK: INYECCIÓN GLOBAL DE CSS PARA OBLIGAR A WORD A USAR ARIAL
-    const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' " +
-            "xmlns:w='urn:schemas-microsoft-com:office:word' " +
-            "xmlns='http://www.w3.org/TR/REC-html40'>" +
-            "<head><meta charset='utf-8'><title>Informe de Horas Extras</title>" +
-            "<style> body, table, td, th, p, span, div { font-family: Arial, sans-serif !important; } </style>" +
-            "</head><body>";
-    const footer = "</body></html>";
-    const sourceHTML = header + content + footer;
-    
-    const blob = new Blob(['\ufeff', sourceHTML], { type: 'application/msword' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'Informe_Horas_Extras_MDT.doc';
-    
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    if (content.includes('Completa los días')) return alert('Genera vista previa.');
+    const blob = new Blob(['\ufeff', `<html><head><meta charset='utf-8'><style>body,table,td{font-family:Arial !important;}</style></head><body>${content}</body></html>`], { type: 'application/msword' });
+    const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'Informe_MDT.doc'; link.click();
 }
 </script>
 </body>

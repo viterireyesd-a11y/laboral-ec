@@ -25,6 +25,9 @@
             --cv-accent: #3b82f6;        
             --btn-action: #10b981;       
             --cv-gray: #94a3b8; 
+            --gold: #d4a843;
+            --gold-edge: rgba(212,168,67,0.30);
+            --gold-lt: #f0c96a;
         }
         
         body { background-color: var(--bg-main); color: var(--text-main); font-family: 'Inter', sans-serif; line-height: 1.6; margin: 0; padding: 0;}
@@ -193,7 +196,7 @@
     <header>
         <div class="header-container" style="background: var(--card-bg); border-bottom: 1px solid var(--card-border); padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
             <div class="brand-wrapper" style="display:flex; align-items:center; justify-content:center; gap: 15px;">
-               <img src="escudo.svg.png" class="escudo-img" alt="Escudo Ecuador" style="height: 50px;">
+               <img src="escudo.svg.png" class="escudo-img" alt="Escudo Ecuador" style="height: 45px;">
                 <div class="brand-text">
                     <h1 style="margin:0; font-size:1.5rem; letter-spacing: 1px;">LABORALEC</h1>
                     <span style="font-size:0.8rem; color:var(--cv-accent); font-weight: 700; letter-spacing: 0.5px;">SISTEMA JURÍDICO INTEGRADO 2026</span>
@@ -409,7 +412,7 @@
                     <div class="card" style="border-color: #eab308; background: rgba(234, 179, 8, 0.05);">
                         <div class="card-header" style="border-bottom-color: #eab308;"><h3 style="color:#eab308;"><i class="fas fa-folder-open"></i> 9. Central de Plantillas (Word)</h3></div>
                         <div class="card-body">
-                            <p>Formatos listos para imprimir y presentar ante el Ministerio o la Empresa.</p>
+                            <p style="margin-bottom:16px; font-size:0.88rem;">Formatos listos para imprimir y presentar ante el Ministerio o la Empresa.</p>
                             
                             <a href="silencio_administrativo.docx" download style="background:#eab308; color:#0f172a; padding:10px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; text-decoration:none; box-sizing:border-box;">
                                 <span><i class="fas fa-file-word"></i> Oficio: Silencio Administrativo</span> <i class="fas fa-download"></i>
@@ -429,124 +432,135 @@
         </div>
 
         <div id="tab-calculadoras" class="tab-pane">
-            <div class="grid-calculadoras">
+            <div class="legal-universe">
+                <div class="hero-legal">
+                    <h1 style="font-size: 2.2rem; margin-bottom: 10px;">Calculadoras Laborales 2026</h1>
+                    <p style="color:var(--cv-gray); font-size: 1.1rem; max-width: 800px; margin: 0 auto;">Resultados basados en el Código del Trabajo ecuatoriano y el SBU vigente de $482.00.</p>
+                </div>
                 
-                <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-hand-holding-medical" style="color:#60a5fa"></i> Aportes IESS</h3></div>
-                    <div class="card-body">
-                        <div class="framed-text" style="padding: 15px; margin-bottom: 15px;">
-                            <div class="form-group"><label>Sueldo Nominal ($)</label><input type="number" id="iess_sueldo" value="482.00"></div>
-                            <div class="form-group" style="margin-bottom:0;">
-                                <label>Régimen</label>
-                                <select id="iess_tipo">
-                                    <option value="privado">Sector Privado (9.45%)</option>
-                                    <option value="publico">Sector Público (11.45%)</option>
-                                </select>
+                <div class="grid-calculadoras">
+                    
+                    <div class="card">
+                        <div class="card-header"><h3><i class="fas fa-hand-holding-medical" style="color:#60a5fa"></i> Aportes IESS</h3></div>
+                        <div class="card-body">
+                            <div class="framed-text" style="padding: 15px; margin-bottom: 15px;">
+                                <div class="form-group"><label>Sueldo Nominal ($)</label><input type="number" id="iess_sueldo" value="482.00"></div>
+                                <div class="form-group" style="margin-bottom:0;">
+                                    <label>Régimen</label>
+                                    <select id="iess_tipo">
+                                        <option value="privado">Sector Privado (9.45%)</option>
+                                        <option value="publico">Sector Público (11.45%)</option>
+                                    </select>
+                                </div>
                             </div>
+                            <button class="btn-calc" onclick="calculators.iess()" style="background:#3b82f6; color:white; padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);">CALCULAR</button>
+                            <div id="res_iess" class="result-panel"></div>
                         </div>
-                        <button class="btn btn-primary" onclick="calculators.iess()" style="padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold; background:#3b82f6; color:white; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);">CALCULAR</button>
-                        <div id="res_iess" class="result-panel"></div>
                     </div>
-                </div>
 
-                <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-door-open" style="color:#ef4444"></i> Liquidación Final</h3></div>
-                    <div class="card-body">
-                        <div class="framed-text" style="padding: 15px; margin-bottom: 15px;">
-                            <div class="form-group"><label>Remuneración ($)</label><input type="number" id="liq_sueldo"></div>
-                            <div class="form-group"><label>Años de Servicio</label><input type="number" id="liq_anios"></div>
-                            <div class="form-group" style="margin-bottom:0;">
-                                <label>Causal</label>
-                                <select id="liq_causa">
-                                    <option value="intempestivo">Despido Intempestivo</option>
-                                    <option value="renuncia">Renuncia / Desahucio</option>
-                                </select>
+                    <div class="card">
+                        <div class="card-header"><h3><i class="fas fa-door-open" style="color:#ef4444"></i> Liquidación Final</h3></div>
+                        <div class="card-body">
+                            <div class="framed-text" style="padding: 15px; margin-bottom: 15px;">
+                                <div class="form-group"><label>Remuneración ($)</label><input type="number" id="liq_sueldo"></div>
+                                <div class="form-group"><label>Años de Servicio</label><input type="number" id="liq_anios"></div>
+                                <div class="form-group" style="margin-bottom:0;">
+                                    <label>Causal</label>
+                                    <select id="liq_causa">
+                                        <option value="intempestivo">Despido Intempestivo</option>
+                                        <option value="renuncia">Renuncia / Desahucio</option>
+                                    </select>
+                                </div>
                             </div>
+                            <button class="btn-action" onclick="calculators.liquidacion()" style="background:#10b981; color:white; padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);">SIMULAR</button>
+                            <div id="res_liq" class="result-panel"></div>
                         </div>
-                        <button class="btn btn-action" onclick="calculators.liquidacion()" style="background:#10b981; color:white; padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);">SIMULAR</button>
-                        <div id="res_liq" class="result-panel"></div>
                     </div>
-                </div>
 
-                <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-clock" style="color:#f59e0b"></i> Horas Extras</h3></div>
-                    <div class="card-body">
-                        <div class="framed-text" style="padding: 15px; margin-bottom: 15px;">
-                            <div class="form-group"><label>Sueldo ($)</label><input type="number" id="he_sueldo"></div>
-                            <div class="grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:0;">
-                                <div class="form-group" style="margin-bottom:0;"><label>Horas 50%</label><input type="number" id="he_50"></div>
-                                <div class="form-group" style="margin-bottom:0;"><label>Horas 100%</label><input type="number" id="he_100"></div>
+                    <div class="card">
+                        <div class="card-header"><h3><i class="fas fa-clock" style="color:#f59e0b"></i> Horas Extras</h3></div>
+                        <div class="card-body">
+                            <div class="framed-text" style="padding: 15px; margin-bottom: 15px;">
+                                <div class="form-group"><label>Sueldo ($)</label><input type="number" id="he_sueldo"></div>
+                                <div class="grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:0;">
+                                    <div class="form-group" style="margin-bottom:0;"><label>Horas 50%</label><input type="number" id="he_50"></div>
+                                    <div class="form-group" style="margin-bottom:0;"><label>Horas 100%</label><input type="number" id="he_100"></div>
+                                </div>
                             </div>
+                            <button class="btn-calc" onclick="calculators.extras()" style="background:#3b82f6; color:white; padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);">CALCULAR VALORES</button>
+                            <div id="res_he" class="result-panel"></div>
+                            
+                            <a href="informe-horas.html" target="_blank" style="display:block; text-align:center; background: rgba(212,168,67,0.1); border: 1px solid var(--gold-edge); color: var(--gold); margin-top: 15px; padding: 12px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: all 0.2s;">
+                                <i class="fas fa-file-alt" style="color:var(--gold);"></i> Redactar Informe MDT
+                            </a>
                         </div>
-                        <button class="btn btn-primary" onclick="calculators.extras()" style="padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold; background:#3b82f6; color:white; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);">CALCULAR</button>
-                        <div id="res_he" class="result-panel"></div>
                     </div>
-                </div>
 
-                <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-coins" style="color:#10b981"></i> Décimos</h3></div>
-                    <div class="card-body">
-                        <div class="framed-text" style="padding: 15px; margin-bottom: 15px;">
-                            <div class="form-group"><label>Sueldo ($)</label><input type="number" id="dec_sueldo"></div>
-                            <div class="form-group" style="margin-bottom:0;"><label>Meses</label><input type="number" id="dec_meses" value="12"></div>
-                        </div>
-                        <button class="btn btn-action" onclick="calculators.decimos()" style="background:#10b981; color:white; padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);">CALCULAR</button>
-                        <div id="res_dec" class="result-panel"></div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-blind" style="color:#8b5cf6"></i> Jubilación Patronal</h3></div>
-                    <div class="card-body">
-                        <div class="framed-text" style="padding: 15px; margin-bottom: 15px;">
-                            <div class="form-group"><label>Promedio 5 años ($)</label><input type="number" id="jub_prom"></div>
-                            <div class="form-group"><label>Años Servicio</label><input type="number" id="jub_anios"></div>
-                            <div class="form-group" style="margin-bottom:0;"><label>Edad Actual</label><input type="number" id="jub_edad"></div>
-                        </div>
-                        <button class="btn btn-primary" onclick="calculators.jubilacion()" style="padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold; background:#3b82f6; color:white; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);">CALCULAR</button>
-                        <div id="res_jub" class="result-panel"></div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-landmark" style="color:#3b82f6"></i> LOSEP</h3></div>
-                    <div class="card-body">
-                        <div class="framed-text" style="padding: 15px; margin-bottom: 15px;">
-                            <div class="form-group"><label>RMU Actual ($)</label><input type="number" id="losep_rmu"></div>
-                            <div class="form-group" style="margin-bottom:0;"><label>Años Servicio</label><input type="number" id="losep_anios"></div>
-                        </div>
-                        <button class="btn btn-action" onclick="calculators.losep()" style="background:#10b981; color:white; padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);">SIMULAR</button>
-                        <div id="res_losep" class="result-panel"></div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h3 style="color:#d946ef;"><i class="fas fa-hand-holding-heart"></i> Beneficio Social</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="framed-text" style="padding: 15px; margin-bottom: 15px;">
-                            <div class="grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                                <div class="form-group"><label>Sueldo/RMU ($)</label><input type="text" id="bs_rmu" placeholder="Ej: 800"></div>
-                                <div class="form-group"><label>SBU Actual ($)</label><input type="text" id="bs_sbu" value="482.00"></div>
+                    <div class="card">
+                        <div class="card-header"><h3><i class="fas fa-coins" style="color:#10b981"></i> Décimos</h3></div>
+                        <div class="card-body">
+                            <div class="framed-text" style="padding: 15px; margin-bottom: 15px;">
+                                <div class="form-group"><label>Sueldo ($)</label><input type="number" id="dec_sueldo"></div>
+                                <div class="form-group" style="margin-bottom:0;"><label>Meses</label><input type="number" id="dec_meses" value="12"></div>
                             </div>
-                            <div class="grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                                <div class="form-group"><label>Años Servicio</label><input type="number" id="bs_anios" placeholder="Ej: 5"></div>
-                                <div class="form-group"><label>N° de Hijos</label><input type="number" id="bs_hijos" placeholder="Ej: 2"></div>
-                            </div>
-                            <div class="form-group" style="margin-bottom:0;">
-                                <label>Días Laborados (Para Alimentación)</label>
-                                <input type="number" id="bs_dias_laborados" placeholder="Ej: 20">
-                            </div>
+                            <button class="btn-action" onclick="calculators.decimos()" style="background:#10b981; color:white; padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);">CALCULAR</button>
+                            <div id="res_dec" class="result-panel"></div>
                         </div>
-                        <p style="font-size:0.75rem; color:var(--cv-gray); margin-top:-5px; margin-bottom:15px; line-height:1.3; font-style: italic;">
-                            *Hijos hasta 18 años o con discapacidad. Aplica Art. 23 (1% SBU) y Art. 24 (0.25% RMU). Alimentación calculada a $4.50 por día laborado.
-                        </p>
-                        <button type="button" id="btnCalcBS" style="background:#d946ef; color:white; padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold; box-shadow: 0 4px 10px rgba(217, 70, 239, 0.3);">CALCULAR</button>
-                        <div id="contenedorResultadoBS" class="result-panel" style="border-color:#d946ef;"></div>
                     </div>
-                </div>
 
+                    <div class="card">
+                        <div class="card-header"><h3><i class="fas fa-blind" style="color:#8b5cf6"></i> Jubilación Patronal</h3></div>
+                        <div class="card-body">
+                            <div class="framed-text" style="padding: 15px; margin-bottom: 15px;">
+                                <div class="form-group"><label>Promedio 5 años ($)</label><input type="number" id="jub_prom"></div>
+                                <div class="form-group"><label>Años Servicio</label><input type="number" id="jub_anios"></div>
+                                <div class="form-group" style="margin-bottom:0;"><label>Edad Actual</label><input type="number" id="jub_edad"></div>
+                            </div>
+                            <button class="btn-calc" onclick="calculators.jubilacion()" style="background:#3b82f6; color:white; padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);">CALCULAR PENSIÓN</button>
+                            <div id="res_jub" class="result-panel"></div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header"><h3><i class="fas fa-landmark" style="color:#3b82f6"></i> LOSEP</h3></div>
+                        <div class="card-body">
+                            <div class="framed-text" style="padding: 15px; margin-bottom: 15px;">
+                                <div class="form-group"><label>RMU Actual ($)</label><input type="number" id="losep_rmu"></div>
+                                <div class="form-group" style="margin-bottom:0;"><label>Años Servicio</label><input type="number" id="losep_anios"></div>
+                            </div>
+                            <button class="btn-action" onclick="calculators.losep()" style="background:#10b981; color:white; padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);">SIMULAR</button>
+                            <div id="res_losep" class="result-panel"></div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="border-top:2px solid #d946ef; grid-column: 1 / -1;">
+                        <div class="card-header">
+                            <h3 style="color:#d946ef;"><i class="fas fa-hand-holding-heart"></i> Beneficio Social</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="framed-text" style="padding: 15px; margin-bottom: 15px;">
+                                <div class="grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                                    <div class="form-group"><label>Sueldo/RMU ($)</label><input type="text" id="bs_rmu" placeholder="Ej: 800"></div>
+                                    <div class="form-group"><label>SBU Actual ($)</label><input type="text" id="bs_sbu" value="482.00"></div>
+                                </div>
+                                <div class="grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                                    <div class="form-group"><label>Años Servicio</label><input type="number" id="bs_anios" placeholder="Ej: 5"></div>
+                                    <div class="form-group"><label>N° de Hijos</label><input type="number" id="bs_hijos" placeholder="Ej: 2"></div>
+                                </div>
+                                <div class="form-group" style="margin-bottom:0;">
+                                    <label>Días Laborados (Para Alimentación)</label>
+                                    <input type="number" id="bs_dias_laborados" placeholder="Ej: 20">
+                                </div>
+                            </div>
+                            <p style="font-size:0.75rem; color:var(--cv-gray); margin-top:-5px; margin-bottom:15px; line-height:1.3; font-style: italic;">
+                                *Hijos hasta 18 años o con discapacidad. Aplica Art. 23 (1% SBU) y Art. 24 (0.25% RMU). Alimentación calculada a $4.50 por día laborado.
+                            </p>
+                            <button type="button" id="btnCalcBS" style="background:#d946ef; color:white; padding:12px; width:100%; border:none; border-radius:6px; cursor:pointer; font-weight:bold; box-shadow: 0 4px 10px rgba(217, 70, 239, 0.3);">CALCULAR</button>
+                            <div id="contenedorResultadoBS" class="result-panel" style="border-color:#d946ef;"></div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
 
@@ -587,7 +601,7 @@
                 <div class="legal-grid">
                     
                     <details class="legal-item" open>
-                        <summary><span class="art-badge" style="background:#ef4444; font-weight:bold; letter-spacing:1px;">NUEVO</span> Acuerdo MDT-2026-046: El Fin de las 8 Horas</summary>
+                        <summary><span class="art-badge" style="background:rgba(239,68,68,0.15); color:#fca5a5; border-color:rgba(239,68,68,0.3);">NUEVO</span> Acuerdo MDT-2026-046: El Fin de las 8 Horas</summary>
                         <div class="legal-content">
                             <h3 style="margin-top: 0; color: var(--text-heading); border-bottom: 1px solid var(--card-border); padding-bottom: 10px;">Análisis de la Normativa: Jornadas de 10 y 12 horas sin horas extras</h3>
                             
@@ -612,7 +626,7 @@
                             <div class="framed-text">
                                 <h4 style="color:#60a5fa; margin-top:0;">3. El "Banco de Horas"</h4>
                                 <p>El artículo 9 legaliza la acumulación y compensación de horas según las altas y bajas de producción de la empresa, respetando las 40 horas semanales.</p>
-                                <div class="law-box" style="margin-bottom:0;">
+                                <div class="law-box" style="margin-bottom:0; border-left-color: var(--cv-accent);">
                                     <strong>El Candado Legal:</strong> Se requiere mutuo consentimiento y prohíbe la imposición unilateral, aunque en la relación de dependencia la línea de la voluntariedad suele ser muy fina.
                                 </div>
                             </div>
@@ -837,10 +851,13 @@
                 <div class="cv-builder-wrapper">
                     <div class="cv-editor">
                         <div class="cv-section-title">1. Fotografía</div>
-                        <div class="photo-upload-container" onclick="document.getElementById('photo-input').click()">
-                            <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color:#3b82f6; margin-bottom:10px;"></i>
-                            <p style="margin:0; font-weight:600; color:var(--text-main);">Clic para subir tu foto</p>
-                            <input type="file" id="photo-input" accept="image/*" style="display:none;" onchange="loadPhoto(event)">
+                        
+                        <div class="form-group" style="text-align: center; border: 1px dashed var(--rim); padding: 16px; border-radius: 8px; margin-bottom: 16px; background: rgba(59,130,246,0.05);">
+                            <label style="display:block; margin-bottom:10px; font-size:0.78rem; text-transform:uppercase; letter-spacing:1px; color: var(--cv-gray);">
+                                <i class="fas fa-camera" style="color:var(--cv-accent); font-size:1.5rem; display:block; margin-bottom:6px;"></i>
+                                Foto para Hoja de Vida
+                            </label>
+                            <input type="file" id="photo-input" accept="image/*" style="background:transparent !important; border:none !important; color:var(--text-main) !important; padding: 0 !important; cursor: pointer;" onchange="loadPhoto(event)">
                         </div>
 
                         <div class="cv-section-title">2. Datos Personales</div>
@@ -912,6 +929,7 @@
                                 <div class="cv-side-col">
                                     <div class="cv-section-head"><i class="fas fa-graduation-cap"></i> Educación</div>
                                     <div id="prev-edu-container"></div>
+                                    
                                     <div class="cv-section-head" style="margin-top: 25px;"><i class="fas fa-star"></i> Habilidades</div>
                                     <div id="prev-skills-container"></div>
                                 </div>
@@ -1164,7 +1182,7 @@
             });
         }
 
-        // --- 2. LÓGICA DE LAS CALCULADORAS ---
+        // --- 2. LÓGICA DE LAS CALCULADORAS (CON DESGLOSE POTENCIADO) ---
         const calculators = {
             iess: function() {
                 const sueldo = parseFloat(document.getElementById('iess_sueldo').value) || 0;
@@ -1186,20 +1204,48 @@
                     <strong style="color:var(--btn-action); font-size:1.1rem;">Total Estimado: $${(desahucio + intempestivo).toFixed(2)}</strong>
                 `);
             },
+            
+            // INGENIERO ALASK: CALCULADORA DE HORAS EXTRAS ACTUALIZADA
             extras: function() {
                 const sueldo = parseFloat(document.getElementById('he_sueldo').value) || 0;
                 const h50 = parseFloat(document.getElementById('he_50').value) || 0;
                 const h100 = parseFloat(document.getElementById('he_100').value) || 0;
-                const valorHora = sueldo / 240;
-                const pago50 = valorHora * 1.5 * h50;
-                const pago100 = valorHora * 2 * h100;
+                
+                if(sueldo <= 0) return;
+                
+                const vh = sueldo / 240;
+                const total50 = vh * 1.5 * h50;
+                const total100 = vh * 2 * h100;
+                const bruto = total50 + total100;
+                const iess = bruto * 0.0945;
+                const neto = bruto - iess;
+                
                 this.showResult('res_he', `
-                    Pago por ${h50} horas al 50%: $${pago50.toFixed(2)}<br>
-                    Pago por ${h100} horas al 100%: $${pago100.toFixed(2)}<br>
-                    <hr style="border-color:var(--card-border); margin:10px 0;">
-                    <strong style="color:var(--btn-action); font-size:1.1rem;">Total a Recibir: $${(pago50 + pago100).toFixed(2)}</strong>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:0.9rem;"><span>Valor Hora Normal:</span> <strong>$${vh.toFixed(2)}</strong></div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:0.9rem;"><span>Total Horas 50%:</span> <strong>$${total50.toFixed(2)}</strong></div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.9rem;"><span>Total Horas 100%:</span> <strong>$${total100.toFixed(2)}</strong></div>
+                    
+                    <hr style="border:none; border-top:1px solid var(--card-border); margin:10px 0;">
+                    
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.95rem;">
+                        <span>Total Bruto:</span> 
+                        <strong style="color:var(--gold);">$${bruto.toFixed(2)}</strong>
+                    </div>
+                    
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px; background: rgba(59,130,246,0.1); padding: 8px 10px; border-radius: 4px; border: 1px solid rgba(59,130,246,0.3); font-size:0.9rem;">
+                        <span style="display:flex; align-items:center; gap:8px;"><i class="fas fa-shield-alt" style="color:var(--cv-accent);"></i> Aporte IESS (9.45%):</span> 
+                        <strong style="color:#93b8ff;">-$${iess.toFixed(2)}</strong>
+                    </div>
+                    
+                    <hr style="border:none; border-top:1px solid var(--card-border); margin:10px 0;">
+                    
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-weight:600; color:var(--text-heading);">Total Neto a Recibir:</span> 
+                        <strong style="color:var(--btn-action); font-size:1.15rem;">$${neto.toFixed(2)}</strong>
+                    </div>
                 `);
             },
+            
             decimos: function() {
                 const sueldo = parseFloat(document.getElementById('dec_sueldo').value) || 0;
                 const meses = parseInt(document.getElementById('dec_meses').value) || 0;
@@ -1211,9 +1257,59 @@
                     Proporcional 14to: $${d14.toFixed(2)}<br>
                 `);
             },
+            
+            // INGENIERO ALASK: CALCULADORA DE JUBILACIÓN ACTUALIZADA
             jubilacion: function() {
-                this.showResult('res_jub', `<i class="fas fa-exclamation-triangle" style="color:#f59e0b;"></i> El cálculo exacto requiere la aplicación de coeficientes actuariales del Art. 218. Te recomendamos acudir a un perito contable para una liquidación oficial.`);
+                const prom = parseFloat(document.getElementById('jub_prom').value) || 0;
+                const anios = parseInt(document.getElementById('jub_anios').value) || 0;
+                const edad = parseInt(document.getElementById('jub_edad').value) || 0;
+
+                if (prom <= 0 || anios <= 0 || edad <= 0) {
+                    this.showResult('res_jub', '<span style="color:var(--cv-gray);">Ingresa todos los datos para calcular.</span>');
+                    return;
+                }
+                
+                if (anios < 20) {
+                    this.showResult('res_jub', '<span style="color:#fca5a5;"><i class="fas fa-exclamation-triangle"></i> La ley exige mínimo 20 años de servicio en la misma empresa.</span>');
+                    return;
+                }
+
+                const coeficientes = {
+                    45: 15.9321, 46: 15.6599, 47: 15.3804, 48: 15.0934, 49: 14.7985, 50: 14.4956,
+                    51: 14.1843, 52: 13.8643, 53: 13.5355, 54: 13.1975, 55: 12.8503, 56: 12.4939,
+                    57: 12.1281, 58: 11.7532, 59: 11.3694, 60: 10.8202, 61: 10.5756, 62: 10.1664,
+                    63: 9.7497, 64: 9.3262, 65: 8.8967, 66: 8.4623, 67: 8.0242, 68: 7.5836,
+                    69: 7.1421, 70: 6.7013, 71: 6.2635, 72: 5.8306, 73: 5.4045, 74: 4.9873,
+                    75: 4.5807, 76: 4.1865, 77: 3.8040, 78: 3.4357, 79: 3.0838, 80: 2.7505
+                };
+                
+                let edadCalc = Math.max(45, Math.min(80, edad));
+                const coef = coeficientes[edadCalc] || 10.8202;
+                
+                const fondoGlobal = prom * anios * 0.05;
+                const pensionAnual = fondoGlobal / coef;
+                let pensionMensual = pensionAnual / 12;
+                
+                let tope = "";
+                if (pensionMensual > 482) {
+                    pensionMensual = 482;
+                    tope = '<p style="font-size:0.75rem; color:#f59e0b; margin-top:10px; font-style:italic; line-height:1.4;">*Pensión limitada al tope legal de 1 SBU ($482.00).</p>';
+                }
+                
+                if (pensionMensual < 30) pensionMensual = 30;
+                
+                this.showResult('res_jub', `
+                    <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:0.9rem;"><span>Fondo Global Base:</span> <strong>$${fondoGlobal.toFixed(2)}</strong></div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.9rem;"><span>Coeficiente (Edad ${edad}):</span> <strong>${coef}</strong></div>
+                    <hr style="border:none; border-top:1px solid var(--card-border); margin:10px 0;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-weight:600; color:var(--text-heading);">Pensión Mensual:</span> 
+                        <strong style="color:#8b5cf6; font-size:1.15rem;">$${pensionMensual.toFixed(2)}</strong>
+                    </div>
+                    ${tope}
+                `);
             },
+            
             losep: function() {
                 const rmu = parseFloat(document.getElementById('losep_rmu').value) || 0;
                 const anios = parseInt(document.getElementById('losep_anios').value) || 0;
@@ -1302,6 +1398,7 @@
                     const tag = document.createElement('span');
                     tag.className = 'cv-skill-tag';
                     tag.innerText = skill.trim();
+                    tag.style.cssText = "display:inline-block; background:#e0f2fe !important; padding:5px 10px; border-radius:6px; font-size:0.85rem; color:#0369a1 !important; margin:0 5px 5px 0; font-weight:600; border:1px solid #bae6fd !important;";
                     container.appendChild(tag);
                 }
             });
@@ -1327,10 +1424,10 @@
             const prevDiv = document.createElement('div');
             prevDiv.className = 'cv-item';
             prevDiv.innerHTML = `
-                <div class="cv-item-title" id="job-title-${jobCount}">Cargo</div>
-                <div class="cv-item-subtitle" id="job-company-${jobCount}">Empresa</div>
-                <span class="cv-item-date" id="job-date-${jobCount}">Período</span>
-                <div class="cv-item-desc" id="job-desc-${jobCount}">Descripción...</div>
+                <div class="cv-item-title" id="job-title-${jobCount}" style="font-weight:800; color:#1e293b !important; font-size:1.05rem;">Cargo</div>
+                <div class="cv-item-subtitle" id="job-company-${jobCount}" style="color:#1a3a6e !important; font-weight:600; font-size:0.9rem;">Empresa</div>
+                <span class="cv-item-date" id="job-date-${jobCount}" style="font-size:0.85rem; color:#64748b !important; font-style:italic; margin-bottom:5px; display:block;">Período</span>
+                <div class="cv-item-desc" id="job-desc-${jobCount}" style="font-size:0.95rem; text-align:justify; line-height:1.5; color:#334155 !important;">Descripción...</div>
             `;
             prevContainer.appendChild(prevDiv);
         }
@@ -1354,9 +1451,9 @@
             const prevDiv = document.createElement('div');
             prevDiv.className = 'cv-item';
             prevDiv.innerHTML = `
-                <div class="cv-item-title" id="edu-title-${eduCount}" style="font-size:0.9rem">Título</div>
-                <div class="cv-item-subtitle" id="edu-school-${eduCount}" style="font-size:0.8rem">Institución</div>
-                <span class="cv-item-date" id="edu-date-${eduCount}">Año</span>
+                <div class="cv-item-title" id="edu-title-${eduCount}" style="font-weight:800; color:#1e293b !important; font-size:1.05rem;">Título</div>
+                <div class="cv-item-subtitle" id="edu-school-${eduCount}" style="color:#1a3a6e !important; font-weight:600; font-size:0.9rem;">Institución</div>
+                <span class="cv-item-date" id="edu-date-${eduCount}" style="font-size:0.85rem; color:#64748b !important; font-style:italic; margin-bottom:5px; display:block;">Año</span>
             `;
             prevContainer.appendChild(prevDiv);
         }
@@ -1379,10 +1476,11 @@
 
             const prevDiv = document.createElement('div');
             prevDiv.className = 'ref-card';
+            prevDiv.style.cssText = "background:#f8fafc !important; padding:10px; border-radius:6px; border:1px solid #e2e8f0 !important; color:#334155 !important;";
             prevDiv.innerHTML = `
                 <div style="font-weight:700; font-size:0.85rem;" id="rj-name-${refJobCount}">Nombre</div>
                 <div style="font-size:0.8rem; color:#64748b !important;" id="rj-role-${refJobCount}">Cargo</div>
-                <div style="font-size:0.8rem; color:#2563eb !important;" id="rj-tel-${refJobCount}">Teléfono</div>
+                <div style="font-size:0.8rem; color:#1a3a6e !important;" id="rj-tel-${refJobCount}">Teléfono</div>
             `;
             prevContainer.appendChild(prevDiv);
         }
@@ -1404,9 +1502,10 @@
 
             const prevDiv = document.createElement('div');
             prevDiv.className = 'ref-card';
+            prevDiv.style.cssText = "background:#f8fafc !important; padding:10px; border-radius:6px; border:1px solid #e2e8f0 !important; color:#334155 !important;";
             prevDiv.innerHTML = `
                 <div style="font-weight:700; font-size:0.85rem;" id="rp-name-${refPersCount}">Nombre</div>
-                <div style="font-size:0.8rem; color:#2563eb !important;" id="rp-tel-${refPersCount}">Teléfono</div>
+                <div style="font-size:0.8rem; color:#1a3a6e !important;" id="rp-tel-${refPersCount}">Teléfono</div>
             `;
             prevContainer.appendChild(prevDiv);
         }
@@ -1417,3 +1516,4 @@
     </script>
 </body>
 </html>
+

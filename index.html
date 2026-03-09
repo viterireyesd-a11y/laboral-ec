@@ -1167,7 +1167,9 @@
                         }
                     }
                 }
-                diasHtml += '</div><p style="font-size:0.7rem; color:var(--cv-gray); margin-top:5px;">Si se marcó erróneamente un día, puedes hacer clic en él para ajustarlo manualmente.</p>';
+                
+                // INGENIERO ALASK: Se removió el texto de ayuda del JS aquí
+                diasHtml += '</div>';
                 
                 if(fechasUnicas.size > 0) {
                     container.innerHTML = diasHtml;

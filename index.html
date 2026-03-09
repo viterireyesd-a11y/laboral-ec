@@ -14,6 +14,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+
     <style>
         /* --- ESTILOS GENERALES Y MODO OSCURO --- */
         :root { 
@@ -548,8 +550,15 @@
                                     <div class="form-group"><label>N° de Hijos</label><input type="number" id="bs_hijos" placeholder="Ej: 2"></div>
                                 </div>
                                 <div class="form-group" style="margin-bottom:0;">
-                                    <label>Días Laborados (Para Alimentación)</label>
+                                    <label style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+                                        <span>Días Laborados (Para Alimentación)</span>
+                                        <label for="pdf-dias-laborados" style="margin:0; background:rgba(217, 70, 239, 0.1); color:#d946ef; padding:4px 10px; border-radius:4px; cursor:pointer; font-size:0.7rem; border:1px solid #d946ef; transition: all 0.2s;">
+                                            <i class="fas fa-file-pdf"></i> Leer Biométrico
+                                        </label>
+                                        <input type="file" id="pdf-dias-laborados" accept="application/pdf" style="display:none;" onchange="procesarPDFDiasLaborados(event)">
+                                    </label>
                                     <input type="number" id="bs_dias_laborados" placeholder="Ej: 20">
+                                    <div id="pdf-dias-status" style="font-size: 0.75rem; color: #10b981; margin-top: 5px; display: none; font-weight: bold;">Calculando...</div>
                                 </div>
                             </div>
                             <p style="font-size:0.75rem; color:var(--cv-gray); margin-top:-5px; margin-bottom:15px; line-height:1.3; font-style: italic;">
@@ -1019,7 +1028,83 @@
 
     <script>
         // =========================================================================
-        // INGENIERO ALASK: URL DE GOOGLE APPS SCRIPT CONECTADA CORRECTAMENTE (FINAL)
+        // INGENIERO ALASK: ARRAYS DE FERIADOS (PARA LECTURA BIOMÉTRICA)
+        // =========================================================================
+        const FERIADOS_EC_GLOBAL = [
+            '2025-01-01','2025-02-24','2025-02-25','2025-04-18','2025-04-19',
+            '2025-05-01','2025-05-24','2025-08-10','2025-10-09',
+            '2025-11-02','2025-11-03','2025-12-06','2025-12-25',
+            '2026-01-01','2026-03-02','2026-03-03','2026-04-03','2026-04-04',
+            '2026-05-01','2026-05-25','2026-08-10','2026-10-09','2026-11-02',
+            '2026-11-03','2026-12-06','2026-12-25'
+        ];
+
+        // INGENIERO ALASK: INICIALIZACIÓN DEL MOTOR PDF
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+        // LÓGICA DE EXTRACCIÓN DE DÍAS LABORADOS DESDE PDF
+        async function procesarPDFDiasLaborados(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const status = document.getElementById('pdf-dias-status');
+            status.style.display = 'block';
+            status.textContent = 'Analizando biométrico...';
+            status.style.color = '#d946ef';
+
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+                let fullText = '';
+
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const textContent = await page.getTextContent();
+                    const pageText = textContent.items.map(item => item.str).join(' ');
+                    fullText += pageText + ' ';
+                }
+
+                // Buscar fechas formato DD/MM/YYYY o DD-MM-YYYY
+                const matchesFechas = [...fullText.matchAll(/\b(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})\b/g)];
+                let fechasUnicas = new Set();
+                let diasValidos = 0;
+
+                for (let m of matchesFechas) {
+                    const dia = m[1].padStart(2, '0');
+                    const mes = m[2].padStart(2, '0');
+                    const anio = m[3];
+                    const fechaStr = `${anio}-${mes}-${dia}`;
+
+                    if (!fechasUnicas.has(fechaStr)) {
+                        fechasUnicas.add(fechaStr);
+                        
+                        const dObj = new Date(anio, parseInt(mes) - 1, dia);
+                        const dow = dObj.getDay(); // 0 = Domingo, 6 = Sábado
+                        const esFeriado = FERIADOS_EC_GLOBAL.includes(fechaStr);
+
+                        // Si NO es sábado, domingo, ni feriado, es día laborado
+                        if (dow !== 0 && dow !== 6 && !esFeriado) {
+                            diasValidos++;
+                        }
+                    }
+                }
+
+                document.getElementById('bs_dias_laborados').value = diasValidos;
+                status.textContent = `¡Listo! Detectados ${diasValidos} días laborables.`;
+                status.style.color = '#10b981';
+                
+                setTimeout(() => { status.style.display = 'none'; }, 5000);
+
+            } catch (err) {
+                console.error(err);
+                status.textContent = 'Error al procesar el PDF.';
+                status.style.color = '#ef4444';
+            }
+            event.target.value = '';
+        }
+
+        // =========================================================================
+        // URL DE GOOGLE APPS SCRIPT CONECTADA CORRECTAMENTE (FINAL)
         // =========================================================================
         const scriptURL = 'https://script.google.com/macros/s/AKfycbyY3WTDAX2FUkPjtntdswkhDyh2D8WLF4cNONYHF_JVPwrpIz6hYfwQvd_1y8Mz-XEA/exec';
 

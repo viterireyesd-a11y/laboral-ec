@@ -33,21 +33,11 @@
             --purple: #8b5cf6;
         }
         
-        body { 
-            background-color: var(--bg-main);
-            background-image: 
-                radial-gradient(ellipse at 20% 0%, rgba(212,168,67,0.07) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 100%, rgba(212,168,67,0.05) 0%, transparent 50%);
-            color: var(--text-main); 
-            font-family: 'Inter', sans-serif; 
-            line-height: 1.6; 
-            margin: 0; 
-            padding: 0;
-        }
+        body { background-color: var(--bg-main); color: var(--text-main); font-family: 'Inter', sans-serif; line-height: 1.6; margin: 0; padding: 0;}
         h1, h2, h3, h4, h5, h6 { color: var(--text-heading); }
 
         .legal-universe { max-width: 1100px; margin: 0 auto; padding: 20px; }
-        .hero-legal { background: linear-gradient(135deg, #1a1400 0%, #050505 60%, #0a0800 100%); color: white; padding: 40px; border-radius: 16px; margin-bottom: 30px; text-align: center; border: 1px solid var(--card-border); box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+        .hero-legal { background: linear-gradient(135deg, #1e293b 0%, #020617 100%); color: white; padding: 40px; border-radius: 16px; margin-bottom: 30px; text-align: center; border: 1px solid var(--card-border); box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
         
         /* DISEÑO ENCUADRADO PROFESIONAL */
         .framed-text {
@@ -75,7 +65,7 @@
         /* --- CUADROS (CARDS) --- */
         .grid-calculadoras { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; padding: 20px 0; }
         .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; overflow: hidden; transition: all 0.3s ease; box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
-        .card:hover { border-color: var(--gold); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(212,168,67,0.1); }
+        .card:hover { border-color: var(--cv-accent); transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
         .card-header { background: rgba(0,0,0,0.25); padding: 15px 20px; border-bottom: 1px solid var(--card-border); }
         .card-header h3 { margin: 0; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; }
         .card-body { padding: 20px; color: var(--text-main); }
@@ -87,7 +77,7 @@
         .legal-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
         .legal-item { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; overflow: hidden; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .legal-item:hover { border-color: var(--cv-accent); }
-        summary { padding: 20px; cursor: pointer; list-style: none; display: flex; align-items: center; font-weight: 700; color: var(--text-heading); background: #0a0a0a; }
+        summary { padding: 20px; cursor: pointer; list-style: none; display: flex; align-items: center; font-weight: 700; color: var(--text-heading); background: var(--card-bg); }
         summary:hover { background: rgba(51, 65, 85, 0.5); }
         .art-badge { background: var(--cv-accent); color: white; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; margin-right: 15px; font-family: 'Roboto Mono', monospace; min-width: 80px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
         .legal-content { padding: 25px; border-top: 1px solid var(--card-border); color: var(--text-main); background: rgba(15, 23, 42, 0.2); }
@@ -190,16 +180,16 @@
         @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
         /* --- FOOTER Y NAVEGACIÓN --- */
-        .legal-footer { text-align: center; padding: 20px; color: var(--cv-gray); font-size: 0.85rem; margin-top: 40px; border-top: 1px solid var(--gold-edge); background: #0a0a0a; }
+        .legal-footer { text-align: center; padding: 20px; color: var(--cv-gray); font-size: 0.85rem; margin-top: 40px; border-top: 1px solid var(--card-border); background: var(--card-bg); }
         .footer-title { font-weight: 800; margin: 0; opacity: 0.8; font-size: 1rem; color: var(--text-heading); }
         .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 12px; }
         .footer-links a { color: var(--cv-gray); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; font-weight: 500; }
         .footer-links a:hover { color: var(--cv-accent); }
         .footer-links a.highlight { color: var(--cv-accent); font-weight: 600; }
         
-        .tab-btn { background: #0d0d0d; color: var(--cv-gray); padding: 12px 24px; border: 1px solid var(--card-border); border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.2s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .tab-btn { background: var(--bg-main); color: var(--cv-gray); padding: 12px 24px; border: 1px solid var(--card-border); border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.2s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .tab-btn:hover { border-color: var(--cv-gray); color: var(--text-heading); }
-        .tab-btn.active { background: linear-gradient(135deg, #1a1400, #2a1f00); color: var(--gold-lt); border-color: var(--gold); box-shadow: 0 4px 12px rgba(212,168,67,0.2); }
+        .tab-btn.active { background: var(--cv-accent); color: white; border-color: var(--cv-accent); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4); }
 
         .result-panel { margin-top: 15px; padding: 15px; border-radius: 8px; background: rgba(59, 130, 246, 0.1); border: 1px solid var(--cv-accent); display: none; color: var(--text-heading); font-size: 0.95rem; line-height: 1.5; box-shadow: inset 0 2px 5px rgba(0,0,0,0.1); }
         
@@ -218,18 +208,18 @@
 <body>
 
     <header>
-        <div class="header-container" style="background: linear-gradient(135deg, #111111 0%, #1a1400 100%); border-bottom: 1px solid var(--gold-edge); padding: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.6);">
+        <div class="header-container" style="background: var(--card-bg); border-bottom: 1px solid var(--card-border); padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
             <div class="brand-wrapper" style="display:flex; align-items:center; justify-content:center; gap: 15px;">
                <img src="escudo.svg.png" class="escudo-img" alt="Escudo Ecuador" style="height: 45px;">
                 <div class="brand-text">
-                    <h1 style="margin:0; font-size:1.5rem; letter-spacing: 1px; color: var(--gold-lt);">LABORALEC</h1>
-                    <span style="font-size:0.8rem; color:var(--gold); font-weight: 700; letter-spacing: 0.5px;">SISTEMA JURÍDICO INTEGRADO 2026</span>
+                    <h1 style="margin:0; font-size:1.5rem; letter-spacing: 1px;">LABORALEC</h1>
+                    <span style="font-size:0.8rem; color:var(--cv-accent); font-weight: 700; letter-spacing: 0.5px;">SISTEMA JURÍDICO INTEGRADO 2026</span>
                 </div>
             </div>
         </div>
     </header>
 
-    <nav class="nav-wrapper" style="background: #050505; padding: 20px 0; text-align: center; border-bottom: 1px solid var(--gold-edge);">
+    <nav class="nav-wrapper" style="background: var(--bg-main); padding: 20px 0; text-align: center; border-bottom: 1px solid var(--card-border);">
         <div class="nav-tabs" id="main-nav" style="display:inline-flex; gap: 12px; flex-wrap: wrap; justify-content:center;">
             <button class="tab-btn active" onclick="app.navigate('tab-sindical', this)">
                 <i class="fas fa-users-cog"></i> Org. Sindical
@@ -938,7 +928,7 @@
                                     <div class="cv-name" id="prev-name">TU NOMBRE</div>
                                     <div class="cv-role" id="prev-role">TU TÍTULO PROFESIONAL</div>
                                     <div class="cv-contact-info">
-                                        <div class="cv-contact-item"><i class="fas fa-envelope"></i> <span id="prev-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d8bdb5b9b1b498bdb2bdb5a8b4b7f6bbb7b5">[email&#160;protected]</a></span></div>
+                                        <div class="cv-contact-item"><i class="fas fa-envelope"></i> <span id="prev-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bfdad2ded6d3ffdad5dad2cfd3d091dcd0d2">[email&#160;protected]</a></span></div>
                                         <div class="cv-contact-item"><i class="fas fa-phone"></i> <span id="prev-phone">099 999 9999</span></div>
                                         <div class="cv-contact-item"><i class="fas fa-map-marker-alt"></i> <span id="prev-location">Ciudad, País</span></div>
                                     </div>
@@ -1043,7 +1033,7 @@
     </div>
 
     <footer class="legal-footer">
-        <p class="footer-title" style="color: var(--gold-lt);">LABORALEC PRO 2026 | Ingeniería Legal de Precisión.</p>
+        <p class="footer-title">LABORALEC PRO 2026 | Ingeniería Legal de Precisión.</p>
         <div class="footer-links">
             <a href="privacidad.html"><i class="fas fa-user-shield"></i> Privacidad</a>
             <a href="terminos.html"><i class="fas fa-balance-scale"></i> Términos</a>
@@ -1655,8 +1645,7 @@
             div.className = 'cv-input-group framed-text';
             div.style.borderLeft = "4px solid #6366f1";
             div.innerHTML = `
-                <input type="text" placeholder="Nombre Contacto" oninput="document.getElementById('rj-name-${refJobCount}').innerText = this.value" style="margin-bottom:8px;">
-                <input type="text" placeholder="Cargo/Empresa" oninput="document.getElementById('rj-role-${refJobCount}').innerText = this.value" style="margin-bottom:8px;">
+                <input type="text" placeholder="Nombr${refJobCount}').innerText = this.value" style="margin-bottom:8px;">
                 <input type="text" placeholder="Teléfono" oninput="document.getElementById('rj-tel-${refJobCount}').innerText = this.value">
             `;
             editorContainer.appendChild(div);
@@ -1692,4 +1681,14 @@
             prevDiv.style.cssText = "background:#f8fafc !important; padding:10px; border-radius:6px; border:1px solid #e2e8f0 !important; color:#334155 !important;";
             prevDiv.innerHTML = `
                 <div style="font-weight:700; font-size:0.85rem;" id="rp-name-${refPersCount}">Nombre</div>
-                <div style="font-size:0.8rem; color
+                <div style="font-size:0.8rem; color:#1a3a6e !important;" id="rp-tel-${refPersCount}">Teléfono</div>
+            `;
+            prevContainer.appendChild(prevDiv);
+        }
+
+        // Init Editor
+        addJob();
+        addEdu();
+    </script>
+</body>
+</html>

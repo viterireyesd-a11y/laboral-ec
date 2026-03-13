@@ -65,7 +65,7 @@
         /* --- CUADROS (CARDS) --- */
         .grid-calculadoras { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; padding: 20px 0; }
         .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; overflow: hidden; transition: all 0.3s ease; box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
-        .card:hover { border-color: #d4a843; transform: translateY(-4px); box-shadow: 0 10px 25px rgba(212,168,67,0.15); }
+        .card:hover { border-color: var(--cv-accent); transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
         .card-header { background: rgba(0,0,0,0.25); padding: 15px 20px; border-bottom: 1px solid var(--card-border); }
         .card-header h3 { margin: 0; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; }
         .card-body { padding: 20px; color: var(--text-main); }
@@ -212,8 +212,8 @@
             <div class="brand-wrapper" style="display:flex; align-items:center; justify-content:center; gap: 15px;">
                <img src="escudo.svg.png" class="escudo-img" alt="Escudo Ecuador" style="height: 45px;">
                 <div class="brand-text">
-                    <h1 style="margin:0; font-size:1.5rem; letter-spacing: 1px; color: #d4a843;">LABORALEC</h1>
-                    <span style="font-size:0.8rem; color:#f0c96a; font-weight: 700; letter-spacing: 0.5px;">SISTEMA JURÍDICO INTEGRADO 2026</span>
+                    <h1 style="margin:0; font-size:1.5rem; letter-spacing: 1px;">LABORALEC</h1>
+                    <span style="font-size:0.8rem; color:var(--cv-accent); font-weight: 700; letter-spacing: 0.5px;">SISTEMA JURÍDICO INTEGRADO 2026</span>
                 </div>
             </div>
         </div>
@@ -1137,33 +1137,39 @@
                                 if (FERIADOS_EC_GLOBAL.includes(mañana.toISOString().split('T')[0])) esPuenteSug = true;
                             }
 
-                            // FILTRO 2: Determinar si se marca automáticamente
-                            let isChecked = true;
+                            // FILTRO 2: Solo mostrar dias con dudas
+                            const minEntrada = Math.min(...horasValidasMinutos);
+                            const minSalida = Math.max(...horasValidasMinutos);
+                            const jornadaMinutos = minSalida - minEntrada;
+                            const jornadaCompleta = 525; // 8h45 = 525 min
+                            const jornadaIncompleta = jornadaMinutos < (jornadaCompleta - 30);
+
                             let labelClase = "";
-                            let tagTexto = "Normal";
+                            let tagTexto = "";
+                            let mostrar = false;
+                            let isChecked = true;
 
                             if (dow === 0 || dow === 6) {
-                                isChecked = false;
-                                labelClase = "finde";
-                                tagTexto = "Fin Semana";
+                                mostrar = true; isChecked = false;
+                                labelClase = "finde"; tagTexto = "Fin Semana";
                             } else if (esFeriado) {
-                                isChecked = false;
-                                labelClase = "feriado";
-                                tagTexto = "Feriado";
+                                mostrar = true; isChecked = false;
+                                labelClase = "feriado"; tagTexto = "Feriado";
                             } else if (esPuenteSug) {
-                                isChecked = false; 
-                                labelClase = "puente";
-                                tagTexto = "Puente";
+                                mostrar = true; isChecked = false;
+                                labelClase = "puente"; tagTexto = "Puente";
+                            } else if (jornadaIncompleta) {
+                                mostrar = true; isChecked = true;
+                                const hh = Math.floor(jornadaMinutos/60);
+                                const mm = jornadaMinutos % 60;
+                                tagTexto = "Incompleta (" + hh + "h" + (mm > 0 ? mm + "m" : "") + ")";
+                            } else {
+                                mostrar = false; isChecked = true;
                             }
 
                             const dayName = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'][dow];
-                            
-                            diasHtml += `
-                                <label class="chip-label ${labelClase}">
-                                    <input type="checkbox" class="chip-check dia-bs-check" ${isChecked ? 'checked' : ''} onchange="actualizarTotalDiasBS()">
-                                    <strong>${dia}/${mes} (${dayName})</strong> - ${tagTexto}
-                                </label>
-                            `;
+
+                            if (mostrar) { diasHtml += '<label class="chip-label ' + labelClase + '"><input type="checkbox" class="chip-check dia-bs-check" ' + (isChecked ? 'checked' : '') + ' onchange="actualizarTotalDiasBS()"><strong>' + dia + '/' + mes + ' (' + dayName + ')</strong> - ' + tagTexto + '</label>'; }
                         }
                     }
                 }

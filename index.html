@@ -1165,6 +1165,8 @@
                                 tagTexto = "Incompleta (" + hh + "h" + (mm > 0 ? mm + "m" : "") + ")";
                             } else {
                                 mostrar = false; isChecked = true;
+                                // Dia normal completo: agregar checkbox oculto para conteo automatico
+                                diasHtml += '<input type="checkbox" class="chip-check dia-bs-check" checked style="display:none;" onchange="actualizarTotalDiasBS()">';
                             }
 
                             const dayName = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'][dow];

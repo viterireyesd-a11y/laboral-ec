@@ -1873,24 +1873,31 @@
                 const fondosReserva = sueldo * 0.0833;
                 const aporteVoluntario = sueldo * 0.1760;
                 const costoEmpleador = sueldo + aportePatronal + fondosReserva;
-                const sep = '<hr style="border:none;border-top:1px solid rgba(201,151,58,0.15);margin:10px 0;">';
+
+                function fila(label, valor, color, prefijo) {
+                    return '<div style="background:rgba(0,0,0,0.25);border-radius:3px;padding:10px 14px;margin-bottom:8px;border-left:3px solid ' + color + ';">' +
+                        '<div style="font-size:0.75rem;color:#6b6050;margin-bottom:3px;">' + label + '</div>' +
+                        '<div style="font-size:1.3rem;font-weight:700;color:' + color + ';letter-spacing:0.02em;">' + prefijo + '$' + valor + '</div>' +
+                    '</div>';
+                }
+
+                function titulo(texto) {
+                    return '<div style="font-size:0.65rem;letter-spacing:0.15em;color:#c9973a;margin:14px 0 8px;text-transform:uppercase;font-weight:700;border-bottom:1px solid rgba(201,151,58,0.15);padding-bottom:5px;">' + texto + '</div>';
+                }
 
                 this.showResult('res_iess',
-                    '<div style="font-size:0.7rem;letter-spacing:0.12em;color:#c9973a;margin-bottom:8px;text-transform:uppercase;font-weight:700;">AFILIADO DEPENDIENTE</div>' +
-                    '<div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:0.92rem;"><span>Aporte personal (' + (tasaPersonal*100).toFixed(2) + '%)</span><strong style="color:#f0e6d0;">-$' + aportePersonal.toFixed(2) + '</strong></div>' +
-                    '<div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:0.92rem;"><span>Aporte patronal (' + (tasaPatronal*100).toFixed(2) + '%)</span><strong style="color:#10b981;">$' + aportePatronal.toFixed(2) + '</strong></div>' +
-                    '<div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:0.92rem;"><span>Total al IESS</span><strong style="color:#60a5fa;">$' + totalAporte.toFixed(2) + '</strong></div>' +
-                    sep +
-                    '<div style="font-size:0.7rem;letter-spacing:0.12em;color:#c9973a;margin-bottom:8px;text-transform:uppercase;font-weight:700;">FONDOS DE RESERVA (desde mes 13)</div>' +
-                    '<div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:0.92rem;"><span>Fondo de reserva (8.33%)</span><strong style="color:#10b981;">$' + fondosReserva.toFixed(2) + '</strong></div>' +
-                    '<div style="font-size:0.78rem;color:#5a5040;font-style:italic;margin-bottom:5px;">Puede acumularse en IESS o pagarse mensual</div>' +
-                    sep +
-                    '<div style="font-size:0.7rem;letter-spacing:0.12em;color:#c9973a;margin-bottom:8px;text-transform:uppercase;font-weight:700;">AFILIADO VOLUNTARIO</div>' +
-                    '<div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:0.92rem;"><span>Aporte voluntario (17.60%)</span><strong style="color:#a78bfa;">$' + aporteVoluntario.toFixed(2) + '</strong></div>' +
-                    '<div style="font-size:0.78rem;color:#5a5040;font-style:italic;margin-bottom:5px;">Cubre: salud + vejez + invalidez (sin riesgos laborales)</div>' +
-                    sep +
-                    '<div style="font-size:0.7rem;letter-spacing:0.12em;color:#c9973a;margin-bottom:8px;text-transform:uppercase;font-weight:700;">COSTO REAL PARA EL EMPLEADOR</div>' +
-                    '<div style="display:flex;justify-content:space-between;font-size:1rem;"><span style="font-weight:600;">Sueldo + Patronal + F. Reserva</span><strong style="color:#e8b84b;font-size:1.1rem;">$' + costoEmpleador.toFixed(2) + '</strong></div>'
+                    titulo('Afiliado Dependiente') +
+                    fila('Descuento personal (' + (tasaPersonal*100).toFixed(2) + '%)', aportePersonal.toFixed(2), '#f87171', '-') +
+                    fila('Aporte patronal (' + (tasaPatronal*100).toFixed(2) + '%)', aportePatronal.toFixed(2), '#34d399', '') +
+                    fila('Total mensual al IESS', totalAporte.toFixed(2), '#60a5fa', '') +
+                    titulo('Fondos de Reserva') +
+                    fila('8.33% del sueldo (desde mes 13)', fondosReserva.toFixed(2), '#34d399', '') +
+                    '<div style="font-size:0.78rem;color:#5a5040;font-style:italic;margin:-4px 0 8px 4px;">Acumulable en IESS o pago mensual</div>' +
+                    titulo('Afiliado Voluntario') +
+                    fila('Aporte voluntario (17.60%)', aporteVoluntario.toFixed(2), '#a78bfa', '') +
+                    '<div style="font-size:0.78rem;color:#5a5040;font-style:italic;margin:-4px 0 8px 4px;">Cubre salud, vejez e invalidez</div>' +
+                    titulo('Costo Real para el Empleador') +
+                    fila('Sueldo + Patronal + F. Reserva', costoEmpleador.toFixed(2), '#e8b84b', '')
                 );
             },
             liquidacion: function() {
